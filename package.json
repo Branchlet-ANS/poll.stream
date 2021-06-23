@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
+    "build": "npx rimraf build && svelte-kit build --verbose",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -21,6 +21,7 @@
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
     "svelte": "^3.34.0",
+    "svelte-adapter-firebase": "^0.8.4",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
