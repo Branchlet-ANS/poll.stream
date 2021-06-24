@@ -12,6 +12,20 @@
 	<div class="title">New poll</div>
 	<div class="divider"></div>
 	<button class="poll-edit" on:click={handleClick}> counting {answer_count}</button>
+	<nav class="buttonbar">
+		<div class="button">
+			<a href="#/poll">
+				<div class="dot">
+					<img src="/images/poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
+				</div>
+			</a>
+		</div>
+		<div class="button">
+			<div class="dot">
+				<img src="/images/calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
+			</div>
+		</div>
+	</nav>
 
 </div>
 
@@ -36,5 +50,5 @@
 		width: 4em;
 		height: 4em;
 	}
-	
+
 </style>

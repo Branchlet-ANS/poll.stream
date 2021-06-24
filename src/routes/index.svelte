@@ -7,7 +7,7 @@
 	<div class="divider"></div>
 	<nav class="buttonbar">
 		<div class="button">
-			<a href="{base}/poll_page">
+			<a href="/poll_page">
 				<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
 					<g id="figure-svg">
 						<rect class = figure-outline

@@ -9,8 +9,8 @@
 <body>
 
     <slot></slot>
-	
-	
+
+
 	<footer>
 	    <div class="logo">Poll<br>stream</div>
 	</footer>
@@ -36,7 +36,7 @@
 	}
 	button{
 	}
-	
+
     body {
         margin: 20vh 0 0 0;
         padding: 0;
