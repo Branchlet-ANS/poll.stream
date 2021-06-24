@@ -4,13 +4,16 @@
 </script>
 
 <button class="float" on:click={onclick}>
-	Create Poll Stream
+	+ Add
 </button>
 
 <style>
 	.float {
+		font-size: large;
+		font-weight: 500;
+		
 		position: fixed;
-		width: 130px;
+		width: 120px;
 		height: 60px;
 		bottom: 40px;
 		right: 50% - 30px;
@@ -25,8 +28,14 @@
 		cursor: pointer;
 	}
 
+	.float:hover {
+		/* box-shadow: 0px 4px 10px var(--c_dark); */
+		bottom: 42px;
+	}
+
 	.float:active {
 		box-shadow: none;
 		bottom: 38px;
 	}
+
 </style>

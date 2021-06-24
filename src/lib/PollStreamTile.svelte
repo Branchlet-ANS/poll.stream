@@ -13,11 +13,12 @@
 
 <style>
 	.container {
-		padding: 5pt;
-		margin: 10pt;
-        width: 100%;
-        height: 100%;
-
+		padding: 10pt;
+		margin-top: 15pt;
+        margin-bottom: 0pt;
+		margin-left: 0pt;
+		margin-right: 0pt;
+		
 		border-style: solid;
 		border-width: 2pt;
 		border-color: var(--c_light);

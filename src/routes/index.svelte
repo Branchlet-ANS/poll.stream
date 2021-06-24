@@ -9,6 +9,11 @@
 	}
 </script>
 
+{#if streams.length == 0}
+	<p style="margin-top: 100px;">No Poll Streams!</p>
+	<p>Click the button below to add a stream.</p>
+{/if}
+
 <PollStreamTileContainer>
 	{#each streams as s}
 		<PollStreamTile>{s}</PollStreamTile>
