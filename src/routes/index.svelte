@@ -1,108 +1,18 @@
-<!DOCTYPE html>
-
 <script>
-    import {base} from '$app/paths'
+	import PollStreamTile from '../lib/PollStreamTile.svelte';
+	import PollStreamTileContainer from '../lib/PollStreamTileContainer.svelte';
+	import FloatingButton from '../lib/FloatingButton.svelte';
+	let streams = [];
+
+	function appendStreams() {
+		streams = [...streams, streams.length.toString()];
+	}
 </script>
 
-<div class="content">
-	<div class="title">Welcome</div>
-	<div class="divider"></div>
-	<nav class="buttonbar">
-		<div class="button">
-			<a href="{base}/poll_page">
-				<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
-					<g id="figure-svg">
-						<rect class = figure-outline
-						stroke="white"
-						stroke-width="4"
-						fill="transparent"
-						width="100"
-						height="100"
-						rx="40"/>
-					</g>
-				</svg>
-				<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
-			</a>
-		</div>
-		<div class="button">
-			<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
-				<g id="figure-svg">
-					<rect class = figure-outline
-					stroke="white"
-					stroke-width="4"
-					fill="transparent"
-					width="100"
-					height="100"
-					rx="40"/>
-				</g>
-			</svg>
-			<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
-		</div>
-	</nav>
+<PollStreamTileContainer>
+	{#each streams as s}
+		<PollStreamTile>{s}</PollStreamTile>
+	{/each}
+</PollStreamTileContainer>
 
-</div>
-
-
-
-
-
-
-<style>
-	*{
-		margin: 0;
-		padding: 0;
-	}
-	.title{
-        font-family: Tahoma, sans-serif;
-		color: rgb(255, 255, 255);
-		text-align: center;
-        font-size: 2em;
-	}
-	.content{
-		width: 50%;
-        margin: auto;
-	}
-	.divider{
-        margin: 0.5em 0 0 0;
-		width: 100%;
-		height: 0.15em;
-		background-color: rgb(255, 255, 255);
-	}
-	.buttonbar{
-		margin: 0;
-		width: 50%;
-		margin: auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.button{
-		margin: 1em 1em;
-		position: relative;
-	}
-	img{
-		position: absolute;
-		min-width: 100%;
-		min-height: 100%;
-		left: 0;
-		top: 0;
-		pointer-events: none;
-	}
-	svg{
-		display: block;
-        margin: auto;
-	}
-	.figure{
-        height: 8em;
-		width: 8em;
-		display: block;
-		margin: auto;
-	}
-	.figure-outline{
-		stroke-dasharray: 10 20;
-		transition: 0.3s;
-	}
-	.figure-outline:hover{
-		stroke-dasharray: 29 0;
-	}
-</style>
+<FloatingButton onclick={appendStreams}></FloatingButton>

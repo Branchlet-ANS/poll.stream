@@ -1,48 +1,39 @@
-<!DOCTYPE html>
-<script>
-	import PollPage from './poll_page.svelte'
-    import {base} from '$app/paths'
-</script>
-<head>
-</head>
-<html lang="en">
-<body>
 
-    <slot></slot>
+<body>
+	<h1 class="logo">Poll.stream</h1>
 	
-	<footer>
-	    <div class="logo">Poll<br>stream</div>
-	</footer>
+    <slot></slot>
 </body>
-</html>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 	:root {
-		--c_accent: #00A757;
-		--c_background: #1A1923;
-		--c_warning: #79093B;
-		--c_warning_text: #EE005A;
+		--c_blue: #0086E5;
+		--c_yellow: #FFBB33;
+		--c_white: #FFFFFF;
+		--c_dark: #244B69;
+		--c_light: #B4C5D3;
 	}
-	.logo{
-		margin: auto;
-		color: rgb(255, 255, 255);
-		text-align: left;
-		font-family: 'Brush Script MT', cursive;
-        font-size: 3em;
+
+	.logo {
+		text-align: center;
+		font-family: 'Fredoka One', cursive;
+		color: #0086E5;
 	}
-	
+
     body {
-        margin: 20vh 0 0 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		font-family: 'Roboto', sans-serif;
+		
         padding: 0;
         width: 100%;
         height: 100%;
-		background-color: rgb(59, 59, 59);
-	}
-
-	footer {
-		color: rgb(0, 0, 0);
-		position: fixed;
-		left: 10vw;
-		top: 10vh;
+		background-color: var(--c_white);
 	}
 </style>
