@@ -9,22 +9,49 @@
 	<div class="divider"></div>
 	<nav class="buttonbar">
 		<div class="button">
-			<a href="{base}/PollPage">
-				<div class="dot">
-					<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
-				</div>
+			<a href="{base}/poll_page">
+				<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
+					<g id="figure-svg">
+						<rect class = figure-outline
+						stroke="white"
+						stroke-width="4"
+						fill="transparent"
+						width="100"
+						height="100"
+						rx="40"/>
+					</g>
+				</svg>
+				<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
 			</a>
 		</div>
 		<div class="button">
-			<div class="dot">
-				<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
-			</div>
+			<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
+				<g id="figure-svg">
+					<rect class = figure-outline
+					stroke="white"
+					stroke-width="4"
+					fill="transparent"
+					width="100"
+					height="100"
+					rx="40"/>
+				</g>
+			</svg>
+			<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
 		</div>
 	</nav>
 
 </div>
 
+
+
+
+
+
 <style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
 	.title{
         font-family: Tahoma, sans-serif;
 		color: rgb(255, 255, 255);
@@ -41,37 +68,41 @@
 		height: 0.15em;
 		background-color: rgb(255, 255, 255);
 	}
-	.dot{
-        height: 8em;
-		width: 8em;
-		background-color: #bbb;
-		border-radius: 40%;
-	}
 	.buttonbar{
 		margin: 0;
-		width: 40%;
+		width: 50%;
 		margin: auto;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
 	.button{
-		display: inline-block;
 		margin: 1em 1em;
 		position: relative;
 	}
-
-	.button::after{
-		content: '';
-		height: 5px;
-		width: 0;
-		background: var(--c_accent);
+	img{
 		position: absolute;
+		min-width: 100%;
+		min-height: 100%;
 		left: 0;
-		bottom: -10px;
+		top: 0;
+		pointer-events: none;
+	}
+	svg{
+		display: block;
+        margin: auto;
+	}
+	.figure{
+        height: 8em;
+		width: 8em;
+		display: block;
+		margin: auto;
+	}
+	.figure-outline{
+		stroke-dasharray: 10 20;
 		transition: 0.3s;
 	}
-	.button:hover::after{
-		width: 100%;
+	.figure-outline:hover{
+		stroke-dasharray: 29 0;
 	}
 </style>
