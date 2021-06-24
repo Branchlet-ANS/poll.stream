@@ -59,7 +59,7 @@
 
 {#if !loggedIn}
 	<button on:click={signIn}>
-		Login with Google
+		Sign in with Google
 	</button>
 {:else}
 	<p>Signed in as {name}</p>
