@@ -24,7 +24,7 @@
 	});
 
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
-	function signin() {
+	function signIn() {
 		var provider = new firebase.auth.GoogleAuthProvider();
 
 		firebase.auth()
@@ -51,12 +51,17 @@
 				console.log(errorCode, errorMessage, email, credential);
 			});
 	}
+
+	function signOut() {
+		firebase.auth().signOut();
+	}
 </script>
 
 {#if !loggedIn}
-	<button on:click={signin}>
+	<button on:click={signIn}>
 		Login with Google
 	</button>
 {:else}
 	<p>Signed in as {name}</p>
+	<button on:click={signOut}>Sign out</button>
 {/if}
