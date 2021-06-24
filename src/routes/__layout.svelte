@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 <script>
-	import PollPage from './poll_page.svelte'
-    import {base} from '$app/paths'
+	function handleClick() {
+		alert('your mom')
+	}
 </script>
 <head>
 </head>
@@ -10,11 +10,15 @@
 
     <slot></slot>
 	
+	
 	<footer>
 	    <div class="logo">Poll<br>stream</div>
 	</footer>
 </body>
 </html>
+<button on:click={handleClick}>
+	Click me
+</button>
 
 <style>
 	:root {
@@ -29,6 +33,8 @@
 		text-align: left;
 		font-family: 'Brush Script MT', cursive;
         font-size: 3em;
+	}
+	button{
 	}
 	
     body {

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <script>
     import {base} from '$app/paths'
 </script>
@@ -21,7 +19,7 @@
 						rx="40"/>
 					</g>
 				</svg>
-				<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
+				<img src="poll.png" alt="poll">
 			</a>
 		</div>
 		<div class="button">
@@ -36,7 +34,7 @@
 					rx="40"/>
 				</g>
 			</svg>
-			<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
+			<img src="calendar.png" alt="calendar">
 		</div>
 	</nav>
 
@@ -82,8 +80,10 @@
 	}
 	img{
 		position: absolute;
-		min-width: 100%;
-		min-height: 100%;
+		height: 50%;
+		width: 50%;
+		margin-top: 25%;
+		margin-left: 25%;
 		left: 0;
 		top: 0;
 		pointer-events: none;
