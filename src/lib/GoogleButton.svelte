@@ -16,7 +16,6 @@
 			// ...
 			name = user.displayName;
 			loggedIn = true;
-			classList.add('signed-in');
 		} else {
 			// User is signed out
 			// ...

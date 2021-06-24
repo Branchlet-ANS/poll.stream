@@ -11,7 +11,7 @@
 	.float {
 		font-size: large;
 		font-weight: 500;
-		position: absolute;
+		position: fixed;
 		bottom: 100px;
 		padding: 20px 40px;
 		transition: bottom 0.3s, padding 0.3s;

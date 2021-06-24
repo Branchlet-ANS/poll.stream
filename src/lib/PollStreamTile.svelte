@@ -4,7 +4,7 @@
 	}
 </script>
 
-<div class="container" on:click={print}>
+<div class="container" on:click={expand}>
 	<h3>Poll Stream Name</h3>
 	<span><slot></slot></span>
 	<p>Poll Stream Details</p>
