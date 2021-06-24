@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<script>
-	import PollPage from './poll_page.svelte'
-    import {base} from '$app/paths'
-</script>
-<head>
-</head>
-<html lang="en">
+
 <body>
 
     <slot></slot>
@@ -14,7 +7,6 @@
 	    <div class="logo">Poll<br>stream</div>
 	</footer>
 </body>
-</html>
 
 <style>
 	:root {
