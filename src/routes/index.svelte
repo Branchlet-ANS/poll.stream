@@ -2,6 +2,7 @@
 	import PollStreamTile from '../lib/PollStreamTile.svelte';
 	import PollStreamTileContainer from '../lib/PollStreamTileContainer.svelte';
 	import FloatingButton from '../lib/FloatingButton.svelte';
+	import FloatingButtonContainer from '../lib/FloatingButtonContainer.svelte';
 	import GoogleButton from '../lib/GoogleButton.svelte';
 
 	import firebase from "firebase/app";
@@ -20,7 +21,7 @@
 	} else {
 		firebase.app(); // if already initialized, use that one
 	}
-	
+
 	let streams = [];
 
 	function appendStreams() {
@@ -31,7 +32,7 @@
 <GoogleButton></GoogleButton>
 
 {#if streams.length == 0}
-	<p style="margin-top: 100px;">No Poll Streams!</p>
+	<p style="margin-top: 100px">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>
 {/if}
 
@@ -41,4 +42,6 @@
 	{/each}
 </PollStreamTileContainer>
 
-<FloatingButton onclick={appendStreams}></FloatingButton>
+<FloatingButtonContainer>
+	<FloatingButton onclick={appendStreams}></FloatingButton>
+</FloatingButtonContainer>
