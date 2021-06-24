@@ -1,13 +1,12 @@
 <script>
-	function expand() {
-		alert("Hello World!")
-	}
+	export let remove;
 </script>
 
-<div class="container" on:click={expand}>
+<div class="container">
 	<h3>Poll Stream Name</h3>
 	<span><slot></slot></span>
 	<p>Poll Stream Details</p>
+	<button on:click={remove}>Delete</button>
 </div>
 
 

@@ -16,17 +16,58 @@
 		appId: "1:70389726858:web:ce6df871a0d048ffc13773",
 		measurementId: "G-M76SYZGGMZ"
 	};
+	let app;
 	if (!firebase.apps.length) {
-		firebase.initializeApp(firebaseConfig);
+		app = firebase.initializeApp(firebaseConfig);
 	} else {
-		firebase.app(); // if already initialized, use that one
+		app = firebase.app(); // if already initialized, use that one
 	}
+	let db = firebase.firestore(app);
 
 	let streams = [];
 
 	function appendStreams() {
 		streams = [...streams, streams.length.toString()];
+		setUserData()
 	}
+
+	function removeStream(stream) {
+		streams.splice(streams.indexOf(stream), 1);
+		streams = streams; // to notify Svelte
+		setUserData()
+	}
+
+	function setUserData() {
+		var data = {
+			streams: streams
+		}
+		db.collection("users").doc(firebase.auth().currentUser.uid).set(data);
+	}
+
+	async function getUserData() {
+		const doc = await db.collection("users").doc(firebase.auth().currentUser.uid).get();
+		return doc.data();
+	}
+
+	function buildFromUserData() {
+		getUserData().then((data) => {
+			// for (const [key, value] of Object.entries(data)) {
+			// 	streams = [...streams, `data: ${key}: ${value}`];
+			// }
+			if (Object.keys(data).includes("streams")) {
+				streams = data.streams;
+			}
+		});
+	}
+
+	firebase.auth().onAuthStateChanged((user) => {
+		if (user) {
+			buildFromUserData();
+		} else {
+			streams = [];
+		}
+	});
+
 </script>
 
 <GoogleButton></GoogleButton>
@@ -38,7 +79,7 @@
 
 <PollStreamTileContainer>
 	{#each streams as s}
-		<PollStreamTile>{s}</PollStreamTile>
+		<PollStreamTile remove={removeStream}>{s}</PollStreamTile>
 	{/each}
 </PollStreamTileContainer>
 

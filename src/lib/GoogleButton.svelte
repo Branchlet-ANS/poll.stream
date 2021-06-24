@@ -5,8 +5,7 @@
 
 	let loggedIn = false;
 	let name;
-	let uid;
-
+	
 	// Source: https://firebase.google.com/docs/auth/web/manage-users
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
@@ -22,7 +21,7 @@
 			loggedIn = false;
 		}
 	});
-
+	
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
 	function signIn() {
 		var provider = new firebase.auth.GoogleAuthProvider();
