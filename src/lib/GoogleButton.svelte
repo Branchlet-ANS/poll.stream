@@ -59,11 +59,11 @@
 </script>
 
 {#if !loggedIn}
-	<button class = b-signin on:click={signin}>
+	<button class = b-signin on:click={signIn}>
 		Login with Google
 	</button>
 {:else}
-	<button class = b-signout on:click={signout} style="padding:0 0">
+	<button class = b-signout on:click={signOut} style="padding:0 0">
 		<p>Signed in as {name}</p>
 	</button>
 {/if}
