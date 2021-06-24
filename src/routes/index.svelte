@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-
-<script>
-    import {base} from '$app/paths'
-</script>
 
 <div class="content">
 	<div class="title">Welcome</div>
 	<div class="divider"></div>
 	<nav class="buttonbar">
 		<div class="button">
-			<a href="{base}/poll_page">
+			<a href="/poll_page">
 				<svg class="figure" width="100" height="100" viewBox="-3 -3 106 106">
 					<g id="figure-svg">
 						<rect class = figure-outline
@@ -21,7 +16,7 @@
 						rx="40"/>
 					</g>
 				</svg>
-				<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
+				<img src="/images/poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
 			</a>
 		</div>
 		<div class="button">
@@ -36,7 +31,7 @@
 					rx="40"/>
 				</g>
 			</svg>
-			<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
+			<img src="/images/calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
 		</div>
 	</nav>
 

@@ -7,13 +7,13 @@
 		<div class="button">
 			<a href="#/poll">
 				<div class="dot">
-					<img src="poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
+					<img src="/images/poll.png" alt="poll" style="width:2em;height:2em;margin:auto;">
 				</div>
 			</a>
 		</div>
 		<div class="button">
 			<div class="dot">
-				<img src="calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
+				<img src="/images/calendar.png" alt="calendar" style="width:2em;height:2em;margin:auto;">
 			</div>
 		</div>
 	</nav>
