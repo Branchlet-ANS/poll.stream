@@ -5,8 +5,9 @@
 	import FloatingButtonContainer from '../lib/FloatingButtonContainer.svelte';
 	import GoogleButton from '../lib/GoogleButton.svelte';
 
-	import firebase from "firebase/app";
-
+	import firebase from 'firebase/app';
+	import 'firebase/firestore';
+	
 	const firebaseConfig = {
 		apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
 		authDomain: "poll-stream.firebaseapp.com",

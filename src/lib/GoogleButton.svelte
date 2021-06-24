@@ -2,7 +2,7 @@
 <script>
 	import firebase from "firebase/app";
 	import "firebase/auth";
-
+	
 	let loggedIn = false;
 	let name;
 	
@@ -11,7 +11,7 @@
 		if (user) {
 			// User is signed in, see docs for a list of available properties
 			// https://firebase.google.com/docs/reference/js/firebase.User
-			uid = user.uid;
+			var uid = user.uid;
 			// ...
 			name = user.displayName;
 			loggedIn = true;
