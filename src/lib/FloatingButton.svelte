@@ -11,12 +11,11 @@
 	.float {
 		font-size: large;
 		font-weight: 500;
-		
-		position: fixed;
-		width: 120px;
-		height: 60px;
-		bottom: 40px;
-		right: 50% - 30px;
+		position: absolute;
+		bottom: 100px;
+		padding: 20px 40px;
+		transition: bottom 0.3s, padding 0.3s;
+		margin: 0 auto;
 
 		background-color: var(--c_blue);
 		color: var(--c_white);
@@ -29,8 +28,8 @@
 	}
 
 	.float:hover {
-		/* box-shadow: 0px 4px 10px var(--c_dark); */
-		bottom: 42px;
+		bottom: 95px;
+		padding: 30px 50px;
 	}
 
 	.float:active {

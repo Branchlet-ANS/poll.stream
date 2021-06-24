@@ -1,5 +1,5 @@
 <script>
-	function print() {
+	function expand() {
 		alert("Hello World!")
 	}
 </script>
@@ -18,7 +18,7 @@
         margin-bottom: 0pt;
 		margin-left: 0pt;
 		margin-right: 0pt;
-		
+
 		border-style: solid;
 		border-width: 2pt;
 		border-color: var(--c_light);

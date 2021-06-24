@@ -6,7 +6,7 @@
 	let loggedIn = false;
 	let name;
 	let uid;
-	
+
 	// Source: https://firebase.google.com/docs/auth/web/manage-users
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
@@ -16,6 +16,7 @@
 			// ...
 			name = user.displayName;
 			loggedIn = true;
+			classList.add('signed-in');
 		} else {
 			// User is signed out
 			// ...
@@ -51,12 +52,70 @@
 				console.log(errorCode, errorMessage, email, credential);
 			});
 	}
+	function signout() {
+		alert("no")
+	}
 </script>
 
 {#if !loggedIn}
-	<button on:click={signin}>
+	<button class = b-signin on:click={signin}>
 		Login with Google
 	</button>
 {:else}
-	<p>Signed in as {name}</p>
+	<button class = b-signout on:click={signout} style="padding:0 0">
+		<p>Signed in as {name}</p>
+	</button>
 {/if}
+
+<style>
+	.b-signin {
+		margin: 10px 0 0 0;
+		font-size: large;
+		font-weight: 500;
+		min-width: 150px;
+		min-height: 70px;
+		padding: 0 30px;
+
+		background-color: var(--c_blue);
+		color: var(--c_white);
+		border-radius: 50px;
+		border: none;
+		text-align: center;
+		box-shadow: 0px 4px 10px var(--c_light);
+
+		cursor: pointer;
+	}
+	.b-signout {
+		font-style: italic;
+		margin: 10px 0 0 0;
+		font-size: large;
+		font-weight: 500;
+		min-width: 150px;
+		min-height: 70px;
+		padding: 0px 30px;
+		transition: padding 0.3s;
+
+		background-color: var(--c_blue);
+		color: var(--c_white);
+		border-radius: 50px;
+		border: none;
+		text-align: center;
+		box-shadow: 0px 4px 10px var(--c_light);
+
+		cursor: pointer;
+	}
+	.b-signout:signed-in{
+		padding: 10px 30px;
+	}
+
+	button:hover {
+		/* box-shadow: 0px 4px 10px var(--c_dark); */
+		bottom: 42px;
+	}
+
+	button:active {
+		box-shadow: none;
+		bottom: 38px;
+	}
+
+</style>

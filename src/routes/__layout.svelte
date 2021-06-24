@@ -1,7 +1,7 @@
 
 <body>
 	<h1 class="logo">Poll.stream</h1>
-	
+
     <slot></slot>
 </body>
 
@@ -25,12 +25,12 @@
 
     body {
 		display: flex;
-		flex-direction: column;
+  		flex-flow: column;
 		justify-content: center;
 		align-items: center;
 
 		font-family: 'Roboto', sans-serif;
-		
+
         padding: 0;
         width: 100%;
         height: 100%;
