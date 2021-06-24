@@ -25,7 +25,7 @@
 	});
 
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
-	function signin() {
+	function signIn() {
 		var provider = new firebase.auth.GoogleAuthProvider();
 
 		firebase.auth()
@@ -52,8 +52,9 @@
 				console.log(errorCode, errorMessage, email, credential);
 			});
 	}
-	function signout() {
-		alert("no")
+
+	function signOut() {
+		firebase.auth().signOut();
 	}
 </script>
 
