@@ -18,7 +18,7 @@ class PollStream {
 	public getId() {
 		return this.id;
 	}
-	
+
 	public addUser(user: String) {
 		this.users.push(user);
 	}
@@ -67,7 +67,7 @@ class Poll {
 			return;
 		}
 		if (previousAnswer != null && this.singleAnswer) {
-			
+			this.removeAnswer(user, previousAnswer);
 		}
 		this.answers.get(answer).push(user);
 	}
