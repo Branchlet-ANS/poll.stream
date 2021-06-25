@@ -62,27 +62,28 @@ class Poll {
 	}
 
 	public addAnswer(user: String, answer: String) {
-		var previousAnswer = this.getAnswer(user);
-		if (previousAnswer == answer) {
+		var previousAnswers = this.getAnswersOfUser(user);
+		if (previousAnswers.includes(answer)) {
 			return;
 		}
-		if (previousAnswer != null && this.singleAnswer) {
-			this.removeAnswer(user, previousAnswer);
+		if (this.singleAnswer && previousAnswers.length != 0) {
+			this.removeAnswer(user, previousAnswers[0]);
 		}
 		this.answers.get(answer).push(user);
 	}
-
+	
 	public removeAnswer(user: String, answer: String) {
 		var users = this.answers.get(answer);
 		users.splice(users.indexOf(user), 1);
 	}
 
-	public getAnswer(user: String) {
+	public getAnswersOfUser(user: String) {
+		var answers = [];
 		for (const [answer, users] of this.answers.entries()) {
 			if (users.includes(user)) {
-				return answer;
+				answers.push(answer);
 			}
 		}
-		return null;
+		return answers;
 	}
 }
