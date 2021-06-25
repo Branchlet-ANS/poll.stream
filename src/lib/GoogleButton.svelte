@@ -2,10 +2,10 @@
 <script>
 	import firebase from "firebase/app";
 	import "firebase/auth";
-	
+
 	let loggedIn = false;
 	let name;
-	
+
 	// Source: https://firebase.google.com/docs/auth/web/manage-users
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
@@ -21,7 +21,7 @@
 			loggedIn = false;
 		}
 	});
-	
+
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
 	function signIn() {
 		var provider = new firebase.auth.GoogleAuthProvider();
@@ -55,66 +55,65 @@
 		firebase.auth().signOut();
 	}
 </script>
-
-{#if !loggedIn}
-	<button class = b-signin on:click={signIn}>
-		Sign in with Google
+<div class = "dumb-container">
+	<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>
+		<span class="b-google-text">{loggedIn ? ("Signed in as " + name) : "Sign in with Google" }</span>
 	</button>
-{:else}
-	<button class = b-signout on:click={signOut} style="padding:0 0">
-		<p>Signed in as {name}</p>
-	</button>
-{/if}
+	<span class="cross">&#10006</span>
+</div>
 
 <style>
-	.b-signin {
+	.dumb-container{
+		position: relative;
+	    z-index: 10;
+	}
+	.b-google {
+		position: relative;
+		display:block;
 		margin: 10px 0 0 0;
 		font-size: large;
 		font-weight: 500;
-		min-width: 150px;
+		width: 270px;
 		min-height: 70px;
-		padding: 0 30px;
-
-		background-color: var(--c_blue);
-		color: var(--c_white);
-		border-radius: 50px;
-		border: none;
-		text-align: center;
-		box-shadow: 0px 4px 10px var(--c_light);
-
-		cursor: pointer;
-	}
-	.b-signout {
-		font-style: italic;
-		margin: 10px 0 0 0;
-		font-size: large;
-		font-weight: 500;
-		min-width: 150px;
-		min-height: 70px;
-		padding: 0px 30px;
-		transition: padding 0.3s;
-
-		background-color: var(--c_blue);
-		color: var(--c_white);
-		border-radius: 50px;
-		border: none;
-		text-align: center;
-		box-shadow: 0px 4px 10px var(--c_light);
-
-		cursor: pointer;
-	}
-	.b-signout:signed-in{
 		padding: 10px 30px;
-	}
+		white-space: nowrap;
+		opacity: 1;
+		transition: width 0.2s, opacity .5s;
 
-	button:hover {
-		/* box-shadow: 0px 4px 10px var(--c_dark); */
-		bottom: 42px;
-	}
+		background-color: var(--c_blue);
+		color: var(--c_white);
+		border-radius: 50px;
+		border: none;
+		text-align: center;
+		box-shadow: 0px 4px 10px var(--c_light);
 
-	button:active {
-		box-shadow: none;
-		bottom: 38px;
+		cursor: pointer;
+		z-index: 0;
+	}
+	.b-google.loggedIn{
+		width: 400px;
+	}
+	.b-google.loggedIn:hover{
+		opacity: 0.4;
+	}
+	.b-google-text{
+		margin-left: -100%;
+	    margin-right: -100%;
+	    text-align: center;
+	}
+	.cross{
+	    text-align: center;
+		position: absolute;
+		color: var(--c_blue);
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+  		line-height: 2.9;
+		font-size: 2em;
+		vertical-align: middle;
+		opacity: 1;
+		z-index: -9;
 	}
 
 </style>
