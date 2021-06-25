@@ -1,35 +1,20 @@
+import { v4 as uuidv4 } from 'uuid';
 
 export class PollStream {
 	private id: String; // Unique identifier, used in url
-	private owner: String;
-	private users: Array<String> = []; // Users who have access
 	private polls: Array<Poll> = [];
 	__type = 'PollStream'; // For deserialization
 
-	constructor(id: String, owner: String) {
-		this.id = id; // generateId() ?
-		this.owner = owner;
-		this.addUser(owner);
-	}
-
-	public getOwner() {
-		return this.owner;
+	constructor() {
+		this.id = uuidv4();
 	}
 
 	public getId() {
 		return this.id;
 	}
 
-	public getUsers() {
-		return [...this.users];
-	}
-
 	public getPolls() {
 		return [...this.polls];
-	}
-
-	public addUser(user: String) {
-		this.users.push(user);
 	}
 
 	public addPoll(poll: Poll) {
@@ -96,5 +81,31 @@ export class Poll {
 			}
 		}
 		return answers;
+	}
+}
+
+export class UserData {
+	private id: String;
+	private polls: Array<PollStream> = [];
+	__type = 'UserData'; // For deserialization
+
+	constructor(id: String) {
+		this.id = id;
+	}
+
+	public getId() {
+		return this.id;
+	}
+
+	public getPollIDs() {
+		return [...this.polls];
+	}
+
+	public addPoll(poll: PollStream) {
+		this.polls.push(poll);
+	}
+
+	public removePoll(poll: PollStream) {
+		this.polls.slice(this.polls.indexOf(poll), 1);
 	}
 }

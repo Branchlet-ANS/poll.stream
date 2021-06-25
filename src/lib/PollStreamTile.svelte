@@ -15,12 +15,12 @@
 	<h2>PollStream: {pollStream.getId()}</h2>
 	<button on:click={remove}>Delete</button>
 	<button on:click={addPoll}>Add Poll</button>
+	<a href={"/poll/" + pollStream.getId()}>Poll Page</a>
 	<h3>Polls:</h3>
 	{#each polls as poll}
 		<p>{poll.getQuestion()}</p>
 	{/each}
 </div>
-
 
 <style>
 	.container {

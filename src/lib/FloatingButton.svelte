@@ -4,7 +4,7 @@
 </script>
 
 <button class="float" on:click={onclick}>
-	+ Add
+	<slot></slot>
 </button>
 
 <style>

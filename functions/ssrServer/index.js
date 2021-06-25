@@ -9692,35 +9692,39 @@ var require_http_proxy = __commonJS({
 var require_package = __commonJS({
   "node_modules/@grpc/grpc-js/package.json"(exports2, module2) {
     module2.exports = {
-      _from: "@grpc/grpc-js@^1.0.0",
+      _args: [
+        [
+          "@grpc/grpc-js@1.3.3",
+          "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream"
+        ]
+      ],
+      _from: "@grpc/grpc-js@1.3.3",
       _id: "@grpc/grpc-js@1.3.3",
       _inBundle: false,
       _integrity: "sha512-KkKZrX3fVTBYCtUk8I+Y4xWaauEEOIR1mIGoPFUK8C+a9TTub5dmjowJpFGz0dqYj//wJcgVR9fqpoNhSYFfHQ==",
       _location: "/@grpc/grpc-js",
       _phantomChildren: {},
       _requested: {
-        type: "range",
+        type: "version",
         registry: true,
-        raw: "@grpc/grpc-js@^1.0.0",
+        raw: "@grpc/grpc-js@1.3.3",
         name: "@grpc/grpc-js",
         escapedName: "@grpc%2fgrpc-js",
         scope: "@grpc",
-        rawSpec: "^1.0.0",
+        rawSpec: "1.3.3",
         saveSpec: null,
-        fetchSpec: "^1.0.0"
+        fetchSpec: "1.3.3"
       },
       _requiredBy: [
         "/@firebase/firestore",
         "/@firebase/firestore-compat"
       ],
       _resolved: "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.3.tgz",
-      _shasum: "479764be3044f44c9fe38702643f59ea1a5374cb",
-      _spec: "@grpc/grpc-js@^1.0.0",
-      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream\\node_modules\\@firebase\\firestore",
+      _spec: "1.3.3",
+      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream",
       author: {
         name: "Google Inc."
       },
-      bundleDependencies: false,
       contributors: [
         {
           name: "Google Inc."
@@ -9729,7 +9733,6 @@ var require_package = __commonJS({
       dependencies: {
         "@types/node": ">=12.12.47"
       },
-      deprecated: false,
       description: "gRPC Library for Node - pure JS implementation",
       devDependencies: {
         "@grpc/proto-loader": "^0.5.5",
@@ -39868,9 +39871,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-447a08e5.js",
+      file: "/./_app/start-a61d0a1d.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-447a08e5.js", "/./_app/chunks/vendor-c5b255ff.js"]
+      js: ["/./_app/start-a61d0a1d.js", "/./_app/chunks/vendor-b6d41d82.js"]
     },
     fetched: void 0,
     floc: false,
@@ -39925,7 +39928,7 @@ var module_lookup = {
     return index;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-5efd397a.js", "css": ["/./_app/assets/pages/__layout.svelte-f59864f1.css"], "js": ["/./_app/pages/__layout.svelte-5efd397a.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f484e334.js", "css": [], "js": ["/./_app/error.svelte-f484e334.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-332406a6.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-332406a6.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-a5c68c00.js", "css": ["/./_app/assets/pages/__layout.svelte-f59864f1.css"], "js": ["/./_app/pages/__layout.svelte-a5c68c00.js", "/./_app/chunks/vendor-b6d41d82.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-7458a561.js", "css": [], "js": ["/./_app/error.svelte-7458a561.js", "/./_app/chunks/vendor-b6d41d82.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-76d61328.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-76d61328.js", "/./_app/chunks/vendor-b6d41d82.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -39977,19 +39980,102 @@ var error2 = /* @__PURE__ */ Object.freeze({
   "default": Error2,
   load
 });
+var PollStream = class {
+  constructor(id, owner) {
+    this.users = [];
+    this.polls = [];
+    this.__type = "PollStream";
+    this.id = id;
+    this.owner = owner;
+    this.addUser(owner);
+  }
+  getOwner() {
+    return this.owner;
+  }
+  getId() {
+    return this.id;
+  }
+  getUsers() {
+    return [...this.users];
+  }
+  getPolls() {
+    return [...this.polls];
+  }
+  addUser(user) {
+    this.users.push(user);
+  }
+  addPoll(poll) {
+    this.polls = [...this.polls, poll];
+  }
+  removePoll(poll) {
+    this.polls.slice(this.polls.indexOf(poll), 1);
+    this.polls = this.polls;
+  }
+};
+var Poll = class {
+  constructor(question) {
+    this.singleAnswer = true;
+    this.__type = "Poll";
+    this.question = question;
+  }
+  setQuestion(question) {
+    this.question = question;
+  }
+  getQuestion() {
+    return this.question;
+  }
+  getAnswers() {
+    return new Map(this.answers);
+  }
+  addOption(answer) {
+    this.answers.set(answer, []);
+  }
+  removeOption(answer) {
+    this.answers.delete(answer);
+  }
+  addAnswer(user, answer) {
+    var previousAnswers = this.getAnswersOfUser(user);
+    if (previousAnswers.includes(answer)) {
+      return;
+    }
+    if (this.singleAnswer && previousAnswers.length != 0) {
+      this.removeAnswer(user, previousAnswers[0]);
+    }
+    this.answers.get(answer).push(user);
+  }
+  removeAnswer(user, answer) {
+    var users = this.answers.get(answer);
+    users.splice(users.indexOf(user), 1);
+  }
+  getAnswersOfUser(user) {
+    var answers = [];
+    for (const [answer, users] of this.answers.entries()) {
+      if (users.includes(user)) {
+        answers.push(answer);
+      }
+    }
+    return answers;
+  }
+};
 var css$4 = {
   code: ".container.svelte-caltpl{padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer}.container.svelte-caltpl:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: '{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script>\\r\\n\\texport let remove;\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\">\\r\\n\\t<h3>Poll Stream Name</h3>\\r\\n\\t<span><slot></slot></span>\\r\\n\\t<p>Poll Stream Details</p>\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n</div>\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAaC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}'
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { Poll, PollStream } from './poll';\\r\\nexport let remove;\\r\\nexport let pollStream;\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll(\\"Hello world?\\"));\\r\\n    pollStream = pollStream; // For Svelte\\r\\n}\\r\\n$: polls = pollStream.getPolls();\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\">\\r\\n\\t<h2>PollStream: {pollStream.getId()}</h2>\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n\\t<button on:click={addPoll}>Add Poll</button>\\r\\n\\t<h3>Polls:</h3>\\r\\n\\t{#each polls as poll}\\r\\n\\t\\t<p>{poll.getQuestion()}</p>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAsBC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let polls;
   let {remove} = $$props;
+  let {pollStream} = $$props;
   if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
     $$bindings.remove(remove);
+  if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
+    $$bindings.pollStream(pollStream);
   $$result.css.add(css$4);
-  return `<div class="${"container svelte-caltpl"}"><h3>Poll Stream Name</h3>
-	<span>${slots.default ? slots.default({}) : ``}</span>
-	<p>Poll Stream Details</p>
+  polls = pollStream.getPolls();
+  return `<div class="${"container svelte-caltpl"}"><h2>PollStream: ${escape2(pollStream.getId())}</h2>
 	<button>Delete</button>
+	<button>Add Poll</button>
+	<h3>Polls:</h3>
+	${each(polls, (poll) => `<p>${escape2(poll.getQuestion())}</p>`)}
 </div>`;
 });
 var css$3 = {
@@ -40045,6 +40131,10 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
 	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
 </div>`;
 });
+function assign(obj, value) {
+  Object.assign(obj, value);
+  return obj;
+}
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const firebaseConfig = {
     apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
@@ -40062,28 +40152,47 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     firebaseApp = (0, import_app.getApp)();
   }
   const db = (0, import_firestore.getFirestore)(firebaseApp);
-  let streams = [];
+  let pollStreams = [];
   function appendStreams() {
-    streams = [...streams, streams.length.toString()];
+    var user = (0, import_auth.getAuth)(firebaseApp).currentUser;
+    var uid = user == null ? "" : user.uid;
+    pollStreams = [...pollStreams, new PollStream("id", uid)];
     setUserData();
   }
   function removeStream(stream) {
-    streams.splice(streams.indexOf(stream), 1);
-    streams = streams;
+    pollStreams.splice(pollStreams.indexOf(stream), 1);
+    pollStreams = pollStreams;
     setUserData();
   }
   function setUserData() {
-    var data = {streams};
-    (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid), data);
+    var user = (0, import_auth.getAuth)(firebaseApp).currentUser;
+    if (user != null) {
+      var data = {pollStreams: JSON.stringify(pollStreams)};
+      (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid), data);
+    }
   }
   async function getUserData() {
     var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid));
     return document2.data();
   }
+  function jsonProvider(key, value) {
+    if (typeof value === "object") {
+      switch (value.__type) {
+        case "PollStream":
+          return assign(new PollStream("", ""), value);
+        case "Poll":
+          return assign(new Poll(""), value);
+        default:
+          return value;
+      }
+    } else {
+      return value;
+    }
+  }
   function buildFromUserData() {
     getUserData().then((data) => {
-      if (Object.keys(data).includes("streams")) {
-        streams = data.streams;
+      if (Object.keys(data).includes("pollStreams")) {
+        pollStreams = JSON.parse(data.pollStreams, jsonProvider);
       }
     });
   }
@@ -40091,16 +40200,19 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     if (user) {
       buildFromUserData();
     } else {
-      streams = [];
+      pollStreams = [];
     }
   });
   return `${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
 
-${streams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
+${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>` : ``}
 
 ${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
-    default: () => `${each(streams, (s2) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {remove: removeStream}, {}, {default: () => `${escape2(s2)}`})}`)}`
+    default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
+      remove: () => removeStream(pollStream),
+      pollStream
+    }, {}, {})}`)}`
   })}
 
 ${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
