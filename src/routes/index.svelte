@@ -5,8 +5,9 @@
 	import FloatingButtonContainer from '../lib/FloatingButtonContainer.svelte';
 	import GoogleButton from '../lib/GoogleButton.svelte';
 
-	import firebase from 'firebase/app';
-	import 'firebase/firestore';
+	import { initializeApp, getApps, getApp } from "@firebase/app"
+	import { getFirestore, collection, setDoc, doc, getDoc } from "@firebase/firestore";
+	import { getAuth } from '@firebase/auth';
 	
 	const firebaseConfig = {
 		apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
@@ -17,13 +18,13 @@
 		appId: "1:70389726858:web:ce6df871a0d048ffc13773",
 		measurementId: "G-M76SYZGGMZ"
 	};
-	let app;
-	if (!firebase.apps.length) {
-		app = firebase.initializeApp(firebaseConfig);
+	let firebaseApp;
+	if (!getApps().length) {
+		firebaseApp = initializeApp(firebaseConfig);
 	} else {
-		app = firebase.app(); // if already initialized, use that one
+		firebaseApp = getApp(); // if already initialized, use that one
 	}
-	let db = firebase.firestore(app);
+	const db = getFirestore(firebaseApp);
 
 	let streams = [];
 
@@ -32,6 +33,9 @@
 		setUserData()
 	}
 
+	/**
+	* @param {any} stream
+	*/
 	function removeStream(stream) {
 		streams.splice(streams.indexOf(stream), 1);
 		streams = streams; // to notify Svelte
@@ -42,12 +46,12 @@
 		var data = {
 			streams: streams
 		}
-		db.collection("users").doc(firebase.auth().currentUser.uid).set(data);
+		setDoc(doc(collection(db, "users"), getAuth(firebaseApp).currentUser.uid), data)
 	}
 
 	async function getUserData() {
-		const doc = await db.collection("users").doc(firebase.auth().currentUser.uid).get();
-		return doc.data();
+		var document = await getDoc(doc(collection(db, "users"), getAuth(firebaseApp).currentUser.uid));
+		return document.data();
 	}
 
 	function buildFromUserData() {
@@ -61,7 +65,7 @@
 		});
 	}
 
-	firebase.auth().onAuthStateChanged((user) => {
+	getAuth(firebaseApp).onAuthStateChanged((user) => {
 		if (user) {
 			buildFromUserData();
 		} else {
