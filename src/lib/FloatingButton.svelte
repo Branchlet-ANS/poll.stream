@@ -28,13 +28,8 @@
 	}
 
 	.float:hover {
-		bottom: 95px;
+		bottom: 90px;
 		padding: 30px 50px;
-	}
-
-	.float:active {
-		box-shadow: none;
-		bottom: 38px;
 	}
 
 </style>
