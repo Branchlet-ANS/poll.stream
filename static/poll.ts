@@ -1,9 +1,9 @@
 
 class PollStream {
-	id: String; // Unique identifier, used in url
-	owner: String;
-	users: Array<String> = []; // Users who have access
-	polls: Array<Poll> = [];
+	private id: String; // Unique identifier, used in url
+	private owner: String;
+	private users: Array<String> = []; // Users who have access
+	private polls: Array<Poll> = [];
 
 	public PollStream(id: String, owner: String) {
 		this.id = id; // generateId() ?
@@ -11,6 +11,14 @@ class PollStream {
 		this.addUser(owner);
 	}
 
+	public getOwner() {
+		return this.owner;
+	}
+
+	public getId() {
+		return this.id;
+	}
+	
 	public addUser(user: String) {
 		this.users.push(user);
 	}
@@ -68,7 +76,7 @@ class Poll {
 		var users = this.answers.get(answer);
 		users.splice(users.indexOf(user), 1);
 	}
-	
+
 	public getAnswer(user: String) {
 		for (const [answer, users] of this.answers.entries()) {
 			if (users.includes(user)) {
