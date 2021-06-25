@@ -1566,9 +1566,12 @@ var require_index_cjs = __commonJS({
         this.component = null;
         this.instances = new Map();
         this.instancesDeferred = new Map();
-        this.onInitCallbacks = new Map();
+        this.onInitCallbacks = new Set();
       }
       Provider2.prototype.get = function(identifier) {
+        if (identifier === void 0) {
+          identifier = DEFAULT_ENTRY_NAME;
+        }
         var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
         if (!this.instancesDeferred.has(normalizedIdentifier)) {
           var deferred = new util.Deferred();
@@ -1588,9 +1591,8 @@ var require_index_cjs = __commonJS({
         return this.instancesDeferred.get(normalizedIdentifier).promise;
       };
       Provider2.prototype.getImmediate = function(options2) {
-        var _a;
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(options2 === null || options2 === void 0 ? void 0 : options2.identifier);
-        var optional = (_a = options2 === null || options2 === void 0 ? void 0 : options2.optional) !== null && _a !== void 0 ? _a : false;
+        var _a = tslib.__assign({identifier: DEFAULT_ENTRY_NAME, optional: false}, options2), identifier = _a.identifier, optional = _a.optional;
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
         if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
           try {
             return this.getOrInitializeService({
@@ -1700,8 +1702,8 @@ var require_index_cjs = __commonJS({
         if (opts === void 0) {
           opts = {};
         }
-        var _b = opts.options, options2 = _b === void 0 ? {} : _b;
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(opts.instanceIdentifier);
+        var _b = opts.instanceIdentifier, instanceIdentifier = _b === void 0 ? DEFAULT_ENTRY_NAME : _b, _c = opts.options, options2 = _c === void 0 ? {} : _c;
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
         if (this.isInitialized(normalizedIdentifier)) {
           throw Error(this.name + "(" + normalizedIdentifier + ") has already been initialized");
         }
@@ -1713,9 +1715,9 @@ var require_index_cjs = __commonJS({
           options: options2
         });
         try {
-          for (var _c = tslib.__values(this.instancesDeferred.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
-            var _e = tslib.__read(_d.value, 2), instanceIdentifier = _e[0], instanceDeferred = _e[1];
-            var normalizedDeferredIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
+          for (var _d = tslib.__values(this.instancesDeferred.entries()), _e = _d.next(); !_e.done; _e = _d.next()) {
+            var _f = tslib.__read(_e.value, 2), instanceIdentifier_1 = _f[0], instanceDeferred = _f[1];
+            var normalizedDeferredIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier_1);
             if (normalizedIdentifier === normalizedDeferredIdentifier) {
               instanceDeferred.resolve(instance);
             }
@@ -1724,8 +1726,8 @@ var require_index_cjs = __commonJS({
           e_2 = {error: e_2_1};
         } finally {
           try {
-            if (_d && !_d.done && (_a = _c.return))
-              _a.call(_c);
+            if (_e && !_e.done && (_a = _d.return))
+              _a.call(_d);
           } finally {
             if (e_2)
               throw e_2.error;
@@ -1734,40 +1736,29 @@ var require_index_cjs = __commonJS({
         this.invokeOnInitCallbacks(instance, normalizedIdentifier);
         return instance;
       };
-      Provider2.prototype.onInit = function(callback, identifier) {
-        var _a;
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
-        var existingCallbacks = (_a = this.onInitCallbacks.get(normalizedIdentifier)) !== null && _a !== void 0 ? _a : new Set();
-        existingCallbacks.add(callback);
-        this.onInitCallbacks.set(normalizedIdentifier, existingCallbacks);
-        var existingInstance = this.instances.get(normalizedIdentifier);
-        if (existingInstance) {
-          callback(existingInstance, normalizedIdentifier);
-        }
+      Provider2.prototype.onInit = function(callback) {
+        var _this = this;
+        this.onInitCallbacks.add(callback);
         return function() {
-          existingCallbacks.delete(callback);
+          _this.onInitCallbacks.delete(callback);
         };
       };
       Provider2.prototype.invokeOnInitCallbacks = function(instance, identifier) {
         var e_3, _a;
-        var callbacks = this.onInitCallbacks.get(identifier);
-        if (!callbacks) {
-          return;
-        }
         try {
-          for (var callbacks_1 = tslib.__values(callbacks), callbacks_1_1 = callbacks_1.next(); !callbacks_1_1.done; callbacks_1_1 = callbacks_1.next()) {
-            var callback = callbacks_1_1.value;
+          for (var _b = tslib.__values(this.onInitCallbacks), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var callback = _c.value;
             try {
               callback(instance, identifier);
-            } catch (_b) {
+            } catch (_d) {
             }
           }
         } catch (e_3_1) {
           e_3 = {error: e_3_1};
         } finally {
           try {
-            if (callbacks_1_1 && !callbacks_1_1.done && (_a = callbacks_1.return))
-              _a.call(callbacks_1);
+            if (_c && !_c.done && (_a = _b.return))
+              _a.call(_b);
           } finally {
             if (e_3)
               throw e_3.error;
@@ -1793,9 +1784,6 @@ var require_index_cjs = __commonJS({
         return instance || null;
       };
       Provider2.prototype.normalizeInstanceIdentifier = function(identifier) {
-        if (identifier === void 0) {
-          identifier = DEFAULT_ENTRY_NAME;
-        }
         if (this.component) {
           return this.component.multipleInstances ? identifier : DEFAULT_ENTRY_NAME;
         } else {
@@ -2049,774 +2037,20 @@ var require_index_cjs2 = __commonJS({
   }
 });
 
-// node_modules/dom-storage/lib/index.js
-var require_lib = __commonJS({
-  "node_modules/dom-storage/lib/index.js"(exports2, module2) {
-    (function() {
-      "use strict";
-      var fs = require("fs");
-      function Storage(path, opts) {
-        opts = opts || {};
-        var db;
-        Object.defineProperty(this, "___priv_bk___", {
-          value: {
-            path
-          },
-          writable: false,
-          enumerable: false
-        });
-        Object.defineProperty(this, "___priv_strict___", {
-          value: !!opts.strict,
-          writable: false,
-          enumerable: false
-        });
-        Object.defineProperty(this, "___priv_ws___", {
-          value: opts.ws || "  ",
-          writable: false,
-          enumerable: false
-        });
-        try {
-          db = JSON.parse(fs.readFileSync(path));
-        } catch (e) {
-          db = {};
-        }
-        Object.keys(db).forEach(function(key) {
-          this[key] = db[key];
-        }, this);
-      }
-      Storage.prototype.getItem = function(key) {
-        if (this.hasOwnProperty(key)) {
-          if (this.___priv_strict___) {
-            return String(this[key]);
-          } else {
-            return this[key];
-          }
-        }
-        return null;
-      };
-      Storage.prototype.setItem = function(key, val) {
-        if (val === void 0) {
-          this[key] = null;
-        } else if (this.___priv_strict___) {
-          this[key] = String(val);
-        } else {
-          this[key] = val;
-        }
-        this.___save___();
-      };
-      Storage.prototype.removeItem = function(key) {
-        delete this[key];
-        this.___save___();
-      };
-      Storage.prototype.clear = function() {
-        var self2 = this;
-        Object.keys(self2).forEach(function(key) {
-          self2[key] = void 0;
-          delete self2[key];
-        });
-      };
-      Storage.prototype.key = function(i) {
-        i = i || 0;
-        return Object.keys(this)[i];
-      };
-      Object.defineProperty(Storage.prototype, "length", {
-        get: function() {
-          return Object.keys(this).length;
-        }
-      });
-      Storage.prototype.___save___ = function() {
-        var self2 = this;
-        if (!this.___priv_bk___.path) {
-          return;
-        }
-        if (this.___priv_bk___.lock) {
-          this.___priv_bk___.wait = true;
-          return;
-        }
-        this.___priv_bk___.lock = true;
-        fs.writeFile(this.___priv_bk___.path, JSON.stringify(this, null, this.___priv_ws___), "utf8", function(e) {
-          self2.___priv_bk___.lock = false;
-          if (e) {
-            console.error("Could not write to database", self2.___priv_bk___.path);
-            console.error(e);
-            return;
-          }
-          if (self2.___priv_bk___.wait) {
-            self2.___priv_bk___.wait = false;
-            self2.___save___();
-          }
-        });
-      };
-      Object.defineProperty(Storage, "create", {
-        value: function(path, opts) {
-          return new Storage(path, opts);
-        },
-        writable: false,
-        enumerable: false
-      });
-      module2.exports = Storage;
-    })();
-  }
-});
-
-// node_modules/xmlhttprequest/lib/XMLHttpRequest.js
-var require_XMLHttpRequest = __commonJS({
-  "node_modules/xmlhttprequest/lib/XMLHttpRequest.js"(exports2) {
-    var Url = require("url");
-    var spawn = require("child_process").spawn;
-    var fs = require("fs");
-    exports2.XMLHttpRequest = function() {
-      "use strict";
-      var self2 = this;
-      var http2 = require("http");
-      var https2 = require("https");
-      var request;
-      var response;
-      var settings = {};
-      var disableHeaderCheck = false;
-      var defaultHeaders = {
-        "User-Agent": "node-XMLHttpRequest",
-        "Accept": "*/*"
-      };
-      var headers = {};
-      var headersCase = {};
-      var forbiddenRequestHeaders = [
-        "accept-charset",
-        "accept-encoding",
-        "access-control-request-headers",
-        "access-control-request-method",
-        "connection",
-        "content-length",
-        "content-transfer-encoding",
-        "cookie",
-        "cookie2",
-        "date",
-        "expect",
-        "host",
-        "keep-alive",
-        "origin",
-        "referer",
-        "te",
-        "trailer",
-        "transfer-encoding",
-        "upgrade",
-        "via"
-      ];
-      var forbiddenRequestMethods = [
-        "TRACE",
-        "TRACK",
-        "CONNECT"
-      ];
-      var sendFlag = false;
-      var errorFlag = false;
-      var listeners = {};
-      this.UNSENT = 0;
-      this.OPENED = 1;
-      this.HEADERS_RECEIVED = 2;
-      this.LOADING = 3;
-      this.DONE = 4;
-      this.readyState = this.UNSENT;
-      this.onreadystatechange = null;
-      this.responseText = "";
-      this.responseXML = "";
-      this.status = null;
-      this.statusText = null;
-      this.withCredentials = false;
-      var isAllowedHttpHeader = function(header) {
-        return disableHeaderCheck || header && forbiddenRequestHeaders.indexOf(header.toLowerCase()) === -1;
-      };
-      var isAllowedHttpMethod = function(method) {
-        return method && forbiddenRequestMethods.indexOf(method) === -1;
-      };
-      this.open = function(method, url, async, user, password) {
-        this.abort();
-        errorFlag = false;
-        if (!isAllowedHttpMethod(method)) {
-          throw new Error("SecurityError: Request method not allowed");
-        }
-        settings = {
-          "method": method,
-          "url": url.toString(),
-          "async": typeof async !== "boolean" ? true : async,
-          "user": user || null,
-          "password": password || null
-        };
-        setState(this.OPENED);
-      };
-      this.setDisableHeaderCheck = function(state) {
-        disableHeaderCheck = state;
-      };
-      this.setRequestHeader = function(header, value) {
-        if (this.readyState !== this.OPENED) {
-          throw new Error("INVALID_STATE_ERR: setRequestHeader can only be called when state is OPEN");
-        }
-        if (!isAllowedHttpHeader(header)) {
-          console.warn('Refused to set unsafe header "' + header + '"');
-          return;
-        }
-        if (sendFlag) {
-          throw new Error("INVALID_STATE_ERR: send flag is true");
-        }
-        header = headersCase[header.toLowerCase()] || header;
-        headersCase[header.toLowerCase()] = header;
-        headers[header] = headers[header] ? headers[header] + ", " + value : value;
-      };
-      this.getResponseHeader = function(header) {
-        if (typeof header === "string" && this.readyState > this.OPENED && response && response.headers && response.headers[header.toLowerCase()] && !errorFlag) {
-          return response.headers[header.toLowerCase()];
-        }
-        return null;
-      };
-      this.getAllResponseHeaders = function() {
-        if (this.readyState < this.HEADERS_RECEIVED || errorFlag) {
-          return "";
-        }
-        var result = "";
-        for (var i in response.headers) {
-          if (i !== "set-cookie" && i !== "set-cookie2") {
-            result += i + ": " + response.headers[i] + "\r\n";
-          }
-        }
-        return result.substr(0, result.length - 2);
-      };
-      this.getRequestHeader = function(name) {
-        if (typeof name === "string" && headersCase[name.toLowerCase()]) {
-          return headers[headersCase[name.toLowerCase()]];
-        }
-        return "";
-      };
-      this.send = function(data) {
-        if (this.readyState !== this.OPENED) {
-          throw new Error("INVALID_STATE_ERR: connection must be opened before send() is called");
-        }
-        if (sendFlag) {
-          throw new Error("INVALID_STATE_ERR: send has already been called");
-        }
-        var ssl = false, local = false;
-        var url = Url.parse(settings.url);
-        var host;
-        switch (url.protocol) {
-          case "https:":
-            ssl = true;
-          case "http:":
-            host = url.hostname;
-            break;
-          case "file:":
-            local = true;
-            break;
-          case void 0:
-          case null:
-          case "":
-            host = "localhost";
-            break;
-          default:
-            throw new Error("Protocol not supported.");
-        }
-        if (local) {
-          if (settings.method !== "GET") {
-            throw new Error("XMLHttpRequest: Only GET method is supported");
-          }
-          if (settings.async) {
-            fs.readFile(url.pathname, "utf8", function(error3, data2) {
-              if (error3) {
-                self2.handleError(error3);
-              } else {
-                self2.status = 200;
-                self2.responseText = data2;
-                setState(self2.DONE);
-              }
-            });
-          } else {
-            try {
-              this.responseText = fs.readFileSync(url.pathname, "utf8");
-              this.status = 200;
-              setState(self2.DONE);
-            } catch (e) {
-              this.handleError(e);
-            }
-          }
-          return;
-        }
-        var port = url.port || (ssl ? 443 : 80);
-        var uri = url.pathname + (url.search ? url.search : "");
-        for (var name in defaultHeaders) {
-          if (!headersCase[name.toLowerCase()]) {
-            headers[name] = defaultHeaders[name];
-          }
-        }
-        headers.Host = host;
-        if (!(ssl && port === 443 || port === 80)) {
-          headers.Host += ":" + url.port;
-        }
-        if (settings.user) {
-          if (typeof settings.password === "undefined") {
-            settings.password = "";
-          }
-          var authBuf = new Buffer(settings.user + ":" + settings.password);
-          headers.Authorization = "Basic " + authBuf.toString("base64");
-        }
-        if (settings.method === "GET" || settings.method === "HEAD") {
-          data = null;
-        } else if (data) {
-          headers["Content-Length"] = Buffer.isBuffer(data) ? data.length : Buffer.byteLength(data);
-          if (!headers["Content-Type"]) {
-            headers["Content-Type"] = "text/plain;charset=UTF-8";
-          }
-        } else if (settings.method === "POST") {
-          headers["Content-Length"] = 0;
-        }
-        var options2 = {
-          host,
-          port,
-          path: uri,
-          method: settings.method,
-          headers,
-          agent: false,
-          withCredentials: self2.withCredentials
-        };
-        errorFlag = false;
-        if (settings.async) {
-          var doRequest = ssl ? https2.request : http2.request;
-          sendFlag = true;
-          self2.dispatchEvent("readystatechange");
-          var responseHandler = function responseHandler2(resp2) {
-            response = resp2;
-            if (response.statusCode === 301 || response.statusCode === 302 || response.statusCode === 303 || response.statusCode === 307) {
-              settings.url = response.headers.location;
-              var url2 = Url.parse(settings.url);
-              host = url2.hostname;
-              var newOptions = {
-                hostname: url2.hostname,
-                port: url2.port,
-                path: url2.path,
-                method: response.statusCode === 303 ? "GET" : settings.method,
-                headers,
-                withCredentials: self2.withCredentials
-              };
-              request = doRequest(newOptions, responseHandler2).on("error", errorHandler);
-              request.end();
-              return;
-            }
-            response.setEncoding("utf8");
-            setState(self2.HEADERS_RECEIVED);
-            self2.status = response.statusCode;
-            response.on("data", function(chunk) {
-              if (chunk) {
-                self2.responseText += chunk;
-              }
-              if (sendFlag) {
-                setState(self2.LOADING);
-              }
-            });
-            response.on("end", function() {
-              if (sendFlag) {
-                setState(self2.DONE);
-                sendFlag = false;
-              }
-            });
-            response.on("error", function(error3) {
-              self2.handleError(error3);
-            });
-          };
-          var errorHandler = function errorHandler2(error3) {
-            self2.handleError(error3);
-          };
-          request = doRequest(options2, responseHandler).on("error", errorHandler);
-          if (data) {
-            request.write(data);
-          }
-          request.end();
-          self2.dispatchEvent("loadstart");
-        } else {
-          var contentFile = ".node-xmlhttprequest-content-" + process.pid;
-          var syncFile = ".node-xmlhttprequest-sync-" + process.pid;
-          fs.writeFileSync(syncFile, "", "utf8");
-          var execString = "var http = require('http'), https = require('https'), fs = require('fs');var doRequest = http" + (ssl ? "s" : "") + ".request;var options = " + JSON.stringify(options2) + ";var responseText = '';var req = doRequest(options, function(response) {response.setEncoding('utf8');response.on('data', function(chunk) {  responseText += chunk;});response.on('end', function() {fs.writeFileSync('" + contentFile + "', JSON.stringify({err: null, data: {statusCode: response.statusCode, headers: response.headers, text: responseText}}), 'utf8');fs.unlinkSync('" + syncFile + "');});response.on('error', function(error) {fs.writeFileSync('" + contentFile + "', JSON.stringify({err: error}), 'utf8');fs.unlinkSync('" + syncFile + "');});}).on('error', function(error) {fs.writeFileSync('" + contentFile + "', JSON.stringify({err: error}), 'utf8');fs.unlinkSync('" + syncFile + "');});" + (data ? "req.write('" + JSON.stringify(data).slice(1, -1).replace(/'/g, "\\'") + "');" : "") + "req.end();";
-          var syncProc = spawn(process.argv[0], ["-e", execString]);
-          while (fs.existsSync(syncFile)) {
-          }
-          var resp = JSON.parse(fs.readFileSync(contentFile, "utf8"));
-          syncProc.stdin.end();
-          fs.unlinkSync(contentFile);
-          if (resp.err) {
-            self2.handleError(resp.err);
-          } else {
-            response = resp.data;
-            self2.status = resp.data.statusCode;
-            self2.responseText = resp.data.text;
-            setState(self2.DONE);
-          }
-        }
-      };
-      this.handleError = function(error3) {
-        this.status = 0;
-        this.statusText = error3;
-        this.responseText = error3.stack;
-        errorFlag = true;
-        setState(this.DONE);
-        this.dispatchEvent("error");
-      };
-      this.abort = function() {
-        if (request) {
-          request.abort();
-          request = null;
-        }
-        headers = defaultHeaders;
-        this.status = 0;
-        this.responseText = "";
-        this.responseXML = "";
-        errorFlag = true;
-        if (this.readyState !== this.UNSENT && (this.readyState !== this.OPENED || sendFlag) && this.readyState !== this.DONE) {
-          sendFlag = false;
-          setState(this.DONE);
-        }
-        this.readyState = this.UNSENT;
-        this.dispatchEvent("abort");
-      };
-      this.addEventListener = function(event, callback) {
-        if (!(event in listeners)) {
-          listeners[event] = [];
-        }
-        listeners[event].push(callback);
-      };
-      this.removeEventListener = function(event, callback) {
-        if (event in listeners) {
-          listeners[event] = listeners[event].filter(function(ev) {
-            return ev !== callback;
-          });
-        }
-      };
-      this.dispatchEvent = function(event) {
-        if (typeof self2["on" + event] === "function") {
-          self2["on" + event]();
-        }
-        if (event in listeners) {
-          for (var i = 0, len = listeners[event].length; i < len; i++) {
-            listeners[event][i].call(self2);
-          }
-        }
-      };
-      var setState = function(state) {
-        if (state == self2.LOADING || self2.readyState !== state) {
-          self2.readyState = state;
-          if (settings.async || self2.readyState < self2.OPENED || self2.readyState === self2.DONE) {
-            self2.dispatchEvent("readystatechange");
-          }
-          if (self2.readyState === self2.DONE && !errorFlag) {
-            self2.dispatchEvent("load");
-            self2.dispatchEvent("loadend");
-          }
-        }
-      };
-    };
-  }
-});
-
-// node_modules/@firebase/app/dist/index.node.cjs.js
-var require_index_node_cjs2 = __commonJS({
-  "node_modules/@firebase/app/dist/index.node.cjs.js"(exports2) {
+// node_modules/@firebase/app/dist/index.cjs.js
+var require_index_cjs3 = __commonJS({
+  "node_modules/@firebase/app/dist/index.cjs.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", {value: true});
-    var tslib = require_tslib();
-    var util = require_index_node_cjs();
     var component = require_index_cjs();
+    var tslib = require_tslib();
     var logger$1 = require_index_cjs2();
-    var Storage = require_lib();
-    var xmlhttprequest = require_XMLHttpRequest();
-    function _interopDefaultLegacy(e) {
-      return e && typeof e === "object" && "default" in e ? e : {"default": e};
-    }
-    var Storage__default = /* @__PURE__ */ _interopDefaultLegacy(Storage);
-    var _a;
-    var ERRORS = (_a = {}, _a["no-app"] = "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()", _a["bad-app-name"] = "Illegal App name: '{$appName}", _a["duplicate-app"] = "Firebase App named '{$appName}' already exists", _a["app-deleted"] = "Firebase App named '{$appName}' already deleted", _a["invalid-app-argument"] = "firebase.{$appName}() takes either no argument or a Firebase App instance.", _a["invalid-log-argument"] = "First argument to `onLog` must be null or a function.", _a);
-    var ERROR_FACTORY = new util.ErrorFactory("app", "Firebase", ERRORS);
-    var name = "@firebase/app";
-    var version = "0.6.27";
-    var name$1 = "@firebase/analytics";
-    var name$2 = "@firebase/app-check";
-    var name$3 = "@firebase/auth";
-    var name$4 = "@firebase/database";
-    var name$5 = "@firebase/functions";
-    var name$6 = "@firebase/installations";
-    var name$7 = "@firebase/messaging";
-    var name$8 = "@firebase/performance";
-    var name$9 = "@firebase/remote-config";
-    var name$a = "@firebase/storage";
-    var name$b = "@firebase/firestore";
-    var name$c = "firebase-wrapper";
-    var _a$1;
-    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
-    var PLATFORM_LOG_STRING = (_a$1 = {}, _a$1[name] = "fire-core", _a$1[name$1] = "fire-analytics", _a$1[name$2] = "fire-app-check", _a$1[name$3] = "fire-auth", _a$1[name$4] = "fire-rtdb", _a$1[name$5] = "fire-fn", _a$1[name$6] = "fire-iid", _a$1[name$7] = "fire-fcm", _a$1[name$8] = "fire-perf", _a$1[name$9] = "fire-rc", _a$1[name$a] = "fire-gcs", _a$1[name$b] = "fire-fst", _a$1["fire-js"] = "fire-js", _a$1[name$c] = "fire-js-all", _a$1);
-    var logger = new logger$1.Logger("@firebase/app");
-    var FirebaseAppImpl = function() {
-      function FirebaseAppImpl2(options2, config, firebase_) {
-        var _this = this;
-        this.firebase_ = firebase_;
-        this.isDeleted_ = false;
-        this.name_ = config.name;
-        this.automaticDataCollectionEnabled_ = config.automaticDataCollectionEnabled || false;
-        this.options_ = util.deepCopy(options2);
-        this.container = new component.ComponentContainer(config.name);
-        this._addComponent(new component.Component("app", function() {
-          return _this;
-        }, "PUBLIC"));
-        this.firebase_.INTERNAL.components.forEach(function(component2) {
-          return _this._addComponent(component2);
-        });
-      }
-      Object.defineProperty(FirebaseAppImpl2.prototype, "automaticDataCollectionEnabled", {
-        get: function() {
-          this.checkDestroyed_();
-          return this.automaticDataCollectionEnabled_;
-        },
-        set: function(val) {
-          this.checkDestroyed_();
-          this.automaticDataCollectionEnabled_ = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "name", {
-        get: function() {
-          this.checkDestroyed_();
-          return this.name_;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "options", {
-        get: function() {
-          this.checkDestroyed_();
-          return this.options_;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      FirebaseAppImpl2.prototype.delete = function() {
-        var _this = this;
-        return new Promise(function(resolve2) {
-          _this.checkDestroyed_();
-          resolve2();
-        }).then(function() {
-          _this.firebase_.INTERNAL.removeApp(_this.name_);
-          return Promise.all(_this.container.getProviders().map(function(provider) {
-            return provider.delete();
-          }));
-        }).then(function() {
-          _this.isDeleted_ = true;
-        });
-      };
-      FirebaseAppImpl2.prototype._getService = function(name2, instanceIdentifier) {
-        var _a2;
-        if (instanceIdentifier === void 0) {
-          instanceIdentifier = DEFAULT_ENTRY_NAME;
-        }
-        this.checkDestroyed_();
-        var provider = this.container.getProvider(name2);
-        if (!provider.isInitialized() && ((_a2 = provider.getComponent()) === null || _a2 === void 0 ? void 0 : _a2.instantiationMode) === "EXPLICIT") {
-          provider.initialize();
-        }
-        return provider.getImmediate({
-          identifier: instanceIdentifier
-        });
-      };
-      FirebaseAppImpl2.prototype._removeServiceInstance = function(name2, instanceIdentifier) {
-        if (instanceIdentifier === void 0) {
-          instanceIdentifier = DEFAULT_ENTRY_NAME;
-        }
-        this.container.getProvider(name2).clearInstance(instanceIdentifier);
-      };
-      FirebaseAppImpl2.prototype._addComponent = function(component2) {
-        try {
-          this.container.addComponent(component2);
-        } catch (e) {
-          logger.debug("Component " + component2.name + " failed to register with FirebaseApp " + this.name, e);
-        }
-      };
-      FirebaseAppImpl2.prototype._addOrOverwriteComponent = function(component2) {
-        this.container.addOrOverwriteComponent(component2);
-      };
-      FirebaseAppImpl2.prototype.toJSON = function() {
-        return {
-          name: this.name,
-          automaticDataCollectionEnabled: this.automaticDataCollectionEnabled,
-          options: this.options
-        };
-      };
-      FirebaseAppImpl2.prototype.checkDestroyed_ = function() {
-        if (this.isDeleted_) {
-          throw ERROR_FACTORY.create("app-deleted", {appName: this.name_});
-        }
-      };
-      return FirebaseAppImpl2;
-    }();
-    FirebaseAppImpl.prototype.name && FirebaseAppImpl.prototype.options || FirebaseAppImpl.prototype.delete || console.log("dc");
-    var version$1 = "8.6.8";
-    function createFirebaseNamespaceCore(firebaseAppImpl) {
-      var apps = {};
-      var components = new Map();
-      var namespace = {
-        __esModule: true,
-        initializeApp,
-        app,
-        registerVersion,
-        setLogLevel: logger$1.setLogLevel,
-        onLog,
-        apps: null,
-        SDK_VERSION: version$1,
-        INTERNAL: {
-          registerComponent,
-          removeApp,
-          components,
-          useAsService
-        }
-      };
-      namespace["default"] = namespace;
-      Object.defineProperty(namespace, "apps", {
-        get: getApps
-      });
-      function removeApp(name2) {
-        delete apps[name2];
-      }
-      function app(name2) {
-        name2 = name2 || DEFAULT_ENTRY_NAME;
-        if (!util.contains(apps, name2)) {
-          throw ERROR_FACTORY.create("no-app", {appName: name2});
-        }
-        return apps[name2];
-      }
-      app["App"] = firebaseAppImpl;
-      function initializeApp(options2, rawConfig) {
-        if (rawConfig === void 0) {
-          rawConfig = {};
-        }
-        if (typeof rawConfig !== "object" || rawConfig === null) {
-          var name_1 = rawConfig;
-          rawConfig = {name: name_1};
-        }
-        var config = rawConfig;
-        if (config.name === void 0) {
-          config.name = DEFAULT_ENTRY_NAME;
-        }
-        var name2 = config.name;
-        if (typeof name2 !== "string" || !name2) {
-          throw ERROR_FACTORY.create("bad-app-name", {
-            appName: String(name2)
-          });
-        }
-        if (util.contains(apps, name2)) {
-          throw ERROR_FACTORY.create("duplicate-app", {appName: name2});
-        }
-        var app2 = new firebaseAppImpl(options2, config, namespace);
-        apps[name2] = app2;
-        return app2;
-      }
-      function getApps() {
-        return Object.keys(apps).map(function(name2) {
-          return apps[name2];
-        });
-      }
-      function registerComponent(component2) {
-        var componentName = component2.name;
-        if (components.has(componentName)) {
-          logger.debug("There were multiple attempts to register component " + componentName + ".");
-          return component2.type === "PUBLIC" ? namespace[componentName] : null;
-        }
-        components.set(componentName, component2);
-        if (component2.type === "PUBLIC") {
-          var serviceNamespace = function(appArg) {
-            if (appArg === void 0) {
-              appArg = app();
-            }
-            if (typeof appArg[componentName] !== "function") {
-              throw ERROR_FACTORY.create("invalid-app-argument", {
-                appName: componentName
-              });
-            }
-            return appArg[componentName]();
-          };
-          if (component2.serviceProps !== void 0) {
-            util.deepExtend(serviceNamespace, component2.serviceProps);
-          }
-          namespace[componentName] = serviceNamespace;
-          firebaseAppImpl.prototype[componentName] = function() {
-            var args = [];
-            for (var _i2 = 0; _i2 < arguments.length; _i2++) {
-              args[_i2] = arguments[_i2];
-            }
-            var serviceFxn = this._getService.bind(this, componentName);
-            return serviceFxn.apply(this, component2.multipleInstances ? args : []);
-          };
-        }
-        for (var _i = 0, _a2 = Object.keys(apps); _i < _a2.length; _i++) {
-          var appName = _a2[_i];
-          apps[appName]._addComponent(component2);
-        }
-        return component2.type === "PUBLIC" ? namespace[componentName] : null;
-      }
-      function registerVersion(libraryKeyOrName, version2, variant) {
-        var _a2;
-        var library = (_a2 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a2 !== void 0 ? _a2 : libraryKeyOrName;
-        if (variant) {
-          library += "-" + variant;
-        }
-        var libraryMismatch = library.match(/\s|\//);
-        var versionMismatch = version2.match(/\s|\//);
-        if (libraryMismatch || versionMismatch) {
-          var warning = [
-            'Unable to register library "' + library + '" with version "' + version2 + '":'
-          ];
-          if (libraryMismatch) {
-            warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
-          }
-          if (libraryMismatch && versionMismatch) {
-            warning.push("and");
-          }
-          if (versionMismatch) {
-            warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
-          }
-          logger.warn(warning.join(" "));
-          return;
-        }
-        registerComponent(new component.Component(library + "-version", function() {
-          return {library, version: version2};
-        }, "VERSION"));
-      }
-      function onLog(logCallback, options2) {
-        if (logCallback !== null && typeof logCallback !== "function") {
-          throw ERROR_FACTORY.create("invalid-log-argument");
-        }
-        logger$1.setUserLogHandler(logCallback, options2);
-      }
-      function useAsService(app2, name2) {
-        if (name2 === "serverAuth") {
-          return null;
-        }
-        var useService = name2;
-        return useService;
-      }
-      return namespace;
-    }
-    function createFirebaseNamespace() {
-      var namespace = createFirebaseNamespaceCore(FirebaseAppImpl);
-      namespace.INTERNAL = tslib.__assign(tslib.__assign({}, namespace.INTERNAL), {
-        createFirebaseNamespace,
-        extendNamespace,
-        createSubscribe: util.createSubscribe,
-        ErrorFactory: util.ErrorFactory,
-        deepExtend: util.deepExtend
-      });
-      function extendNamespace(props) {
-        util.deepExtend(namespace, props);
-      }
-      return namespace;
-    }
-    var firebase2 = createFirebaseNamespace();
-    var PlatformLoggerService = function() {
-      function PlatformLoggerService2(container) {
+    var util = require_index_node_cjs();
+    var PlatformLoggerServiceImpl = function() {
+      function PlatformLoggerServiceImpl2(container) {
         this.container = container;
       }
-      PlatformLoggerService2.prototype.getPlatformInfoString = function() {
+      PlatformLoggerServiceImpl2.prototype.getPlatformInfoString = function() {
         var providers = this.container.getProviders();
         return providers.map(function(provider) {
           if (isVersionServiceProvider(provider)) {
@@ -2829,8240 +2063,5491 @@ var require_index_node_cjs2 = __commonJS({
           return logString;
         }).join(" ");
       };
-      return PlatformLoggerService2;
+      return PlatformLoggerServiceImpl2;
     }();
     function isVersionServiceProvider(provider) {
       var component2 = provider.getComponent();
       return (component2 === null || component2 === void 0 ? void 0 : component2.type) === "VERSION";
     }
-    function registerCoreComponents(firebase3, variant) {
-      firebase3.INTERNAL.registerComponent(new component.Component("platform-logger", function(container) {
-        return new PlatformLoggerService(container);
-      }, "PRIVATE"));
-      firebase3.registerVersion(name, version, variant);
-      firebase3.registerVersion("fire-js", "");
+    var name = "@firebase/app-exp";
+    var version = "0.0.900-exp.d92a36260";
+    var logger = new logger$1.Logger("@firebase/app");
+    var name$1 = "@firebase/app-compat";
+    var name$2 = "@firebase/analytics-compat";
+    var name$3 = "@firebase/analytics-exp";
+    var name$4 = "@firebase/auth-exp";
+    var name$5 = "@firebase/auth-compat";
+    var name$6 = "@firebase/database";
+    var name$7 = "@firebase/database-compat";
+    var name$8 = "@firebase/functions-exp";
+    var name$9 = "@firebase/functions-compat";
+    var name$a = "@firebase/installations-exp";
+    var name$b = "@firebase/installations-compat";
+    var name$c = "@firebase/messaging-exp";
+    var name$d = "@firebase/messaging-compat";
+    var name$e = "@firebase/performance-exp";
+    var name$f = "@firebase/performance-compat";
+    var name$g = "@firebase/remote-config-exp";
+    var name$h = "@firebase/remote-config-compat";
+    var name$i = "@firebase/storage";
+    var name$j = "@firebase/storage-compat";
+    var name$k = "@firebase/firestore";
+    var name$l = "@firebase/firestore-compat";
+    var name$m = "firebase-exp";
+    var version$1 = "9.0.0-beta.2";
+    var _a;
+    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
+    var PLATFORM_LOG_STRING = (_a = {}, _a[name] = "fire-core", _a[name$1] = "fire-core-compat", _a[name$3] = "fire-analytics", _a[name$2] = "fire-analytics-compat", _a[name$4] = "fire-auth", _a[name$5] = "fire-auth-compat", _a[name$6] = "fire-rtdb", _a[name$7] = "fire-rtdb-compat", _a[name$8] = "fire-fn", _a[name$9] = "fire-fn-compat", _a[name$a] = "fire-iid", _a[name$b] = "fire-iid-compat", _a[name$c] = "fire-fcm", _a[name$d] = "fire-fcm-compat", _a[name$e] = "fire-perf", _a[name$f] = "fire-perf-compat", _a[name$g] = "fire-rc", _a[name$h] = "fire-rc-compat", _a[name$i] = "fire-gcs", _a[name$j] = "fire-gcs-compat", _a[name$k] = "fire-fst", _a[name$l] = "fire-fst-compat", _a["fire-js"] = "fire-js", _a[name$m] = "fire-js-all", _a);
+    var _apps = new Map();
+    var _components = new Map();
+    function _addComponent(app, component2) {
+      try {
+        app.container.addComponent(component2);
+      } catch (e) {
+        logger.debug("Component " + component2.name + " failed to register with FirebaseApp " + app.name, e);
+      }
     }
-    firebase2.INTERNAL.extendNamespace({
-      INTERNAL: {
-        node: {
-          localStorage: new Storage__default["default"](null, {strict: true}),
-          sessionStorage: new Storage__default["default"](null, {strict: true}),
-          XMLHttpRequest: xmlhttprequest.XMLHttpRequest
+    function _addOrOverwriteComponent(app, component2) {
+      app.container.addOrOverwriteComponent(component2);
+    }
+    function _registerComponent(component2) {
+      var e_1, _a2;
+      var componentName = component2.name;
+      if (_components.has(componentName)) {
+        logger.debug("There were multiple attempts to register component " + componentName + ".");
+        return false;
+      }
+      _components.set(componentName, component2);
+      try {
+        for (var _b = tslib.__values(_apps.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
+          var app = _c.value;
+          _addComponent(app, component2);
+        }
+      } catch (e_1_1) {
+        e_1 = {error: e_1_1};
+      } finally {
+        try {
+          if (_c && !_c.done && (_a2 = _b.return))
+            _a2.call(_b);
+        } finally {
+          if (e_1)
+            throw e_1.error;
         }
       }
-    });
-    var firebase$1 = firebase2;
-    registerCoreComponents(firebase$1, "node");
-    exports2.default = firebase$1;
-    exports2.firebase = firebase$1;
+      return true;
+    }
+    function _getProvider(app, name2) {
+      return app.container.getProvider(name2);
+    }
+    function _removeServiceInstance(app, name2, instanceIdentifier) {
+      if (instanceIdentifier === void 0) {
+        instanceIdentifier = DEFAULT_ENTRY_NAME;
+      }
+      _getProvider(app, name2).clearInstance(instanceIdentifier);
+    }
+    function _clearComponents() {
+      _components.clear();
+    }
+    var _a$1;
+    var ERRORS = (_a$1 = {}, _a$1["no-app"] = "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()", _a$1["bad-app-name"] = "Illegal App name: '{$appName}", _a$1["duplicate-app"] = "Firebase App named '{$appName}' already exists", _a$1["app-deleted"] = "Firebase App named '{$appName}' already deleted", _a$1["invalid-app-argument"] = "firebase.{$appName}() takes either no argument or a Firebase App instance.", _a$1["invalid-log-argument"] = "First argument to `onLog` must be null or a function.", _a$1);
+    var ERROR_FACTORY = new util.ErrorFactory("app", "Firebase", ERRORS);
+    var FirebaseAppImpl = function() {
+      function FirebaseAppImpl2(options2, config, container) {
+        var _this = this;
+        this._isDeleted = false;
+        this._options = tslib.__assign({}, options2);
+        this._name = config.name;
+        this._automaticDataCollectionEnabled = config.automaticDataCollectionEnabled;
+        this._container = container;
+        this.container.addComponent(new component.Component("app-exp", function() {
+          return _this;
+        }, "PUBLIC"));
+      }
+      Object.defineProperty(FirebaseAppImpl2.prototype, "automaticDataCollectionEnabled", {
+        get: function() {
+          this.checkDestroyed();
+          return this._automaticDataCollectionEnabled;
+        },
+        set: function(val) {
+          this.checkDestroyed();
+          this._automaticDataCollectionEnabled = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "name", {
+        get: function() {
+          this.checkDestroyed();
+          return this._name;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "options", {
+        get: function() {
+          this.checkDestroyed();
+          return this._options;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "container", {
+        get: function() {
+          return this._container;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "isDeleted", {
+        get: function() {
+          return this._isDeleted;
+        },
+        set: function(val) {
+          this._isDeleted = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      FirebaseAppImpl2.prototype.checkDestroyed = function() {
+        if (this.isDeleted) {
+          throw ERROR_FACTORY.create("app-deleted", {appName: this._name});
+        }
+      };
+      return FirebaseAppImpl2;
+    }();
+    var SDK_VERSION = version$1;
+    function initializeApp2(options2, rawConfig) {
+      var e_1, _a2;
+      if (rawConfig === void 0) {
+        rawConfig = {};
+      }
+      if (typeof rawConfig !== "object") {
+        var name_1 = rawConfig;
+        rawConfig = {name: name_1};
+      }
+      var config = tslib.__assign({name: DEFAULT_ENTRY_NAME, automaticDataCollectionEnabled: false}, rawConfig);
+      var name2 = config.name;
+      if (typeof name2 !== "string" || !name2) {
+        throw ERROR_FACTORY.create("bad-app-name", {
+          appName: String(name2)
+        });
+      }
+      if (_apps.has(name2)) {
+        throw ERROR_FACTORY.create("duplicate-app", {appName: name2});
+      }
+      var container = new component.ComponentContainer(name2);
+      try {
+        for (var _b = tslib.__values(_components.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
+          var component$1 = _c.value;
+          container.addComponent(component$1);
+        }
+      } catch (e_1_1) {
+        e_1 = {error: e_1_1};
+      } finally {
+        try {
+          if (_c && !_c.done && (_a2 = _b.return))
+            _a2.call(_b);
+        } finally {
+          if (e_1)
+            throw e_1.error;
+        }
+      }
+      var newApp = new FirebaseAppImpl(options2, config, container);
+      _apps.set(name2, newApp);
+      return newApp;
+    }
+    function getApp2(name2) {
+      if (name2 === void 0) {
+        name2 = DEFAULT_ENTRY_NAME;
+      }
+      var app = _apps.get(name2);
+      if (!app) {
+        throw ERROR_FACTORY.create("no-app", {appName: name2});
+      }
+      return app;
+    }
+    function getApps2() {
+      return Array.from(_apps.values());
+    }
+    function deleteApp(app) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var name2;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              name2 = app.name;
+              if (!_apps.has(name2))
+                return [3, 2];
+              _apps.delete(name2);
+              return [4, Promise.all(app.container.getProviders().map(function(provider) {
+                return provider.delete();
+              }))];
+            case 1:
+              _a2.sent();
+              app.isDeleted = true;
+              _a2.label = 2;
+            case 2:
+              return [2];
+          }
+        });
+      });
+    }
+    function registerVersion(libraryKeyOrName, version2, variant) {
+      var _a2;
+      var library = (_a2 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a2 !== void 0 ? _a2 : libraryKeyOrName;
+      if (variant) {
+        library += "-" + variant;
+      }
+      var libraryMismatch = library.match(/\s|\//);
+      var versionMismatch = version2.match(/\s|\//);
+      if (libraryMismatch || versionMismatch) {
+        var warning = [
+          'Unable to register library "' + library + '" with version "' + version2 + '":'
+        ];
+        if (libraryMismatch) {
+          warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
+        }
+        if (libraryMismatch && versionMismatch) {
+          warning.push("and");
+        }
+        if (versionMismatch) {
+          warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
+        }
+        logger.warn(warning.join(" "));
+        return;
+      }
+      _registerComponent(new component.Component(library + "-version", function() {
+        return {library, version: version2};
+      }, "VERSION"));
+    }
+    function onLog(logCallback, options2) {
+      if (logCallback !== null && typeof logCallback !== "function") {
+        throw ERROR_FACTORY.create("invalid-log-argument");
+      }
+      logger$1.setUserLogHandler(logCallback, options2);
+    }
+    function setLogLevel(logLevel) {
+      logger$1.setLogLevel(logLevel);
+    }
+    function registerCoreComponents(variant) {
+      _registerComponent(new component.Component("platform-logger", function(container) {
+        return new PlatformLoggerServiceImpl(container);
+      }, "PRIVATE"));
+      registerVersion(name, version, variant);
+      registerVersion("fire-js", "");
+    }
+    registerCoreComponents();
+    exports2.SDK_VERSION = SDK_VERSION;
+    exports2._DEFAULT_ENTRY_NAME = DEFAULT_ENTRY_NAME;
+    exports2._addComponent = _addComponent;
+    exports2._addOrOverwriteComponent = _addOrOverwriteComponent;
+    exports2._apps = _apps;
+    exports2._clearComponents = _clearComponents;
+    exports2._components = _components;
+    exports2._getProvider = _getProvider;
+    exports2._registerComponent = _registerComponent;
+    exports2._removeServiceInstance = _removeServiceInstance;
+    exports2.deleteApp = deleteApp;
+    exports2.getApp = getApp2;
+    exports2.getApps = getApps2;
+    exports2.initializeApp = initializeApp2;
+    exports2.onLog = onLog;
+    exports2.registerVersion = registerVersion;
+    exports2.setLogLevel = setLogLevel;
   }
 });
 
-// node_modules/firebase/app/dist/index.cjs.js
-var require_index_cjs3 = __commonJS({
-  "node_modules/firebase/app/dist/index.cjs.js"(exports2, module2) {
+// node_modules/node-fetch/lib/index.js
+var require_lib = __commonJS({
+  "node_modules/node-fetch/lib/index.js"(exports2, module2) {
     "use strict";
-    var firebase2 = require_index_node_cjs2();
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    function _interopDefault(ex) {
+      return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
+    }
+    var Stream2 = _interopDefault(require("stream"));
+    var http2 = _interopDefault(require("http"));
+    var Url = _interopDefault(require("url"));
+    var https2 = _interopDefault(require("https"));
+    var zlib2 = _interopDefault(require("zlib"));
+    var Readable2 = Stream2.Readable;
+    var BUFFER = Symbol("buffer");
+    var TYPE = Symbol("type");
+    var Blob2 = class {
+      constructor() {
+        this[TYPE] = "";
+        const blobParts = arguments[0];
+        const options2 = arguments[1];
+        const buffers = [];
+        let size = 0;
+        if (blobParts) {
+          const a = blobParts;
+          const length = Number(a.length);
+          for (let i = 0; i < length; i++) {
+            const element = a[i];
+            let buffer;
+            if (element instanceof Buffer) {
+              buffer = element;
+            } else if (ArrayBuffer.isView(element)) {
+              buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
+            } else if (element instanceof ArrayBuffer) {
+              buffer = Buffer.from(element);
+            } else if (element instanceof Blob2) {
+              buffer = element[BUFFER];
+            } else {
+              buffer = Buffer.from(typeof element === "string" ? element : String(element));
+            }
+            size += buffer.length;
+            buffers.push(buffer);
+          }
+        }
+        this[BUFFER] = Buffer.concat(buffers);
+        let type = options2 && options2.type !== void 0 && String(options2.type).toLowerCase();
+        if (type && !/[^\u0020-\u007E]/.test(type)) {
+          this[TYPE] = type;
+        }
+      }
+      get size() {
+        return this[BUFFER].length;
+      }
+      get type() {
+        return this[TYPE];
+      }
+      text() {
+        return Promise.resolve(this[BUFFER].toString());
+      }
+      arrayBuffer() {
+        const buf = this[BUFFER];
+        const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        return Promise.resolve(ab);
+      }
+      stream() {
+        const readable = new Readable2();
+        readable._read = function() {
+        };
+        readable.push(this[BUFFER]);
+        readable.push(null);
+        return readable;
+      }
+      toString() {
+        return "[object Blob]";
+      }
+      slice() {
+        const size = this.size;
+        const start = arguments[0];
+        const end = arguments[1];
+        let relativeStart, relativeEnd;
+        if (start === void 0) {
+          relativeStart = 0;
+        } else if (start < 0) {
+          relativeStart = Math.max(size + start, 0);
+        } else {
+          relativeStart = Math.min(start, size);
+        }
+        if (end === void 0) {
+          relativeEnd = size;
+        } else if (end < 0) {
+          relativeEnd = Math.max(size + end, 0);
+        } else {
+          relativeEnd = Math.min(end, size);
+        }
+        const span = Math.max(relativeEnd - relativeStart, 0);
+        const buffer = this[BUFFER];
+        const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
+        const blob = new Blob2([], {type: arguments[2]});
+        blob[BUFFER] = slicedBuffer;
+        return blob;
+      }
+    };
+    Object.defineProperties(Blob2.prototype, {
+      size: {enumerable: true},
+      type: {enumerable: true},
+      slice: {enumerable: true}
+    });
+    Object.defineProperty(Blob2.prototype, Symbol.toStringTag, {
+      value: "Blob",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    function FetchError2(message, type, systemError) {
+      Error.call(this, message);
+      this.message = message;
+      this.type = type;
+      if (systemError) {
+        this.code = this.errno = systemError.code;
+      }
+      Error.captureStackTrace(this, this.constructor);
+    }
+    FetchError2.prototype = Object.create(Error.prototype);
+    FetchError2.prototype.constructor = FetchError2;
+    FetchError2.prototype.name = "FetchError";
+    var convert;
+    try {
+      convert = require("encoding").convert;
+    } catch (e) {
+    }
+    var INTERNALS2 = Symbol("Body internals");
+    var PassThrough2 = Stream2.PassThrough;
+    function Body2(body) {
+      var _this = this;
+      var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
+      let size = _ref$size === void 0 ? 0 : _ref$size;
+      var _ref$timeout = _ref.timeout;
+      let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
+      if (body == null) {
+        body = null;
+      } else if (isURLSearchParams(body)) {
+        body = Buffer.from(body.toString());
+      } else if (isBlob2(body))
+        ;
+      else if (Buffer.isBuffer(body))
+        ;
+      else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+        body = Buffer.from(body);
+      } else if (ArrayBuffer.isView(body)) {
+        body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
+      } else if (body instanceof Stream2)
+        ;
+      else {
+        body = Buffer.from(String(body));
+      }
+      this[INTERNALS2] = {
+        body,
+        disturbed: false,
+        error: null
+      };
+      this.size = size;
+      this.timeout = timeout;
+      if (body instanceof Stream2) {
+        body.on("error", function(err) {
+          const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+          _this[INTERNALS2].error = error3;
+        });
+      }
+    }
+    Body2.prototype = {
+      get body() {
+        return this[INTERNALS2].body;
+      },
+      get bodyUsed() {
+        return this[INTERNALS2].disturbed;
+      },
+      arrayBuffer() {
+        return consumeBody2.call(this).then(function(buf) {
+          return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        });
+      },
+      blob() {
+        let ct = this.headers && this.headers.get("content-type") || "";
+        return consumeBody2.call(this).then(function(buf) {
+          return Object.assign(new Blob2([], {
+            type: ct.toLowerCase()
+          }), {
+            [BUFFER]: buf
+          });
+        });
+      },
+      json() {
+        var _this2 = this;
+        return consumeBody2.call(this).then(function(buffer) {
+          try {
+            return JSON.parse(buffer.toString());
+          } catch (err) {
+            return Body2.Promise.reject(new FetchError2(`invalid json response body at ${_this2.url} reason: ${err.message}`, "invalid-json"));
+          }
+        });
+      },
+      text() {
+        return consumeBody2.call(this).then(function(buffer) {
+          return buffer.toString();
+        });
+      },
+      buffer() {
+        return consumeBody2.call(this);
+      },
+      textConverted() {
+        var _this3 = this;
+        return consumeBody2.call(this).then(function(buffer) {
+          return convertBody(buffer, _this3.headers);
+        });
+      }
+    };
+    Object.defineProperties(Body2.prototype, {
+      body: {enumerable: true},
+      bodyUsed: {enumerable: true},
+      arrayBuffer: {enumerable: true},
+      blob: {enumerable: true},
+      json: {enumerable: true},
+      text: {enumerable: true}
+    });
+    Body2.mixIn = function(proto) {
+      for (const name of Object.getOwnPropertyNames(Body2.prototype)) {
+        if (!(name in proto)) {
+          const desc = Object.getOwnPropertyDescriptor(Body2.prototype, name);
+          Object.defineProperty(proto, name, desc);
+        }
+      }
+    };
+    function consumeBody2() {
+      var _this4 = this;
+      if (this[INTERNALS2].disturbed) {
+        return Body2.Promise.reject(new TypeError(`body used already for: ${this.url}`));
+      }
+      this[INTERNALS2].disturbed = true;
+      if (this[INTERNALS2].error) {
+        return Body2.Promise.reject(this[INTERNALS2].error);
+      }
+      let body = this.body;
+      if (body === null) {
+        return Body2.Promise.resolve(Buffer.alloc(0));
+      }
+      if (isBlob2(body)) {
+        body = body.stream();
+      }
+      if (Buffer.isBuffer(body)) {
+        return Body2.Promise.resolve(body);
+      }
+      if (!(body instanceof Stream2)) {
+        return Body2.Promise.resolve(Buffer.alloc(0));
+      }
+      let accum = [];
+      let accumBytes = 0;
+      let abort = false;
+      return new Body2.Promise(function(resolve2, reject) {
+        let resTimeout;
+        if (_this4.timeout) {
+          resTimeout = setTimeout(function() {
+            abort = true;
+            reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+          }, _this4.timeout);
+        }
+        body.on("error", function(err) {
+          if (err.name === "AbortError") {
+            abort = true;
+            reject(err);
+          } else {
+            reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+          }
+        });
+        body.on("data", function(chunk) {
+          if (abort || chunk === null) {
+            return;
+          }
+          if (_this4.size && accumBytes + chunk.length > _this4.size) {
+            abort = true;
+            reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+            return;
+          }
+          accumBytes += chunk.length;
+          accum.push(chunk);
+        });
+        body.on("end", function() {
+          if (abort) {
+            return;
+          }
+          clearTimeout(resTimeout);
+          try {
+            resolve2(Buffer.concat(accum, accumBytes));
+          } catch (err) {
+            reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+          }
+        });
+      });
+    }
+    function convertBody(buffer, headers) {
+      if (typeof convert !== "function") {
+        throw new Error("The package `encoding` must be installed to use the textConverted() function");
+      }
+      const ct = headers.get("content-type");
+      let charset = "utf-8";
+      let res, str;
+      if (ct) {
+        res = /charset=([^;]*)/i.exec(ct);
+      }
+      str = buffer.slice(0, 1024).toString();
+      if (!res && str) {
+        res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
+      }
+      if (!res && str) {
+        res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+        if (!res) {
+          res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+          if (res) {
+            res.pop();
+          }
+        }
+        if (res) {
+          res = /charset=(.*)/i.exec(res.pop());
+        }
+      }
+      if (!res && str) {
+        res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
+      }
+      if (res) {
+        charset = res.pop();
+        if (charset === "gb2312" || charset === "gbk") {
+          charset = "gb18030";
+        }
+      }
+      return convert(buffer, "UTF-8", charset).toString();
+    }
+    function isURLSearchParams(obj) {
+      if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
+        return false;
+      }
+      return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
+    }
+    function isBlob2(obj) {
+      return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
+    }
+    function clone2(instance) {
+      let p1, p2;
+      let body = instance.body;
+      if (instance.bodyUsed) {
+        throw new Error("cannot clone body after it is used");
+      }
+      if (body instanceof Stream2 && typeof body.getBoundary !== "function") {
+        p1 = new PassThrough2();
+        p2 = new PassThrough2();
+        body.pipe(p1);
+        body.pipe(p2);
+        instance[INTERNALS2].body = p1;
+        body = p2;
+      }
+      return body;
+    }
+    function extractContentType2(body) {
+      if (body === null) {
+        return null;
+      } else if (typeof body === "string") {
+        return "text/plain;charset=UTF-8";
+      } else if (isURLSearchParams(body)) {
+        return "application/x-www-form-urlencoded;charset=UTF-8";
+      } else if (isBlob2(body)) {
+        return body.type || null;
+      } else if (Buffer.isBuffer(body)) {
+        return null;
+      } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+        return null;
+      } else if (ArrayBuffer.isView(body)) {
+        return null;
+      } else if (typeof body.getBoundary === "function") {
+        return `multipart/form-data;boundary=${body.getBoundary()}`;
+      } else if (body instanceof Stream2) {
+        return null;
+      } else {
+        return "text/plain;charset=UTF-8";
+      }
+    }
+    function getTotalBytes2(instance) {
+      const body = instance.body;
+      if (body === null) {
+        return 0;
+      } else if (isBlob2(body)) {
+        return body.size;
+      } else if (Buffer.isBuffer(body)) {
+        return body.length;
+      } else if (body && typeof body.getLengthSync === "function") {
+        if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
+          return body.getLengthSync();
+        }
+        return null;
+      } else {
+        return null;
+      }
+    }
+    function writeToStream2(dest, instance) {
+      const body = instance.body;
+      if (body === null) {
+        dest.end();
+      } else if (isBlob2(body)) {
+        body.stream().pipe(dest);
+      } else if (Buffer.isBuffer(body)) {
+        dest.write(body);
+        dest.end();
+      } else {
+        body.pipe(dest);
+      }
+    }
+    Body2.Promise = global.Promise;
+    var invalidTokenRegex = /[^\^_`a-zA-Z\-0-9!#$%&'*+.|~]/;
+    var invalidHeaderCharRegex = /[^\t\x20-\x7e\x80-\xff]/;
+    function validateName(name) {
+      name = `${name}`;
+      if (invalidTokenRegex.test(name) || name === "") {
+        throw new TypeError(`${name} is not a legal HTTP header name`);
+      }
+    }
+    function validateValue(value) {
+      value = `${value}`;
+      if (invalidHeaderCharRegex.test(value)) {
+        throw new TypeError(`${value} is not a legal HTTP header value`);
+      }
+    }
+    function find(map, name) {
+      name = name.toLowerCase();
+      for (const key in map) {
+        if (key.toLowerCase() === name) {
+          return key;
+        }
+      }
+      return void 0;
+    }
+    var MAP = Symbol("map");
+    var Headers2 = class {
+      constructor() {
+        let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
+        this[MAP] = Object.create(null);
+        if (init2 instanceof Headers2) {
+          const rawHeaders = init2.raw();
+          const headerNames = Object.keys(rawHeaders);
+          for (const headerName of headerNames) {
+            for (const value of rawHeaders[headerName]) {
+              this.append(headerName, value);
+            }
+          }
+          return;
+        }
+        if (init2 == null)
+          ;
+        else if (typeof init2 === "object") {
+          const method = init2[Symbol.iterator];
+          if (method != null) {
+            if (typeof method !== "function") {
+              throw new TypeError("Header pairs must be iterable");
+            }
+            const pairs = [];
+            for (const pair of init2) {
+              if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") {
+                throw new TypeError("Each header pair must be iterable");
+              }
+              pairs.push(Array.from(pair));
+            }
+            for (const pair of pairs) {
+              if (pair.length !== 2) {
+                throw new TypeError("Each header pair must be a name/value tuple");
+              }
+              this.append(pair[0], pair[1]);
+            }
+          } else {
+            for (const key of Object.keys(init2)) {
+              const value = init2[key];
+              this.append(key, value);
+            }
+          }
+        } else {
+          throw new TypeError("Provided initializer must be an object");
+        }
+      }
+      get(name) {
+        name = `${name}`;
+        validateName(name);
+        const key = find(this[MAP], name);
+        if (key === void 0) {
+          return null;
+        }
+        return this[MAP][key].join(", ");
+      }
+      forEach(callback) {
+        let thisArg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
+        let pairs = getHeaders(this);
+        let i = 0;
+        while (i < pairs.length) {
+          var _pairs$i = pairs[i];
+          const name = _pairs$i[0], value = _pairs$i[1];
+          callback.call(thisArg, value, name, this);
+          pairs = getHeaders(this);
+          i++;
+        }
+      }
+      set(name, value) {
+        name = `${name}`;
+        value = `${value}`;
+        validateName(name);
+        validateValue(value);
+        const key = find(this[MAP], name);
+        this[MAP][key !== void 0 ? key : name] = [value];
+      }
+      append(name, value) {
+        name = `${name}`;
+        value = `${value}`;
+        validateName(name);
+        validateValue(value);
+        const key = find(this[MAP], name);
+        if (key !== void 0) {
+          this[MAP][key].push(value);
+        } else {
+          this[MAP][name] = [value];
+        }
+      }
+      has(name) {
+        name = `${name}`;
+        validateName(name);
+        return find(this[MAP], name) !== void 0;
+      }
+      delete(name) {
+        name = `${name}`;
+        validateName(name);
+        const key = find(this[MAP], name);
+        if (key !== void 0) {
+          delete this[MAP][key];
+        }
+      }
+      raw() {
+        return this[MAP];
+      }
+      keys() {
+        return createHeadersIterator(this, "key");
+      }
+      values() {
+        return createHeadersIterator(this, "value");
+      }
+      [Symbol.iterator]() {
+        return createHeadersIterator(this, "key+value");
+      }
+    };
+    Headers2.prototype.entries = Headers2.prototype[Symbol.iterator];
+    Object.defineProperty(Headers2.prototype, Symbol.toStringTag, {
+      value: "Headers",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Headers2.prototype, {
+      get: {enumerable: true},
+      forEach: {enumerable: true},
+      set: {enumerable: true},
+      append: {enumerable: true},
+      has: {enumerable: true},
+      delete: {enumerable: true},
+      keys: {enumerable: true},
+      values: {enumerable: true},
+      entries: {enumerable: true}
+    });
+    function getHeaders(headers) {
+      let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
+      const keys = Object.keys(headers[MAP]).sort();
+      return keys.map(kind === "key" ? function(k) {
+        return k.toLowerCase();
+      } : kind === "value" ? function(k) {
+        return headers[MAP][k].join(", ");
+      } : function(k) {
+        return [k.toLowerCase(), headers[MAP][k].join(", ")];
+      });
+    }
+    var INTERNAL = Symbol("internal");
+    function createHeadersIterator(target, kind) {
+      const iterator = Object.create(HeadersIteratorPrototype);
+      iterator[INTERNAL] = {
+        target,
+        kind,
+        index: 0
+      };
+      return iterator;
+    }
+    var HeadersIteratorPrototype = Object.setPrototypeOf({
+      next() {
+        if (!this || Object.getPrototypeOf(this) !== HeadersIteratorPrototype) {
+          throw new TypeError("Value of `this` is not a HeadersIterator");
+        }
+        var _INTERNAL = this[INTERNAL];
+        const target = _INTERNAL.target, kind = _INTERNAL.kind, index2 = _INTERNAL.index;
+        const values = getHeaders(target, kind);
+        const len = values.length;
+        if (index2 >= len) {
+          return {
+            value: void 0,
+            done: true
+          };
+        }
+        this[INTERNAL].index = index2 + 1;
+        return {
+          value: values[index2],
+          done: false
+        };
+      }
+    }, Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]())));
+    Object.defineProperty(HeadersIteratorPrototype, Symbol.toStringTag, {
+      value: "HeadersIterator",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    function exportNodeCompatibleHeaders(headers) {
+      const obj = Object.assign({__proto__: null}, headers[MAP]);
+      const hostHeaderKey = find(headers[MAP], "Host");
+      if (hostHeaderKey !== void 0) {
+        obj[hostHeaderKey] = obj[hostHeaderKey][0];
+      }
+      return obj;
+    }
+    function createHeadersLenient(obj) {
+      const headers = new Headers2();
+      for (const name of Object.keys(obj)) {
+        if (invalidTokenRegex.test(name)) {
+          continue;
+        }
+        if (Array.isArray(obj[name])) {
+          for (const val of obj[name]) {
+            if (invalidHeaderCharRegex.test(val)) {
+              continue;
+            }
+            if (headers[MAP][name] === void 0) {
+              headers[MAP][name] = [val];
+            } else {
+              headers[MAP][name].push(val);
+            }
+          }
+        } else if (!invalidHeaderCharRegex.test(obj[name])) {
+          headers[MAP][name] = [obj[name]];
+        }
+      }
+      return headers;
+    }
+    var INTERNALS$12 = Symbol("Response internals");
+    var STATUS_CODES = http2.STATUS_CODES;
+    var Response3 = class {
+      constructor() {
+        let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+        let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        Body2.call(this, body, opts);
+        const status = opts.status || 200;
+        const headers = new Headers2(opts.headers);
+        if (body != null && !headers.has("Content-Type")) {
+          const contentType = extractContentType2(body);
+          if (contentType) {
+            headers.append("Content-Type", contentType);
+          }
+        }
+        this[INTERNALS$12] = {
+          url: opts.url,
+          status,
+          statusText: opts.statusText || STATUS_CODES[status],
+          headers,
+          counter: opts.counter
+        };
+      }
+      get url() {
+        return this[INTERNALS$12].url || "";
+      }
+      get status() {
+        return this[INTERNALS$12].status;
+      }
+      get ok() {
+        return this[INTERNALS$12].status >= 200 && this[INTERNALS$12].status < 300;
+      }
+      get redirected() {
+        return this[INTERNALS$12].counter > 0;
+      }
+      get statusText() {
+        return this[INTERNALS$12].statusText;
+      }
+      get headers() {
+        return this[INTERNALS$12].headers;
+      }
+      clone() {
+        return new Response3(clone2(this), {
+          url: this.url,
+          status: this.status,
+          statusText: this.statusText,
+          headers: this.headers,
+          ok: this.ok,
+          redirected: this.redirected
+        });
+      }
+    };
+    Body2.mixIn(Response3.prototype);
+    Object.defineProperties(Response3.prototype, {
+      url: {enumerable: true},
+      status: {enumerable: true},
+      ok: {enumerable: true},
+      redirected: {enumerable: true},
+      statusText: {enumerable: true},
+      headers: {enumerable: true},
+      clone: {enumerable: true}
+    });
+    Object.defineProperty(Response3.prototype, Symbol.toStringTag, {
+      value: "Response",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    var INTERNALS$22 = Symbol("Request internals");
+    var parse_url = Url.parse;
+    var format_url = Url.format;
+    var streamDestructionSupported = "destroy" in Stream2.Readable.prototype;
+    function isRequest2(input) {
+      return typeof input === "object" && typeof input[INTERNALS$22] === "object";
+    }
+    function isAbortSignal2(signal) {
+      const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
+      return !!(proto && proto.constructor.name === "AbortSignal");
+    }
+    var Request2 = class {
+      constructor(input) {
+        let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        let parsedURL;
+        if (!isRequest2(input)) {
+          if (input && input.href) {
+            parsedURL = parse_url(input.href);
+          } else {
+            parsedURL = parse_url(`${input}`);
+          }
+          input = {};
+        } else {
+          parsedURL = parse_url(input.url);
+        }
+        let method = init2.method || input.method || "GET";
+        method = method.toUpperCase();
+        if ((init2.body != null || isRequest2(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
+          throw new TypeError("Request with GET/HEAD method cannot have body");
+        }
+        let inputBody = init2.body != null ? init2.body : isRequest2(input) && input.body !== null ? clone2(input) : null;
+        Body2.call(this, inputBody, {
+          timeout: init2.timeout || input.timeout || 0,
+          size: init2.size || input.size || 0
+        });
+        const headers = new Headers2(init2.headers || input.headers || {});
+        if (inputBody != null && !headers.has("Content-Type")) {
+          const contentType = extractContentType2(inputBody);
+          if (contentType) {
+            headers.append("Content-Type", contentType);
+          }
+        }
+        let signal = isRequest2(input) ? input.signal : null;
+        if ("signal" in init2)
+          signal = init2.signal;
+        if (signal != null && !isAbortSignal2(signal)) {
+          throw new TypeError("Expected signal to be an instanceof AbortSignal");
+        }
+        this[INTERNALS$22] = {
+          method,
+          redirect: init2.redirect || input.redirect || "follow",
+          headers,
+          parsedURL,
+          signal
+        };
+        this.follow = init2.follow !== void 0 ? init2.follow : input.follow !== void 0 ? input.follow : 20;
+        this.compress = init2.compress !== void 0 ? init2.compress : input.compress !== void 0 ? input.compress : true;
+        this.counter = init2.counter || input.counter || 0;
+        this.agent = init2.agent || input.agent;
+      }
+      get method() {
+        return this[INTERNALS$22].method;
+      }
+      get url() {
+        return format_url(this[INTERNALS$22].parsedURL);
+      }
+      get headers() {
+        return this[INTERNALS$22].headers;
+      }
+      get redirect() {
+        return this[INTERNALS$22].redirect;
+      }
+      get signal() {
+        return this[INTERNALS$22].signal;
+      }
+      clone() {
+        return new Request2(this);
+      }
+    };
+    Body2.mixIn(Request2.prototype);
+    Object.defineProperty(Request2.prototype, Symbol.toStringTag, {
+      value: "Request",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Request2.prototype, {
+      method: {enumerable: true},
+      url: {enumerable: true},
+      headers: {enumerable: true},
+      redirect: {enumerable: true},
+      clone: {enumerable: true},
+      signal: {enumerable: true}
+    });
+    function getNodeRequestOptions2(request) {
+      const parsedURL = request[INTERNALS$22].parsedURL;
+      const headers = new Headers2(request[INTERNALS$22].headers);
+      if (!headers.has("Accept")) {
+        headers.set("Accept", "*/*");
+      }
+      if (!parsedURL.protocol || !parsedURL.hostname) {
+        throw new TypeError("Only absolute URLs are supported");
+      }
+      if (!/^https?:$/.test(parsedURL.protocol)) {
+        throw new TypeError("Only HTTP(S) protocols are supported");
+      }
+      if (request.signal && request.body instanceof Stream2.Readable && !streamDestructionSupported) {
+        throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
+      }
+      let contentLengthValue = null;
+      if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
+        contentLengthValue = "0";
+      }
+      if (request.body != null) {
+        const totalBytes = getTotalBytes2(request);
+        if (typeof totalBytes === "number") {
+          contentLengthValue = String(totalBytes);
+        }
+      }
+      if (contentLengthValue) {
+        headers.set("Content-Length", contentLengthValue);
+      }
+      if (!headers.has("User-Agent")) {
+        headers.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
+      }
+      if (request.compress && !headers.has("Accept-Encoding")) {
+        headers.set("Accept-Encoding", "gzip,deflate");
+      }
+      let agent = request.agent;
+      if (typeof agent === "function") {
+        agent = agent(parsedURL);
+      }
+      if (!headers.has("Connection") && !agent) {
+        headers.set("Connection", "close");
+      }
+      return Object.assign({}, parsedURL, {
+        method: request.method,
+        headers: exportNodeCompatibleHeaders(headers),
+        agent
+      });
+    }
+    function AbortError2(message) {
+      Error.call(this, message);
+      this.type = "aborted";
+      this.message = message;
+      Error.captureStackTrace(this, this.constructor);
+    }
+    AbortError2.prototype = Object.create(Error.prototype);
+    AbortError2.prototype.constructor = AbortError2;
+    AbortError2.prototype.name = "AbortError";
+    var PassThrough$1 = Stream2.PassThrough;
+    var resolve_url = Url.resolve;
+    function fetch3(url, opts) {
+      if (!fetch3.Promise) {
+        throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
+      }
+      Body2.Promise = fetch3.Promise;
+      return new fetch3.Promise(function(resolve2, reject) {
+        const request = new Request2(url, opts);
+        const options2 = getNodeRequestOptions2(request);
+        const send = (options2.protocol === "https:" ? https2 : http2).request;
+        const signal = request.signal;
+        let response = null;
+        const abort = function abort2() {
+          let error3 = new AbortError2("The user aborted a request.");
+          reject(error3);
+          if (request.body && request.body instanceof Stream2.Readable) {
+            request.body.destroy(error3);
+          }
+          if (!response || !response.body)
+            return;
+          response.body.emit("error", error3);
+        };
+        if (signal && signal.aborted) {
+          abort();
+          return;
+        }
+        const abortAndFinalize = function abortAndFinalize2() {
+          abort();
+          finalize();
+        };
+        const req = send(options2);
+        let reqTimeout;
+        if (signal) {
+          signal.addEventListener("abort", abortAndFinalize);
+        }
+        function finalize() {
+          req.abort();
+          if (signal)
+            signal.removeEventListener("abort", abortAndFinalize);
+          clearTimeout(reqTimeout);
+        }
+        if (request.timeout) {
+          req.once("socket", function(socket) {
+            reqTimeout = setTimeout(function() {
+              reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
+              finalize();
+            }, request.timeout);
+          });
+        }
+        req.on("error", function(err) {
+          reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
+          finalize();
+        });
+        req.on("response", function(res) {
+          clearTimeout(reqTimeout);
+          const headers = createHeadersLenient(res.headers);
+          if (fetch3.isRedirect(res.statusCode)) {
+            const location = headers.get("Location");
+            const locationURL = location === null ? null : resolve_url(request.url, location);
+            switch (request.redirect) {
+              case "error":
+                reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+                finalize();
+                return;
+              case "manual":
+                if (locationURL !== null) {
+                  try {
+                    headers.set("Location", locationURL);
+                  } catch (err) {
+                    reject(err);
+                  }
+                }
+                break;
+              case "follow":
+                if (locationURL === null) {
+                  break;
+                }
+                if (request.counter >= request.follow) {
+                  reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+                  finalize();
+                  return;
+                }
+                const requestOpts = {
+                  headers: new Headers2(request.headers),
+                  follow: request.follow,
+                  counter: request.counter + 1,
+                  agent: request.agent,
+                  compress: request.compress,
+                  method: request.method,
+                  body: request.body,
+                  signal: request.signal,
+                  timeout: request.timeout,
+                  size: request.size
+                };
+                if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
+                  reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+                  finalize();
+                  return;
+                }
+                if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
+                  requestOpts.method = "GET";
+                  requestOpts.body = void 0;
+                  requestOpts.headers.delete("content-length");
+                }
+                resolve2(fetch3(new Request2(locationURL, requestOpts)));
+                finalize();
+                return;
+            }
+          }
+          res.once("end", function() {
+            if (signal)
+              signal.removeEventListener("abort", abortAndFinalize);
+          });
+          let body = res.pipe(new PassThrough$1());
+          const response_options = {
+            url: request.url,
+            status: res.statusCode,
+            statusText: res.statusMessage,
+            headers,
+            size: request.size,
+            timeout: request.timeout,
+            counter: request.counter
+          };
+          const codings = headers.get("Content-Encoding");
+          if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          const zlibOptions = {
+            flush: zlib2.Z_SYNC_FLUSH,
+            finishFlush: zlib2.Z_SYNC_FLUSH
+          };
+          if (codings == "gzip" || codings == "x-gzip") {
+            body = body.pipe(zlib2.createGunzip(zlibOptions));
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          if (codings == "deflate" || codings == "x-deflate") {
+            const raw = res.pipe(new PassThrough$1());
+            raw.once("data", function(chunk) {
+              if ((chunk[0] & 15) === 8) {
+                body = body.pipe(zlib2.createInflate());
+              } else {
+                body = body.pipe(zlib2.createInflateRaw());
+              }
+              response = new Response3(body, response_options);
+              resolve2(response);
+            });
+            return;
+          }
+          if (codings == "br" && typeof zlib2.createBrotliDecompress === "function") {
+            body = body.pipe(zlib2.createBrotliDecompress());
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          response = new Response3(body, response_options);
+          resolve2(response);
+        });
+        writeToStream2(req, request);
+      });
+    }
+    fetch3.isRedirect = function(code) {
+      return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
+    };
+    fetch3.Promise = global.Promise;
+    module2.exports = exports2 = fetch3;
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    exports2.default = exports2;
+    exports2.Headers = Headers2;
+    exports2.Request = Request2;
+    exports2.Response = Response3;
+    exports2.FetchError = FetchError2;
+  }
+});
+
+// node_modules/@firebase/auth/dist/node/register-2a5ac87a.js
+var require_register_2a5ac87a = __commonJS({
+  "node_modules/@firebase/auth/dist/node/register-2a5ac87a.js"(exports2) {
+    "use strict";
+    var app = require_index_cjs3();
+    var tslib = require_tslib();
+    var util = require_index_node_cjs();
+    var logger = require_index_cjs2();
+    var component = require_index_cjs();
+    function _debugErrorMap() {
+      var _a2;
+      return _a2 = {}, _a2["admin-restricted-operation"] = "This operation is restricted to administrators only.", _a2["argument-error"] = "", _a2["app-not-authorized"] = "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.", _a2["app-not-installed"] = "The requested mobile application corresponding to the identifier (Android package name or iOS bundle ID) provided is not installed on this device.", _a2["captcha-check-failed"] = "The reCAPTCHA response token provided is either invalid, expired, already used or the domain associated with it does not match the list of whitelisted domains.", _a2["code-expired"] = "The SMS code has expired. Please re-send the verification code to try again.", _a2["cordova-not-ready"] = "Cordova framework is not ready.", _a2["cors-unsupported"] = "This browser is not supported.", _a2["credential-already-in-use"] = "This credential is already associated with a different user account.", _a2["custom-token-mismatch"] = "The custom token corresponds to a different audience.", _a2["requires-recent-login"] = "This operation is sensitive and requires recent authentication. Log in again before retrying this request.", _a2["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a2["dynamic-link-not-activated"] = "Please activate Dynamic Links in the Firebase Console and agree to the terms and conditions.", _a2["email-change-needs-verification"] = "Multi-factor users must always have a verified email.", _a2["email-already-in-use"] = "The email address is already in use by another account.", _a2["emulator-config-failed"] = 'Auth instance has already been used to make a network call. Auth can no longer be configured to use the emulator. Try calling "useAuthEmulator()" sooner.', _a2["expired-action-code"] = "The action code has expired.", _a2["cancelled-popup-request"] = "This operation has been cancelled due to another conflicting popup being opened.", _a2["internal-error"] = "An internal AuthError has occurred.", _a2["invalid-app-credential"] = "The phone verification request contains an invalid application verifier. The reCAPTCHA token response is either invalid or expired.", _a2["invalid-app-id"] = "The mobile app identifier is not registed for the current project.", _a2["invalid-user-token"] = "This user's credential isn't valid for this project. This can happen if the user's token has been tampered with, or if the user isn't for the project associated with this API key.", _a2["invalid-auth-event"] = "An internal AuthError has occurred.", _a2["invalid-verification-code"] = "The SMS verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.", _a2["invalid-continue-uri"] = "The continue URL provided in the request is invalid.", _a2["invalid-cordova-configuration"] = "The following Cordova plugins must be installed to enable OAuth sign-in: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser and cordova-plugin-customurlscheme.", _a2["invalid-custom-token"] = "The custom token format is incorrect. Please check the documentation.", _a2["invalid-dynamic-link-domain"] = "The provided dynamic link domain is not configured or authorized for the current project.", _a2["invalid-email"] = "The email address is badly formatted.", _a2["invalid-emulator-scheme"] = "Emulator URL must start with a valid scheme (http:// or https://).", _a2["invalid-api-key"] = "Your API key is invalid, please check you have copied it correctly.", _a2["invalid-cert-hash"] = "The SHA-1 certificate hash provided is invalid.", _a2["invalid-credential"] = "The supplied auth credential is malformed or has expired.", _a2["invalid-message-payload"] = "The email template corresponding to this action contains invalid characters in its message. Please fix by going to the Auth email templates section in the Firebase Console.", _a2["invalid-multi-factor-session"] = "The request does not contain a valid proof of first factor successful sign-in.", _a2["invalid-oauth-provider"] = "EmailAuthProvider is not supported for this operation. This operation only supports OAuth providers.", _a2["invalid-oauth-client-id"] = "The OAuth client ID provided is either invalid or does not match the specified API key.", _a2["unauthorized-domain"] = "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.", _a2["invalid-action-code"] = "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.", _a2["wrong-password"] = "The password is invalid or the user does not have a password.", _a2["invalid-persistence-type"] = "The specified persistence type is invalid. It can only be local, session or none.", _a2["invalid-phone-number"] = "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code].", _a2["invalid-provider-id"] = "The specified provider ID is invalid.", _a2["invalid-recipient-email"] = "The email corresponding to this action failed to send as the provided recipient email address is invalid.", _a2["invalid-sender"] = "The email template corresponding to this action contains an invalid sender email or name. Please fix by going to the Auth email templates section in the Firebase Console.", _a2["invalid-verification-id"] = "The verification ID used to create the phone auth credential is invalid.", _a2["invalid-tenant-id"] = "The Auth instance's tenant ID is invalid.", _a2["missing-android-pkg-name"] = "An Android Package Name must be provided if the Android App is required to be installed.", _a2["auth-domain-config-required"] = "Be sure to include authDomain when calling firebase.initializeApp(), by following the instructions in the Firebase console.", _a2["missing-app-credential"] = "The phone verification request is missing an application verifier assertion. A reCAPTCHA response token needs to be provided.", _a2["missing-verification-code"] = "The phone auth credential was created with an empty SMS verification code.", _a2["missing-continue-uri"] = "A continue URL must be provided in the request.", _a2["missing-iframe-start"] = "An internal AuthError has occurred.", _a2["missing-ios-bundle-id"] = "An iOS Bundle ID must be provided if an App Store ID is provided.", _a2["missing-or-invalid-nonce"] = "The request does not contain a valid nonce. This can occur if the SHA-256 hash of the provided raw nonce does not match the hashed nonce in the ID token payload.", _a2["missing-multi-factor-info"] = "No second factor identifier is provided.", _a2["missing-multi-factor-session"] = "The request is missing proof of first factor successful sign-in.", _a2["missing-phone-number"] = "To send verification codes, provide a phone number for the recipient.", _a2["missing-verification-id"] = "The phone auth credential was created with an empty verification ID.", _a2["app-deleted"] = "This instance of FirebaseApp has been deleted.", _a2["multi-factor-info-not-found"] = "The user does not have a second factor matching the identifier provided.", _a2["multi-factor-auth-required"] = "Proof of ownership of a second factor is required to complete sign-in.", _a2["account-exists-with-different-credential"] = "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.", _a2["network-request-failed"] = "A network AuthError (such as timeout, interrupted connection or unreachable host) has occurred.", _a2["no-auth-event"] = "An internal AuthError has occurred.", _a2["no-such-provider"] = "User was not linked to an account with the given provider.", _a2["null-user"] = "A null user object was provided as the argument for an operation which requires a non-null user object.", _a2["operation-not-allowed"] = "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.", _a2["operation-not-supported-in-this-environment"] = 'This operation is not supported in the environment this application is running on. "location.protocol" must be http, https or chrome-extension and web storage must be enabled.', _a2["popup-blocked"] = "Unable to establish a connection with the popup. It may have been blocked by the browser.", _a2["popup-closed-by-user"] = "The popup has been closed by the user before finalizing the operation.", _a2["provider-already-linked"] = "User can only be linked to one identity for the given provider.", _a2["quota-exceeded"] = "The project's quota for this operation has been exceeded.", _a2["redirect-cancelled-by-user"] = "The redirect operation has been cancelled by the user before finalizing.", _a2["redirect-operation-pending"] = "A redirect sign-in operation is already pending.", _a2["rejected-credential"] = "The request contains malformed or mismatching credentials.", _a2["second-factor-already-in-use"] = "The second factor is already enrolled on this account.", _a2["maximum-second-factor-count-exceeded"] = "The maximum allowed number of second factors on a user has been exceeded.", _a2["tenant-id-mismatch"] = "The provided tenant ID does not match the Auth instance's tenant ID", _a2["timeout"] = "The operation has timed out.", _a2["user-token-expired"] = "The user's credential is no longer valid. The user must sign in again.", _a2["too-many-requests"] = "We have blocked all requests from this device due to unusual activity. Try again later.", _a2["unauthorized-continue-uri"] = "The domain of the continue URL is not whitelisted.  Please whitelist the domain in the Firebase console.", _a2["unsupported-first-factor"] = "Enrolling a second factor or signing in with a multi-factor account requires sign-in with a supported first factor.", _a2["unsupported-persistence-type"] = "The current environment does not support the specified persistence type.", _a2["unsupported-tenant-operation"] = "This operation is not supported in a multi-tenant context.", _a2["unverified-email"] = "The operation requires a verified email.", _a2["user-cancelled"] = "The user did not grant your application the permissions it requested.", _a2["user-not-found"] = "There is no user record corresponding to this identifier. The user may have been deleted.", _a2["user-disabled"] = "The user account has been disabled by an administrator.", _a2["user-mismatch"] = "The supplied credentials do not correspond to the previously signed in user.", _a2["user-signed-out"] = "", _a2["weak-password"] = "The password must be 6 characters long or more.", _a2["web-storage-unsupported"] = "This browser is not supported or 3rd party cookies and data may be disabled.", _a2["already-initialized"] = "Auth can only be initialized once per app.", _a2;
+    }
+    function _prodErrorMap() {
+      var _a2;
+      return _a2 = {}, _a2["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a2;
+    }
+    var debugErrorMap = _debugErrorMap;
+    var prodErrorMap = _prodErrorMap;
+    var _DEFAULT_AUTH_ERROR_FACTORY = new util.ErrorFactory("auth", "Firebase", _prodErrorMap());
+    var logClient = new logger.Logger("@firebase/auth-exp");
+    function _logError(msg) {
+      var args = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+        args[_i - 1] = arguments[_i];
+      }
+      if (logClient.logLevel <= logger.LogLevel.ERROR) {
+        logClient.error.apply(logClient, tslib.__spreadArray(["Auth (" + app.SDK_VERSION + "): " + msg], args));
+      }
+    }
+    function _fail(authOrCode) {
+      var rest = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
+      }
+      throw createErrorInternal.apply(void 0, tslib.__spreadArray([authOrCode], rest));
+    }
+    function _createError(authOrCode) {
+      var rest = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
+      }
+      return createErrorInternal.apply(void 0, tslib.__spreadArray([authOrCode], rest));
+    }
+    function createErrorInternal(authOrCode) {
+      var _a2;
+      var rest = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
+      }
+      if (typeof authOrCode !== "string") {
+        var code = rest[0];
+        var fullParams = tslib.__spreadArray([], rest.slice(1));
+        if (fullParams[0]) {
+          fullParams[0].appName = authOrCode.name;
+        }
+        return (_a2 = authOrCode._errorFactory).create.apply(_a2, tslib.__spreadArray([code], fullParams));
+      }
+      return _DEFAULT_AUTH_ERROR_FACTORY.create.apply(_DEFAULT_AUTH_ERROR_FACTORY, tslib.__spreadArray([authOrCode], rest));
+    }
+    function _assert(assertion, authOrCode) {
+      var rest = [];
+      for (var _i = 2; _i < arguments.length; _i++) {
+        rest[_i - 2] = arguments[_i];
+      }
+      if (!assertion) {
+        throw createErrorInternal.apply(void 0, tslib.__spreadArray([authOrCode], rest));
+      }
+    }
+    function debugFail(failure) {
+      var message = "INTERNAL ASSERTION FAILED: " + failure;
+      _logError(message);
+      throw new Error(message);
+    }
+    function debugAssert(assertion, message) {
+      if (!assertion) {
+        debugFail(message);
+      }
+    }
+    var instanceCache = new Map();
+    function _getInstance(cls) {
+      debugAssert(cls instanceof Function, "Expected a class definition");
+      var instance = instanceCache.get(cls);
+      if (instance) {
+        debugAssert(instance instanceof cls, "Instance stored in cache mismatched with class");
+        return instance;
+      }
+      instance = new cls();
+      instanceCache.set(cls, instance);
+      return instance;
+    }
+    function initializeAuth(app$1, deps) {
+      var provider = app._getProvider(app$1, "auth-exp");
+      if (provider.isInitialized()) {
+        var auth_1 = provider.getImmediate();
+        _fail(auth_1, "already-initialized");
+      }
+      var auth = provider.initialize({options: deps});
+      return auth;
+    }
+    function _initializeAuthInstance(auth, deps) {
+      var persistence = (deps === null || deps === void 0 ? void 0 : deps.persistence) || [];
+      var hierarchy = (Array.isArray(persistence) ? persistence : [persistence]).map(_getInstance);
+      if (deps === null || deps === void 0 ? void 0 : deps.errorMap) {
+        auth._updateErrorMap(deps.errorMap);
+      }
+      auth._initializeWithPersistence(hierarchy, deps === null || deps === void 0 ? void 0 : deps.popupRedirectResolver);
+    }
+    function _getCurrentUrl() {
+      var _a2;
+      return typeof self !== "undefined" && ((_a2 = self.location) === null || _a2 === void 0 ? void 0 : _a2.href) || "";
+    }
+    function _isHttpOrHttps() {
+      return _getCurrentScheme() === "http:" || _getCurrentScheme() === "https:";
+    }
+    function _getCurrentScheme() {
+      var _a2;
+      return typeof self !== "undefined" && ((_a2 = self.location) === null || _a2 === void 0 ? void 0 : _a2.protocol) || null;
+    }
+    function _isOnline() {
+      if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && (_isHttpOrHttps() || util.isBrowserExtension() || "connection" in navigator)) {
+        return navigator.onLine;
+      }
+      return true;
+    }
+    function _getUserLanguage() {
+      if (typeof navigator === "undefined") {
+        return null;
+      }
+      var navigatorLanguage = navigator;
+      return navigatorLanguage.languages && navigatorLanguage.languages[0] || navigatorLanguage.language || null;
+    }
+    var Delay = function() {
+      function Delay2(shortDelay, longDelay) {
+        this.shortDelay = shortDelay;
+        this.longDelay = longDelay;
+        debugAssert(longDelay > shortDelay, "Short delay should be less than long delay!");
+        this.isMobile = util.isMobileCordova() || util.isReactNative();
+      }
+      Delay2.prototype.get = function() {
+        if (!_isOnline()) {
+          return Math.min(5e3, this.shortDelay);
+        }
+        return this.isMobile ? this.longDelay : this.shortDelay;
+      };
+      return Delay2;
+    }();
+    function _emulatorUrl(config, path) {
+      debugAssert(config.emulator, "Emulator should always be set here");
+      var url = config.emulator.url;
+      if (!path) {
+        return url;
+      }
+      return "" + url + (path.startsWith("/") ? path.slice(1) : path);
+    }
+    var FetchProvider = function() {
+      function FetchProvider2() {
+      }
+      FetchProvider2.initialize = function(fetchImpl, headersImpl, responseImpl) {
+        this.fetchImpl = fetchImpl;
+        if (headersImpl) {
+          this.headersImpl = headersImpl;
+        }
+        if (responseImpl) {
+          this.responseImpl = responseImpl;
+        }
+      };
+      FetchProvider2.fetch = function() {
+        if (this.fetchImpl) {
+          return this.fetchImpl;
+        }
+        if (typeof self !== "undefined" && "fetch" in self) {
+          return self.fetch;
+        }
+        debugFail("Could not find fetch implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
+      };
+      FetchProvider2.headers = function() {
+        if (this.headersImpl) {
+          return this.headersImpl;
+        }
+        if (typeof self !== "undefined" && "Headers" in self) {
+          return self.Headers;
+        }
+        debugFail("Could not find Headers implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
+      };
+      FetchProvider2.response = function() {
+        if (this.responseImpl) {
+          return this.responseImpl;
+        }
+        if (typeof self !== "undefined" && "Response" in self) {
+          return self.Response;
+        }
+        debugFail("Could not find Response implementation, make sure you call FetchProvider.initialize() with an appropriate polyfill");
+      };
+      return FetchProvider2;
+    }();
+    var _a;
+    var SERVER_ERROR_MAP = (_a = {}, _a["CREDENTIAL_MISMATCH"] = "custom-token-mismatch", _a["MISSING_CUSTOM_TOKEN"] = "internal-error", _a["INVALID_IDENTIFIER"] = "invalid-email", _a["MISSING_CONTINUE_URI"] = "internal-error", _a["INVALID_PASSWORD"] = "wrong-password", _a["MISSING_PASSWORD"] = "internal-error", _a["EMAIL_EXISTS"] = "email-already-in-use", _a["PASSWORD_LOGIN_DISABLED"] = "operation-not-allowed", _a["INVALID_IDP_RESPONSE"] = "invalid-credential", _a["INVALID_PENDING_TOKEN"] = "invalid-credential", _a["FEDERATED_USER_ID_ALREADY_LINKED"] = "credential-already-in-use", _a["MISSING_REQ_TYPE"] = "internal-error", _a["EMAIL_NOT_FOUND"] = "user-not-found", _a["RESET_PASSWORD_EXCEED_LIMIT"] = "too-many-requests", _a["EXPIRED_OOB_CODE"] = "expired-action-code", _a["INVALID_OOB_CODE"] = "invalid-action-code", _a["MISSING_OOB_CODE"] = "internal-error", _a["CREDENTIAL_TOO_OLD_LOGIN_AGAIN"] = "requires-recent-login", _a["INVALID_ID_TOKEN"] = "invalid-user-token", _a["TOKEN_EXPIRED"] = "user-token-expired", _a["USER_NOT_FOUND"] = "user-token-expired", _a["TOO_MANY_ATTEMPTS_TRY_LATER"] = "too-many-requests", _a["INVALID_CODE"] = "invalid-verification-code", _a["INVALID_SESSION_INFO"] = "invalid-verification-id", _a["INVALID_TEMPORARY_PROOF"] = "invalid-credential", _a["MISSING_SESSION_INFO"] = "missing-verification-id", _a["SESSION_EXPIRED"] = "code-expired", _a["MISSING_ANDROID_PACKAGE_NAME"] = "missing-android-pkg-name", _a["UNAUTHORIZED_DOMAIN"] = "unauthorized-continue-uri", _a["INVALID_OAUTH_CLIENT_ID"] = "invalid-oauth-client-id", _a["ADMIN_ONLY_OPERATION"] = "admin-restricted-operation", _a["INVALID_MFA_PENDING_CREDENTIAL"] = "invalid-multi-factor-session", _a["MFA_ENROLLMENT_NOT_FOUND"] = "multi-factor-info-not-found", _a["MISSING_MFA_ENROLLMENT_ID"] = "missing-multi-factor-info", _a["MISSING_MFA_PENDING_CREDENTIAL"] = "missing-multi-factor-session", _a["SECOND_FACTOR_EXISTS"] = "second-factor-already-in-use", _a["SECOND_FACTOR_LIMIT_EXCEEDED"] = "maximum-second-factor-count-exceeded", _a);
+    var DEFAULT_API_TIMEOUT_MS = new Delay(3e4, 6e4);
+    function _addTidIfNecessary(auth, request) {
+      if (auth.tenantId && !request.tenantId) {
+        return tslib.__assign(tslib.__assign({}, request), {tenantId: auth.tenantId});
+      }
+      return request;
+    }
+    function _performApiRequest(auth, method, path, request, customErrorMap) {
+      if (customErrorMap === void 0) {
+        customErrorMap = {};
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performFetchWithErrorHandling(auth, customErrorMap, function() {
+            var body = {};
+            var params = {};
+            if (request) {
+              if (method === "GET") {
+                params = request;
+              } else {
+                body = {
+                  body: JSON.stringify(request)
+                };
+              }
+            }
+            var query = util.querystring(tslib.__assign({key: auth.config.apiKey}, params)).slice(1);
+            var headers = new (FetchProvider.headers())();
+            headers.set("Content-Type", "application/json");
+            headers.set("X-Client-Version", auth._getSdkClientVersion());
+            if (auth.languageCode) {
+              headers.set("X-Firebase-Locale", auth.languageCode);
+            }
+            return FetchProvider.fetch()(_getFinalTarget(auth, auth.config.apiHost, path, query), tslib.__assign({
+              method,
+              headers,
+              referrerPolicy: "no-referrer"
+            }, body));
+          })];
+        });
+      });
+    }
+    function _performFetchWithErrorHandling(auth, customErrorMap, fetchFn) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var errorMap, networkTimeout, response, json, errorMessage, serverErrorCode, authError, e_1;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              auth._canInitEmulator = false;
+              errorMap = tslib.__assign(tslib.__assign({}, SERVER_ERROR_MAP), customErrorMap);
+              _a2.label = 1;
+            case 1:
+              _a2.trys.push([1, 4, , 5]);
+              networkTimeout = new NetworkTimeout(auth);
+              return [4, Promise.race([
+                fetchFn(),
+                networkTimeout.promise
+              ])];
+            case 2:
+              response = _a2.sent();
+              networkTimeout.clearNetworkTimeout();
+              return [4, response.json()];
+            case 3:
+              json = _a2.sent();
+              if ("needConfirmation" in json) {
+                throw _makeTaggedError(auth, "account-exists-with-different-credential", json);
+              }
+              if (response.ok && !("errorMessage" in json)) {
+                return [2, json];
+              } else {
+                errorMessage = response.ok ? json.errorMessage : json.error.message;
+                serverErrorCode = errorMessage.split(" : ")[0];
+                if (serverErrorCode === "FEDERATED_USER_ID_ALREADY_LINKED") {
+                  throw _makeTaggedError(auth, "credential-already-in-use", json);
+                } else if (serverErrorCode === "EMAIL_EXISTS") {
+                  throw _makeTaggedError(auth, "email-already-in-use", json);
+                }
+                authError = errorMap[serverErrorCode] || serverErrorCode.toLowerCase().replace(/[_\s]+/g, "-");
+                _fail(auth, authError);
+              }
+              return [3, 5];
+            case 4:
+              e_1 = _a2.sent();
+              if (e_1 instanceof util.FirebaseError) {
+                throw e_1;
+              }
+              _fail(auth, "network-request-failed");
+              return [3, 5];
+            case 5:
+              return [2];
+          }
+        });
+      });
+    }
+    function _performSignInRequest(auth, method, path, request, customErrorMap) {
+      if (customErrorMap === void 0) {
+        customErrorMap = {};
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var serverResponse;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, _performApiRequest(auth, method, path, request, customErrorMap)];
+            case 1:
+              serverResponse = _a2.sent();
+              if ("mfaPendingCredential" in serverResponse) {
+                _fail(auth, "multi-factor-auth-required", {
+                  serverResponse
+                });
+              }
+              return [2, serverResponse];
+          }
+        });
+      });
+    }
+    function _getFinalTarget(auth, host, path, query) {
+      var base = "" + host + path + "?" + query;
+      if (!auth.config.emulator) {
+        return auth.config.apiScheme + "://" + base;
+      }
+      return _emulatorUrl(auth.config, base);
+    }
+    var NetworkTimeout = function() {
+      function NetworkTimeout2(auth) {
+        var _this = this;
+        this.auth = auth;
+        this.timer = null;
+        this.promise = new Promise(function(_, reject) {
+          _this.timer = setTimeout(function() {
+            return reject(_createError(_this.auth, "timeout"));
+          }, DEFAULT_API_TIMEOUT_MS.get());
+        });
+      }
+      NetworkTimeout2.prototype.clearNetworkTimeout = function() {
+        clearTimeout(this.timer);
+      };
+      return NetworkTimeout2;
+    }();
+    function _makeTaggedError(auth, code, response) {
+      var errorParams = {
+        appName: auth.name
+      };
+      if (response.email) {
+        errorParams.email = response.email;
+      }
+      if (response.phoneNumber) {
+        errorParams.phoneNumber = response.phoneNumber;
+      }
+      var error3 = _createError(auth, code, errorParams);
+      error3.customData._tokenResponse = response;
+      return error3;
+    }
+    function deleteAccount(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:delete", request)];
+        });
+      });
+    }
+    function deleteLinkedAccounts(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
+        });
+      });
+    }
+    function getAccountInfo(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:lookup", request)];
+        });
+      });
+    }
+    function utcTimestampToDateString(utcTimestamp) {
+      if (!utcTimestamp) {
+        return void 0;
+      }
+      try {
+        var date = new Date(Number(utcTimestamp));
+        if (!isNaN(date.getTime())) {
+          return date.toUTCString();
+        }
+      } catch (e) {
+      }
+      return void 0;
+    }
+    function getIdToken(user, forceRefresh) {
+      if (forceRefresh === void 0) {
+        forceRefresh = false;
+      }
+      return util.getModularInstance(user).getIdToken(forceRefresh);
+    }
+    function getIdTokenResult(user, forceRefresh) {
+      if (forceRefresh === void 0) {
+        forceRefresh = false;
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal, token, claims, firebase, signInProvider;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, userInternal.getIdToken(forceRefresh)];
+            case 1:
+              token = _a2.sent();
+              claims = _parseToken(token);
+              _assert(claims && claims.exp && claims.auth_time && claims.iat, userInternal.auth, "internal-error");
+              firebase = typeof claims.firebase === "object" ? claims.firebase : void 0;
+              signInProvider = firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_provider"];
+              return [2, {
+                claims,
+                token,
+                authTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.auth_time)),
+                issuedAtTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.iat)),
+                expirationTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.exp)),
+                signInProvider: signInProvider || null,
+                signInSecondFactor: (firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_second_factor"]) || null
+              }];
+          }
+        });
+      });
+    }
+    function secondsStringToMilliseconds(seconds) {
+      return Number(seconds) * 1e3;
+    }
+    function _parseToken(token) {
+      var _a2 = token.split("."), algorithm = _a2[0], payload = _a2[1], signature = _a2[2];
+      if (algorithm === void 0 || payload === void 0 || signature === void 0) {
+        _logError("JWT malformed, contained fewer than 3 sections");
+        return null;
+      }
+      try {
+        var decoded = util.base64Decode(payload);
+        if (!decoded) {
+          _logError("Failed to decode base64 JWT payload");
+          return null;
+        }
+        return JSON.parse(decoded);
+      } catch (e) {
+        _logError("Caught error parsing JWT payload as JSON", e);
+        return null;
+      }
+    }
+    function _tokenExpiresIn(token) {
+      var parsedToken = _parseToken(token);
+      _assert(parsedToken, "internal-error");
+      _assert(typeof parsedToken.exp !== "undefined", "internal-error");
+      _assert(typeof parsedToken.iat !== "undefined", "internal-error");
+      return Number(parsedToken.exp) - Number(parsedToken.iat);
+    }
+    function _logoutIfInvalidated(user, promise, bypassAuthState) {
+      if (bypassAuthState === void 0) {
+        bypassAuthState = false;
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var e_1;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              if (bypassAuthState) {
+                return [2, promise];
+              }
+              _a2.label = 1;
+            case 1:
+              _a2.trys.push([1, 3, , 6]);
+              return [4, promise];
+            case 2:
+              return [2, _a2.sent()];
+            case 3:
+              e_1 = _a2.sent();
+              if (!(e_1 instanceof util.FirebaseError && isUserInvalidated(e_1)))
+                return [3, 5];
+              if (!(user.auth.currentUser === user))
+                return [3, 5];
+              return [4, user.auth.signOut()];
+            case 4:
+              _a2.sent();
+              _a2.label = 5;
+            case 5:
+              throw e_1;
+            case 6:
+              return [2];
+          }
+        });
+      });
+    }
+    function isUserInvalidated(_a2) {
+      var code = _a2.code;
+      return code === "auth/user-disabled" || code === "auth/user-token-expired";
+    }
+    var ProactiveRefresh = function() {
+      function ProactiveRefresh2(user) {
+        this.user = user;
+        this.isRunning = false;
+        this.timerId = null;
+        this.errorBackoff = 3e4;
+      }
+      ProactiveRefresh2.prototype._start = function() {
+        if (this.isRunning) {
+          return;
+        }
+        this.isRunning = true;
+        this.schedule();
+      };
+      ProactiveRefresh2.prototype._stop = function() {
+        if (!this.isRunning) {
+          return;
+        }
+        this.isRunning = false;
+        if (this.timerId !== null) {
+          clearTimeout(this.timerId);
+        }
+      };
+      ProactiveRefresh2.prototype.getInterval = function(wasError) {
+        var _a2;
+        if (wasError) {
+          var interval = this.errorBackoff;
+          this.errorBackoff = Math.min(this.errorBackoff * 2, 96e4);
+          return interval;
+        } else {
+          this.errorBackoff = 3e4;
+          var expTime = (_a2 = this.user.stsTokenManager.expirationTime) !== null && _a2 !== void 0 ? _a2 : 0;
+          var interval = expTime - Date.now() - 3e5;
+          return Math.max(0, interval);
+        }
+      };
+      ProactiveRefresh2.prototype.schedule = function(wasError) {
+        var _this = this;
+        if (wasError === void 0) {
+          wasError = false;
+        }
+        if (!this.isRunning) {
+          return;
+        }
+        var interval = this.getInterval(wasError);
+        this.timerId = setTimeout(function() {
+          return tslib.__awaiter(_this, void 0, void 0, function() {
+            return tslib.__generator(this, function(_a2) {
+              switch (_a2.label) {
+                case 0:
+                  return [4, this.iteration()];
+                case 1:
+                  _a2.sent();
+                  return [2];
+              }
+            });
+          });
+        }, interval);
+      };
+      ProactiveRefresh2.prototype.iteration = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var e_1;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                _a2.trys.push([0, 2, , 3]);
+                return [4, this.user.getIdToken(true)];
+              case 1:
+                _a2.sent();
+                return [3, 3];
+              case 2:
+                e_1 = _a2.sent();
+                if (e_1.code === "auth/network-request-failed") {
+                  this.schedule(true);
+                }
+                return [2];
+              case 3:
+                this.schedule();
+                return [2];
+            }
+          });
+        });
+      };
+      return ProactiveRefresh2;
+    }();
+    var UserMetadata = function() {
+      function UserMetadata2(createdAt, lastLoginAt) {
+        this.createdAt = createdAt;
+        this.lastLoginAt = lastLoginAt;
+        this._initializeTime();
+      }
+      UserMetadata2.prototype._initializeTime = function() {
+        this.lastSignInTime = utcTimestampToDateString(this.lastLoginAt);
+        this.creationTime = utcTimestampToDateString(this.createdAt);
+      };
+      UserMetadata2.prototype._copy = function(metadata) {
+        this.createdAt = metadata.createdAt;
+        this.lastLoginAt = metadata.lastLoginAt;
+        this._initializeTime();
+      };
+      UserMetadata2.prototype.toJSON = function() {
+        return {
+          createdAt: this.createdAt,
+          lastLoginAt: this.lastLoginAt
+        };
+      };
+      return UserMetadata2;
+    }();
+    function _reloadWithoutSaving(user) {
+      var _a2;
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var auth, idToken, response, coreAccount, newProviderData, providerData, oldIsAnonymous, newIsAnonymous, isAnonymous, updates;
+        return tslib.__generator(this, function(_b) {
+          switch (_b.label) {
+            case 0:
+              auth = user.auth;
+              return [4, user.getIdToken()];
+            case 1:
+              idToken = _b.sent();
+              return [4, _logoutIfInvalidated(user, getAccountInfo(auth, {idToken}))];
+            case 2:
+              response = _b.sent();
+              _assert(response === null || response === void 0 ? void 0 : response.users.length, auth, "internal-error");
+              coreAccount = response.users[0];
+              user._notifyReloadListener(coreAccount);
+              newProviderData = ((_a2 = coreAccount.providerUserInfo) === null || _a2 === void 0 ? void 0 : _a2.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
+              providerData = mergeProviderData(user.providerData, newProviderData);
+              oldIsAnonymous = user.isAnonymous;
+              newIsAnonymous = !(user.email && coreAccount.passwordHash) && !(providerData === null || providerData === void 0 ? void 0 : providerData.length);
+              isAnonymous = !oldIsAnonymous ? false : newIsAnonymous;
+              updates = {
+                uid: coreAccount.localId,
+                displayName: coreAccount.displayName || null,
+                photoURL: coreAccount.photoUrl || null,
+                email: coreAccount.email || null,
+                emailVerified: coreAccount.emailVerified || false,
+                phoneNumber: coreAccount.phoneNumber || null,
+                tenantId: coreAccount.tenantId || null,
+                providerData,
+                metadata: new UserMetadata(coreAccount.createdAt, coreAccount.lastLoginAt),
+                isAnonymous
+              };
+              Object.assign(user, updates);
+              return [2];
+          }
+        });
+      });
+    }
+    function reload(user) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, _reloadWithoutSaving(userInternal)];
+            case 1:
+              _a2.sent();
+              return [4, userInternal.auth._persistUserIfCurrent(userInternal)];
+            case 2:
+              _a2.sent();
+              userInternal.auth._notifyListenersIfCurrent(userInternal);
+              return [2];
+          }
+        });
+      });
+    }
+    function mergeProviderData(original, newData) {
+      var deduped = original.filter(function(o) {
+        return !newData.some(function(n) {
+          return n.providerId === o.providerId;
+        });
+      });
+      return tslib.__spreadArray(tslib.__spreadArray([], deduped), newData);
+    }
+    function extractProviderData(providers) {
+      return providers.map(function(_a2) {
+        var providerId = _a2.providerId, provider = tslib.__rest(_a2, ["providerId"]);
+        return {
+          providerId,
+          uid: provider.rawId || "",
+          displayName: provider.displayName || null,
+          email: provider.email || null,
+          phoneNumber: provider.phoneNumber || null,
+          photoURL: provider.photoUrl || null
+        };
+      });
+    }
+    function requestStsToken(auth, refreshToken) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var response;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, _performFetchWithErrorHandling(auth, {}, function() {
+                var body = util.querystring({
+                  "grant_type": "refresh_token",
+                  "refresh_token": refreshToken
+                }).slice(1);
+                var _a3 = auth.config, tokenApiHost = _a3.tokenApiHost, apiKey = _a3.apiKey;
+                var url = _getFinalTarget(auth, tokenApiHost, "/v1/token", "key=" + apiKey);
+                return FetchProvider.fetch()(url, {
+                  method: "POST",
+                  headers: {
+                    "X-Client-Version": auth._getSdkClientVersion(),
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  body
+                });
+              })];
+            case 1:
+              response = _a2.sent();
+              return [2, {
+                accessToken: response.access_token,
+                expiresIn: response.expires_in,
+                refreshToken: response.refresh_token
+              }];
+          }
+        });
+      });
+    }
+    var StsTokenManager = function() {
+      function StsTokenManager2() {
+        this.refreshToken = null;
+        this.accessToken = null;
+        this.expirationTime = null;
+      }
+      Object.defineProperty(StsTokenManager2.prototype, "isExpired", {
+        get: function() {
+          return !this.expirationTime || Date.now() > this.expirationTime - 3e4;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      StsTokenManager2.prototype.updateFromServerResponse = function(response) {
+        _assert(response.idToken, "internal-error");
+        _assert(typeof response.idToken !== "undefined", "internal-error");
+        _assert(typeof response.refreshToken !== "undefined", "internal-error");
+        var expiresIn = "expiresIn" in response && typeof response.expiresIn !== "undefined" ? Number(response.expiresIn) : _tokenExpiresIn(response.idToken);
+        this.updateTokensAndExpiration(response.idToken, response.refreshToken, expiresIn);
+      };
+      StsTokenManager2.prototype.getToken = function(auth, forceRefresh) {
+        if (forceRefresh === void 0) {
+          forceRefresh = false;
+        }
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                _assert(!this.accessToken || this.refreshToken, auth, "user-token-expired");
+                if (!forceRefresh && this.accessToken && !this.isExpired) {
+                  return [2, this.accessToken];
+                }
+                if (!this.refreshToken)
+                  return [3, 2];
+                return [4, this.refresh(auth, this.refreshToken)];
+              case 1:
+                _a2.sent();
+                return [2, this.accessToken];
+              case 2:
+                return [2, null];
+            }
+          });
+        });
+      };
+      StsTokenManager2.prototype.clearRefreshToken = function() {
+        this.refreshToken = null;
+      };
+      StsTokenManager2.prototype.refresh = function(auth, oldToken) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var _a2, accessToken, refreshToken, expiresIn;
+          return tslib.__generator(this, function(_b) {
+            switch (_b.label) {
+              case 0:
+                return [4, requestStsToken(auth, oldToken)];
+              case 1:
+                _a2 = _b.sent(), accessToken = _a2.accessToken, refreshToken = _a2.refreshToken, expiresIn = _a2.expiresIn;
+                this.updateTokensAndExpiration(accessToken, refreshToken, Number(expiresIn));
+                return [2];
+            }
+          });
+        });
+      };
+      StsTokenManager2.prototype.updateTokensAndExpiration = function(accessToken, refreshToken, expiresInSec) {
+        this.refreshToken = refreshToken || null;
+        this.accessToken = accessToken || null;
+        this.expirationTime = Date.now() + expiresInSec * 1e3;
+      };
+      StsTokenManager2.fromJSON = function(appName, object) {
+        var refreshToken = object.refreshToken, accessToken = object.accessToken, expirationTime = object.expirationTime;
+        var manager = new StsTokenManager2();
+        if (refreshToken) {
+          _assert(typeof refreshToken === "string", "internal-error", {
+            appName
+          });
+          manager.refreshToken = refreshToken;
+        }
+        if (accessToken) {
+          _assert(typeof accessToken === "string", "internal-error", {
+            appName
+          });
+          manager.accessToken = accessToken;
+        }
+        if (expirationTime) {
+          _assert(typeof expirationTime === "number", "internal-error", {
+            appName
+          });
+          manager.expirationTime = expirationTime;
+        }
+        return manager;
+      };
+      StsTokenManager2.prototype.toJSON = function() {
+        return {
+          refreshToken: this.refreshToken,
+          accessToken: this.accessToken,
+          expirationTime: this.expirationTime
+        };
+      };
+      StsTokenManager2.prototype._assign = function(stsTokenManager) {
+        this.accessToken = stsTokenManager.accessToken;
+        this.refreshToken = stsTokenManager.refreshToken;
+        this.expirationTime = stsTokenManager.expirationTime;
+      };
+      StsTokenManager2.prototype._clone = function() {
+        return Object.assign(new StsTokenManager2(), this.toJSON());
+      };
+      StsTokenManager2.prototype._performRefresh = function() {
+        return debugFail("not implemented");
+      };
+      return StsTokenManager2;
+    }();
+    function assertStringOrUndefined(assertion, appName) {
+      _assert(typeof assertion === "string" || typeof assertion === "undefined", "internal-error", {appName});
+    }
+    var UserImpl = function() {
+      function UserImpl2(_a2) {
+        var uid = _a2.uid, auth = _a2.auth, stsTokenManager = _a2.stsTokenManager, opt = tslib.__rest(_a2, ["uid", "auth", "stsTokenManager"]);
+        this.providerId = "firebase";
+        this.emailVerified = false;
+        this.isAnonymous = false;
+        this.tenantId = null;
+        this.providerData = [];
+        this.proactiveRefresh = new ProactiveRefresh(this);
+        this.reloadUserInfo = null;
+        this.reloadListener = null;
+        this.uid = uid;
+        this.auth = auth;
+        this.stsTokenManager = stsTokenManager;
+        this.accessToken = stsTokenManager.accessToken;
+        this.displayName = opt.displayName || null;
+        this.email = opt.email || null;
+        this.phoneNumber = opt.phoneNumber || null;
+        this.photoURL = opt.photoURL || null;
+        this.isAnonymous = opt.isAnonymous || false;
+        this.metadata = new UserMetadata(opt.createdAt || void 0, opt.lastLoginAt || void 0);
+      }
+      UserImpl2.prototype.getIdToken = function(forceRefresh) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var accessToken;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, _logoutIfInvalidated(this, this.stsTokenManager.getToken(this.auth, forceRefresh))];
+              case 1:
+                accessToken = _a2.sent();
+                _assert(accessToken, this.auth, "internal-error");
+                if (!(this.accessToken !== accessToken))
+                  return [3, 3];
+                this.accessToken = accessToken;
+                return [4, this.auth._persistUserIfCurrent(this)];
+              case 2:
+                _a2.sent();
+                this.auth._notifyListenersIfCurrent(this);
+                _a2.label = 3;
+              case 3:
+                return [2, accessToken];
+            }
+          });
+        });
+      };
+      UserImpl2.prototype.getIdTokenResult = function(forceRefresh) {
+        return getIdTokenResult(this, forceRefresh);
+      };
+      UserImpl2.prototype.reload = function() {
+        return reload(this);
+      };
+      UserImpl2.prototype._assign = function(user) {
+        if (this === user) {
+          return;
+        }
+        _assert(this.uid === user.uid, this.auth, "internal-error");
+        this.displayName = user.displayName;
+        this.photoURL = user.photoURL;
+        this.email = user.email;
+        this.emailVerified = user.emailVerified;
+        this.phoneNumber = user.phoneNumber;
+        this.isAnonymous = user.isAnonymous;
+        this.tenantId = user.tenantId;
+        this.providerData = user.providerData.map(function(userInfo) {
+          return tslib.__assign({}, userInfo);
+        });
+        this.metadata._copy(user.metadata);
+        this.stsTokenManager._assign(user.stsTokenManager);
+      };
+      UserImpl2.prototype._clone = function(auth) {
+        return new UserImpl2(tslib.__assign(tslib.__assign({}, this), {auth, stsTokenManager: this.stsTokenManager._clone()}));
+      };
+      UserImpl2.prototype._onReload = function(callback) {
+        _assert(!this.reloadListener, this.auth, "internal-error");
+        this.reloadListener = callback;
+        if (this.reloadUserInfo) {
+          this._notifyReloadListener(this.reloadUserInfo);
+          this.reloadUserInfo = null;
+        }
+      };
+      UserImpl2.prototype._notifyReloadListener = function(userInfo) {
+        if (this.reloadListener) {
+          this.reloadListener(userInfo);
+        } else {
+          this.reloadUserInfo = userInfo;
+        }
+      };
+      UserImpl2.prototype._startProactiveRefresh = function() {
+        this.proactiveRefresh._start();
+      };
+      UserImpl2.prototype._stopProactiveRefresh = function() {
+        this.proactiveRefresh._stop();
+      };
+      UserImpl2.prototype._updateTokensIfNecessary = function(response, reload2) {
+        if (reload2 === void 0) {
+          reload2 = false;
+        }
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var tokensRefreshed;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                tokensRefreshed = false;
+                if (response.idToken && response.idToken !== this.stsTokenManager.accessToken) {
+                  this.stsTokenManager.updateFromServerResponse(response);
+                  tokensRefreshed = true;
+                }
+                if (!reload2)
+                  return [3, 2];
+                return [4, _reloadWithoutSaving(this)];
+              case 1:
+                _a2.sent();
+                _a2.label = 2;
+              case 2:
+                return [4, this.auth._persistUserIfCurrent(this)];
+              case 3:
+                _a2.sent();
+                if (tokensRefreshed) {
+                  this.auth._notifyListenersIfCurrent(this);
+                }
+                return [2];
+            }
+          });
+        });
+      };
+      UserImpl2.prototype.delete = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var idToken;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, this.getIdToken()];
+              case 1:
+                idToken = _a2.sent();
+                return [4, _logoutIfInvalidated(this, deleteAccount(this.auth, {idToken}))];
+              case 2:
+                _a2.sent();
+                this.stsTokenManager.clearRefreshToken();
+                return [2, this.auth.signOut()];
+            }
+          });
+        });
+      };
+      UserImpl2.prototype.toJSON = function() {
+        return tslib.__assign(tslib.__assign({
+          uid: this.uid,
+          email: this.email || void 0,
+          emailVerified: this.emailVerified,
+          displayName: this.displayName || void 0,
+          isAnonymous: this.isAnonymous,
+          photoURL: this.photoURL || void 0,
+          phoneNumber: this.phoneNumber || void 0,
+          tenantId: this.tenantId || void 0,
+          providerData: this.providerData.map(function(userInfo) {
+            return tslib.__assign({}, userInfo);
+          }),
+          stsTokenManager: this.stsTokenManager.toJSON(),
+          _redirectEventId: this._redirectEventId
+        }, this.metadata.toJSON()), {
+          apiKey: this.auth.config.apiKey,
+          appName: this.auth.name
+        });
+      };
+      Object.defineProperty(UserImpl2.prototype, "refreshToken", {
+        get: function() {
+          return this.stsTokenManager.refreshToken || "";
+        },
+        enumerable: false,
+        configurable: true
+      });
+      UserImpl2._fromJSON = function(auth, object) {
+        var _a2, _b, _c, _d, _e, _f, _g, _h;
+        var displayName = (_a2 = object.displayName) !== null && _a2 !== void 0 ? _a2 : void 0;
+        var email = (_b = object.email) !== null && _b !== void 0 ? _b : void 0;
+        var phoneNumber = (_c = object.phoneNumber) !== null && _c !== void 0 ? _c : void 0;
+        var photoURL = (_d = object.photoURL) !== null && _d !== void 0 ? _d : void 0;
+        var tenantId = (_e = object.tenantId) !== null && _e !== void 0 ? _e : void 0;
+        var _redirectEventId = (_f = object._redirectEventId) !== null && _f !== void 0 ? _f : void 0;
+        var createdAt = (_g = object.createdAt) !== null && _g !== void 0 ? _g : void 0;
+        var lastLoginAt = (_h = object.lastLoginAt) !== null && _h !== void 0 ? _h : void 0;
+        var uid = object.uid, emailVerified = object.emailVerified, isAnonymous = object.isAnonymous, providerData = object.providerData, plainObjectTokenManager = object.stsTokenManager;
+        _assert(uid && plainObjectTokenManager, auth, "internal-error");
+        var stsTokenManager = StsTokenManager.fromJSON(this.name, plainObjectTokenManager);
+        _assert(typeof uid === "string", auth, "internal-error");
+        assertStringOrUndefined(displayName, auth.name);
+        assertStringOrUndefined(email, auth.name);
+        _assert(typeof emailVerified === "boolean", auth, "internal-error");
+        _assert(typeof isAnonymous === "boolean", auth, "internal-error");
+        assertStringOrUndefined(phoneNumber, auth.name);
+        assertStringOrUndefined(photoURL, auth.name);
+        assertStringOrUndefined(tenantId, auth.name);
+        assertStringOrUndefined(_redirectEventId, auth.name);
+        assertStringOrUndefined(createdAt, auth.name);
+        assertStringOrUndefined(lastLoginAt, auth.name);
+        var user = new UserImpl2({
+          uid,
+          auth,
+          email,
+          emailVerified,
+          displayName,
+          isAnonymous,
+          photoURL,
+          phoneNumber,
+          tenantId,
+          stsTokenManager,
+          createdAt,
+          lastLoginAt
+        });
+        if (providerData && Array.isArray(providerData)) {
+          user.providerData = providerData.map(function(userInfo) {
+            return tslib.__assign({}, userInfo);
+          });
+        }
+        if (_redirectEventId) {
+          user._redirectEventId = _redirectEventId;
+        }
+        return user;
+      };
+      UserImpl2._fromIdTokenResponse = function(auth, idTokenResponse, isAnonymous) {
+        if (isAnonymous === void 0) {
+          isAnonymous = false;
+        }
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var stsTokenManager, user;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                stsTokenManager = new StsTokenManager();
+                stsTokenManager.updateFromServerResponse(idTokenResponse);
+                user = new UserImpl2({
+                  uid: idTokenResponse.localId,
+                  auth,
+                  stsTokenManager,
+                  isAnonymous
+                });
+                return [4, _reloadWithoutSaving(user)];
+              case 1:
+                _a2.sent();
+                return [2, user];
+            }
+          });
+        });
+      };
+      return UserImpl2;
+    }();
+    var InMemoryPersistence = function() {
+      function InMemoryPersistence2() {
+        this.type = "NONE";
+        this.storage = {};
+      }
+      InMemoryPersistence2.prototype._isAvailable = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            return [2, true];
+          });
+        });
+      };
+      InMemoryPersistence2.prototype._set = function(key, value) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            this.storage[key] = value;
+            return [2];
+          });
+        });
+      };
+      InMemoryPersistence2.prototype._get = function(key) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var value;
+          return tslib.__generator(this, function(_a2) {
+            value = this.storage[key];
+            return [2, value === void 0 ? null : value];
+          });
+        });
+      };
+      InMemoryPersistence2.prototype._remove = function(key) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            delete this.storage[key];
+            return [2];
+          });
+        });
+      };
+      InMemoryPersistence2.prototype._addListener = function(_key, _listener) {
+        return;
+      };
+      InMemoryPersistence2.prototype._removeListener = function(_key, _listener) {
+        return;
+      };
+      InMemoryPersistence2.type = "NONE";
+      return InMemoryPersistence2;
+    }();
+    var inMemoryPersistence = InMemoryPersistence;
+    function _persistenceKeyName(key, apiKey, appName) {
+      return "firebase:" + key + ":" + apiKey + ":" + appName;
+    }
+    var PersistenceUserManager = function() {
+      function PersistenceUserManager2(persistence, auth, userKey) {
+        this.persistence = persistence;
+        this.auth = auth;
+        this.userKey = userKey;
+        var _a2 = this.auth, config = _a2.config, name2 = _a2.name;
+        this.fullUserKey = _persistenceKeyName(this.userKey, config.apiKey, name2);
+        this.fullPersistenceKey = _persistenceKeyName("persistence", config.apiKey, name2);
+        this.boundEventHandler = auth._onStorageEvent.bind(auth);
+        this.persistence._addListener(this.fullUserKey, this.boundEventHandler);
+      }
+      PersistenceUserManager2.prototype.setCurrentUser = function(user) {
+        return this.persistence._set(this.fullUserKey, user.toJSON());
+      };
+      PersistenceUserManager2.prototype.getCurrentUser = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var blob;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, this.persistence._get(this.fullUserKey)];
+              case 1:
+                blob = _a2.sent();
+                return [2, blob ? UserImpl._fromJSON(this.auth, blob) : null];
+            }
+          });
+        });
+      };
+      PersistenceUserManager2.prototype.removeCurrentUser = function() {
+        return this.persistence._remove(this.fullUserKey);
+      };
+      PersistenceUserManager2.prototype.savePersistenceForRedirect = function() {
+        return this.persistence._set(this.fullPersistenceKey, this.persistence.type);
+      };
+      PersistenceUserManager2.prototype.setPersistence = function(newPersistence) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var currentUser;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                if (this.persistence === newPersistence) {
+                  return [2];
+                }
+                return [4, this.getCurrentUser()];
+              case 1:
+                currentUser = _a2.sent();
+                return [4, this.removeCurrentUser()];
+              case 2:
+                _a2.sent();
+                this.persistence = newPersistence;
+                if (currentUser) {
+                  return [2, this.setCurrentUser(currentUser)];
+                }
+                return [2];
+            }
+          });
+        });
+      };
+      PersistenceUserManager2.prototype.delete = function() {
+        this.persistence._removeListener(this.fullUserKey, this.boundEventHandler);
+      };
+      PersistenceUserManager2.create = function(auth, persistenceHierarchy, userKey) {
+        if (userKey === void 0) {
+          userKey = "authUser";
+        }
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var chosenPersistence, _i, persistenceHierarchy_1, persistence, userToMigrate, key, _a2, persistenceHierarchy_2, persistence, blob, user, _b;
+          var _this = this;
+          return tslib.__generator(this, function(_c) {
+            switch (_c.label) {
+              case 0:
+                if (!persistenceHierarchy.length) {
+                  return [2, new PersistenceUserManager2(_getInstance(inMemoryPersistence), auth, userKey)];
+                }
+                chosenPersistence = _getInstance(inMemoryPersistence);
+                _i = 0, persistenceHierarchy_1 = persistenceHierarchy;
+                _c.label = 1;
+              case 1:
+                if (!(_i < persistenceHierarchy_1.length))
+                  return [3, 4];
+                persistence = persistenceHierarchy_1[_i];
+                return [4, persistence._isAvailable()];
+              case 2:
+                if (_c.sent()) {
+                  chosenPersistence = persistence;
+                  return [3, 4];
+                }
+                _c.label = 3;
+              case 3:
+                _i++;
+                return [3, 1];
+              case 4:
+                userToMigrate = null;
+                key = _persistenceKeyName(userKey, auth.config.apiKey, auth.name);
+                _a2 = 0, persistenceHierarchy_2 = persistenceHierarchy;
+                _c.label = 5;
+              case 5:
+                if (!(_a2 < persistenceHierarchy_2.length))
+                  return [3, 10];
+                persistence = persistenceHierarchy_2[_a2];
+                _c.label = 6;
+              case 6:
+                _c.trys.push([6, 8, , 9]);
+                return [4, persistence._get(key)];
+              case 7:
+                blob = _c.sent();
+                if (blob) {
+                  user = UserImpl._fromJSON(auth, blob);
+                  if (persistence !== chosenPersistence) {
+                    userToMigrate = user;
+                  }
+                  return [3, 10];
+                }
+                return [3, 9];
+              case 8:
+                _b = _c.sent();
+                return [3, 9];
+              case 9:
+                _a2++;
+                return [3, 5];
+              case 10:
+                if (!userToMigrate)
+                  return [3, 12];
+                return [4, chosenPersistence._set(key, userToMigrate.toJSON())];
+              case 11:
+                _c.sent();
+                _c.label = 12;
+              case 12:
+                return [4, Promise.all(persistenceHierarchy.map(function(persistence2) {
+                  return tslib.__awaiter(_this, void 0, void 0, function() {
+                    var _a3;
+                    return tslib.__generator(this, function(_b2) {
+                      switch (_b2.label) {
+                        case 0:
+                          if (!(persistence2 !== chosenPersistence))
+                            return [3, 4];
+                          _b2.label = 1;
+                        case 1:
+                          _b2.trys.push([1, 3, , 4]);
+                          return [4, persistence2._remove(key)];
+                        case 2:
+                          _b2.sent();
+                          return [3, 4];
+                        case 3:
+                          _a3 = _b2.sent();
+                          return [3, 4];
+                        case 4:
+                          return [2];
+                      }
+                    });
+                  });
+                }))];
+              case 13:
+                _c.sent();
+                return [2, new PersistenceUserManager2(chosenPersistence, auth, userKey)];
+            }
+          });
+        });
+      };
+      return PersistenceUserManager2;
+    }();
+    function _getBrowserName(userAgent) {
+      var ua = userAgent.toLowerCase();
+      if (ua.includes("opera/") || ua.includes("opr/") || ua.includes("opios/")) {
+        return "Opera";
+      } else if (_isIEMobile(ua)) {
+        return "IEMobile";
+      } else if (ua.includes("msie") || ua.includes("trident/")) {
+        return "IE";
+      } else if (ua.includes("edge/")) {
+        return "Edge";
+      } else if (_isFirefox(ua)) {
+        return "Firefox";
+      } else if (ua.includes("silk/")) {
+        return "Silk";
+      } else if (_isBlackBerry(ua)) {
+        return "Blackberry";
+      } else if (_isWebOS(ua)) {
+        return "Webos";
+      } else if (_isSafari(ua)) {
+        return "Safari";
+      } else if ((ua.includes("chrome/") || _isChromeIOS(ua)) && !ua.includes("edge/")) {
+        return "Chrome";
+      } else if (_isAndroid(ua)) {
+        return "Android";
+      } else {
+        var re = /([a-zA-Z\d\.]+)\/[a-zA-Z\d\.]*$/;
+        var matches = userAgent.match(re);
+        if ((matches === null || matches === void 0 ? void 0 : matches.length) === 2) {
+          return matches[1];
+        }
+      }
+      return "Other";
+    }
+    function _isFirefox(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /firefox\//i.test(ua);
+    }
+    function _isSafari(userAgent) {
+      if (userAgent === void 0) {
+        userAgent = util.getUA();
+      }
+      var ua = userAgent.toLowerCase();
+      return ua.includes("safari/") && !ua.includes("chrome/") && !ua.includes("crios/") && !ua.includes("android");
+    }
+    function _isChromeIOS(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /crios\//i.test(ua);
+    }
+    function _isIEMobile(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /iemobile/i.test(ua);
+    }
+    function _isAndroid(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /android/i.test(ua);
+    }
+    function _isBlackBerry(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /blackberry/i.test(ua);
+    }
+    function _isWebOS(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /webos/i.test(ua);
+    }
+    function _isIOS(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /iphone|ipad|ipod/i.test(ua);
+    }
+    function _isIOS7Or8(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return /(iPad|iPhone|iPod).*OS 7_\d/i.test(ua) || /(iPad|iPhone|iPod).*OS 8_\d/i.test(ua);
+    }
+    function _isIOSStandalone(ua) {
+      var _a2;
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return _isIOS(ua) && !!((_a2 = window.navigator) === null || _a2 === void 0 ? void 0 : _a2.standalone);
+    }
+    function _isIE10() {
+      return util.isIE() && document.documentMode === 10;
+    }
+    function _isMobileBrowser(ua) {
+      if (ua === void 0) {
+        ua = util.getUA();
+      }
+      return _isIOS(ua) || _isAndroid(ua) || _isWebOS(ua) || _isBlackBerry(ua) || /windows phone/i.test(ua) || _isIEMobile(ua);
+    }
+    function _isIframe() {
+      try {
+        return !!(window && window !== window.top);
+      } catch (e) {
+        return false;
+      }
+    }
+    function _getClientVersion(clientPlatform, frameworks) {
+      if (frameworks === void 0) {
+        frameworks = [];
+      }
+      var reportedPlatform;
+      switch (clientPlatform) {
+        case "Browser":
+          reportedPlatform = _getBrowserName(util.getUA());
+          break;
+        case "Worker":
+          reportedPlatform = _getBrowserName(util.getUA()) + "-" + clientPlatform;
+          break;
+        default:
+          reportedPlatform = clientPlatform;
+      }
+      var reportedFrameworks = frameworks.length ? frameworks.join(",") : "FirebaseCore-web";
+      return reportedPlatform + "/JsCore/" + app.SDK_VERSION + "/" + reportedFrameworks;
+    }
+    var AuthImpl = function() {
+      function AuthImpl2(app2, config) {
+        this.app = app2;
+        this.config = config;
+        this.currentUser = null;
+        this.emulatorConfig = null;
+        this.operations = Promise.resolve();
+        this.authStateSubscription = new Subscription(this);
+        this.idTokenSubscription = new Subscription(this);
+        this.redirectUser = null;
+        this.isProactiveRefreshEnabled = false;
+        this.redirectInitializerError = null;
+        this._canInitEmulator = true;
+        this._isInitialized = false;
+        this._deleted = false;
+        this._initializationPromise = null;
+        this._popupRedirectResolver = null;
+        this._errorFactory = _DEFAULT_AUTH_ERROR_FACTORY;
+        this.lastNotifiedUid = void 0;
+        this.languageCode = null;
+        this.tenantId = null;
+        this.settings = {appVerificationDisabledForTesting: false};
+        this.frameworks = [];
+        this.name = app2.name;
+        this.clientVersion = config.sdkClientVersion;
+      }
+      AuthImpl2.prototype._initializeWithPersistence = function(persistenceHierarchy, popupRedirectResolver) {
+        var _this = this;
+        if (popupRedirectResolver) {
+          this._popupRedirectResolver = _getInstance(popupRedirectResolver);
+        }
+        this._initializationPromise = this.queue(function() {
+          return tslib.__awaiter(_this, void 0, void 0, function() {
+            var _a2;
+            var _b;
+            return tslib.__generator(this, function(_c) {
+              switch (_c.label) {
+                case 0:
+                  if (this._deleted) {
+                    return [2];
+                  }
+                  _a2 = this;
+                  return [4, PersistenceUserManager.create(this, persistenceHierarchy)];
+                case 1:
+                  _a2.persistenceManager = _c.sent();
+                  if (this._deleted) {
+                    return [2];
+                  }
+                  if (!((_b = this._popupRedirectResolver) === null || _b === void 0 ? void 0 : _b._shouldInitProactively))
+                    return [3, 3];
+                  return [4, this._popupRedirectResolver._initialize(this)];
+                case 2:
+                  _c.sent();
+                  _c.label = 3;
+                case 3:
+                  return [4, this.initializeCurrentUser(popupRedirectResolver)];
+                case 4:
+                  _c.sent();
+                  if (this._deleted) {
+                    return [2];
+                  }
+                  this._isInitialized = true;
+                  return [2];
+              }
+            });
+          });
+        });
+        return this._initializationPromise.then(function() {
+          if (_this.redirectInitializerError) {
+            throw _this.redirectInitializerError;
+          }
+        });
+      };
+      AuthImpl2.prototype._onStorageEvent = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var user;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                if (this._deleted) {
+                  return [2];
+                }
+                return [4, this.assertedPersistence.getCurrentUser()];
+              case 1:
+                user = _a2.sent();
+                if (!this.currentUser && !user) {
+                  return [2];
+                }
+                if (!(this.currentUser && user && this.currentUser.uid === user.uid))
+                  return [3, 3];
+                this._currentUser._assign(user);
+                return [4, this.currentUser.getIdToken()];
+              case 2:
+                _a2.sent();
+                return [2];
+              case 3:
+                return [4, this._updateCurrentUser(user)];
+              case 4:
+                _a2.sent();
+                return [2];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.initializeCurrentUser = function(popupRedirectResolver) {
+        var _a2;
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var storedUser, redirectUserEventId, storedUserEventId, result;
+          return tslib.__generator(this, function(_b) {
+            switch (_b.label) {
+              case 0:
+                return [4, this.assertedPersistence.getCurrentUser()];
+              case 1:
+                storedUser = _b.sent();
+                if (!(popupRedirectResolver && this.config.authDomain))
+                  return [3, 4];
+                return [4, this.getOrInitRedirectPersistenceManager()];
+              case 2:
+                _b.sent();
+                redirectUserEventId = (_a2 = this.redirectUser) === null || _a2 === void 0 ? void 0 : _a2._redirectEventId;
+                storedUserEventId = storedUser === null || storedUser === void 0 ? void 0 : storedUser._redirectEventId;
+                return [4, this.tryRedirectSignIn(popupRedirectResolver)];
+              case 3:
+                result = _b.sent();
+                if ((!redirectUserEventId || redirectUserEventId === storedUserEventId) && (result === null || result === void 0 ? void 0 : result.user)) {
+                  storedUser = result.user;
+                }
+                _b.label = 4;
+              case 4:
+                if (!storedUser) {
+                  return [2, this.directlySetCurrentUser(null)];
+                }
+                if (!storedUser._redirectEventId) {
+                  return [2, this.reloadAndSetCurrentUserOrClear(storedUser)];
+                }
+                _assert(this._popupRedirectResolver, this, "argument-error");
+                return [4, this.getOrInitRedirectPersistenceManager()];
+              case 5:
+                _b.sent();
+                if (this.redirectUser && this.redirectUser._redirectEventId === storedUser._redirectEventId) {
+                  return [2, this.directlySetCurrentUser(storedUser)];
+                }
+                return [2, this.reloadAndSetCurrentUserOrClear(storedUser)];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.tryRedirectSignIn = function(redirectResolver) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var result, e_1;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                result = null;
+                _a2.label = 1;
+              case 1:
+                _a2.trys.push([1, 3, , 5]);
+                return [4, this._popupRedirectResolver._completeRedirectFn(this, redirectResolver, true)];
+              case 2:
+                result = _a2.sent();
+                return [3, 5];
+              case 3:
+                e_1 = _a2.sent();
+                this.redirectInitializerError = e_1;
+                return [4, this._setRedirectUser(null)];
+              case 4:
+                _a2.sent();
+                return [3, 5];
+              case 5:
+                return [2, result];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.reloadAndSetCurrentUserOrClear = function(user) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var e_2;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                _a2.trys.push([0, 2, , 3]);
+                return [4, _reloadWithoutSaving(user)];
+              case 1:
+                _a2.sent();
+                return [3, 3];
+              case 2:
+                e_2 = _a2.sent();
+                if (e_2.code !== "auth/network-request-failed") {
+                  return [2, this.directlySetCurrentUser(null)];
+                }
+                return [3, 3];
+              case 3:
+                return [2, this.directlySetCurrentUser(user)];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.useDeviceLanguage = function() {
+        this.languageCode = _getUserLanguage();
+      };
+      AuthImpl2.prototype._delete = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            this._deleted = true;
+            return [2];
+          });
+        });
+      };
+      AuthImpl2.prototype.updateCurrentUser = function(userExtern) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var user;
+          return tslib.__generator(this, function(_a2) {
+            user = userExtern ? util.getModularInstance(userExtern) : null;
+            if (user) {
+              _assert(user.auth.config.apiKey === this.config.apiKey, this, "invalid-user-token");
+            }
+            return [2, this._updateCurrentUser(user && user._clone(this))];
+          });
+        });
+      };
+      AuthImpl2.prototype._updateCurrentUser = function(user) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var _this = this;
+          return tslib.__generator(this, function(_a2) {
+            if (this._deleted) {
+              return [2];
+            }
+            if (user) {
+              _assert(this.tenantId === user.tenantId, this, "tenant-id-mismatch");
+            }
+            return [2, this.queue(function() {
+              return tslib.__awaiter(_this, void 0, void 0, function() {
+                return tslib.__generator(this, function(_a3) {
+                  switch (_a3.label) {
+                    case 0:
+                      return [4, this.directlySetCurrentUser(user)];
+                    case 1:
+                      _a3.sent();
+                      this.notifyAuthListeners();
+                      return [2];
+                  }
+                });
+              });
+            })];
+          });
+        });
+      };
+      AuthImpl2.prototype.signOut = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                if (!(this.redirectPersistenceManager || this._popupRedirectResolver))
+                  return [3, 2];
+                return [4, this._setRedirectUser(null)];
+              case 1:
+                _a2.sent();
+                _a2.label = 2;
+              case 2:
+                return [2, this._updateCurrentUser(null)];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.setPersistence = function(persistence) {
+        var _this = this;
+        return this.queue(function() {
+          return tslib.__awaiter(_this, void 0, void 0, function() {
+            return tslib.__generator(this, function(_a2) {
+              switch (_a2.label) {
+                case 0:
+                  return [4, this.assertedPersistence.setPersistence(_getInstance(persistence))];
+                case 1:
+                  _a2.sent();
+                  return [2];
+              }
+            });
+          });
+        });
+      };
+      AuthImpl2.prototype._getPersistence = function() {
+        return this.assertedPersistence.persistence.type;
+      };
+      AuthImpl2.prototype._updateErrorMap = function(errorMap) {
+        this._errorFactory = new util.ErrorFactory("auth", "Firebase", errorMap());
+      };
+      AuthImpl2.prototype.onAuthStateChanged = function(nextOrObserver, error3, completed) {
+        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error3, completed);
+      };
+      AuthImpl2.prototype.onIdTokenChanged = function(nextOrObserver, error3, completed) {
+        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error3, completed);
+      };
+      AuthImpl2.prototype.toJSON = function() {
+        var _a2;
+        return {
+          apiKey: this.config.apiKey,
+          authDomain: this.config.authDomain,
+          appName: this.name,
+          currentUser: (_a2 = this._currentUser) === null || _a2 === void 0 ? void 0 : _a2.toJSON()
+        };
+      };
+      AuthImpl2.prototype._setRedirectUser = function(user, popupRedirectResolver) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var redirectManager;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, this.getOrInitRedirectPersistenceManager(popupRedirectResolver)];
+              case 1:
+                redirectManager = _a2.sent();
+                return [2, user === null ? redirectManager.removeCurrentUser() : redirectManager.setCurrentUser(user)];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.getOrInitRedirectPersistenceManager = function(popupRedirectResolver) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var resolver, _a2, _b;
+          return tslib.__generator(this, function(_c) {
+            switch (_c.label) {
+              case 0:
+                if (!!this.redirectPersistenceManager)
+                  return [3, 3];
+                resolver = popupRedirectResolver && _getInstance(popupRedirectResolver) || this._popupRedirectResolver;
+                _assert(resolver, this, "argument-error");
+                _a2 = this;
+                return [4, PersistenceUserManager.create(this, [_getInstance(resolver._redirectPersistence)], "redirectUser")];
+              case 1:
+                _a2.redirectPersistenceManager = _c.sent();
+                _b = this;
+                return [4, this.redirectPersistenceManager.getCurrentUser()];
+              case 2:
+                _b.redirectUser = _c.sent();
+                _c.label = 3;
+              case 3:
+                return [2, this.redirectPersistenceManager];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype._redirectUserForId = function(id) {
+        var _a2, _b;
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var _this = this;
+          return tslib.__generator(this, function(_c) {
+            switch (_c.label) {
+              case 0:
+                if (!this._isInitialized)
+                  return [3, 2];
+                return [4, this.queue(function() {
+                  return tslib.__awaiter(_this, void 0, void 0, function() {
+                    return tslib.__generator(this, function(_a3) {
+                      return [2];
+                    });
+                  });
+                })];
+              case 1:
+                _c.sent();
+                _c.label = 2;
+              case 2:
+                if (((_a2 = this._currentUser) === null || _a2 === void 0 ? void 0 : _a2._redirectEventId) === id) {
+                  return [2, this._currentUser];
+                }
+                if (((_b = this.redirectUser) === null || _b === void 0 ? void 0 : _b._redirectEventId) === id) {
+                  return [2, this.redirectUser];
+                }
+                return [2, null];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype._persistUserIfCurrent = function(user) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var _this = this;
+          return tslib.__generator(this, function(_a2) {
+            if (user === this.currentUser) {
+              return [2, this.queue(function() {
+                return tslib.__awaiter(_this, void 0, void 0, function() {
+                  return tslib.__generator(this, function(_a3) {
+                    return [2, this.directlySetCurrentUser(user)];
+                  });
+                });
+              })];
+            }
+            return [2];
+          });
+        });
+      };
+      AuthImpl2.prototype._notifyListenersIfCurrent = function(user) {
+        if (user === this.currentUser) {
+          this.notifyAuthListeners();
+        }
+      };
+      AuthImpl2.prototype._key = function() {
+        return this.config.authDomain + ":" + this.config.apiKey + ":" + this.name;
+      };
+      AuthImpl2.prototype._startProactiveRefresh = function() {
+        this.isProactiveRefreshEnabled = true;
+        if (this.currentUser) {
+          this._currentUser._startProactiveRefresh();
+        }
+      };
+      AuthImpl2.prototype._stopProactiveRefresh = function() {
+        this.isProactiveRefreshEnabled = false;
+        if (this.currentUser) {
+          this._currentUser._stopProactiveRefresh();
+        }
+      };
+      Object.defineProperty(AuthImpl2.prototype, "_currentUser", {
+        get: function() {
+          return this.currentUser;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      AuthImpl2.prototype.notifyAuthListeners = function() {
+        var _a2, _b;
+        if (!this._isInitialized) {
+          return;
+        }
+        this.idTokenSubscription.next(this.currentUser);
+        var currentUid = (_b = (_a2 = this.currentUser) === null || _a2 === void 0 ? void 0 : _a2.uid) !== null && _b !== void 0 ? _b : null;
+        if (this.lastNotifiedUid !== currentUid) {
+          this.lastNotifiedUid = currentUid;
+          this.authStateSubscription.next(this.currentUser);
+        }
+      };
+      AuthImpl2.prototype.registerStateListener = function(subscription, nextOrObserver, error3, completed) {
+        var _this = this;
+        if (this._deleted) {
+          return function() {
+          };
+        }
+        var cb = typeof nextOrObserver === "function" ? nextOrObserver : nextOrObserver.next;
+        var promise = this._isInitialized ? Promise.resolve() : this._initializationPromise;
+        _assert(promise, this, "internal-error");
+        promise.then(function() {
+          return cb(_this.currentUser);
+        });
+        if (typeof nextOrObserver === "function") {
+          return subscription.addObserver(nextOrObserver, error3, completed);
+        } else {
+          return subscription.addObserver(nextOrObserver);
+        }
+      };
+      AuthImpl2.prototype.directlySetCurrentUser = function(user) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                if (this.currentUser && this.currentUser !== user) {
+                  this._currentUser._stopProactiveRefresh();
+                  if (user && this.isProactiveRefreshEnabled) {
+                    user._startProactiveRefresh();
+                  }
+                }
+                this.currentUser = user;
+                if (!user)
+                  return [3, 2];
+                return [4, this.assertedPersistence.setCurrentUser(user)];
+              case 1:
+                _a2.sent();
+                return [3, 4];
+              case 2:
+                return [4, this.assertedPersistence.removeCurrentUser()];
+              case 3:
+                _a2.sent();
+                _a2.label = 4;
+              case 4:
+                return [2];
+            }
+          });
+        });
+      };
+      AuthImpl2.prototype.queue = function(action) {
+        this.operations = this.operations.then(action, action);
+        return this.operations;
+      };
+      Object.defineProperty(AuthImpl2.prototype, "assertedPersistence", {
+        get: function() {
+          _assert(this.persistenceManager, this, "internal-error");
+          return this.persistenceManager;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      AuthImpl2.prototype._logFramework = function(framework) {
+        if (!framework || this.frameworks.includes(framework)) {
+          return;
+        }
+        this.frameworks.push(framework);
+        this.frameworks.sort();
+        this.clientVersion = _getClientVersion(this.config.clientPlatform, this._getFrameworks());
+      };
+      AuthImpl2.prototype._getFrameworks = function() {
+        return this.frameworks;
+      };
+      AuthImpl2.prototype._getSdkClientVersion = function() {
+        return this.clientVersion;
+      };
+      return AuthImpl2;
+    }();
+    function _castAuth(auth) {
+      return util.getModularInstance(auth);
+    }
+    var Subscription = function() {
+      function Subscription2(auth) {
+        var _this = this;
+        this.auth = auth;
+        this.observer = null;
+        this.addObserver = util.createSubscribe(function(observer) {
+          return _this.observer = observer;
+        });
+      }
+      Object.defineProperty(Subscription2.prototype, "next", {
+        get: function() {
+          _assert(this.observer, this.auth, "internal-error");
+          return this.observer.next.bind(this.observer);
+        },
+        enumerable: false,
+        configurable: true
+      });
+      return Subscription2;
+    }();
+    function useAuthEmulator(auth, url, options2) {
+      var authInternal = _castAuth(auth);
+      _assert(authInternal._canInitEmulator, authInternal, "emulator-config-failed");
+      _assert(/^https?:\/\//.test(url), authInternal, "invalid-emulator-scheme");
+      var disableWarnings = !!(options2 === null || options2 === void 0 ? void 0 : options2.disableWarnings);
+      var protocol = extractProtocol(url);
+      var _a2 = extractHostAndPort(url), host = _a2.host, port = _a2.port;
+      var portStr = port === null ? "" : ":" + port;
+      authInternal.config.emulator = {url: protocol + "//" + host + portStr + "/"};
+      authInternal.settings.appVerificationDisabledForTesting = true;
+      authInternal.emulatorConfig = Object.freeze({
+        host,
+        port,
+        protocol: protocol.replace(":", ""),
+        options: Object.freeze({disableWarnings})
+      });
+      emitEmulatorWarning(disableWarnings);
+    }
+    function extractProtocol(url) {
+      var protocolEnd = url.indexOf(":");
+      return protocolEnd < 0 ? "" : url.substr(0, protocolEnd + 1);
+    }
+    function extractHostAndPort(url) {
+      var protocol = extractProtocol(url);
+      var authority = /(\/\/)?([^?#/]+)/.exec(url.substr(protocol.length));
+      if (!authority) {
+        return {host: "", port: null};
+      }
+      var hostAndPort = authority[2].split("@").pop() || "";
+      var bracketedIPv6 = /^(\[[^\]]+\])(:|$)/.exec(hostAndPort);
+      if (bracketedIPv6) {
+        var host = bracketedIPv6[1];
+        return {host, port: parsePort(hostAndPort.substr(host.length + 1))};
+      } else {
+        var _a2 = hostAndPort.split(":"), host = _a2[0], port = _a2[1];
+        return {host, port: parsePort(port)};
+      }
+    }
+    function parsePort(portStr) {
+      if (!portStr) {
+        return null;
+      }
+      var port = Number(portStr);
+      if (isNaN(port)) {
+        return null;
+      }
+      return port;
+    }
+    function emitEmulatorWarning(disableBanner) {
+      function attachBanner() {
+        var el = document.createElement("p");
+        var sty = el.style;
+        el.innerText = "Running in emulator mode. Do not use with production credentials.";
+        sty.position = "fixed";
+        sty.width = "100%";
+        sty.backgroundColor = "#ffffff";
+        sty.border = ".1em solid #000000";
+        sty.color = "#b50000";
+        sty.bottom = "0px";
+        sty.left = "0px";
+        sty.margin = "0px";
+        sty.zIndex = "10000";
+        sty.textAlign = "center";
+        el.classList.add("firebase-emulator-warning");
+        document.body.appendChild(el);
+      }
+      if (typeof console !== "undefined" && typeof console.info === "function") {
+        console.info("WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.");
+      }
+      if (typeof window !== "undefined" && typeof document !== "undefined" && !disableBanner) {
+        if (document.readyState === "loading") {
+          window.addEventListener("DOMContentLoaded", attachBanner);
+        } else {
+          attachBanner();
+        }
+      }
+    }
+    var AuthCredential = function() {
+      function AuthCredential2(providerId, signInMethod) {
+        this.providerId = providerId;
+        this.signInMethod = signInMethod;
+      }
+      AuthCredential2.prototype.toJSON = function() {
+        return debugFail("not implemented");
+      };
+      AuthCredential2.prototype._getIdTokenResponse = function(_auth) {
+        return debugFail("not implemented");
+      };
+      AuthCredential2.prototype._linkToIdToken = function(_auth, _idToken) {
+        return debugFail("not implemented");
+      };
+      AuthCredential2.prototype._getReauthenticationResolver = function(_auth) {
+        return debugFail("not implemented");
+      };
+      return AuthCredential2;
+    }();
+    function resetPassword(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:resetPassword", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function updateEmailPassword(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
+        });
+      });
+    }
+    function applyActionCode(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function signInWithPassword(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPassword", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function sendOobCode(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:sendOobCode", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function sendEmailVerification(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, sendOobCode(auth, request)];
+        });
+      });
+    }
+    function sendPasswordResetEmail(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, sendOobCode(auth, request)];
+        });
+      });
+    }
+    function sendSignInLinkToEmail(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, sendOobCode(auth, request)];
+        });
+      });
+    }
+    function verifyAndChangeEmail(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, sendOobCode(auth, request)];
+        });
+      });
+    }
+    function signInWithEmailLink(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithEmailLink", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function signInWithEmailLinkForLinking(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithEmailLink", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    var EmailAuthCredential = function(_super) {
+      tslib.__extends(EmailAuthCredential2, _super);
+      function EmailAuthCredential2(_email, _password, signInMethod, _tenantId) {
+        if (_tenantId === void 0) {
+          _tenantId = null;
+        }
+        var _this = _super.call(this, "password", signInMethod) || this;
+        _this._email = _email;
+        _this._password = _password;
+        _this._tenantId = _tenantId;
+        return _this;
+      }
+      EmailAuthCredential2._fromEmailAndPassword = function(email, password) {
+        return new EmailAuthCredential2(email, password, "password");
+      };
+      EmailAuthCredential2._fromEmailAndCode = function(email, oobCode, tenantId) {
+        if (tenantId === void 0) {
+          tenantId = null;
+        }
+        return new EmailAuthCredential2(email, oobCode, "emailLink", tenantId);
+      };
+      EmailAuthCredential2.prototype.toJSON = function() {
+        return {
+          email: this._email,
+          password: this._password,
+          signInMethod: this.signInMethod,
+          tenantId: this._tenantId
+        };
+      };
+      EmailAuthCredential2.fromJSON = function(json) {
+        var obj = typeof json === "string" ? JSON.parse(json) : json;
+        if ((obj === null || obj === void 0 ? void 0 : obj.email) && (obj === null || obj === void 0 ? void 0 : obj.password)) {
+          if (obj.signInMethod === "password") {
+            return this._fromEmailAndPassword(obj.email, obj.password);
+          } else if (obj.signInMethod === "emailLink") {
+            return this._fromEmailAndCode(obj.email, obj.password, obj.tenantId);
+          }
+        }
+        return null;
+      };
+      EmailAuthCredential2.prototype._getIdTokenResponse = function(auth) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            switch (this.signInMethod) {
+              case "password":
+                return [2, signInWithPassword(auth, {
+                  returnSecureToken: true,
+                  email: this._email,
+                  password: this._password
+                })];
+              case "emailLink":
+                return [2, signInWithEmailLink(auth, {
+                  email: this._email,
+                  oobCode: this._password
+                })];
+              default:
+                _fail(auth, "internal-error");
+            }
+            return [2];
+          });
+        });
+      };
+      EmailAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          return tslib.__generator(this, function(_a2) {
+            switch (this.signInMethod) {
+              case "password":
+                return [2, updateEmailPassword(auth, {
+                  idToken,
+                  returnSecureToken: true,
+                  email: this._email,
+                  password: this._password
+                })];
+              case "emailLink":
+                return [2, signInWithEmailLinkForLinking(auth, {
+                  idToken,
+                  email: this._email,
+                  oobCode: this._password
+                })];
+              default:
+                _fail(auth, "internal-error");
+            }
+            return [2];
+          });
+        });
+      };
+      EmailAuthCredential2.prototype._getReauthenticationResolver = function(auth) {
+        return this._getIdTokenResponse(auth);
+      };
+      return EmailAuthCredential2;
+    }(AuthCredential);
+    function signInWithIdp(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithIdp", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    var IDP_REQUEST_URI = "http://localhost";
+    var OAuthCredential = function(_super) {
+      tslib.__extends(OAuthCredential2, _super);
+      function OAuthCredential2() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.pendingToken = null;
+        return _this;
+      }
+      OAuthCredential2._fromParams = function(params) {
+        var cred = new OAuthCredential2(params.providerId, params.signInMethod);
+        if (params.idToken || params.accessToken) {
+          if (params.idToken) {
+            cred.idToken = params.idToken;
+          }
+          if (params.accessToken) {
+            cred.accessToken = params.accessToken;
+          }
+          if (params.nonce && !params.pendingToken) {
+            cred.nonce = params.nonce;
+          }
+          if (params.pendingToken) {
+            cred.pendingToken = params.pendingToken;
+          }
+        } else if (params.oauthToken && params.oauthTokenSecret) {
+          cred.accessToken = params.oauthToken;
+          cred.secret = params.oauthTokenSecret;
+        } else {
+          _fail("argument-error");
+        }
+        return cred;
+      };
+      OAuthCredential2.prototype.toJSON = function() {
+        return {
+          idToken: this.idToken,
+          accessToken: this.accessToken,
+          secret: this.secret,
+          nonce: this.nonce,
+          pendingToken: this.pendingToken,
+          providerId: this.providerId,
+          signInMethod: this.signInMethod
+        };
+      };
+      OAuthCredential2.fromJSON = function(json) {
+        var obj = typeof json === "string" ? JSON.parse(json) : json;
+        var providerId = obj.providerId, signInMethod = obj.signInMethod, rest = tslib.__rest(obj, ["providerId", "signInMethod"]);
+        if (!providerId || !signInMethod) {
+          return null;
+        }
+        var cred = new OAuthCredential2(providerId, signInMethod);
+        Object.assign(cred, rest);
+        return cred;
+      };
+      OAuthCredential2.prototype._getIdTokenResponse = function(auth) {
+        var request = this.buildRequest();
+        return signInWithIdp(auth, request);
+      };
+      OAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
+        var request = this.buildRequest();
+        request.idToken = idToken;
+        return signInWithIdp(auth, request);
+      };
+      OAuthCredential2.prototype._getReauthenticationResolver = function(auth) {
+        var request = this.buildRequest();
+        request.autoCreate = false;
+        return signInWithIdp(auth, request);
+      };
+      OAuthCredential2.prototype.buildRequest = function() {
+        var request = {
+          requestUri: IDP_REQUEST_URI,
+          returnSecureToken: true
+        };
+        if (this.pendingToken) {
+          request.pendingToken = this.pendingToken;
+        } else {
+          var postBody = {};
+          if (this.idToken) {
+            postBody["id_token"] = this.idToken;
+          }
+          if (this.accessToken) {
+            postBody["access_token"] = this.accessToken;
+          }
+          if (this.secret) {
+            postBody["oauth_token_secret"] = this.secret;
+          }
+          postBody["providerId"] = this.providerId;
+          if (this.nonce && !this.pendingToken) {
+            postBody["nonce"] = this.nonce;
+          }
+          request.postBody = util.querystring(postBody);
+        }
+        return request;
+      };
+      return OAuthCredential2;
+    }(AuthCredential);
+    var _a$1;
+    function sendPhoneVerificationCode(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:sendVerificationCode", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function signInWithPhoneNumber(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function linkWithPhoneNumber(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var response;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, request))];
+            case 1:
+              response = _a2.sent();
+              if (response.temporaryProof) {
+                throw _makeTaggedError(auth, "account-exists-with-different-credential", response);
+              }
+              return [2, response];
+          }
+        });
+      });
+    }
+    var VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_ = (_a$1 = {}, _a$1["USER_NOT_FOUND"] = "user-not-found", _a$1);
+    function verifyPhoneNumberForExisting(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var apiRequest;
+        return tslib.__generator(this, function(_a2) {
+          apiRequest = tslib.__assign(tslib.__assign({}, request), {operation: "REAUTH"});
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, apiRequest), VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_)];
+        });
+      });
+    }
+    var PhoneAuthCredential = function(_super) {
+      tslib.__extends(PhoneAuthCredential2, _super);
+      function PhoneAuthCredential2(params) {
+        var _this = _super.call(this, "phone", "phone") || this;
+        _this.params = params;
+        return _this;
+      }
+      PhoneAuthCredential2._fromVerification = function(verificationId, verificationCode) {
+        return new PhoneAuthCredential2({verificationId, verificationCode});
+      };
+      PhoneAuthCredential2._fromTokenResponse = function(phoneNumber, temporaryProof) {
+        return new PhoneAuthCredential2({phoneNumber, temporaryProof});
+      };
+      PhoneAuthCredential2.prototype._getIdTokenResponse = function(auth) {
+        return signInWithPhoneNumber(auth, this._makeVerificationRequest());
+      };
+      PhoneAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
+        return linkWithPhoneNumber(auth, tslib.__assign({idToken}, this._makeVerificationRequest()));
+      };
+      PhoneAuthCredential2.prototype._getReauthenticationResolver = function(auth) {
+        return verifyPhoneNumberForExisting(auth, this._makeVerificationRequest());
+      };
+      PhoneAuthCredential2.prototype._makeVerificationRequest = function() {
+        var _a2 = this.params, temporaryProof = _a2.temporaryProof, phoneNumber = _a2.phoneNumber, verificationId = _a2.verificationId, verificationCode = _a2.verificationCode;
+        if (temporaryProof && phoneNumber) {
+          return {temporaryProof, phoneNumber};
+        }
+        return {
+          sessionInfo: verificationId,
+          code: verificationCode
+        };
+      };
+      PhoneAuthCredential2.prototype.toJSON = function() {
+        var obj = {
+          providerId: this.providerId
+        };
+        if (this.params.phoneNumber) {
+          obj.phoneNumber = this.params.phoneNumber;
+        }
+        if (this.params.temporaryProof) {
+          obj.temporaryProof = this.params.temporaryProof;
+        }
+        if (this.params.verificationCode) {
+          obj.verificationCode = this.params.verificationCode;
+        }
+        if (this.params.verificationId) {
+          obj.verificationId = this.params.verificationId;
+        }
+        return obj;
+      };
+      PhoneAuthCredential2.fromJSON = function(json) {
+        if (typeof json === "string") {
+          json = JSON.parse(json);
+        }
+        var _a2 = json, verificationId = _a2.verificationId, verificationCode = _a2.verificationCode, phoneNumber = _a2.phoneNumber, temporaryProof = _a2.temporaryProof;
+        if (!verificationCode && !verificationId && !phoneNumber && !temporaryProof) {
+          return null;
+        }
+        return new PhoneAuthCredential2({
+          verificationId,
+          verificationCode,
+          phoneNumber,
+          temporaryProof
+        });
+      };
+      return PhoneAuthCredential2;
+    }(AuthCredential);
+    function parseMode(mode) {
+      switch (mode) {
+        case "recoverEmail":
+          return "RECOVER_EMAIL";
+        case "resetPassword":
+          return "PASSWORD_RESET";
+        case "signIn":
+          return "EMAIL_SIGNIN";
+        case "verifyEmail":
+          return "VERIFY_EMAIL";
+        case "verifyAndChangeEmail":
+          return "VERIFY_AND_CHANGE_EMAIL";
+        case "revertSecondFactorAddition":
+          return "REVERT_SECOND_FACTOR_ADDITION";
+        default:
+          return null;
+      }
+    }
+    function parseDeepLink(url) {
+      var link = util.querystringDecode(util.extractQuerystring(url))["link"];
+      var doubleDeepLink = link ? util.querystringDecode(util.extractQuerystring(link))["deep_link_id"] : null;
+      var iOSDeepLink = util.querystringDecode(util.extractQuerystring(url))["deep_link_id"];
+      var iOSDoubleDeepLink = iOSDeepLink ? util.querystringDecode(util.extractQuerystring(iOSDeepLink))["link"] : null;
+      return iOSDoubleDeepLink || iOSDeepLink || doubleDeepLink || link || url;
+    }
+    var ActionCodeURL = function() {
+      function ActionCodeURL2(actionLink) {
+        var _a2, _b, _c, _d, _e, _f;
+        var searchParams = util.querystringDecode(util.extractQuerystring(actionLink));
+        var apiKey = (_a2 = searchParams["apiKey"]) !== null && _a2 !== void 0 ? _a2 : null;
+        var code = (_b = searchParams["oobCode"]) !== null && _b !== void 0 ? _b : null;
+        var operation = parseMode((_c = searchParams["mode"]) !== null && _c !== void 0 ? _c : null);
+        _assert(apiKey && code && operation, "argument-error");
+        this.apiKey = apiKey;
+        this.operation = operation;
+        this.code = code;
+        this.continueUrl = (_d = searchParams["continueUrl"]) !== null && _d !== void 0 ? _d : null;
+        this.languageCode = (_e = searchParams["languageCode"]) !== null && _e !== void 0 ? _e : null;
+        this.tenantId = (_f = searchParams["tenantId"]) !== null && _f !== void 0 ? _f : null;
+      }
+      ActionCodeURL2.parseLink = function(link) {
+        var actionLink = parseDeepLink(link);
+        try {
+          return new ActionCodeURL2(actionLink);
+        } catch (_a2) {
+          return null;
+        }
+      };
+      return ActionCodeURL2;
+    }();
+    function parseActionCodeURL(link) {
+      return ActionCodeURL.parseLink(link);
+    }
+    var EmailAuthProvider = function() {
+      function EmailAuthProvider2() {
+        this.providerId = EmailAuthProvider2.PROVIDER_ID;
+      }
+      EmailAuthProvider2.credential = function(email, password) {
+        return EmailAuthCredential._fromEmailAndPassword(email, password);
+      };
+      EmailAuthProvider2.credentialWithLink = function(email, emailLink) {
+        var actionCodeUrl = ActionCodeURL.parseLink(emailLink);
+        _assert(actionCodeUrl, "argument-error");
+        return EmailAuthCredential._fromEmailAndCode(email, actionCodeUrl.code, actionCodeUrl.tenantId);
+      };
+      EmailAuthProvider2.PROVIDER_ID = "password";
+      EmailAuthProvider2.EMAIL_PASSWORD_SIGN_IN_METHOD = "password";
+      EmailAuthProvider2.EMAIL_LINK_SIGN_IN_METHOD = "emailLink";
+      return EmailAuthProvider2;
+    }();
+    var FederatedAuthProvider = function() {
+      function FederatedAuthProvider2(providerId) {
+        this.providerId = providerId;
+        this.defaultLanguageCode = null;
+        this.customParameters = {};
+      }
+      FederatedAuthProvider2.prototype.setDefaultLanguage = function(languageCode) {
+        this.defaultLanguageCode = languageCode;
+      };
+      FederatedAuthProvider2.prototype.setCustomParameters = function(customOAuthParameters) {
+        this.customParameters = customOAuthParameters;
+        return this;
+      };
+      FederatedAuthProvider2.prototype.getCustomParameters = function() {
+        return this.customParameters;
+      };
+      return FederatedAuthProvider2;
+    }();
+    var BaseOAuthProvider = function(_super) {
+      tslib.__extends(BaseOAuthProvider2, _super);
+      function BaseOAuthProvider2() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.scopes = [];
+        return _this;
+      }
+      BaseOAuthProvider2.prototype.addScope = function(scope) {
+        if (!this.scopes.includes(scope)) {
+          this.scopes.push(scope);
+        }
+        return this;
+      };
+      BaseOAuthProvider2.prototype.getScopes = function() {
+        return tslib.__spreadArray([], this.scopes);
+      };
+      return BaseOAuthProvider2;
+    }(FederatedAuthProvider);
+    var OAuthProvider = function(_super) {
+      tslib.__extends(OAuthProvider2, _super);
+      function OAuthProvider2() {
+        return _super !== null && _super.apply(this, arguments) || this;
+      }
+      OAuthProvider2.credentialFromJSON = function(json) {
+        var obj = typeof json === "string" ? JSON.parse(json) : json;
+        _assert("providerId" in obj && "signInMethod" in obj, "argument-error");
+        return OAuthCredential._fromParams(obj);
+      };
+      OAuthProvider2.prototype.credential = function(params) {
+        return this._credential(params);
+      };
+      OAuthProvider2.prototype._credential = function(params) {
+        _assert(params.idToken || params.accessToken, "argument-error");
+        return OAuthCredential._fromParams(tslib.__assign(tslib.__assign({}, params), {providerId: this.providerId, signInMethod: this.providerId}));
+      };
+      OAuthProvider2.credentialFromResult = function(userCredential) {
+        return OAuthProvider2.oauthCredentialFromTaggedObject(userCredential);
+      };
+      OAuthProvider2.credentialFromError = function(error3) {
+        return OAuthProvider2.oauthCredentialFromTaggedObject(error3.customData || {});
+      };
+      OAuthProvider2.oauthCredentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse) {
+          return null;
+        }
+        var _b = tokenResponse, oauthIdToken = _b.oauthIdToken, oauthAccessToken = _b.oauthAccessToken, oauthTokenSecret = _b.oauthTokenSecret, pendingToken = _b.pendingToken, nonce = _b.nonce, providerId = _b.providerId;
+        if (!oauthAccessToken && !oauthTokenSecret && !oauthIdToken && !pendingToken) {
+          return null;
+        }
+        if (!providerId) {
+          return null;
+        }
+        try {
+          return new OAuthProvider2(providerId)._credential({
+            idToken: oauthIdToken,
+            accessToken: oauthAccessToken,
+            rawNonce: nonce,
+            pendingToken
+          });
+        } catch (e) {
+          return null;
+        }
+      };
+      return OAuthProvider2;
+    }(BaseOAuthProvider);
+    var FacebookAuthProvider = function(_super) {
+      tslib.__extends(FacebookAuthProvider2, _super);
+      function FacebookAuthProvider2() {
+        return _super.call(this, "facebook.com") || this;
+      }
+      FacebookAuthProvider2.credential = function(accessToken) {
+        return OAuthCredential._fromParams({
+          providerId: FacebookAuthProvider2.PROVIDER_ID,
+          signInMethod: FacebookAuthProvider2.FACEBOOK_SIGN_IN_METHOD,
+          accessToken
+        });
+      };
+      FacebookAuthProvider2.credentialFromResult = function(userCredential) {
+        return FacebookAuthProvider2.credentialFromTaggedObject(userCredential);
+      };
+      FacebookAuthProvider2.credentialFromError = function(error3) {
+        return FacebookAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      };
+      FacebookAuthProvider2.credentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse || !("oauthAccessToken" in tokenResponse)) {
+          return null;
+        }
+        if (!tokenResponse.oauthAccessToken) {
+          return null;
+        }
+        try {
+          return FacebookAuthProvider2.credential(tokenResponse.oauthAccessToken);
+        } catch (_b) {
+          return null;
+        }
+      };
+      FacebookAuthProvider2.FACEBOOK_SIGN_IN_METHOD = "facebook.com";
+      FacebookAuthProvider2.PROVIDER_ID = "facebook.com";
+      return FacebookAuthProvider2;
+    }(BaseOAuthProvider);
+    var GoogleAuthProvider = function(_super) {
+      tslib.__extends(GoogleAuthProvider2, _super);
+      function GoogleAuthProvider2() {
+        var _this = _super.call(this, "google.com") || this;
+        _this.addScope("profile");
+        return _this;
+      }
+      GoogleAuthProvider2.credential = function(idToken, accessToken) {
+        return OAuthCredential._fromParams({
+          providerId: GoogleAuthProvider2.PROVIDER_ID,
+          signInMethod: GoogleAuthProvider2.GOOGLE_SIGN_IN_METHOD,
+          idToken,
+          accessToken
+        });
+      };
+      GoogleAuthProvider2.credentialFromResult = function(userCredential) {
+        return GoogleAuthProvider2.credentialFromTaggedObject(userCredential);
+      };
+      GoogleAuthProvider2.credentialFromError = function(error3) {
+        return GoogleAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      };
+      GoogleAuthProvider2.credentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse) {
+          return null;
+        }
+        var _b = tokenResponse, oauthIdToken = _b.oauthIdToken, oauthAccessToken = _b.oauthAccessToken;
+        if (!oauthIdToken && !oauthAccessToken) {
+          return null;
+        }
+        try {
+          return GoogleAuthProvider2.credential(oauthIdToken, oauthAccessToken);
+        } catch (_c) {
+          return null;
+        }
+      };
+      GoogleAuthProvider2.GOOGLE_SIGN_IN_METHOD = "google.com";
+      GoogleAuthProvider2.PROVIDER_ID = "google.com";
+      return GoogleAuthProvider2;
+    }(BaseOAuthProvider);
+    var GithubAuthProvider = function(_super) {
+      tslib.__extends(GithubAuthProvider2, _super);
+      function GithubAuthProvider2() {
+        return _super.call(this, "github.com") || this;
+      }
+      GithubAuthProvider2.credential = function(accessToken) {
+        return OAuthCredential._fromParams({
+          providerId: GithubAuthProvider2.PROVIDER_ID,
+          signInMethod: GithubAuthProvider2.GITHUB_SIGN_IN_METHOD,
+          accessToken
+        });
+      };
+      GithubAuthProvider2.credentialFromResult = function(userCredential) {
+        return GithubAuthProvider2.credentialFromTaggedObject(userCredential);
+      };
+      GithubAuthProvider2.credentialFromError = function(error3) {
+        return GithubAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      };
+      GithubAuthProvider2.credentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse || !("oauthAccessToken" in tokenResponse)) {
+          return null;
+        }
+        if (!tokenResponse.oauthAccessToken) {
+          return null;
+        }
+        try {
+          return GithubAuthProvider2.credential(tokenResponse.oauthAccessToken);
+        } catch (_b) {
+          return null;
+        }
+      };
+      GithubAuthProvider2.GITHUB_SIGN_IN_METHOD = "github.com";
+      GithubAuthProvider2.PROVIDER_ID = "github.com";
+      return GithubAuthProvider2;
+    }(BaseOAuthProvider);
+    var IDP_REQUEST_URI$1 = "http://localhost";
+    var SAMLAuthCredential = function(_super) {
+      tslib.__extends(SAMLAuthCredential2, _super);
+      function SAMLAuthCredential2(providerId, pendingToken) {
+        var _this = _super.call(this, providerId, providerId) || this;
+        _this.pendingToken = pendingToken;
+        return _this;
+      }
+      SAMLAuthCredential2.prototype._getIdTokenResponse = function(auth) {
+        var request = this.buildRequest();
+        return signInWithIdp(auth, request);
+      };
+      SAMLAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
+        var request = this.buildRequest();
+        request.idToken = idToken;
+        return signInWithIdp(auth, request);
+      };
+      SAMLAuthCredential2.prototype._getReauthenticationResolver = function(auth) {
+        var request = this.buildRequest();
+        request.autoCreate = false;
+        return signInWithIdp(auth, request);
+      };
+      SAMLAuthCredential2.prototype.toJSON = function() {
+        return {
+          signInMethod: this.signInMethod,
+          providerId: this.providerId,
+          pendingToken: this.pendingToken
+        };
+      };
+      SAMLAuthCredential2.fromJSON = function(json) {
+        var obj = typeof json === "string" ? JSON.parse(json) : json;
+        var providerId = obj.providerId, signInMethod = obj.signInMethod, pendingToken = obj.pendingToken;
+        if (!providerId || !signInMethod || !pendingToken || providerId !== signInMethod) {
+          return null;
+        }
+        return new SAMLAuthCredential2(providerId, pendingToken);
+      };
+      SAMLAuthCredential2._create = function(providerId, pendingToken) {
+        return new SAMLAuthCredential2(providerId, pendingToken);
+      };
+      SAMLAuthCredential2.prototype.buildRequest = function() {
+        return {
+          requestUri: IDP_REQUEST_URI$1,
+          returnSecureToken: true,
+          pendingToken: this.pendingToken
+        };
+      };
+      return SAMLAuthCredential2;
+    }(AuthCredential);
+    var SAML_PROVIDER_PREFIX = "saml.";
+    var SAMLAuthProvider = function(_super) {
+      tslib.__extends(SAMLAuthProvider2, _super);
+      function SAMLAuthProvider2(providerId) {
+        var _this = this;
+        _assert(providerId.startsWith(SAML_PROVIDER_PREFIX), "argument-error");
+        _this = _super.call(this, providerId) || this;
+        return _this;
+      }
+      SAMLAuthProvider2.credentialFromResult = function(userCredential) {
+        return SAMLAuthProvider2.samlCredentialFromTaggedObject(userCredential);
+      };
+      SAMLAuthProvider2.credentialFromError = function(error3) {
+        return SAMLAuthProvider2.samlCredentialFromTaggedObject(error3.customData || {});
+      };
+      SAMLAuthProvider2.credentialFromJSON = function(json) {
+        var credential = SAMLAuthCredential.fromJSON(json);
+        _assert(credential, "argument-error");
+        return credential;
+      };
+      SAMLAuthProvider2.samlCredentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse) {
+          return null;
+        }
+        var _b = tokenResponse, pendingToken = _b.pendingToken, providerId = _b.providerId;
+        if (!pendingToken || !providerId) {
+          return null;
+        }
+        try {
+          return SAMLAuthCredential._create(providerId, pendingToken);
+        } catch (e) {
+          return null;
+        }
+      };
+      return SAMLAuthProvider2;
+    }(FederatedAuthProvider);
+    var TwitterAuthProvider = function(_super) {
+      tslib.__extends(TwitterAuthProvider2, _super);
+      function TwitterAuthProvider2() {
+        return _super.call(this, "twitter.com") || this;
+      }
+      TwitterAuthProvider2.credential = function(token, secret) {
+        return OAuthCredential._fromParams({
+          providerId: TwitterAuthProvider2.PROVIDER_ID,
+          signInMethod: TwitterAuthProvider2.TWITTER_SIGN_IN_METHOD,
+          oauthToken: token,
+          oauthTokenSecret: secret
+        });
+      };
+      TwitterAuthProvider2.credentialFromResult = function(userCredential) {
+        return TwitterAuthProvider2.credentialFromTaggedObject(userCredential);
+      };
+      TwitterAuthProvider2.credentialFromError = function(error3) {
+        return TwitterAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      };
+      TwitterAuthProvider2.credentialFromTaggedObject = function(_a2) {
+        var tokenResponse = _a2._tokenResponse;
+        if (!tokenResponse) {
+          return null;
+        }
+        var _b = tokenResponse, oauthAccessToken = _b.oauthAccessToken, oauthTokenSecret = _b.oauthTokenSecret;
+        if (!oauthAccessToken || !oauthTokenSecret) {
+          return null;
+        }
+        try {
+          return TwitterAuthProvider2.credential(oauthAccessToken, oauthTokenSecret);
+        } catch (_c) {
+          return null;
+        }
+      };
+      TwitterAuthProvider2.TWITTER_SIGN_IN_METHOD = "twitter.com";
+      TwitterAuthProvider2.PROVIDER_ID = "twitter.com";
+      return TwitterAuthProvider2;
+    }(BaseOAuthProvider);
+    function signUp(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signUp", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    var UserCredentialImpl = function() {
+      function UserCredentialImpl2(params) {
+        this.user = params.user;
+        this.providerId = params.providerId;
+        this._tokenResponse = params._tokenResponse;
+        this.operationType = params.operationType;
+      }
+      UserCredentialImpl2._fromIdTokenResponse = function(auth, operationType, idTokenResponse, isAnonymous) {
+        if (isAnonymous === void 0) {
+          isAnonymous = false;
+        }
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var user, providerId, userCred;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, UserImpl._fromIdTokenResponse(auth, idTokenResponse, isAnonymous)];
+              case 1:
+                user = _a2.sent();
+                providerId = providerIdForResponse(idTokenResponse);
+                userCred = new UserCredentialImpl2({
+                  user,
+                  providerId,
+                  _tokenResponse: idTokenResponse,
+                  operationType
+                });
+                return [2, userCred];
+            }
+          });
+        });
+      };
+      UserCredentialImpl2._forOperation = function(user, operationType, response) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var providerId;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                return [4, user._updateTokensIfNecessary(response, true)];
+              case 1:
+                _a2.sent();
+                providerId = providerIdForResponse(response);
+                return [2, new UserCredentialImpl2({
+                  user,
+                  providerId,
+                  _tokenResponse: response,
+                  operationType
+                })];
+            }
+          });
+        });
+      };
+      return UserCredentialImpl2;
+    }();
+    function providerIdForResponse(response) {
+      if (response.providerId) {
+        return response.providerId;
+      }
+      if ("phoneNumber" in response) {
+        return "phone";
+      }
+      return null;
+    }
+    function signInAnonymously(auth) {
+      var _a2;
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authInternal, response, userCredential;
+        return tslib.__generator(this, function(_b) {
+          switch (_b.label) {
+            case 0:
+              authInternal = _castAuth(auth);
+              if ((_a2 = authInternal.currentUser) === null || _a2 === void 0 ? void 0 : _a2.isAnonymous) {
+                return [2, new UserCredentialImpl({
+                  user: authInternal.currentUser,
+                  providerId: null,
+                  operationType: "signIn"
+                })];
+              }
+              return [4, signUp(authInternal, {
+                returnSecureToken: true
+              })];
+            case 1:
+              response = _b.sent();
+              return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response, true)];
+            case 2:
+              userCredential = _b.sent();
+              return [4, authInternal._updateCurrentUser(userCredential.user)];
+            case 3:
+              _b.sent();
+              return [2, userCredential];
+          }
+        });
+      });
+    }
+    var MultiFactorError = function(_super) {
+      tslib.__extends(MultiFactorError2, _super);
+      function MultiFactorError2(auth, error3, operationType, user) {
+        var _a2;
+        var _this = _super.call(this, error3.code, error3.message) || this;
+        _this.operationType = operationType;
+        _this.user = user;
+        _this.name = "FirebaseError";
+        Object.setPrototypeOf(_this, MultiFactorError2.prototype);
+        _this.appName = auth.name;
+        _this.code = error3.code;
+        _this.tenantId = (_a2 = auth.tenantId) !== null && _a2 !== void 0 ? _a2 : void 0;
+        _this.serverResponse = error3.customData.serverResponse;
+        return _this;
+      }
+      MultiFactorError2._fromErrorAndOperation = function(auth, error3, operationType, user) {
+        return new MultiFactorError2(auth, error3, operationType, user);
+      };
+      return MultiFactorError2;
+    }(util.FirebaseError);
+    function _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential, user) {
+      var idTokenProvider = operationType === "reauthenticate" ? credential._getReauthenticationResolver(auth) : credential._getIdTokenResponse(auth);
+      return idTokenProvider.catch(function(error3) {
+        if (error3.code === "auth/multi-factor-auth-required") {
+          throw MultiFactorError._fromErrorAndOperation(auth, error3, operationType, user);
+        }
+        throw error3;
+      });
+    }
+    function providerDataAsNames(providerData) {
+      return new Set(providerData.map(function(_a2) {
+        var providerId = _a2.providerId;
+        return providerId;
+      }).filter(function(pid) {
+        return !!pid;
+      }));
+    }
+    function unlink(user, providerId) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal, providerUserInfo, _a2, _b, providersLeft;
+        var _c;
+        return tslib.__generator(this, function(_d) {
+          switch (_d.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, _assertLinkedStatus(true, userInternal, providerId)];
+            case 1:
+              _d.sent();
+              _a2 = deleteLinkedAccounts;
+              _b = [userInternal.auth];
+              _c = {};
+              return [4, userInternal.getIdToken()];
+            case 2:
+              return [4, _a2.apply(void 0, _b.concat([(_c.idToken = _d.sent(), _c.deleteProvider = [providerId], _c)]))];
+            case 3:
+              providerUserInfo = _d.sent().providerUserInfo;
+              providersLeft = providerDataAsNames(providerUserInfo || []);
+              userInternal.providerData = userInternal.providerData.filter(function(pd) {
+                return providersLeft.has(pd.providerId);
+              });
+              if (!providersLeft.has("phone")) {
+                userInternal.phoneNumber = null;
+              }
+              return [4, userInternal.auth._persistUserIfCurrent(userInternal)];
+            case 4:
+              _d.sent();
+              return [2, userInternal];
+          }
+        });
+      });
+    }
+    function _link(user, credential, bypassAuthState) {
+      if (bypassAuthState === void 0) {
+        bypassAuthState = false;
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var response, _a2, _b, _c, _d, _e;
+        return tslib.__generator(this, function(_f) {
+          switch (_f.label) {
+            case 0:
+              _a2 = _logoutIfInvalidated;
+              _b = [user];
+              _d = (_c = credential)._linkToIdToken;
+              _e = [user.auth];
+              return [4, user.getIdToken()];
+            case 1:
+              return [4, _a2.apply(void 0, _b.concat([_d.apply(_c, _e.concat([_f.sent()])), bypassAuthState]))];
+            case 2:
+              response = _f.sent();
+              return [2, UserCredentialImpl._forOperation(user, "link", response)];
+          }
+        });
+      });
+    }
+    function _assertLinkedStatus(expected, user, provider) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var providerIds, code;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, _reloadWithoutSaving(user)];
+            case 1:
+              _a2.sent();
+              providerIds = providerDataAsNames(user.providerData);
+              code = expected === false ? "provider-already-linked" : "no-such-provider";
+              _assert(providerIds.has(provider) === expected, user.auth, code);
+              return [2];
+          }
+        });
+      });
+    }
+    function _reauthenticate(user, credential, bypassAuthState) {
+      if (bypassAuthState === void 0) {
+        bypassAuthState = false;
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var auth, operationType, response, parsed, localId, e_1;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              auth = user.auth;
+              operationType = "reauthenticate";
+              _a2.label = 1;
+            case 1:
+              _a2.trys.push([1, 3, , 4]);
+              return [4, _logoutIfInvalidated(user, _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential, user), bypassAuthState)];
+            case 2:
+              response = _a2.sent();
+              _assert(response.idToken, auth, "internal-error");
+              parsed = _parseToken(response.idToken);
+              _assert(parsed, auth, "internal-error");
+              localId = parsed.sub;
+              _assert(user.uid === localId, auth, "user-mismatch");
+              return [2, UserCredentialImpl._forOperation(user, operationType, response)];
+            case 3:
+              e_1 = _a2.sent();
+              if ((e_1 === null || e_1 === void 0 ? void 0 : e_1.code) === "auth/user-not-found") {
+                _fail(auth, "user-mismatch");
+              }
+              throw e_1;
+            case 4:
+              return [2];
+          }
+        });
+      });
+    }
+    function _signInWithCredential(auth, credential, bypassAuthState) {
+      if (bypassAuthState === void 0) {
+        bypassAuthState = false;
+      }
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var operationType, response, userCredential;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              operationType = "signIn";
+              return [4, _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential)];
+            case 1:
+              response = _a2.sent();
+              return [4, UserCredentialImpl._fromIdTokenResponse(auth, operationType, response)];
+            case 2:
+              userCredential = _a2.sent();
+              if (!!bypassAuthState)
+                return [3, 4];
+              return [4, auth._updateCurrentUser(userCredential.user)];
+            case 3:
+              _a2.sent();
+              _a2.label = 4;
+            case 4:
+              return [2, userCredential];
+          }
+        });
+      });
+    }
+    function signInWithCredential(auth, credential) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _signInWithCredential(_castAuth(auth), credential)];
+        });
+      });
+    }
+    function linkWithCredential(user, credential) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, _assertLinkedStatus(false, userInternal, credential.providerId)];
+            case 1:
+              _a2.sent();
+              return [2, _link(userInternal, credential)];
+          }
+        });
+      });
+    }
+    function reauthenticateWithCredential(user, credential) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _reauthenticate(util.getModularInstance(user), credential)];
+        });
+      });
+    }
+    function signInWithCustomToken(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithCustomToken", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function signInWithCustomToken$1(auth, customToken) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authInternal, response, cred;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              authInternal = _castAuth(auth);
+              return [4, signInWithCustomToken(authInternal, {
+                token: customToken,
+                returnSecureToken: true
+              })];
+            case 1:
+              response = _a2.sent();
+              return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response)];
+            case 2:
+              cred = _a2.sent();
+              return [4, authInternal._updateCurrentUser(cred.user)];
+            case 3:
+              _a2.sent();
+              return [2, cred];
+          }
+        });
+      });
+    }
+    var MultiFactorInfoImpl = function() {
+      function MultiFactorInfoImpl2(factorId, response) {
+        this.factorId = factorId;
+        this.uid = response.mfaEnrollmentId;
+        this.enrollmentTime = new Date(response.enrolledAt).toUTCString();
+        this.displayName = response.displayName;
+      }
+      MultiFactorInfoImpl2._fromServerResponse = function(auth, enrollment) {
+        if ("phoneInfo" in enrollment) {
+          return PhoneMultiFactorInfo._fromServerResponse(auth, enrollment);
+        }
+        return _fail(auth, "internal-error");
+      };
+      return MultiFactorInfoImpl2;
+    }();
+    var PhoneMultiFactorInfo = function(_super) {
+      tslib.__extends(PhoneMultiFactorInfo2, _super);
+      function PhoneMultiFactorInfo2(response) {
+        var _this = _super.call(this, "phone", response) || this;
+        _this.phoneNumber = response.phoneInfo;
+        return _this;
+      }
+      PhoneMultiFactorInfo2._fromServerResponse = function(_auth, enrollment) {
+        return new PhoneMultiFactorInfo2(enrollment);
+      };
+      return PhoneMultiFactorInfo2;
+    }(MultiFactorInfoImpl);
+    function _setActionCodeSettingsOnRequest(auth, request, actionCodeSettings) {
+      var _a2;
+      _assert(((_a2 = actionCodeSettings.url) === null || _a2 === void 0 ? void 0 : _a2.length) > 0, auth, "invalid-continue-uri");
+      _assert(typeof actionCodeSettings.dynamicLinkDomain === "undefined" || actionCodeSettings.dynamicLinkDomain.length > 0, auth, "invalid-dynamic-link-domain");
+      request.continueUrl = actionCodeSettings.url;
+      request.dynamicLinkDomain = actionCodeSettings.dynamicLinkDomain;
+      request.canHandleCodeInApp = actionCodeSettings.handleCodeInApp;
+      if (actionCodeSettings.iOS) {
+        _assert(actionCodeSettings.iOS.bundleId.length > 0, auth, "missing-ios-bundle-id");
+        request.iosBundleId = actionCodeSettings.iOS.bundleId;
+      }
+      if (actionCodeSettings.android) {
+        _assert(actionCodeSettings.android.packageName.length > 0, auth, "missing-android-pkg-name");
+        request.androidInstallApp = actionCodeSettings.android.installApp;
+        request.androidMinimumVersionCode = actionCodeSettings.android.minimumVersion;
+        request.androidPackageName = actionCodeSettings.android.packageName;
+      }
+    }
+    function sendPasswordResetEmail$1(auth, email, actionCodeSettings) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authModular, request;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              authModular = util.getModularInstance(auth);
+              request = {
+                requestType: "PASSWORD_RESET",
+                email
+              };
+              if (actionCodeSettings) {
+                _setActionCodeSettingsOnRequest(authModular, request, actionCodeSettings);
+              }
+              return [4, sendPasswordResetEmail(authModular, request)];
+            case 1:
+              _a2.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function confirmPasswordReset(auth, oobCode, newPassword) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, resetPassword(util.getModularInstance(auth), {
+                oobCode,
+                newPassword
+              })];
+            case 1:
+              _a2.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function applyActionCode$1(auth, oobCode) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, applyActionCode(util.getModularInstance(auth), {oobCode})];
+            case 1:
+              _a2.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function checkActionCode(auth, oobCode) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authModular, response, operation, multiFactorInfo;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              authModular = util.getModularInstance(auth);
+              return [4, resetPassword(authModular, {oobCode})];
+            case 1:
+              response = _a2.sent();
+              operation = response.requestType;
+              _assert(operation, authModular, "internal-error");
+              switch (operation) {
+                case "EMAIL_SIGNIN":
+                  break;
+                case "VERIFY_AND_CHANGE_EMAIL":
+                  _assert(response.newEmail, authModular, "internal-error");
+                  break;
+                case "REVERT_SECOND_FACTOR_ADDITION":
+                  _assert(response.mfaInfo, authModular, "internal-error");
+                default:
+                  _assert(response.email, authModular, "internal-error");
+              }
+              multiFactorInfo = null;
+              if (response.mfaInfo) {
+                multiFactorInfo = MultiFactorInfoImpl._fromServerResponse(_castAuth(authModular), response.mfaInfo);
+              }
+              return [2, {
+                data: {
+                  email: (response.requestType === "VERIFY_AND_CHANGE_EMAIL" ? response.newEmail : response.email) || null,
+                  previousEmail: (response.requestType === "VERIFY_AND_CHANGE_EMAIL" ? response.email : response.newEmail) || null,
+                  multiFactorInfo
+                },
+                operation
+              }];
+          }
+        });
+      });
+    }
+    function verifyPasswordResetCode(auth, code) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var data;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              return [4, checkActionCode(util.getModularInstance(auth), code)];
+            case 1:
+              data = _a2.sent().data;
+              return [2, data.email];
+          }
+        });
+      });
+    }
+    function createUserWithEmailAndPassword(auth, email, password) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authInternal, response, userCredential;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              authInternal = _castAuth(auth);
+              return [4, signUp(authInternal, {
+                returnSecureToken: true,
+                email,
+                password
+              })];
+            case 1:
+              response = _a2.sent();
+              return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response)];
+            case 2:
+              userCredential = _a2.sent();
+              return [4, authInternal._updateCurrentUser(userCredential.user)];
+            case 3:
+              _a2.sent();
+              return [2, userCredential];
+          }
+        });
+      });
+    }
+    function signInWithEmailAndPassword(auth, email, password) {
+      return signInWithCredential(util.getModularInstance(auth), EmailAuthProvider.credential(email, password));
+    }
+    function sendSignInLinkToEmail$1(auth, email, actionCodeSettings) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authModular, request;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              authModular = util.getModularInstance(auth);
+              request = {
+                requestType: "EMAIL_SIGNIN",
+                email
+              };
+              _assert(actionCodeSettings.handleCodeInApp, authModular, "argument-error");
+              if (actionCodeSettings) {
+                _setActionCodeSettingsOnRequest(authModular, request, actionCodeSettings);
+              }
+              return [4, sendSignInLinkToEmail(authModular, request)];
+            case 1:
+              _a2.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function isSignInWithEmailLink(auth, emailLink) {
+      var actionCodeUrl = ActionCodeURL.parseLink(emailLink);
+      return (actionCodeUrl === null || actionCodeUrl === void 0 ? void 0 : actionCodeUrl.operation) === "EMAIL_SIGNIN";
+    }
+    function signInWithEmailLink$1(auth, email, emailLink) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var authModular, credential;
+        return tslib.__generator(this, function(_a2) {
+          authModular = util.getModularInstance(auth);
+          credential = EmailAuthProvider.credentialWithLink(email, emailLink || _getCurrentUrl());
+          _assert(credential._tenantId === (authModular.tenantId || null), authModular, "tenant-id-mismatch");
+          return [2, signInWithCredential(authModular, credential)];
+        });
+      });
+    }
+    function createAuthUri(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:createAuthUri", _addTidIfNecessary(auth, request))];
+        });
+      });
+    }
+    function fetchSignInMethodsForEmail(auth, email) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var continueUri, request, signinMethods;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              continueUri = _isHttpOrHttps() ? _getCurrentUrl() : "http://localhost";
+              request = {
+                identifier: email,
+                continueUri
+              };
+              return [4, createAuthUri(util.getModularInstance(auth), request)];
+            case 1:
+              signinMethods = _a2.sent().signinMethods;
+              return [2, signinMethods || []];
+          }
+        });
+      });
+    }
+    function sendEmailVerification$1(user, actionCodeSettings) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal, idToken, request, email;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, user.getIdToken()];
+            case 1:
+              idToken = _a2.sent();
+              request = {
+                requestType: "VERIFY_EMAIL",
+                idToken
+              };
+              if (actionCodeSettings) {
+                _setActionCodeSettingsOnRequest(userInternal.auth, request, actionCodeSettings);
+              }
+              return [4, sendEmailVerification(userInternal.auth, request)];
+            case 2:
+              email = _a2.sent().email;
+              if (!(email !== user.email))
+                return [3, 4];
+              return [4, user.reload()];
+            case 3:
+              _a2.sent();
+              _a2.label = 4;
+            case 4:
+              return [2];
+          }
+        });
+      });
+    }
+    function verifyBeforeUpdateEmail(user, newEmail, actionCodeSettings) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal, idToken, request, email;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              userInternal = util.getModularInstance(user);
+              return [4, user.getIdToken()];
+            case 1:
+              idToken = _a2.sent();
+              request = {
+                requestType: "VERIFY_AND_CHANGE_EMAIL",
+                idToken,
+                newEmail
+              };
+              if (actionCodeSettings) {
+                _setActionCodeSettingsOnRequest(userInternal.auth, request, actionCodeSettings);
+              }
+              return [4, verifyAndChangeEmail(userInternal.auth, request)];
+            case 2:
+              email = _a2.sent().email;
+              if (!(email !== user.email))
+                return [3, 4];
+              return [4, user.reload()];
+            case 3:
+              _a2.sent();
+              _a2.label = 4;
+            case 4:
+              return [2];
+          }
+        });
+      });
+    }
+    function updateProfile(auth, request) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
+        });
+      });
+    }
+    function updateProfile$1(user, _a2) {
+      var displayName = _a2.displayName, photoUrl = _a2.photoURL;
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var userInternal, idToken, profileRequest, response, passwordProvider;
+        return tslib.__generator(this, function(_b) {
+          switch (_b.label) {
+            case 0:
+              if (displayName === void 0 && photoUrl === void 0) {
+                return [2];
+              }
+              userInternal = util.getModularInstance(user);
+              return [4, userInternal.getIdToken()];
+            case 1:
+              idToken = _b.sent();
+              profileRequest = {
+                idToken,
+                displayName,
+                photoUrl,
+                returnSecureToken: true
+              };
+              return [4, _logoutIfInvalidated(userInternal, updateProfile(userInternal.auth, profileRequest))];
+            case 2:
+              response = _b.sent();
+              userInternal.displayName = response.displayName || null;
+              userInternal.photoURL = response.photoUrl || null;
+              passwordProvider = userInternal.providerData.find(function(_a3) {
+                var providerId = _a3.providerId;
+                return providerId === "password";
+              });
+              if (passwordProvider) {
+                passwordProvider.displayName = userInternal.displayName;
+                passwordProvider.photoURL = userInternal.photoURL;
+              }
+              return [4, userInternal._updateTokensIfNecessary(response)];
+            case 3:
+              _b.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function updateEmail(user, newEmail) {
+      return updateEmailOrPassword(util.getModularInstance(user), newEmail, null);
+    }
+    function updatePassword(user, newPassword) {
+      return updateEmailOrPassword(util.getModularInstance(user), null, newPassword);
+    }
+    function updateEmailOrPassword(user, email, password) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var auth, idToken, request, response;
+        return tslib.__generator(this, function(_a2) {
+          switch (_a2.label) {
+            case 0:
+              auth = user.auth;
+              return [4, user.getIdToken()];
+            case 1:
+              idToken = _a2.sent();
+              request = {
+                idToken,
+                returnSecureToken: true
+              };
+              if (email) {
+                request.email = email;
+              }
+              if (password) {
+                request.password = password;
+              }
+              return [4, _logoutIfInvalidated(user, updateEmailPassword(auth, request))];
+            case 2:
+              response = _a2.sent();
+              return [4, user._updateTokensIfNecessary(response, true)];
+            case 3:
+              _a2.sent();
+              return [2];
+          }
+        });
+      });
+    }
+    function _fromIdTokenResponse(idTokenResponse) {
+      var _a2, _b;
+      if (!idTokenResponse) {
+        return null;
+      }
+      var providerId = idTokenResponse.providerId;
+      var profile = idTokenResponse.rawUserInfo ? JSON.parse(idTokenResponse.rawUserInfo) : {};
+      var isNewUser = idTokenResponse.isNewUser || idTokenResponse.kind === "identitytoolkit#SignupNewUserResponse";
+      if (!providerId && (idTokenResponse === null || idTokenResponse === void 0 ? void 0 : idTokenResponse.idToken)) {
+        var signInProvider = (_b = (_a2 = _parseToken(idTokenResponse.idToken)) === null || _a2 === void 0 ? void 0 : _a2.firebase) === null || _b === void 0 ? void 0 : _b["sign_in_provider"];
+        if (signInProvider) {
+          var filteredProviderId = signInProvider !== "anonymous" && signInProvider !== "custom" ? signInProvider : null;
+          return new GenericAdditionalUserInfo(isNewUser, filteredProviderId);
+        }
+      }
+      if (!providerId) {
+        return null;
+      }
+      switch (providerId) {
+        case "facebook.com":
+          return new FacebookAdditionalUserInfo(isNewUser, profile);
+        case "github.com":
+          return new GithubAdditionalUserInfo(isNewUser, profile);
+        case "google.com":
+          return new GoogleAdditionalUserInfo(isNewUser, profile);
+        case "twitter.com":
+          return new TwitterAdditionalUserInfo(isNewUser, profile, idTokenResponse.screenName || null);
+        case "custom":
+        case "anonymous":
+          return new GenericAdditionalUserInfo(isNewUser, null);
+        default:
+          return new GenericAdditionalUserInfo(isNewUser, providerId, profile);
+      }
+    }
+    var GenericAdditionalUserInfo = function() {
+      function GenericAdditionalUserInfo2(isNewUser, providerId, profile) {
+        if (profile === void 0) {
+          profile = {};
+        }
+        this.isNewUser = isNewUser;
+        this.providerId = providerId;
+        this.profile = profile;
+      }
+      return GenericAdditionalUserInfo2;
+    }();
+    var FederatedAdditionalUserInfoWithUsername = function(_super) {
+      tslib.__extends(FederatedAdditionalUserInfoWithUsername2, _super);
+      function FederatedAdditionalUserInfoWithUsername2(isNewUser, providerId, profile, username) {
+        var _this = _super.call(this, isNewUser, providerId, profile) || this;
+        _this.username = username;
+        return _this;
+      }
+      return FederatedAdditionalUserInfoWithUsername2;
+    }(GenericAdditionalUserInfo);
+    var FacebookAdditionalUserInfo = function(_super) {
+      tslib.__extends(FacebookAdditionalUserInfo2, _super);
+      function FacebookAdditionalUserInfo2(isNewUser, profile) {
+        return _super.call(this, isNewUser, "facebook.com", profile) || this;
+      }
+      return FacebookAdditionalUserInfo2;
+    }(GenericAdditionalUserInfo);
+    var GithubAdditionalUserInfo = function(_super) {
+      tslib.__extends(GithubAdditionalUserInfo2, _super);
+      function GithubAdditionalUserInfo2(isNewUser, profile) {
+        return _super.call(this, isNewUser, "github.com", profile, typeof (profile === null || profile === void 0 ? void 0 : profile.login) === "string" ? profile === null || profile === void 0 ? void 0 : profile.login : null) || this;
+      }
+      return GithubAdditionalUserInfo2;
+    }(FederatedAdditionalUserInfoWithUsername);
+    var GoogleAdditionalUserInfo = function(_super) {
+      tslib.__extends(GoogleAdditionalUserInfo2, _super);
+      function GoogleAdditionalUserInfo2(isNewUser, profile) {
+        return _super.call(this, isNewUser, "google.com", profile) || this;
+      }
+      return GoogleAdditionalUserInfo2;
+    }(GenericAdditionalUserInfo);
+    var TwitterAdditionalUserInfo = function(_super) {
+      tslib.__extends(TwitterAdditionalUserInfo2, _super);
+      function TwitterAdditionalUserInfo2(isNewUser, profile, screenName) {
+        return _super.call(this, isNewUser, "twitter.com", profile, screenName) || this;
+      }
+      return TwitterAdditionalUserInfo2;
+    }(FederatedAdditionalUserInfoWithUsername);
+    function getAdditionalUserInfo(userCredential) {
+      var _a2 = userCredential, user = _a2.user, _tokenResponse = _a2._tokenResponse;
+      if (user.isAnonymous && !_tokenResponse) {
+        return {
+          providerId: null,
+          isNewUser: false,
+          profile: null
+        };
+      }
+      return _fromIdTokenResponse(_tokenResponse);
+    }
+    function setPersistence(auth, persistence) {
+      return util.getModularInstance(auth).setPersistence(persistence);
+    }
+    function onIdTokenChanged(auth, nextOrObserver, error3, completed) {
+      return util.getModularInstance(auth).onIdTokenChanged(nextOrObserver, error3, completed);
+    }
+    function onAuthStateChanged2(auth, nextOrObserver, error3, completed) {
+      return util.getModularInstance(auth).onAuthStateChanged(nextOrObserver, error3, completed);
+    }
+    function useDeviceLanguage(auth) {
+      util.getModularInstance(auth).useDeviceLanguage();
+    }
+    function updateCurrentUser(auth, user) {
+      return util.getModularInstance(auth).updateCurrentUser(user);
+    }
+    function signOut(auth) {
+      return util.getModularInstance(auth).signOut();
+    }
+    function deleteUser(user) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a2) {
+          return [2, util.getModularInstance(user).delete()];
+        });
+      });
+    }
+    var MultiFactorSessionImpl = function() {
+      function MultiFactorSessionImpl2(type, credential) {
+        this.type = type;
+        this.credential = credential;
+      }
+      MultiFactorSessionImpl2._fromIdtoken = function(idToken) {
+        return new MultiFactorSessionImpl2("enroll", idToken);
+      };
+      MultiFactorSessionImpl2._fromMfaPendingCredential = function(mfaPendingCredential) {
+        return new MultiFactorSessionImpl2("signin", mfaPendingCredential);
+      };
+      MultiFactorSessionImpl2.prototype.toJSON = function() {
+        var _a2;
+        var key = this.type === "enroll" ? "idToken" : "pendingCredential";
+        return {
+          multiFactorSession: (_a2 = {}, _a2[key] = this.credential, _a2)
+        };
+      };
+      MultiFactorSessionImpl2.fromJSON = function(obj) {
+        var _a2, _b;
+        if (obj === null || obj === void 0 ? void 0 : obj.multiFactorSession) {
+          if ((_a2 = obj.multiFactorSession) === null || _a2 === void 0 ? void 0 : _a2.pendingCredential) {
+            return MultiFactorSessionImpl2._fromMfaPendingCredential(obj.multiFactorSession.pendingCredential);
+          } else if ((_b = obj.multiFactorSession) === null || _b === void 0 ? void 0 : _b.idToken) {
+            return MultiFactorSessionImpl2._fromIdtoken(obj.multiFactorSession.idToken);
+          }
+        }
+        return null;
+      };
+      return MultiFactorSessionImpl2;
+    }();
+    var MultiFactorResolverImpl = function() {
+      function MultiFactorResolverImpl2(session, hints, signInResolver) {
+        this.session = session;
+        this.hints = hints;
+        this.signInResolver = signInResolver;
+      }
+      MultiFactorResolverImpl2._fromError = function(authExtern, error3) {
+        var _this = this;
+        var auth = _castAuth(authExtern);
+        var hints = (error3.serverResponse.mfaInfo || []).map(function(enrollment) {
+          return MultiFactorInfoImpl._fromServerResponse(auth, enrollment);
+        });
+        _assert(error3.serverResponse.mfaPendingCredential, auth, "internal-error");
+        var session = MultiFactorSessionImpl._fromMfaPendingCredential(error3.serverResponse.mfaPendingCredential);
+        return new MultiFactorResolverImpl2(session, hints, function(assertion) {
+          return tslib.__awaiter(_this, void 0, void 0, function() {
+            var mfaResponse, idTokenResponse, _a2, userCredential;
+            return tslib.__generator(this, function(_b) {
+              switch (_b.label) {
+                case 0:
+                  return [4, assertion._process(auth, session)];
+                case 1:
+                  mfaResponse = _b.sent();
+                  delete error3.serverResponse.mfaInfo;
+                  delete error3.serverResponse.mfaPendingCredential;
+                  idTokenResponse = tslib.__assign(tslib.__assign({}, error3.serverResponse), {idToken: mfaResponse.idToken, refreshToken: mfaResponse.refreshToken});
+                  _a2 = error3.operationType;
+                  switch (_a2) {
+                    case "signIn":
+                      return [3, 2];
+                    case "reauthenticate":
+                      return [3, 5];
+                  }
+                  return [3, 6];
+                case 2:
+                  return [4, UserCredentialImpl._fromIdTokenResponse(auth, error3.operationType, idTokenResponse)];
+                case 3:
+                  userCredential = _b.sent();
+                  return [4, auth._updateCurrentUser(userCredential.user)];
+                case 4:
+                  _b.sent();
+                  return [2, userCredential];
+                case 5:
+                  _assert(error3.user, auth, "internal-error");
+                  return [2, UserCredentialImpl._forOperation(error3.user, error3.operationType, idTokenResponse)];
+                case 6:
+                  _fail(auth, "internal-error");
+                  _b.label = 7;
+                case 7:
+                  return [2];
+              }
+            });
+          });
+        });
+      };
+      MultiFactorResolverImpl2.prototype.resolveSignIn = function(assertionExtern) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var assertion;
+          return tslib.__generator(this, function(_a2) {
+            assertion = assertionExtern;
+            return [2, this.signInResolver(assertion)];
+          });
+        });
+      };
+      return MultiFactorResolverImpl2;
+    }();
+    function getMultiFactorResolver(auth, error3) {
+      var _a2;
+      var authModular = util.getModularInstance(auth);
+      var errorInternal = error3;
+      _assert(error3.operationType, authModular, "argument-error");
+      _assert((_a2 = errorInternal.serverResponse) === null || _a2 === void 0 ? void 0 : _a2.mfaPendingCredential, authModular, "argument-error");
+      return MultiFactorResolverImpl._fromError(authModular, errorInternal);
+    }
+    function startEnrollPhoneMfa(auth, request) {
+      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:start", tslib.__assign({tenantId: auth.tenantId}, request));
+    }
+    function finalizeEnrollPhoneMfa(auth, request) {
+      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:finalize", tslib.__assign({tenantId: auth.tenantId}, request));
+    }
+    function withdrawMfa(auth, request) {
+      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:withdraw", tslib.__assign({tenantId: auth.tenantId}, request));
+    }
+    var MultiFactorUserImpl = function() {
+      function MultiFactorUserImpl2(user) {
+        var _this = this;
+        this.user = user;
+        this.enrolledFactors = [];
+        user._onReload(function(userInfo) {
+          if (userInfo.mfaInfo) {
+            _this.enrolledFactors = userInfo.mfaInfo.map(function(enrollment) {
+              return MultiFactorInfoImpl._fromServerResponse(user.auth, enrollment);
+            });
+          }
+        });
+      }
+      MultiFactorUserImpl2._fromUser = function(user) {
+        return new MultiFactorUserImpl2(user);
+      };
+      MultiFactorUserImpl2.prototype.getSession = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var _a2, _b;
+          return tslib.__generator(this, function(_c) {
+            switch (_c.label) {
+              case 0:
+                _b = (_a2 = MultiFactorSessionImpl)._fromIdtoken;
+                return [4, this.user.getIdToken()];
+              case 1:
+                return [2, _b.apply(_a2, [_c.sent()])];
+            }
+          });
+        });
+      };
+      MultiFactorUserImpl2.prototype.enroll = function(assertionExtern, displayName) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var assertion, session, finalizeMfaResponse;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                assertion = assertionExtern;
+                return [4, this.getSession()];
+              case 1:
+                session = _a2.sent();
+                return [4, _logoutIfInvalidated(this.user, assertion._process(this.user.auth, session, displayName))];
+              case 2:
+                finalizeMfaResponse = _a2.sent();
+                return [4, this.user._updateTokensIfNecessary(finalizeMfaResponse)];
+              case 3:
+                _a2.sent();
+                return [2, this.user.reload()];
+            }
+          });
+        });
+      };
+      MultiFactorUserImpl2.prototype.unenroll = function(infoOrUid) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var mfaEnrollmentId, idToken, idTokenResponse, e_1;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                mfaEnrollmentId = typeof infoOrUid === "string" ? infoOrUid : infoOrUid.uid;
+                return [4, this.user.getIdToken()];
+              case 1:
+                idToken = _a2.sent();
+                return [4, _logoutIfInvalidated(this.user, withdrawMfa(this.user.auth, {
+                  idToken,
+                  mfaEnrollmentId
+                }))];
+              case 2:
+                idTokenResponse = _a2.sent();
+                this.enrolledFactors = this.enrolledFactors.filter(function(_a3) {
+                  var uid = _a3.uid;
+                  return uid !== mfaEnrollmentId;
+                });
+                return [4, this.user._updateTokensIfNecessary(idTokenResponse)];
+              case 3:
+                _a2.sent();
+                _a2.label = 4;
+              case 4:
+                _a2.trys.push([4, 6, , 7]);
+                return [4, this.user.reload()];
+              case 5:
+                _a2.sent();
+                return [3, 7];
+              case 6:
+                e_1 = _a2.sent();
+                if (e_1.code !== "auth/user-token-expired") {
+                  throw e_1;
+                }
+                return [3, 7];
+              case 7:
+                return [2];
+            }
+          });
+        });
+      };
+      return MultiFactorUserImpl2;
+    }();
+    var multiFactorUserCache = new WeakMap();
+    function multiFactor(user) {
+      var userModular = util.getModularInstance(user);
+      if (!multiFactorUserCache.has(userModular)) {
+        multiFactorUserCache.set(userModular, MultiFactorUserImpl._fromUser(userModular));
+      }
+      return multiFactorUserCache.get(userModular);
+    }
+    var name = "@firebase/auth-exp";
+    var version = "0.0.900-exp.d92a36260";
+    var AuthInterop = function() {
+      function AuthInterop2(auth) {
+        this.auth = auth;
+        this.internalListeners = new Map();
+      }
+      AuthInterop2.prototype.getUid = function() {
+        var _a2;
+        this.assertAuthConfigured();
+        return ((_a2 = this.auth.currentUser) === null || _a2 === void 0 ? void 0 : _a2.uid) || null;
+      };
+      AuthInterop2.prototype.getToken = function(forceRefresh) {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var accessToken;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                this.assertAuthConfigured();
+                return [4, this.auth._initializationPromise];
+              case 1:
+                _a2.sent();
+                if (!this.auth.currentUser) {
+                  return [2, null];
+                }
+                return [4, this.auth.currentUser.getIdToken(forceRefresh)];
+              case 2:
+                accessToken = _a2.sent();
+                return [2, {accessToken}];
+            }
+          });
+        });
+      };
+      AuthInterop2.prototype.addAuthTokenListener = function(listener) {
+        this.assertAuthConfigured();
+        if (this.internalListeners.has(listener)) {
+          return;
+        }
+        var unsubscribe = this.auth.onIdTokenChanged(function(user) {
+          var _a2;
+          listener(((_a2 = user) === null || _a2 === void 0 ? void 0 : _a2.stsTokenManager.accessToken) || null);
+        });
+        this.internalListeners.set(listener, unsubscribe);
+        this.updateProactiveRefresh();
+      };
+      AuthInterop2.prototype.removeAuthTokenListener = function(listener) {
+        this.assertAuthConfigured();
+        var unsubscribe = this.internalListeners.get(listener);
+        if (!unsubscribe) {
+          return;
+        }
+        this.internalListeners.delete(listener);
+        unsubscribe();
+        this.updateProactiveRefresh();
+      };
+      AuthInterop2.prototype.assertAuthConfigured = function() {
+        _assert(this.auth._initializationPromise, "dependent-sdk-initialized-before-auth");
+      };
+      AuthInterop2.prototype.updateProactiveRefresh = function() {
+        if (this.internalListeners.size > 0) {
+          this.auth._startProactiveRefresh();
+        } else {
+          this.auth._stopProactiveRefresh();
+        }
+      };
+      return AuthInterop2;
+    }();
+    function getVersionForPlatform(clientPlatform) {
+      switch (clientPlatform) {
+        case "Node":
+          return "node";
+        case "ReactNative":
+          return "rn";
+        case "Worker":
+          return "webworker";
+        case "Cordova":
+          return "cordova";
+        default:
+          return void 0;
+      }
+    }
+    function registerAuth(clientPlatform) {
+      app._registerComponent(new component.Component("auth-exp", function(container, _a2) {
+        var deps = _a2.options;
+        var app2 = container.getProvider("app-exp").getImmediate();
+        var _b = app2.options, apiKey = _b.apiKey, authDomain = _b.authDomain;
+        return function(app3) {
+          _assert(apiKey && !apiKey.includes(":"), "invalid-api-key", {appName: app3.name});
+          _assert(!(authDomain === null || authDomain === void 0 ? void 0 : authDomain.includes(":")), "argument-error", {
+            appName: app3.name
+          });
+          var config = {
+            apiKey,
+            authDomain,
+            clientPlatform,
+            apiHost: "identitytoolkit.googleapis.com",
+            tokenApiHost: "securetoken.googleapis.com",
+            apiScheme: "https",
+            sdkClientVersion: _getClientVersion(clientPlatform)
+          };
+          var authInstance = new AuthImpl(app3, config);
+          _initializeAuthInstance(authInstance, deps);
+          return authInstance;
+        }(app2);
+      }, "PUBLIC").setInstantiationMode("EXPLICIT").setInstanceCreatedCallback(function(container, _instanceIdentifier, _instance) {
+        var authInternalProvider = container.getProvider("auth-internal");
+        authInternalProvider.initialize();
+      }));
+      app._registerComponent(new component.Component("auth-internal", function(container) {
+        var auth = _castAuth(container.getProvider("auth-exp").getImmediate());
+        return function(auth2) {
+          return new AuthInterop(auth2);
+        }(auth);
+      }, "PRIVATE").setInstantiationMode("EXPLICIT"));
+      app.registerVersion(name, version, getVersionForPlatform(clientPlatform));
+    }
+    exports2.ActionCodeURL = ActionCodeURL;
+    exports2.AuthCredential = AuthCredential;
+    exports2.AuthImpl = AuthImpl;
+    exports2.BaseOAuthProvider = BaseOAuthProvider;
+    exports2.Delay = Delay;
+    exports2.EmailAuthCredential = EmailAuthCredential;
+    exports2.EmailAuthProvider = EmailAuthProvider;
+    exports2.FacebookAuthProvider = FacebookAuthProvider;
+    exports2.FederatedAuthProvider = FederatedAuthProvider;
+    exports2.FetchProvider = FetchProvider;
+    exports2.GithubAuthProvider = GithubAuthProvider;
+    exports2.GoogleAuthProvider = GoogleAuthProvider;
+    exports2.OAuthCredential = OAuthCredential;
+    exports2.OAuthProvider = OAuthProvider;
+    exports2.PhoneAuthCredential = PhoneAuthCredential;
+    exports2.SAMLAuthCredential = SAMLAuthCredential;
+    exports2.SAMLAuthProvider = SAMLAuthProvider;
+    exports2.TwitterAuthProvider = TwitterAuthProvider;
+    exports2.UserImpl = UserImpl;
+    exports2._assert = _assert;
+    exports2._assertLinkedStatus = _assertLinkedStatus;
+    exports2._castAuth = _castAuth;
+    exports2._createError = _createError;
+    exports2._emulatorUrl = _emulatorUrl;
+    exports2._fail = _fail;
+    exports2._getClientVersion = _getClientVersion;
+    exports2._getCurrentUrl = _getCurrentUrl;
+    exports2._getInstance = _getInstance;
+    exports2._isAndroid = _isAndroid;
+    exports2._isChromeIOS = _isChromeIOS;
+    exports2._isFirefox = _isFirefox;
+    exports2._isHttpOrHttps = _isHttpOrHttps;
+    exports2._isIE10 = _isIE10;
+    exports2._isIOS = _isIOS;
+    exports2._isIOS7Or8 = _isIOS7Or8;
+    exports2._isIOSStandalone = _isIOSStandalone;
+    exports2._isIframe = _isIframe;
+    exports2._isMobileBrowser = _isMobileBrowser;
+    exports2._isSafari = _isSafari;
+    exports2._link = _link;
+    exports2._performApiRequest = _performApiRequest;
+    exports2._persistenceKeyName = _persistenceKeyName;
+    exports2._reauthenticate = _reauthenticate;
+    exports2._signInWithCredential = _signInWithCredential;
+    exports2.applyActionCode = applyActionCode$1;
+    exports2.checkActionCode = checkActionCode;
+    exports2.confirmPasswordReset = confirmPasswordReset;
+    exports2.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+    exports2.debugAssert = debugAssert;
+    exports2.debugErrorMap = debugErrorMap;
+    exports2.debugFail = debugFail;
+    exports2.deleteUser = deleteUser;
+    exports2.fetchSignInMethodsForEmail = fetchSignInMethodsForEmail;
+    exports2.finalizeEnrollPhoneMfa = finalizeEnrollPhoneMfa;
+    exports2.getAdditionalUserInfo = getAdditionalUserInfo;
+    exports2.getIdToken = getIdToken;
+    exports2.getIdTokenResult = getIdTokenResult;
+    exports2.getMultiFactorResolver = getMultiFactorResolver;
+    exports2.inMemoryPersistence = inMemoryPersistence;
+    exports2.initializeAuth = initializeAuth;
+    exports2.isSignInWithEmailLink = isSignInWithEmailLink;
+    exports2.linkWithCredential = linkWithCredential;
+    exports2.multiFactor = multiFactor;
+    exports2.onAuthStateChanged = onAuthStateChanged2;
+    exports2.onIdTokenChanged = onIdTokenChanged;
+    exports2.parseActionCodeURL = parseActionCodeURL;
+    exports2.prodErrorMap = prodErrorMap;
+    exports2.reauthenticateWithCredential = reauthenticateWithCredential;
+    exports2.registerAuth = registerAuth;
+    exports2.reload = reload;
+    exports2.sendEmailVerification = sendEmailVerification$1;
+    exports2.sendPasswordResetEmail = sendPasswordResetEmail$1;
+    exports2.sendPhoneVerificationCode = sendPhoneVerificationCode;
+    exports2.sendSignInLinkToEmail = sendSignInLinkToEmail$1;
+    exports2.setPersistence = setPersistence;
+    exports2.signInAnonymously = signInAnonymously;
+    exports2.signInWithCredential = signInWithCredential;
+    exports2.signInWithCustomToken = signInWithCustomToken$1;
+    exports2.signInWithEmailAndPassword = signInWithEmailAndPassword;
+    exports2.signInWithEmailLink = signInWithEmailLink$1;
+    exports2.signInWithIdp = signInWithIdp;
+    exports2.signOut = signOut;
+    exports2.startEnrollPhoneMfa = startEnrollPhoneMfa;
+    exports2.unlink = unlink;
+    exports2.updateCurrentUser = updateCurrentUser;
+    exports2.updateEmail = updateEmail;
+    exports2.updatePassword = updatePassword;
+    exports2.updateProfile = updateProfile$1;
+    exports2.useAuthEmulator = useAuthEmulator;
+    exports2.useDeviceLanguage = useDeviceLanguage;
+    exports2.verifyBeforeUpdateEmail = verifyBeforeUpdateEmail;
+    exports2.verifyPasswordResetCode = verifyPasswordResetCode;
+  }
+});
+
+// node_modules/@firebase/auth/dist/node/index.js
+var require_node = __commonJS({
+  "node_modules/@firebase/auth/dist/node/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    var fetchImpl = require_lib();
+    var app = require_index_cjs3();
+    require_tslib();
+    require_index_node_cjs();
+    var register = require_register_2a5ac87a();
+    require_index_cjs2();
+    require_index_cjs();
     function _interopDefaultLegacy(e) {
       return e && typeof e === "object" && "default" in e ? e : {"default": e};
     }
-    var firebase__default = /* @__PURE__ */ _interopDefaultLegacy(firebase2);
-    var name = "firebase";
-    var version = "8.6.8";
-    firebase__default["default"].registerVersion(name, version, "app");
-    firebase__default["default"].SDK_VERSION = version;
-    module2.exports = firebase__default["default"];
-  }
-});
-
-// node_modules/@firebase/auth/dist/auth.js
-var require_auth = __commonJS({
-  "node_modules/@firebase/auth/dist/auth.js"() {
-    (function() {
-      var firebase2 = require_index_node_cjs2().default;
-      var k, aa = typeof Object.defineProperties == "function" ? Object.defineProperty : function(a, b, c) {
-        a != Array.prototype && a != Object.prototype && (a[b] = c.value);
-      };
-      function ba(a) {
-        a = [typeof window == "object" && window, typeof self == "object" && self, typeof global == "object" && global, a];
-        for (var b = 0; b < a.length; ++b) {
-          var c = a[b];
-          if (c && c.Math == Math)
-            return c;
-        }
-        return globalThis;
-      }
-      var ca = ba(this);
-      function da(a, b) {
-        if (b) {
-          var c = ca;
-          a = a.split(".");
-          for (var d = 0; d < a.length - 1; d++) {
-            var e = a[d];
-            e in c || (c[e] = {});
-            c = c[e];
-          }
-          a = a[a.length - 1];
-          d = c[a];
-          b = b(d);
-          b != d && b != null && aa(c, a, {configurable: true, writable: true, value: b});
-        }
-      }
-      function ea(a) {
-        var b = 0;
-        return function() {
-          return b < a.length ? {done: false, value: a[b++]} : {done: true};
-        };
-      }
-      function fa(a) {
-        var b = typeof Symbol != "undefined" && Symbol.iterator && a[Symbol.iterator];
-        return b ? b.call(a) : {next: ea(a)};
-      }
-      da("Promise", function(a) {
-        function b(g) {
-          this.b = 0;
-          this.c = void 0;
-          this.a = [];
-          var h = this.f();
-          try {
-            g(h.resolve, h.reject);
-          } catch (m) {
-            h.reject(m);
-          }
-        }
-        function c() {
-          this.a = null;
-        }
-        function d(g) {
-          return g instanceof b ? g : new b(function(h) {
-            h(g);
-          });
-        }
-        if (a)
-          return a;
-        c.prototype.b = function(g) {
-          if (this.a == null) {
-            this.a = [];
-            var h = this;
-            this.c(function() {
-              h.g();
-            });
-          }
-          this.a.push(g);
-        };
-        var e = ca.setTimeout;
-        c.prototype.c = function(g) {
-          e(g, 0);
-        };
-        c.prototype.g = function() {
-          for (; this.a && this.a.length; ) {
-            var g = this.a;
-            this.a = [];
-            for (var h = 0; h < g.length; ++h) {
-              var m = g[h];
-              g[h] = null;
-              try {
-                m();
-              } catch (p) {
-                this.f(p);
-              }
-            }
-          }
-          this.a = null;
-        };
-        c.prototype.f = function(g) {
-          this.c(function() {
-            throw g;
-          });
-        };
-        b.prototype.f = function() {
-          function g(p) {
-            return function(v) {
-              m || (m = true, p.call(h, v));
-            };
-          }
-          var h = this, m = false;
-          return {resolve: g(this.m), reject: g(this.g)};
-        };
-        b.prototype.m = function(g) {
-          if (g === this)
-            this.g(new TypeError("A Promise cannot resolve to itself"));
-          else if (g instanceof b)
-            this.s(g);
-          else {
-            a:
-              switch (typeof g) {
-                case "object":
-                  var h = g != null;
-                  break a;
-                case "function":
-                  h = true;
-                  break a;
-                default:
-                  h = false;
-              }
-            h ? this.v(g) : this.h(g);
-          }
-        };
-        b.prototype.v = function(g) {
-          var h = void 0;
-          try {
-            h = g.then;
-          } catch (m) {
-            this.g(m);
-            return;
-          }
-          typeof h == "function" ? this.u(h, g) : this.h(g);
-        };
-        b.prototype.g = function(g) {
-          this.i(2, g);
-        };
-        b.prototype.h = function(g) {
-          this.i(1, g);
-        };
-        b.prototype.i = function(g, h) {
-          if (this.b != 0)
-            throw Error("Cannot settle(" + g + ", " + h + "): Promise already settled in state" + this.b);
-          this.b = g;
-          this.c = h;
-          this.l();
-        };
-        b.prototype.l = function() {
-          if (this.a != null) {
-            for (var g = 0; g < this.a.length; ++g)
-              f.b(this.a[g]);
-            this.a = null;
-          }
-        };
-        var f = new c();
-        b.prototype.s = function(g) {
-          var h = this.f();
-          g.Ra(h.resolve, h.reject);
-        };
-        b.prototype.u = function(g, h) {
-          var m = this.f();
-          try {
-            g.call(h, m.resolve, m.reject);
-          } catch (p) {
-            m.reject(p);
-          }
-        };
-        b.prototype.then = function(g, h) {
-          function m(A, Q) {
-            return typeof A == "function" ? function(ya) {
-              try {
-                p(A(ya));
-              } catch (Ad) {
-                v(Ad);
-              }
-            } : Q;
-          }
-          var p, v, B = new b(function(A, Q) {
-            p = A;
-            v = Q;
-          });
-          this.Ra(m(g, p), m(h, v));
-          return B;
-        };
-        b.prototype.catch = function(g) {
-          return this.then(void 0, g);
-        };
-        b.prototype.Ra = function(g, h) {
-          function m() {
-            switch (p.b) {
-              case 1:
-                g(p.c);
-                break;
-              case 2:
-                h(p.c);
-                break;
-              default:
-                throw Error("Unexpected state: " + p.b);
-            }
-          }
-          var p = this;
-          this.a == null ? f.b(m) : this.a.push(m);
-        };
-        b.resolve = d;
-        b.reject = function(g) {
-          return new b(function(h, m) {
-            m(g);
-          });
-        };
-        b.race = function(g) {
-          return new b(function(h, m) {
-            for (var p = fa(g), v = p.next(); !v.done; v = p.next())
-              d(v.value).Ra(h, m);
-          });
-        };
-        b.all = function(g) {
-          var h = fa(g), m = h.next();
-          return m.done ? d([]) : new b(function(p, v) {
-            function B(ya) {
-              return function(Ad) {
-                A[ya] = Ad;
-                Q--;
-                Q == 0 && p(A);
-              };
-            }
-            var A = [], Q = 0;
-            do
-              A.push(void 0), Q++, d(m.value).Ra(B(A.length - 1), v), m = h.next();
-            while (!m.done);
-          });
-        };
-        return b;
-      });
-      var ha = ha || {}, l = this || self, ia = /^[\w+/_-]+[=]{0,2}$/, ja = null;
-      function ka(a) {
-        return (a = a.querySelector && a.querySelector("script[nonce]")) && (a = a.nonce || a.getAttribute("nonce")) && ia.test(a) ? a : "";
-      }
-      function la() {
-      }
-      function ma(a) {
-        var b = typeof a;
-        return b != "object" ? b : a ? Array.isArray(a) ? "array" : b : "null";
-      }
-      function na(a) {
-        var b = ma(a);
-        return b == "array" || b == "object" && typeof a.length == "number";
-      }
-      function oa(a) {
-        return ma(a) == "function";
-      }
-      function n(a) {
-        var b = typeof a;
-        return b == "object" && a != null || b == "function";
-      }
-      function pa(a) {
-        return Object.prototype.hasOwnProperty.call(a, qa) && a[qa] || (a[qa] = ++ra);
-      }
-      var qa = "closure_uid_" + (1e9 * Math.random() >>> 0), ra = 0;
-      function sa(a, b, c) {
-        return a.call.apply(a.bind, arguments);
-      }
-      function ta(a, b, c) {
-        if (!a)
-          throw Error();
-        if (2 < arguments.length) {
-          var d = Array.prototype.slice.call(arguments, 2);
-          return function() {
-            var e = Array.prototype.slice.call(arguments);
-            Array.prototype.unshift.apply(e, d);
-            return a.apply(b, e);
-          };
-        }
-        return function() {
-          return a.apply(b, arguments);
-        };
-      }
-      function q(a, b, c) {
-        Function.prototype.bind && Function.prototype.bind.toString().indexOf("native code") != -1 ? q = sa : q = ta;
-        return q.apply(null, arguments);
-      }
-      function ua(a, b) {
-        var c = Array.prototype.slice.call(arguments, 1);
-        return function() {
-          var d = c.slice();
-          d.push.apply(d, arguments);
-          return a.apply(this, d);
-        };
-      }
-      var va = Date.now;
-      function r(a, b) {
-        function c() {
-        }
-        c.prototype = b.prototype;
-        a.bb = b.prototype;
-        a.prototype = new c();
-        a.prototype.constructor = a;
-      }
-      function wa(a) {
-        return a;
-      }
-      ;
-      function t(a, b, c) {
-        this.code = xa + a;
-        this.message = b || za[a] || "";
-        this.a = c || null;
-      }
-      r(t, Error);
-      t.prototype.w = function() {
-        var a = {code: this.code, message: this.message};
-        this.a && (a.serverResponse = this.a);
-        return a;
-      };
-      t.prototype.toJSON = function() {
-        return this.w();
-      };
-      function Aa(a) {
-        var b = a && a.code;
-        return b ? new t(b.substring(xa.length), a.message, a.serverResponse) : null;
-      }
-      var xa = "auth/", za = {
-        "admin-restricted-operation": "This operation is restricted to administrators only.",
-        "argument-error": "",
-        "app-not-authorized": "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.",
-        "app-not-installed": "The requested mobile application corresponding to the identifier (Android package name or iOS bundle ID) provided is not installed on this device.",
-        "captcha-check-failed": "The reCAPTCHA response token provided is either invalid, expired, already used or the domain associated with it does not match the list of whitelisted domains.",
-        "code-expired": "The SMS code has expired. Please re-send the verification code to try again.",
-        "cordova-not-ready": "Cordova framework is not ready.",
-        "cors-unsupported": "This browser is not supported.",
-        "credential-already-in-use": "This credential is already associated with a different user account.",
-        "custom-token-mismatch": "The custom token corresponds to a different audience.",
-        "requires-recent-login": "This operation is sensitive and requires recent authentication. Log in again before retrying this request.",
-        "dynamic-link-not-activated": "Please activate Dynamic Links in the Firebase Console and agree to the terms and conditions.",
-        "email-change-needs-verification": "Multi-factor users must always have a verified email.",
-        "email-already-in-use": "The email address is already in use by another account.",
-        "expired-action-code": "The action code has expired. ",
-        "cancelled-popup-request": "This operation has been cancelled due to another conflicting popup being opened.",
-        "internal-error": "An internal error has occurred.",
-        "invalid-app-credential": "The phone verification request contains an invalid application verifier. The reCAPTCHA token response is either invalid or expired.",
-        "invalid-app-id": "The mobile app identifier is not registed for the current project.",
-        "invalid-user-token": "This user's credential isn't valid for this project. This can happen if the user's token has been tampered with, or if the user isn't for the project associated with this API key.",
-        "invalid-auth-event": "An internal error has occurred.",
-        "invalid-verification-code": "The SMS verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure to use the verification code provided by the user.",
-        "invalid-continue-uri": "The continue URL provided in the request is invalid.",
-        "invalid-cordova-configuration": "The following Cordova plugins must be installed to enable OAuth sign-in: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser and cordova-plugin-customurlscheme.",
-        "invalid-custom-token": "The custom token format is incorrect. Please check the documentation.",
-        "invalid-dynamic-link-domain": "The provided dynamic link domain is not configured or authorized for the current project.",
-        "invalid-email": "The email address is badly formatted.",
-        "invalid-api-key": "Your API key is invalid, please check you have copied it correctly.",
-        "invalid-cert-hash": "The SHA-1 certificate hash provided is invalid.",
-        "invalid-credential": "The supplied auth credential is malformed or has expired.",
-        "invalid-message-payload": "The email template corresponding to this action contains invalid characters in its message. Please fix by going to the Auth email templates section in the Firebase Console.",
-        "invalid-multi-factor-session": "The request does not contain a valid proof of first factor successful sign-in.",
-        "invalid-oauth-provider": "EmailAuthProvider is not supported for this operation. This operation only supports OAuth providers.",
-        "invalid-oauth-client-id": "The OAuth client ID provided is either invalid or does not match the specified API key.",
-        "unauthorized-domain": "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.",
-        "invalid-action-code": "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.",
-        "wrong-password": "The password is invalid or the user does not have a password.",
-        "invalid-persistence-type": "The specified persistence type is invalid. It can only be local, session or none.",
-        "invalid-phone-number": "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code].",
-        "invalid-provider-id": "The specified provider ID is invalid.",
-        "invalid-recipient-email": "The email corresponding to this action failed to send as the provided recipient email address is invalid.",
-        "invalid-sender": "The email template corresponding to this action contains an invalid sender email or name. Please fix by going to the Auth email templates section in the Firebase Console.",
-        "invalid-verification-id": "The verification ID used to create the phone auth credential is invalid.",
-        "invalid-tenant-id": "The Auth instance's tenant ID is invalid.",
-        "multi-factor-info-not-found": "The user does not have a second factor matching the identifier provided.",
-        "multi-factor-auth-required": "Proof of ownership of a second factor is required to complete sign-in.",
-        "missing-android-pkg-name": "An Android Package Name must be provided if the Android App is required to be installed.",
-        "auth-domain-config-required": "Be sure to include authDomain when calling firebase.initializeApp(), by following the instructions in the Firebase console.",
-        "missing-app-credential": "The phone verification request is missing an application verifier assertion. A reCAPTCHA response token needs to be provided.",
-        "missing-verification-code": "The phone auth credential was created with an empty SMS verification code.",
-        "missing-continue-uri": "A continue URL must be provided in the request.",
-        "missing-iframe-start": "An internal error has occurred.",
-        "missing-ios-bundle-id": "An iOS Bundle ID must be provided if an App Store ID is provided.",
-        "missing-multi-factor-info": "No second factor identifier is provided.",
-        "missing-multi-factor-session": "The request is missing proof of first factor successful sign-in.",
-        "missing-or-invalid-nonce": "The request does not contain a valid nonce. This can occur if the SHA-256 hash of the provided raw nonce does not match the hashed nonce in the ID token payload.",
-        "missing-phone-number": "To send verification codes, provide a phone number for the recipient.",
-        "missing-verification-id": "The phone auth credential was created with an empty verification ID.",
-        "app-deleted": "This instance of FirebaseApp has been deleted.",
-        "account-exists-with-different-credential": "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.",
-        "network-request-failed": "A network error (such as timeout, interrupted connection or unreachable host) has occurred.",
-        "no-auth-event": "An internal error has occurred.",
-        "no-such-provider": "User was not linked to an account with the given provider.",
-        "null-user": "A null user object was provided as the argument for an operation which requires a non-null user object.",
-        "operation-not-allowed": "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.",
-        "operation-not-supported-in-this-environment": 'This operation is not supported in the environment this application is running on. "location.protocol" must be http, https or chrome-extension and web storage must be enabled.',
-        "popup-blocked": "Unable to establish a connection with the popup. It may have been blocked by the browser.",
-        "popup-closed-by-user": "The popup has been closed by the user before finalizing the operation.",
-        "provider-already-linked": "User can only be linked to one identity for the given provider.",
-        "quota-exceeded": "The project's quota for this operation has been exceeded.",
-        "redirect-cancelled-by-user": "The redirect operation has been cancelled by the user before finalizing.",
-        "redirect-operation-pending": "A redirect sign-in operation is already pending.",
-        "rejected-credential": "The request contains malformed or mismatching credentials.",
-        "second-factor-already-in-use": "The second factor is already enrolled on this account.",
-        "maximum-second-factor-count-exceeded": "The maximum allowed number of second factors on a user has been exceeded.",
-        "tenant-id-mismatch": "The provided tenant ID does not match the Auth instance's tenant ID",
-        timeout: "The operation has timed out.",
-        "user-token-expired": "The user's credential is no longer valid. The user must sign in again.",
-        "too-many-requests": "We have blocked all requests from this device due to unusual activity. Try again later.",
-        "unauthorized-continue-uri": "The domain of the continue URL is not whitelisted.  Please whitelist the domain in the Firebase console.",
-        "unsupported-first-factor": "Enrolling a second factor or signing in with a multi-factor account requires sign-in with a supported first factor.",
-        "unsupported-persistence-type": "The current environment does not support the specified persistence type.",
-        "unsupported-tenant-operation": "This operation is not supported in a multi-tenant context.",
-        "unverified-email": "The operation requires a verified email.",
-        "user-cancelled": "The user did not grant your application the permissions it requested.",
-        "user-not-found": "There is no user record corresponding to this identifier. The user may have been deleted.",
-        "user-disabled": "The user account has been disabled by an administrator.",
-        "user-mismatch": "The supplied credentials do not correspond to the previously signed in user.",
-        "user-signed-out": "",
-        "weak-password": "The password must be 6 characters long or more.",
-        "web-storage-unsupported": "This browser is not supported or 3rd party cookies and data may be disabled."
-      };
-      var Ba = {ld: {Ua: "https://staging-identitytoolkit.sandbox.googleapis.com/identitytoolkit/v3/relyingparty/", $a: "https://staging-securetoken.sandbox.googleapis.com/v1/token", Xa: "https://staging-identitytoolkit.sandbox.googleapis.com/v2/", id: "b"}, sd: {Ua: "https://www.googleapis.com/identitytoolkit/v3/relyingparty/", $a: "https://securetoken.googleapis.com/v1/token", Xa: "https://identitytoolkit.googleapis.com/v2/", id: "p"}, ud: {
-        Ua: "https://staging-www.sandbox.googleapis.com/identitytoolkit/v3/relyingparty/",
-        $a: "https://staging-securetoken.sandbox.googleapis.com/v1/token",
-        Xa: "https://staging-identitytoolkit.sandbox.googleapis.com/v2/",
-        id: "s"
-      }, vd: {Ua: "https://www-googleapis-test.sandbox.google.com/identitytoolkit/v3/relyingparty/", $a: "https://test-securetoken.sandbox.googleapis.com/v1/token", Xa: "https://test-identitytoolkit.sandbox.googleapis.com/v2/", id: "t"}};
-      function Ca(a) {
-        for (var b in Ba)
-          if (Ba[b].id === a)
-            return a = Ba[b], {firebaseEndpoint: a.Ua, secureTokenEndpoint: a.$a, identityPlatformEndpoint: a.Xa};
-        return null;
-      }
-      var Da;
-      Da = Ca("__EID__") ? "__EID__" : void 0;
-      function Ea(a) {
-        if (!a)
-          return false;
-        try {
-          return !!a.$goog_Thenable;
-        } catch (b) {
-          return false;
-        }
-      }
-      ;
-      function u(a) {
-        if (Error.captureStackTrace)
-          Error.captureStackTrace(this, u);
-        else {
-          var b = Error().stack;
-          b && (this.stack = b);
-        }
-        a && (this.message = String(a));
-      }
-      r(u, Error);
-      u.prototype.name = "CustomError";
-      function Fa(a, b) {
-        a = a.split("%s");
-        for (var c = "", d = a.length - 1, e = 0; e < d; e++)
-          c += a[e] + (e < b.length ? b[e] : "%s");
-        u.call(this, c + a[d]);
-      }
-      r(Fa, u);
-      Fa.prototype.name = "AssertionError";
-      function Ga(a, b) {
-        throw new Fa("Failure" + (a ? ": " + a : ""), Array.prototype.slice.call(arguments, 1));
-      }
-      ;
-      function Ha(a, b) {
-        this.c = a;
-        this.f = b;
-        this.b = 0;
-        this.a = null;
-      }
-      Ha.prototype.get = function() {
-        if (0 < this.b) {
-          this.b--;
-          var a = this.a;
-          this.a = a.next;
-          a.next = null;
-        } else
-          a = this.c();
-        return a;
-      };
-      function Ia(a, b) {
-        a.f(b);
-        100 > a.b && (a.b++, b.next = a.a, a.a = b);
-      }
-      ;
-      function Ja() {
-        this.b = this.a = null;
-      }
-      var La = new Ha(function() {
-        return new Ka();
-      }, function(a) {
-        a.reset();
-      });
-      Ja.prototype.add = function(a, b) {
-        var c = La.get();
-        c.set(a, b);
-        this.b ? this.b.next = c : this.a = c;
-        this.b = c;
-      };
-      function Ma() {
-        var a = Na, b = null;
-        a.a && (b = a.a, a.a = a.a.next, a.a || (a.b = null), b.next = null);
-        return b;
-      }
-      function Ka() {
-        this.next = this.b = this.a = null;
-      }
-      Ka.prototype.set = function(a, b) {
-        this.a = a;
-        this.b = b;
-        this.next = null;
-      };
-      Ka.prototype.reset = function() {
-        this.next = this.b = this.a = null;
-      };
-      var Oa = Array.prototype.indexOf ? function(a, b) {
-        return Array.prototype.indexOf.call(a, b, void 0);
-      } : function(a, b) {
-        if (typeof a === "string")
-          return typeof b !== "string" || b.length != 1 ? -1 : a.indexOf(b, 0);
-        for (var c = 0; c < a.length; c++)
-          if (c in a && a[c] === b)
-            return c;
-        return -1;
-      }, w = Array.prototype.forEach ? function(a, b, c) {
-        Array.prototype.forEach.call(a, b, c);
-      } : function(a, b, c) {
-        for (var d = a.length, e = typeof a === "string" ? a.split("") : a, f = 0; f < d; f++)
-          f in e && b.call(c, e[f], f, a);
-      };
-      function Pa(a, b) {
-        for (var c = typeof a === "string" ? a.split("") : a, d = a.length - 1; 0 <= d; --d)
-          d in c && b.call(void 0, c[d], d, a);
-      }
-      var Qa = Array.prototype.filter ? function(a, b) {
-        return Array.prototype.filter.call(a, b, void 0);
-      } : function(a, b) {
-        for (var c = a.length, d = [], e = 0, f = typeof a === "string" ? a.split("") : a, g = 0; g < c; g++)
-          if (g in f) {
-            var h = f[g];
-            b.call(void 0, h, g, a) && (d[e++] = h);
-          }
-        return d;
-      }, Ra = Array.prototype.map ? function(a, b) {
-        return Array.prototype.map.call(a, b, void 0);
-      } : function(a, b) {
-        for (var c = a.length, d = Array(c), e = typeof a === "string" ? a.split("") : a, f = 0; f < c; f++)
-          f in e && (d[f] = b.call(void 0, e[f], f, a));
-        return d;
-      }, Sa = Array.prototype.some ? function(a, b) {
-        return Array.prototype.some.call(a, b, void 0);
-      } : function(a, b) {
-        for (var c = a.length, d = typeof a === "string" ? a.split("") : a, e = 0; e < c; e++)
-          if (e in d && b.call(void 0, d[e], e, a))
-            return true;
-        return false;
-      };
-      function Ta(a) {
-        a: {
-          var b = Ua;
-          for (var c = a.length, d = typeof a === "string" ? a.split("") : a, e = 0; e < c; e++)
-            if (e in d && b.call(void 0, d[e], e, a)) {
-              b = e;
-              break a;
-            }
-          b = -1;
-        }
-        return 0 > b ? null : typeof a === "string" ? a.charAt(b) : a[b];
-      }
-      function Va(a, b) {
-        return 0 <= Oa(a, b);
-      }
-      function Wa(a, b) {
-        b = Oa(a, b);
-        var c;
-        (c = 0 <= b) && Array.prototype.splice.call(a, b, 1);
-        return c;
-      }
-      function Xa(a, b) {
-        var c = 0;
-        Pa(a, function(d, e) {
-          b.call(void 0, d, e, a) && Array.prototype.splice.call(a, e, 1).length == 1 && c++;
-        });
-      }
-      function Ya(a) {
-        return Array.prototype.concat.apply([], arguments);
-      }
-      function Za(a) {
-        var b = a.length;
-        if (0 < b) {
-          for (var c = Array(b), d = 0; d < b; d++)
-            c[d] = a[d];
-          return c;
-        }
-        return [];
-      }
-      ;
-      var $a = String.prototype.trim ? function(a) {
-        return a.trim();
-      } : function(a) {
-        return /^[\s\xa0]*([\s\S]*?)[\s\xa0]*$/.exec(a)[1];
-      }, ab = /&/g, bb = /</g, cb = />/g, db = /"/g, eb = /'/g, fb = /\x00/g, gb = /[\x00&<>"']/;
-      function x(a, b) {
-        return a.indexOf(b) != -1;
-      }
-      function hb(a, b) {
-        return a < b ? -1 : a > b ? 1 : 0;
-      }
-      ;
-      var ib;
-      a: {
-        var jb = l.navigator;
-        if (jb) {
-          var kb = jb.userAgent;
-          if (kb) {
-            ib = kb;
-            break a;
-          }
-        }
-        ib = "";
-      }
-      function y(a) {
-        return x(ib, a);
-      }
-      ;
-      function lb(a, b) {
-        for (var c in a)
-          b.call(void 0, a[c], c, a);
-      }
-      function mb(a) {
-        for (var b in a)
-          return false;
-        return true;
-      }
-      function nb(a) {
-        var b = {}, c;
-        for (c in a)
-          b[c] = a[c];
-        return b;
-      }
-      var ob = "constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf".split(" ");
-      function z(a, b) {
-        for (var c, d, e = 1; e < arguments.length; e++) {
-          d = arguments[e];
-          for (c in d)
-            a[c] = d[c];
-          for (var f = 0; f < ob.length; f++)
-            c = ob[f], Object.prototype.hasOwnProperty.call(d, c) && (a[c] = d[c]);
-        }
-      }
-      ;
-      function pb(a, b) {
-        a: {
-          try {
-            var c = a && a.ownerDocument, d = c && (c.defaultView || c.parentWindow);
-            d = d || l;
-            if (d.Element && d.Location) {
-              var e = d;
-              break a;
-            }
-          } catch (g) {
-          }
-          e = null;
-        }
-        if (e && typeof e[b] != "undefined" && (!a || !(a instanceof e[b]) && (a instanceof e.Location || a instanceof e.Element))) {
-          if (n(a))
-            try {
-              var f = a.constructor.displayName || a.constructor.name || Object.prototype.toString.call(a);
-            } catch (g) {
-              f = "<object could not be stringified>";
-            }
-          else
-            f = a === void 0 ? "undefined" : a === null ? "null" : typeof a;
-          Ga("Argument is not a %s (or a non-Element, non-Location mock); got: %s", b, f);
-        }
-      }
-      ;
-      function qb(a, b) {
-        this.a = a === rb && b || "";
-        this.b = sb;
-      }
-      qb.prototype.ta = true;
-      qb.prototype.sa = function() {
-        return this.a;
-      };
-      qb.prototype.toString = function() {
-        return "Const{" + this.a + "}";
-      };
-      function tb(a) {
-        if (a instanceof qb && a.constructor === qb && a.b === sb)
-          return a.a;
-        Ga("expected object of type Const, got '" + a + "'");
-        return "type_error:Const";
-      }
-      var sb = {}, rb = {};
-      var ub;
-      function vb() {
-        if (ub === void 0) {
-          var a = null, b = l.trustedTypes;
-          if (b && b.createPolicy) {
-            try {
-              a = b.createPolicy("goog#html", {createHTML: wa, createScript: wa, createScriptURL: wa});
-            } catch (c) {
-              l.console && l.console.error(c.message);
-            }
-            ub = a;
-          } else
-            ub = a;
-        }
-        return ub;
-      }
-      ;
-      function wb(a, b) {
-        this.a = b === xb ? a : "";
-      }
-      wb.prototype.ta = true;
-      wb.prototype.sa = function() {
-        return this.a.toString();
-      };
-      wb.prototype.toString = function() {
-        return "TrustedResourceUrl{" + this.a + "}";
-      };
-      function yb(a) {
-        if (a instanceof wb && a.constructor === wb)
-          return a.a;
-        Ga("expected object of type TrustedResourceUrl, got '" + a + "' of type " + ma(a));
-        return "type_error:TrustedResourceUrl";
-      }
-      function zb(a, b) {
-        var c = tb(a);
-        if (!Ab.test(c))
-          throw Error("Invalid TrustedResourceUrl format: " + c);
-        a = c.replace(Bb, function(d, e) {
-          if (!Object.prototype.hasOwnProperty.call(b, e))
-            throw Error('Found marker, "' + e + '", in format string, "' + c + '", but no valid label mapping found in args: ' + JSON.stringify(b));
-          d = b[e];
-          return d instanceof qb ? tb(d) : encodeURIComponent(String(d));
-        });
-        return Cb(a);
-      }
-      var Bb = /%{(\w+)}/g, Ab = /^((https:)?\/\/[0-9a-z.:[\]-]+\/|\/[^/\\]|[^:/\\%]+\/|[^:/\\%]*[?#]|about:blank#)/i, xb = {};
-      function Cb(a) {
-        var b = vb();
-        a = b ? b.createScriptURL(a) : a;
-        return new wb(a, xb);
-      }
-      ;
-      function C(a, b) {
-        this.a = b === Db ? a : "";
-      }
-      C.prototype.ta = true;
-      C.prototype.sa = function() {
-        return this.a.toString();
-      };
-      C.prototype.toString = function() {
-        return "SafeUrl{" + this.a + "}";
-      };
-      function Eb(a) {
-        if (a instanceof C && a.constructor === C)
-          return a.a;
-        Ga("expected object of type SafeUrl, got '" + a + "' of type " + ma(a));
-        return "type_error:SafeUrl";
-      }
-      var Fb = /^(?:audio\/(?:3gpp2|3gpp|aac|L16|midi|mp3|mp4|mpeg|oga|ogg|opus|x-m4a|x-matroska|x-wav|wav|webm)|font\/\w+|image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp|x-icon)|text\/csv|video\/(?:mpeg|mp4|ogg|webm|quicktime|x-matroska))(?:;\w+=(?:\w+|"[\w;,= ]+"))*$/i, Gb = /^data:(.*);base64,[a-z0-9+\/]+=*$/i, Hb = /^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))/i;
-      function Ib(a) {
-        if (a instanceof C)
-          return a;
-        a = typeof a == "object" && a.ta ? a.sa() : String(a);
-        if (Hb.test(a))
-          a = new C(a, Db);
-        else {
-          a = String(a);
-          a = a.replace(/(%0A|%0D)/g, "");
-          var b = a.match(Gb);
-          a = b && Fb.test(b[1]) ? new C(a, Db) : null;
-        }
-        return a;
-      }
-      function Jb(a) {
-        if (a instanceof C)
-          return a;
-        a = typeof a == "object" && a.ta ? a.sa() : String(a);
-        Hb.test(a) || (a = "about:invalid#zClosurez");
-        return new C(a, Db);
-      }
-      var Db = {}, Kb = new C("about:invalid#zClosurez", Db);
-      function Lb(a, b, c) {
-        this.a = c === Mb ? a : "";
-      }
-      Lb.prototype.ta = true;
-      Lb.prototype.sa = function() {
-        return this.a.toString();
-      };
-      Lb.prototype.toString = function() {
-        return "SafeHtml{" + this.a + "}";
-      };
-      function Nb(a) {
-        if (a instanceof Lb && a.constructor === Lb)
-          return a.a;
-        Ga("expected object of type SafeHtml, got '" + a + "' of type " + ma(a));
-        return "type_error:SafeHtml";
-      }
-      var Mb = {};
-      function Ob(a, b) {
-        pb(a, "HTMLScriptElement");
-        a.src = yb(b);
-        (b = a.ownerDocument && a.ownerDocument.defaultView) && b != l ? b = ka(b.document) : (ja === null && (ja = ka(l.document)), b = ja);
-        b && a.setAttribute("nonce", b);
-      }
-      function Pb(a, b, c, d) {
-        a = a instanceof C ? a : Jb(a);
-        b = b || l;
-        c = c instanceof qb ? tb(c) : c || "";
-        return b.open(Eb(a), c, d, void 0);
-      }
-      ;
-      function Qb(a, b) {
-        for (var c = a.split("%s"), d = "", e = Array.prototype.slice.call(arguments, 1); e.length && 1 < c.length; )
-          d += c.shift() + e.shift();
-        return d + c.join("%s");
-      }
-      function Rb(a) {
-        gb.test(a) && (a.indexOf("&") != -1 && (a = a.replace(ab, "&amp;")), a.indexOf("<") != -1 && (a = a.replace(bb, "&lt;")), a.indexOf(">") != -1 && (a = a.replace(cb, "&gt;")), a.indexOf('"') != -1 && (a = a.replace(db, "&quot;")), a.indexOf("'") != -1 && (a = a.replace(eb, "&#39;")), a.indexOf("\0") != -1 && (a = a.replace(fb, "&#0;")));
-        return a;
-      }
-      ;
-      function Sb(a) {
-        Sb[" "](a);
-        return a;
-      }
-      Sb[" "] = la;
-      function Tb(a, b) {
-        var c = Ub;
-        return Object.prototype.hasOwnProperty.call(c, a) ? c[a] : c[a] = b(a);
-      }
-      ;
-      var Vb = y("Opera"), Wb = y("Trident") || y("MSIE"), Xb = y("Edge"), Yb = Xb || Wb, Zb = y("Gecko") && !(x(ib.toLowerCase(), "webkit") && !y("Edge")) && !(y("Trident") || y("MSIE")) && !y("Edge"), $b = x(ib.toLowerCase(), "webkit") && !y("Edge");
-      function ac() {
-        var a = l.document;
-        return a ? a.documentMode : void 0;
-      }
-      var bc;
-      a: {
-        var cc = "", dc = function() {
-          var a = ib;
-          if (Zb)
-            return /rv:([^\);]+)(\)|;)/.exec(a);
-          if (Xb)
-            return /Edge\/([\d\.]+)/.exec(a);
-          if (Wb)
-            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
-          if ($b)
-            return /WebKit\/(\S+)/.exec(a);
-          if (Vb)
-            return /(?:Version)[ \/]?(\S+)/.exec(a);
-        }();
-        dc && (cc = dc ? dc[1] : "");
-        if (Wb) {
-          var ec = ac();
-          if (ec != null && ec > parseFloat(cc)) {
-            bc = String(ec);
-            break a;
-          }
-        }
-        bc = cc;
-      }
-      var Ub = {};
-      function fc(a) {
-        return Tb(a, function() {
-          for (var b = 0, c = $a(String(bc)).split("."), d = $a(String(a)).split("."), e = Math.max(c.length, d.length), f = 0; b == 0 && f < e; f++) {
-            var g = c[f] || "", h = d[f] || "";
-            do {
-              g = /(\d*)(\D*)(.*)/.exec(g) || ["", "", "", ""];
-              h = /(\d*)(\D*)(.*)/.exec(h) || ["", "", "", ""];
-              if (g[0].length == 0 && h[0].length == 0)
-                break;
-              b = hb(g[1].length == 0 ? 0 : parseInt(g[1], 10), h[1].length == 0 ? 0 : parseInt(h[1], 10)) || hb(g[2].length == 0, h[2].length == 0) || hb(g[2], h[2]);
-              g = g[3];
-              h = h[3];
-            } while (b == 0);
-          }
-          return 0 <= b;
-        });
-      }
-      var gc;
-      if (l.document && Wb) {
-        var hc = ac();
-        gc = hc ? hc : parseInt(bc, 10) || void 0;
-      } else
-        gc = void 0;
-      var ic = gc;
-      try {
-        new self.OffscreenCanvas(0, 0).getContext("2d");
-      } catch (a) {
-      }
-      var jc = !Wb || 9 <= Number(ic);
-      function kc(a) {
-        var b = document;
-        return typeof a === "string" ? b.getElementById(a) : a;
-      }
-      function lc(a, b) {
-        lb(b, function(c, d) {
-          c && typeof c == "object" && c.ta && (c = c.sa());
-          d == "style" ? a.style.cssText = c : d == "class" ? a.className = c : d == "for" ? a.htmlFor = c : mc.hasOwnProperty(d) ? a.setAttribute(mc[d], c) : d.lastIndexOf("aria-", 0) == 0 || d.lastIndexOf("data-", 0) == 0 ? a.setAttribute(d, c) : a[d] = c;
-        });
-      }
-      var mc = {cellpadding: "cellPadding", cellspacing: "cellSpacing", colspan: "colSpan", frameborder: "frameBorder", height: "height", maxlength: "maxLength", nonce: "nonce", role: "role", rowspan: "rowSpan", type: "type", usemap: "useMap", valign: "vAlign", width: "width"};
-      function nc(a, b, c) {
-        var d = arguments, e = document, f = String(d[0]), g = d[1];
-        if (!jc && g && (g.name || g.type)) {
-          f = ["<", f];
-          g.name && f.push(' name="', Rb(g.name), '"');
-          if (g.type) {
-            f.push(' type="', Rb(g.type), '"');
-            var h = {};
-            z(h, g);
-            delete h.type;
-            g = h;
-          }
-          f.push(">");
-          f = f.join("");
-        }
-        f = oc(e, f);
-        g && (typeof g === "string" ? f.className = g : Array.isArray(g) ? f.className = g.join(" ") : lc(f, g));
-        2 < d.length && pc(e, f, d);
-        return f;
-      }
-      function pc(a, b, c) {
-        function d(h) {
-          h && b.appendChild(typeof h === "string" ? a.createTextNode(h) : h);
-        }
-        for (var e = 2; e < c.length; e++) {
-          var f = c[e];
-          if (!na(f) || n(f) && 0 < f.nodeType)
-            d(f);
-          else {
-            a: {
-              if (f && typeof f.length == "number") {
-                if (n(f)) {
-                  var g = typeof f.item == "function" || typeof f.item == "string";
-                  break a;
-                }
-                if (oa(f)) {
-                  g = typeof f.item == "function";
-                  break a;
-                }
-              }
-              g = false;
-            }
-            w(g ? Za(f) : f, d);
-          }
-        }
-      }
-      function oc(a, b) {
-        b = String(b);
-        a.contentType === "application/xhtml+xml" && (b = b.toLowerCase());
-        return a.createElement(b);
-      }
-      ;
-      function qc(a) {
-        l.setTimeout(function() {
-          throw a;
-        }, 0);
-      }
-      var rc;
-      function sc() {
-        var a = l.MessageChannel;
-        typeof a === "undefined" && typeof window !== "undefined" && window.postMessage && window.addEventListener && !y("Presto") && (a = function() {
-          var e = oc(document, "IFRAME");
-          e.style.display = "none";
-          document.documentElement.appendChild(e);
-          var f = e.contentWindow;
-          e = f.document;
-          e.open();
-          e.close();
-          var g = "callImmediate" + Math.random(), h = f.location.protocol == "file:" ? "*" : f.location.protocol + "//" + f.location.host;
-          e = q(function(m) {
-            if ((h == "*" || m.origin == h) && m.data == g)
-              this.port1.onmessage();
-          }, this);
-          f.addEventListener("message", e, false);
-          this.port1 = {};
-          this.port2 = {postMessage: function() {
-            f.postMessage(g, h);
-          }};
-        });
-        if (typeof a !== "undefined" && !y("Trident") && !y("MSIE")) {
-          var b = new a(), c = {}, d = c;
-          b.port1.onmessage = function() {
-            if (c.next !== void 0) {
-              c = c.next;
-              var e = c.Hb;
-              c.Hb = null;
-              e();
-            }
-          };
-          return function(e) {
-            d.next = {Hb: e};
-            d = d.next;
-            b.port2.postMessage(0);
-          };
-        }
-        return function(e) {
-          l.setTimeout(e, 0);
-        };
-      }
-      ;
-      function tc(a, b) {
-        uc || vc();
-        wc || (uc(), wc = true);
-        Na.add(a, b);
-      }
-      var uc;
-      function vc() {
-        if (l.Promise && l.Promise.resolve) {
-          var a = l.Promise.resolve(void 0);
-          uc = function() {
-            a.then(xc);
-          };
-        } else
-          uc = function() {
-            var b = xc;
-            !oa(l.setImmediate) || l.Window && l.Window.prototype && !y("Edge") && l.Window.prototype.setImmediate == l.setImmediate ? (rc || (rc = sc()), rc(b)) : l.setImmediate(b);
-          };
-      }
-      var wc = false, Na = new Ja();
-      function xc() {
-        for (var a; a = Ma(); ) {
-          try {
-            a.a.call(a.b);
-          } catch (b) {
-            qc(b);
-          }
-          Ia(La, a);
-        }
-        wc = false;
-      }
-      ;
-      function D(a, b) {
-        this.a = yc;
-        this.i = void 0;
-        this.f = this.b = this.c = null;
-        this.g = this.h = false;
-        if (a != la)
-          try {
-            var c = this;
-            a.call(b, function(d) {
-              zc(c, Ac, d);
-            }, function(d) {
-              if (!(d instanceof Bc))
-                try {
-                  if (d instanceof Error)
-                    throw d;
-                  throw Error("Promise rejected.");
-                } catch (e) {
-                }
-              zc(c, Cc, d);
-            });
-          } catch (d) {
-            zc(this, Cc, d);
-          }
-      }
-      var yc = 0, Ac = 2, Cc = 3;
-      function Dc() {
-        this.next = this.f = this.b = this.g = this.a = null;
-        this.c = false;
-      }
-      Dc.prototype.reset = function() {
-        this.f = this.b = this.g = this.a = null;
-        this.c = false;
-      };
-      var Ec = new Ha(function() {
-        return new Dc();
-      }, function(a) {
-        a.reset();
-      });
-      function Fc(a, b, c) {
-        var d = Ec.get();
-        d.g = a;
-        d.b = b;
-        d.f = c;
-        return d;
-      }
-      function E(a) {
-        if (a instanceof D)
-          return a;
-        var b = new D(la);
-        zc(b, Ac, a);
-        return b;
-      }
-      function F(a) {
-        return new D(function(b, c) {
-          c(a);
-        });
-      }
-      function Gc(a, b, c) {
-        Hc(a, b, c, null) || tc(ua(b, a));
-      }
-      function Ic(a) {
-        return new D(function(b, c) {
-          var d = a.length, e = [];
-          if (d)
-            for (var f = function(p, v) {
-              d--;
-              e[p] = v;
-              d == 0 && b(e);
-            }, g = function(p) {
-              c(p);
-            }, h = 0, m; h < a.length; h++)
-              m = a[h], Gc(m, ua(f, h), g);
-          else
-            b(e);
-        });
-      }
-      function Jc(a) {
-        return new D(function(b) {
-          var c = a.length, d = [];
-          if (c)
-            for (var e = function(h, m, p) {
-              c--;
-              d[h] = m ? {Qb: true, value: p} : {Qb: false, reason: p};
-              c == 0 && b(d);
-            }, f = 0, g; f < a.length; f++)
-              g = a[f], Gc(g, ua(e, f, true), ua(e, f, false));
-          else
-            b(d);
-        });
-      }
-      D.prototype.then = function(a, b, c) {
-        return Kc(this, oa(a) ? a : null, oa(b) ? b : null, c);
-      };
-      D.prototype.$goog_Thenable = true;
-      k = D.prototype;
-      k.oa = function(a, b) {
-        a = Fc(a, a, b);
-        a.c = true;
-        Lc(this, a);
-        return this;
-      };
-      k.o = function(a, b) {
-        return Kc(this, null, a, b);
-      };
-      k.cancel = function(a) {
-        if (this.a == yc) {
-          var b = new Bc(a);
-          tc(function() {
-            Mc(this, b);
-          }, this);
-        }
-      };
-      function Mc(a, b) {
-        if (a.a == yc)
-          if (a.c) {
-            var c = a.c;
-            if (c.b) {
-              for (var d = 0, e = null, f = null, g = c.b; g && (g.c || (d++, g.a == a && (e = g), !(e && 1 < d))); g = g.next)
-                e || (f = g);
-              e && (c.a == yc && d == 1 ? Mc(c, b) : (f ? (d = f, d.next == c.f && (c.f = d), d.next = d.next.next) : Nc(c), Oc(c, e, Cc, b)));
-            }
-            a.c = null;
-          } else
-            zc(a, Cc, b);
-      }
-      function Lc(a, b) {
-        a.b || a.a != Ac && a.a != Cc || Pc(a);
-        a.f ? a.f.next = b : a.b = b;
-        a.f = b;
-      }
-      function Kc(a, b, c, d) {
-        var e = Fc(null, null, null);
-        e.a = new D(function(f, g) {
-          e.g = b ? function(h) {
-            try {
-              var m = b.call(d, h);
-              f(m);
-            } catch (p) {
-              g(p);
-            }
-          } : f;
-          e.b = c ? function(h) {
-            try {
-              var m = c.call(d, h);
-              m === void 0 && h instanceof Bc ? g(h) : f(m);
-            } catch (p) {
-              g(p);
-            }
-          } : g;
-        });
-        e.a.c = a;
-        Lc(a, e);
-        return e.a;
-      }
-      k.$c = function(a) {
-        this.a = yc;
-        zc(this, Ac, a);
-      };
-      k.ad = function(a) {
-        this.a = yc;
-        zc(this, Cc, a);
-      };
-      function zc(a, b, c) {
-        a.a == yc && (a === c && (b = Cc, c = new TypeError("Promise cannot resolve to itself")), a.a = 1, Hc(c, a.$c, a.ad, a) || (a.i = c, a.a = b, a.c = null, Pc(a), b != Cc || c instanceof Bc || Qc(a, c)));
-      }
-      function Hc(a, b, c, d) {
-        if (a instanceof D)
-          return Lc(a, Fc(b || la, c || null, d)), true;
-        if (Ea(a))
-          return a.then(b, c, d), true;
-        if (n(a))
-          try {
-            var e = a.then;
-            if (oa(e))
-              return Rc(a, e, b, c, d), true;
-          } catch (f) {
-            return c.call(d, f), true;
-          }
-        return false;
-      }
-      function Rc(a, b, c, d, e) {
-        function f(m) {
-          h || (h = true, d.call(e, m));
-        }
-        function g(m) {
-          h || (h = true, c.call(e, m));
-        }
-        var h = false;
-        try {
-          b.call(a, g, f);
-        } catch (m) {
-          f(m);
-        }
-      }
-      function Pc(a) {
-        a.h || (a.h = true, tc(a.gc, a));
-      }
-      function Nc(a) {
-        var b = null;
-        a.b && (b = a.b, a.b = b.next, b.next = null);
-        a.b || (a.f = null);
-        return b;
-      }
-      k.gc = function() {
-        for (var a; a = Nc(this); )
-          Oc(this, a, this.a, this.i);
-        this.h = false;
-      };
-      function Oc(a, b, c, d) {
-        if (c == Cc && b.b && !b.c)
-          for (; a && a.g; a = a.c)
-            a.g = false;
-        if (b.a)
-          b.a.c = null, Sc(b, c, d);
-        else
-          try {
-            b.c ? b.g.call(b.f) : Sc(b, c, d);
-          } catch (e) {
-            Tc.call(null, e);
-          }
-        Ia(Ec, b);
-      }
-      function Sc(a, b, c) {
-        b == Ac ? a.g.call(a.f, c) : a.b && a.b.call(a.f, c);
-      }
-      function Qc(a, b) {
-        a.g = true;
-        tc(function() {
-          a.g && Tc.call(null, b);
-        });
-      }
-      var Tc = qc;
-      function Bc(a) {
-        u.call(this, a);
-      }
-      r(Bc, u);
-      Bc.prototype.name = "cancel";
-      function Uc() {
-        Vc != 0 && (Wc[pa(this)] = this);
-        this.ya = this.ya;
-        this.pa = this.pa;
-      }
-      var Vc = 0, Wc = {};
-      Uc.prototype.ya = false;
-      function Xc(a) {
-        if (!a.ya && (a.ya = true, a.Da(), Vc != 0)) {
-          var b = pa(a);
-          if (Vc != 0 && a.pa && 0 < a.pa.length)
-            throw Error(a + " did not empty its onDisposeCallbacks queue. This probably means it overrode dispose() or disposeInternal() without calling the superclass' method.");
-          delete Wc[b];
-        }
-      }
-      Uc.prototype.Da = function() {
-        if (this.pa)
-          for (; this.pa.length; )
-            this.pa.shift()();
-      };
-      var Yc = Object.freeze || function(a) {
-        return a;
-      };
-      var Zc = !Wb || 9 <= Number(ic), $c = Wb && !fc("9"), ad = function() {
-        if (!l.addEventListener || !Object.defineProperty)
-          return false;
-        var a = false, b = Object.defineProperty({}, "passive", {get: function() {
-          a = true;
-        }});
-        try {
-          l.addEventListener("test", la, b), l.removeEventListener("test", la, b);
-        } catch (c) {
-        }
-        return a;
-      }();
-      function G(a, b) {
-        this.type = a;
-        this.b = this.target = b;
-        this.defaultPrevented = false;
-      }
-      G.prototype.preventDefault = function() {
-        this.defaultPrevented = true;
-      };
-      function bd(a, b) {
-        G.call(this, a ? a.type : "");
-        this.relatedTarget = this.b = this.target = null;
-        this.button = this.screenY = this.screenX = this.clientY = this.clientX = 0;
-        this.key = "";
-        this.metaKey = this.shiftKey = this.altKey = this.ctrlKey = false;
-        this.pointerId = 0;
-        this.pointerType = "";
-        this.a = null;
-        if (a) {
-          var c = this.type = a.type, d = a.changedTouches && a.changedTouches.length ? a.changedTouches[0] : null;
-          this.target = a.target || a.srcElement;
-          this.b = b;
-          if (b = a.relatedTarget) {
-            if (Zb) {
-              a: {
-                try {
-                  Sb(b.nodeName);
-                  var e = true;
-                  break a;
-                } catch (f) {
-                }
-                e = false;
-              }
-              e || (b = null);
-            }
-          } else
-            c == "mouseover" ? b = a.fromElement : c == "mouseout" && (b = a.toElement);
-          this.relatedTarget = b;
-          d ? (this.clientX = d.clientX !== void 0 ? d.clientX : d.pageX, this.clientY = d.clientY !== void 0 ? d.clientY : d.pageY, this.screenX = d.screenX || 0, this.screenY = d.screenY || 0) : (this.clientX = a.clientX !== void 0 ? a.clientX : a.pageX, this.clientY = a.clientY !== void 0 ? a.clientY : a.pageY, this.screenX = a.screenX || 0, this.screenY = a.screenY || 0);
-          this.button = a.button;
-          this.key = a.key || "";
-          this.ctrlKey = a.ctrlKey;
-          this.altKey = a.altKey;
-          this.shiftKey = a.shiftKey;
-          this.metaKey = a.metaKey;
-          this.pointerId = a.pointerId || 0;
-          this.pointerType = typeof a.pointerType === "string" ? a.pointerType : cd[a.pointerType] || "";
-          this.a = a;
-          a.defaultPrevented && this.preventDefault();
-        }
-      }
-      r(bd, G);
-      var cd = Yc({2: "touch", 3: "pen", 4: "mouse"});
-      bd.prototype.preventDefault = function() {
-        bd.bb.preventDefault.call(this);
-        var a = this.a;
-        if (a.preventDefault)
-          a.preventDefault();
-        else if (a.returnValue = false, $c)
-          try {
-            if (a.ctrlKey || 112 <= a.keyCode && 123 >= a.keyCode)
-              a.keyCode = -1;
-          } catch (b) {
-          }
-      };
-      bd.prototype.g = function() {
-        return this.a;
-      };
-      var dd = "closure_listenable_" + (1e6 * Math.random() | 0), ed = 0;
-      function fd(a, b, c, d, e) {
-        this.listener = a;
-        this.proxy = null;
-        this.src = b;
-        this.type = c;
-        this.capture = !!d;
-        this.Wa = e;
-        this.key = ++ed;
-        this.wa = this.Qa = false;
-      }
-      function gd(a) {
-        a.wa = true;
-        a.listener = null;
-        a.proxy = null;
-        a.src = null;
-        a.Wa = null;
-      }
-      ;
-      function hd(a) {
-        this.src = a;
-        this.a = {};
-        this.b = 0;
-      }
-      hd.prototype.add = function(a, b, c, d, e) {
-        var f = a.toString();
-        a = this.a[f];
-        a || (a = this.a[f] = [], this.b++);
-        var g = id(a, b, d, e);
-        -1 < g ? (b = a[g], c || (b.Qa = false)) : (b = new fd(b, this.src, f, !!d, e), b.Qa = c, a.push(b));
-        return b;
-      };
-      function jd(a, b) {
-        var c = b.type;
-        c in a.a && Wa(a.a[c], b) && (gd(b), a.a[c].length == 0 && (delete a.a[c], a.b--));
-      }
-      function id(a, b, c, d) {
-        for (var e = 0; e < a.length; ++e) {
-          var f = a[e];
-          if (!f.wa && f.listener == b && f.capture == !!c && f.Wa == d)
-            return e;
-        }
-        return -1;
-      }
-      ;
-      var kd = "closure_lm_" + (1e6 * Math.random() | 0), ld = {}, md = 0;
-      function nd(a, b, c, d, e) {
-        if (d && d.once)
-          od(a, b, c, d, e);
-        else if (Array.isArray(b))
-          for (var f = 0; f < b.length; f++)
-            nd(a, b[f], c, d, e);
-        else
-          c = pd(c), a && a[dd] ? qd(a, b, c, n(d) ? !!d.capture : !!d, e) : rd(a, b, c, false, d, e);
-      }
-      function rd(a, b, c, d, e, f) {
-        if (!b)
-          throw Error("Invalid event type");
-        var g = n(e) ? !!e.capture : !!e, h = sd(a);
-        h || (a[kd] = h = new hd(a));
-        c = h.add(b, c, d, g, f);
-        if (!c.proxy) {
-          d = td();
-          c.proxy = d;
-          d.src = a;
-          d.listener = c;
-          if (a.addEventListener)
-            ad || (e = g), e === void 0 && (e = false), a.addEventListener(b.toString(), d, e);
-          else if (a.attachEvent)
-            a.attachEvent(ud(b.toString()), d);
-          else if (a.addListener && a.removeListener)
-            a.addListener(d);
-          else
-            throw Error("addEventListener and attachEvent are unavailable.");
-          md++;
-        }
-      }
-      function td() {
-        var a = vd, b = Zc ? function(c) {
-          return a.call(b.src, b.listener, c);
-        } : function(c) {
-          c = a.call(b.src, b.listener, c);
-          if (!c)
-            return c;
-        };
-        return b;
-      }
-      function od(a, b, c, d, e) {
-        if (Array.isArray(b))
-          for (var f = 0; f < b.length; f++)
-            od(a, b[f], c, d, e);
-        else
-          c = pd(c), a && a[dd] ? wd(a, b, c, n(d) ? !!d.capture : !!d, e) : rd(a, b, c, true, d, e);
-      }
-      function xd(a, b, c, d, e) {
-        if (Array.isArray(b))
-          for (var f = 0; f < b.length; f++)
-            xd(a, b[f], c, d, e);
-        else
-          (d = n(d) ? !!d.capture : !!d, c = pd(c), a && a[dd]) ? (a = a.v, b = String(b).toString(), b in a.a && (f = a.a[b], c = id(f, c, d, e), -1 < c && (gd(f[c]), Array.prototype.splice.call(f, c, 1), f.length == 0 && (delete a.a[b], a.b--)))) : a && (a = sd(a)) && (b = a.a[b.toString()], a = -1, b && (a = id(b, c, d, e)), (c = -1 < a ? b[a] : null) && yd(c));
-      }
-      function yd(a) {
-        if (typeof a !== "number" && a && !a.wa) {
-          var b = a.src;
-          if (b && b[dd])
-            jd(b.v, a);
-          else {
-            var c = a.type, d = a.proxy;
-            b.removeEventListener ? b.removeEventListener(c, d, a.capture) : b.detachEvent ? b.detachEvent(ud(c), d) : b.addListener && b.removeListener && b.removeListener(d);
-            md--;
-            (c = sd(b)) ? (jd(c, a), c.b == 0 && (c.src = null, b[kd] = null)) : gd(a);
-          }
-        }
-      }
-      function ud(a) {
-        return a in ld ? ld[a] : ld[a] = "on" + a;
-      }
-      function zd(a, b, c, d) {
-        var e = true;
-        if (a = sd(a)) {
-          if (b = a.a[b.toString()])
-            for (b = b.concat(), a = 0; a < b.length; a++) {
-              var f = b[a];
-              f && f.capture == c && !f.wa && (f = Bd(f, d), e = e && f !== false);
-            }
-        }
-        return e;
-      }
-      function Bd(a, b) {
-        var c = a.listener, d = a.Wa || a.src;
-        a.Qa && yd(a);
-        return c.call(d, b);
-      }
-      function vd(a, b) {
-        if (a.wa)
-          return true;
-        if (!Zc) {
-          if (!b)
-            a: {
-              b = ["window", "event"];
-              for (var c = l, d = 0; d < b.length; d++)
-                if (c = c[b[d]], c == null) {
-                  b = null;
-                  break a;
-                }
-              b = c;
-            }
-          d = b;
-          b = new bd(d, this);
-          c = true;
-          if (!(0 > d.keyCode || d.returnValue != void 0)) {
-            a: {
-              var e = false;
-              if (d.keyCode == 0)
-                try {
-                  d.keyCode = -1;
-                  break a;
-                } catch (g) {
-                  e = true;
-                }
-              if (e || d.returnValue == void 0)
-                d.returnValue = true;
-            }
-            d = [];
-            for (e = b.b; e; e = e.parentNode)
-              d.push(e);
-            a = a.type;
-            for (e = d.length - 1; 0 <= e; e--) {
-              b.b = d[e];
-              var f = zd(d[e], a, true, b);
-              c = c && f;
-            }
-            for (e = 0; e < d.length; e++)
-              b.b = d[e], f = zd(d[e], a, false, b), c = c && f;
-          }
-          return c;
-        }
-        return Bd(a, new bd(b, this));
-      }
-      function sd(a) {
-        a = a[kd];
-        return a instanceof hd ? a : null;
-      }
-      var Cd = "__closure_events_fn_" + (1e9 * Math.random() >>> 0);
-      function pd(a) {
-        if (oa(a))
-          return a;
-        a[Cd] || (a[Cd] = function(b) {
-          return a.handleEvent(b);
-        });
-        return a[Cd];
-      }
-      ;
-      function H() {
-        Uc.call(this);
-        this.v = new hd(this);
-        this.bc = this;
-        this.hb = null;
-      }
-      r(H, Uc);
-      H.prototype[dd] = true;
-      H.prototype.addEventListener = function(a, b, c, d) {
-        nd(this, a, b, c, d);
-      };
-      H.prototype.removeEventListener = function(a, b, c, d) {
-        xd(this, a, b, c, d);
-      };
-      H.prototype.dispatchEvent = function(a) {
-        var b, c = this.hb;
-        if (c)
-          for (b = []; c; c = c.hb)
-            b.push(c);
-        c = this.bc;
-        var d = a.type || a;
-        if (typeof a === "string")
-          a = new G(a, c);
-        else if (a instanceof G)
-          a.target = a.target || c;
-        else {
-          var e = a;
-          a = new G(d, c);
-          z(a, e);
-        }
-        e = true;
-        if (b)
-          for (var f = b.length - 1; 0 <= f; f--) {
-            var g = a.b = b[f];
-            e = Dd(g, d, true, a) && e;
-          }
-        g = a.b = c;
-        e = Dd(g, d, true, a) && e;
-        e = Dd(g, d, false, a) && e;
-        if (b)
-          for (f = 0; f < b.length; f++)
-            g = a.b = b[f], e = Dd(g, d, false, a) && e;
-        return e;
-      };
-      H.prototype.Da = function() {
-        H.bb.Da.call(this);
-        if (this.v) {
-          var a = this.v, b = 0, c;
-          for (c in a.a) {
-            for (var d = a.a[c], e = 0; e < d.length; e++)
-              ++b, gd(d[e]);
-            delete a.a[c];
-            a.b--;
-          }
-        }
-        this.hb = null;
-      };
-      function qd(a, b, c, d, e) {
-        a.v.add(String(b), c, false, d, e);
-      }
-      function wd(a, b, c, d, e) {
-        a.v.add(String(b), c, true, d, e);
-      }
-      function Dd(a, b, c, d) {
-        b = a.v.a[String(b)];
-        if (!b)
-          return true;
-        b = b.concat();
-        for (var e = true, f = 0; f < b.length; ++f) {
-          var g = b[f];
-          if (g && !g.wa && g.capture == c) {
-            var h = g.listener, m = g.Wa || g.src;
-            g.Qa && jd(a.v, g);
-            e = h.call(m, d) !== false && e;
-          }
-        }
-        return e && !d.defaultPrevented;
-      }
-      ;
-      function Ed(a, b, c) {
-        if (oa(a))
-          c && (a = q(a, c));
-        else if (a && typeof a.handleEvent == "function")
-          a = q(a.handleEvent, a);
-        else
-          throw Error("Invalid listener argument");
-        return 2147483647 < Number(b) ? -1 : l.setTimeout(a, b || 0);
-      }
-      function Fd(a) {
-        var b = null;
-        return new D(function(c, d) {
-          b = Ed(function() {
-            c(void 0);
-          }, a);
-          b == -1 && d(Error("Failed to schedule timer."));
-        }).o(function(c) {
-          l.clearTimeout(b);
-          throw c;
-        });
-      }
-      ;
-      function Gd(a) {
-        if (a.X && typeof a.X == "function")
-          return a.X();
-        if (typeof a === "string")
-          return a.split("");
-        if (na(a)) {
-          for (var b = [], c = a.length, d = 0; d < c; d++)
-            b.push(a[d]);
-          return b;
-        }
-        b = [];
-        c = 0;
-        for (d in a)
-          b[c++] = a[d];
-        return b;
-      }
-      function Hd(a) {
-        if (a.Y && typeof a.Y == "function")
-          return a.Y();
-        if (!a.X || typeof a.X != "function") {
-          if (na(a) || typeof a === "string") {
-            var b = [];
-            a = a.length;
-            for (var c = 0; c < a; c++)
-              b.push(c);
-            return b;
-          }
-          b = [];
-          c = 0;
-          for (var d in a)
-            b[c++] = d;
-          return b;
-        }
-      }
-      function Id(a, b) {
-        if (a.forEach && typeof a.forEach == "function")
-          a.forEach(b, void 0);
-        else if (na(a) || typeof a === "string")
-          w(a, b, void 0);
-        else
-          for (var c = Hd(a), d = Gd(a), e = d.length, f = 0; f < e; f++)
-            b.call(void 0, d[f], c && c[f], a);
-      }
-      ;
-      function Jd(a, b) {
-        this.b = {};
-        this.a = [];
-        this.c = 0;
-        var c = arguments.length;
-        if (1 < c) {
-          if (c % 2)
-            throw Error("Uneven number of arguments");
-          for (var d = 0; d < c; d += 2)
-            this.set(arguments[d], arguments[d + 1]);
-        } else if (a)
-          if (a instanceof Jd)
-            for (c = a.Y(), d = 0; d < c.length; d++)
-              this.set(c[d], a.get(c[d]));
-          else
-            for (d in a)
-              this.set(d, a[d]);
-      }
-      k = Jd.prototype;
-      k.X = function() {
-        Kd(this);
-        for (var a = [], b = 0; b < this.a.length; b++)
-          a.push(this.b[this.a[b]]);
-        return a;
-      };
-      k.Y = function() {
-        Kd(this);
-        return this.a.concat();
-      };
-      k.clear = function() {
-        this.b = {};
-        this.c = this.a.length = 0;
-      };
-      function Kd(a) {
-        if (a.c != a.a.length) {
-          for (var b = 0, c = 0; b < a.a.length; ) {
-            var d = a.a[b];
-            Ld(a.b, d) && (a.a[c++] = d);
-            b++;
-          }
-          a.a.length = c;
-        }
-        if (a.c != a.a.length) {
-          var e = {};
-          for (c = b = 0; b < a.a.length; )
-            d = a.a[b], Ld(e, d) || (a.a[c++] = d, e[d] = 1), b++;
-          a.a.length = c;
-        }
-      }
-      k.get = function(a, b) {
-        return Ld(this.b, a) ? this.b[a] : b;
-      };
-      k.set = function(a, b) {
-        Ld(this.b, a) || (this.c++, this.a.push(a));
-        this.b[a] = b;
-      };
-      k.forEach = function(a, b) {
-        for (var c = this.Y(), d = 0; d < c.length; d++) {
-          var e = c[d], f = this.get(e);
-          a.call(b, f, e, this);
-        }
-      };
-      function Ld(a, b) {
-        return Object.prototype.hasOwnProperty.call(a, b);
-      }
-      ;
-      var Md = /^(?:([^:/?#.]+):)?(?:\/\/(?:([^\\/?#]*)@)?([^\\/?#]*?)(?::([0-9]+))?(?=[\\/?#]|$))?([^?#]+)?(?:\?([^#]*))?(?:#([\s\S]*))?$/;
-      function Nd(a, b) {
-        if (a) {
-          a = a.split("&");
-          for (var c = 0; c < a.length; c++) {
-            var d = a[c].indexOf("="), e = null;
-            if (0 <= d) {
-              var f = a[c].substring(0, d);
-              e = a[c].substring(d + 1);
-            } else
-              f = a[c];
-            b(f, e ? decodeURIComponent(e.replace(/\+/g, " ")) : "");
-          }
-        }
-      }
-      ;
-      function Od(a, b) {
-        this.a = this.l = this.c = "";
-        this.g = null;
-        this.h = this.f = "";
-        this.i = false;
-        var c;
-        a instanceof Od ? (this.i = b !== void 0 ? b : a.i, Pd(this, a.c), this.l = a.l, this.a = a.a, Qd(this, a.g), this.f = a.f, Rd(this, Sd(a.b)), this.h = a.h) : a && (c = String(a).match(Md)) ? (this.i = !!b, Pd(this, c[1] || "", true), this.l = Td(c[2] || ""), this.a = Td(c[3] || "", true), Qd(this, c[4]), this.f = Td(c[5] || "", true), Rd(this, c[6] || "", true), this.h = Td(c[7] || "")) : (this.i = !!b, this.b = new Ud(null, this.i));
-      }
-      Od.prototype.toString = function() {
-        var a = [], b = this.c;
-        b && a.push(Vd(b, Wd, true), ":");
-        var c = this.a;
-        if (c || b == "file")
-          a.push("//"), (b = this.l) && a.push(Vd(b, Wd, true), "@"), a.push(encodeURIComponent(String(c)).replace(/%25([0-9a-fA-F]{2})/g, "%$1")), c = this.g, c != null && a.push(":", String(c));
-        if (c = this.f)
-          this.a && c.charAt(0) != "/" && a.push("/"), a.push(Vd(c, c.charAt(0) == "/" ? Xd : Yd, true));
-        (c = this.b.toString()) && a.push("?", c);
-        (c = this.h) && a.push("#", Vd(c, Zd));
-        return a.join("");
-      };
-      Od.prototype.resolve = function(a) {
-        var b = new Od(this), c = !!a.c;
-        c ? Pd(b, a.c) : c = !!a.l;
-        c ? b.l = a.l : c = !!a.a;
-        c ? b.a = a.a : c = a.g != null;
-        var d = a.f;
-        if (c)
-          Qd(b, a.g);
-        else if (c = !!a.f) {
-          if (d.charAt(0) != "/")
-            if (this.a && !this.f)
-              d = "/" + d;
-            else {
-              var e = b.f.lastIndexOf("/");
-              e != -1 && (d = b.f.substr(0, e + 1) + d);
-            }
-          e = d;
-          if (e == ".." || e == ".")
-            d = "";
-          else if (x(e, "./") || x(e, "/.")) {
-            d = e.lastIndexOf("/", 0) == 0;
-            e = e.split("/");
-            for (var f = [], g = 0; g < e.length; ) {
-              var h = e[g++];
-              h == "." ? d && g == e.length && f.push("") : h == ".." ? ((1 < f.length || f.length == 1 && f[0] != "") && f.pop(), d && g == e.length && f.push("")) : (f.push(h), d = true);
-            }
-            d = f.join("/");
-          } else
-            d = e;
-        }
-        c ? b.f = d : c = a.b.toString() !== "";
-        c ? Rd(b, Sd(a.b)) : c = !!a.h;
-        c && (b.h = a.h);
-        return b;
-      };
-      function Pd(a, b, c) {
-        a.c = c ? Td(b, true) : b;
-        a.c && (a.c = a.c.replace(/:$/, ""));
-      }
-      function Qd(a, b) {
-        if (b) {
-          b = Number(b);
-          if (isNaN(b) || 0 > b)
-            throw Error("Bad port number " + b);
-          a.g = b;
-        } else
-          a.g = null;
-      }
-      function Rd(a, b, c) {
-        b instanceof Ud ? (a.b = b, $d(a.b, a.i)) : (c || (b = Vd(b, ae)), a.b = new Ud(b, a.i));
-      }
-      function I(a, b, c) {
-        a.b.set(b, c);
-      }
-      function be(a, b) {
-        return a.b.get(b);
-      }
-      function J(a) {
-        return a instanceof Od ? new Od(a) : new Od(a, void 0);
-      }
-      function ce(a, b, c, d) {
-        var e = new Od(null, void 0);
-        a && Pd(e, a);
-        b && (e.a = b);
-        c && Qd(e, c);
-        d && (e.f = d);
-        return e;
-      }
-      function Td(a, b) {
-        return a ? b ? decodeURI(a.replace(/%25/g, "%2525")) : decodeURIComponent(a) : "";
-      }
-      function Vd(a, b, c) {
-        return typeof a === "string" ? (a = encodeURI(a).replace(b, de), c && (a = a.replace(/%25([0-9a-fA-F]{2})/g, "%$1")), a) : null;
-      }
-      function de(a) {
-        a = a.charCodeAt(0);
-        return "%" + (a >> 4 & 15).toString(16) + (a & 15).toString(16);
-      }
-      var Wd = /[#\/\?@]/g, Yd = /[#\?:]/g, Xd = /[#\?]/g, ae = /[#\?@]/g, Zd = /#/g;
-      function Ud(a, b) {
-        this.b = this.a = null;
-        this.c = a || null;
-        this.f = !!b;
-      }
-      function ee(a) {
-        a.a || (a.a = new Jd(), a.b = 0, a.c && Nd(a.c, function(b, c) {
-          a.add(decodeURIComponent(b.replace(/\+/g, " ")), c);
-        }));
-      }
-      function fe(a) {
-        var b = Hd(a);
-        if (typeof b == "undefined")
-          throw Error("Keys are undefined");
-        var c = new Ud(null, void 0);
-        a = Gd(a);
-        for (var d = 0; d < b.length; d++) {
-          var e = b[d], f = a[d];
-          Array.isArray(f) ? ge(c, e, f) : c.add(e, f);
-        }
-        return c;
-      }
-      k = Ud.prototype;
-      k.add = function(a, b) {
-        ee(this);
-        this.c = null;
-        a = he(this, a);
-        var c = this.a.get(a);
-        c || this.a.set(a, c = []);
-        c.push(b);
-        this.b += 1;
-        return this;
-      };
-      function ie(a, b) {
-        ee(a);
-        b = he(a, b);
-        Ld(a.a.b, b) && (a.c = null, a.b -= a.a.get(b).length, a = a.a, Ld(a.b, b) && (delete a.b[b], a.c--, a.a.length > 2 * a.c && Kd(a)));
-      }
-      k.clear = function() {
-        this.a = this.c = null;
-        this.b = 0;
-      };
-      function je(a, b) {
-        ee(a);
-        b = he(a, b);
-        return Ld(a.a.b, b);
-      }
-      k.forEach = function(a, b) {
-        ee(this);
-        this.a.forEach(function(c, d) {
-          w(c, function(e) {
-            a.call(b, e, d, this);
-          }, this);
-        }, this);
-      };
-      k.Y = function() {
-        ee(this);
-        for (var a = this.a.X(), b = this.a.Y(), c = [], d = 0; d < b.length; d++)
-          for (var e = a[d], f = 0; f < e.length; f++)
-            c.push(b[d]);
-        return c;
-      };
-      k.X = function(a) {
-        ee(this);
-        var b = [];
-        if (typeof a === "string")
-          je(this, a) && (b = Ya(b, this.a.get(he(this, a))));
-        else {
-          a = this.a.X();
-          for (var c = 0; c < a.length; c++)
-            b = Ya(b, a[c]);
-        }
-        return b;
-      };
-      k.set = function(a, b) {
-        ee(this);
-        this.c = null;
-        a = he(this, a);
-        je(this, a) && (this.b -= this.a.get(a).length);
-        this.a.set(a, [b]);
-        this.b += 1;
-        return this;
-      };
-      k.get = function(a, b) {
-        if (!a)
-          return b;
-        a = this.X(a);
-        return 0 < a.length ? String(a[0]) : b;
-      };
-      function ge(a, b, c) {
-        ie(a, b);
-        0 < c.length && (a.c = null, a.a.set(he(a, b), Za(c)), a.b += c.length);
-      }
-      k.toString = function() {
-        if (this.c)
-          return this.c;
-        if (!this.a)
-          return "";
-        for (var a = [], b = this.a.Y(), c = 0; c < b.length; c++) {
-          var d = b[c], e = encodeURIComponent(String(d));
-          d = this.X(d);
-          for (var f = 0; f < d.length; f++) {
-            var g = e;
-            d[f] !== "" && (g += "=" + encodeURIComponent(String(d[f])));
-            a.push(g);
-          }
-        }
-        return this.c = a.join("&");
-      };
-      function Sd(a) {
-        var b = new Ud();
-        b.c = a.c;
-        a.a && (b.a = new Jd(a.a), b.b = a.b);
-        return b;
-      }
-      function he(a, b) {
-        b = String(b);
-        a.f && (b = b.toLowerCase());
-        return b;
-      }
-      function $d(a, b) {
-        b && !a.f && (ee(a), a.c = null, a.a.forEach(function(c, d) {
-          var e = d.toLowerCase();
-          d != e && (ie(this, d), ge(this, e, c));
-        }, a));
-        a.f = b;
-      }
-      ;
-      function ke(a) {
-        var b = [];
-        le(new me(), a, b);
-        return b.join("");
-      }
-      function me() {
-      }
-      function le(a, b, c) {
-        if (b == null)
-          c.push("null");
-        else {
-          if (typeof b == "object") {
-            if (Array.isArray(b)) {
-              var d = b;
-              b = d.length;
-              c.push("[");
-              for (var e = "", f = 0; f < b; f++)
-                c.push(e), le(a, d[f], c), e = ",";
-              c.push("]");
-              return;
-            }
-            if (b instanceof String || b instanceof Number || b instanceof Boolean)
-              b = b.valueOf();
-            else {
-              c.push("{");
-              e = "";
-              for (d in b)
-                Object.prototype.hasOwnProperty.call(b, d) && (f = b[d], typeof f != "function" && (c.push(e), ne(d, c), c.push(":"), le(a, f, c), e = ","));
-              c.push("}");
-              return;
-            }
-          }
-          switch (typeof b) {
-            case "string":
-              ne(b, c);
-              break;
-            case "number":
-              c.push(isFinite(b) && !isNaN(b) ? String(b) : "null");
-              break;
-            case "boolean":
-              c.push(String(b));
-              break;
-            case "function":
-              c.push("null");
-              break;
-            default:
-              throw Error("Unknown type: " + typeof b);
-          }
-        }
-      }
-      var oe = {'"': '\\"', "\\": "\\\\", "/": "\\/", "\b": "\\b", "\f": "\\f", "\n": "\\n", "\r": "\\r", "	": "\\t", "\v": "\\u000b"}, pe = /\uffff/.test("\uFFFF") ? /[\\"\x00-\x1f\x7f-\uffff]/g : /[\\"\x00-\x1f\x7f-\xff]/g;
-      function ne(a, b) {
-        b.push('"', a.replace(pe, function(c) {
-          var d = oe[c];
-          d || (d = "\\u" + (c.charCodeAt(0) | 65536).toString(16).substr(1), oe[c] = d);
-          return d;
-        }), '"');
-      }
-      ;
-      function qe() {
-        var a = K();
-        return Wb && !!ic && ic == 11 || /Edge\/\d+/.test(a);
-      }
-      function re() {
-        return l.window && l.window.location.href || self && self.location && self.location.href || "";
-      }
-      function se(a, b) {
-        b = b || l.window;
-        var c = "about:blank";
-        a && (c = Eb(Ib(a) || Kb));
-        b.location.href = c;
-      }
-      function te(a, b) {
-        var c = [], d;
-        for (d in a)
-          d in b ? typeof a[d] != typeof b[d] ? c.push(d) : typeof a[d] == "object" && a[d] != null && b[d] != null ? 0 < te(a[d], b[d]).length && c.push(d) : a[d] !== b[d] && c.push(d) : c.push(d);
-        for (d in b)
-          d in a || c.push(d);
-        return c;
-      }
-      function ue() {
-        var a = K();
-        a = ve(a) != we ? null : (a = a.match(/\sChrome\/(\d+)/i)) && a.length == 2 ? parseInt(a[1], 10) : null;
-        return a && 30 > a ? false : !Wb || !ic || 9 < ic;
-      }
-      function xe(a) {
-        a = (a || K()).toLowerCase();
-        return a.match(/android/) || a.match(/webos/) || a.match(/iphone|ipad|ipod/) || a.match(/blackberry/) || a.match(/windows phone/) || a.match(/iemobile/) ? true : false;
-      }
-      function ye(a) {
-        a = a || l.window;
-        try {
-          a.close();
-        } catch (b) {
-        }
-      }
-      function ze(a, b, c) {
-        var d = Math.floor(1e9 * Math.random()).toString();
-        b = b || 500;
-        c = c || 600;
-        var e = (window.screen.availHeight - c) / 2, f = (window.screen.availWidth - b) / 2;
-        b = {width: b, height: c, top: 0 < e ? e : 0, left: 0 < f ? f : 0, location: true, resizable: true, statusbar: true, toolbar: false};
-        c = K().toLowerCase();
-        d && (b.target = d, x(c, "crios/") && (b.target = "_blank"));
-        ve(K()) == Ae && (a = a || "http://localhost", b.scrollbars = true);
-        c = a || "";
-        (a = b) || (a = {});
-        d = window;
-        b = c instanceof C ? c : Ib(typeof c.href != "undefined" ? c.href : String(c)) || Kb;
-        c = a.target || c.target;
-        e = [];
-        for (g in a)
-          switch (g) {
-            case "width":
-            case "height":
-            case "top":
-            case "left":
-              e.push(g + "=" + a[g]);
-              break;
-            case "target":
-            case "noopener":
-            case "noreferrer":
-              break;
-            default:
-              e.push(g + "=" + (a[g] ? 1 : 0));
-          }
-        var g = e.join(",");
-        if ((y("iPhone") && !y("iPod") && !y("iPad") || y("iPad") || y("iPod")) && d.navigator && d.navigator.standalone && c && c != "_self")
-          g = oc(document, "A"), pb(g, "HTMLAnchorElement"), b = b instanceof C ? b : Jb(b), g.href = Eb(b), g.setAttribute("target", c), a.noreferrer && g.setAttribute("rel", "noreferrer"), a = document.createEvent("MouseEvent"), a.initMouseEvent("click", true, true, d, 1), g.dispatchEvent(a), g = {};
-        else if (a.noreferrer) {
-          if (g = Pb("", d, c, g), a = Eb(b), g && (Yb && x(a, ";") && (a = "'" + a.replace(/'/g, "%27") + "'"), g.opener = null, a = '<meta name="referrer" content="no-referrer"><meta http-equiv="refresh" content="0; url=' + Rb(a) + '">', a = (d = vb()) ? d.createHTML(a) : a, a = new Lb(a, null, Mb), d = g.document))
-            d.write(Nb(a)), d.close();
-        } else
-          (g = Pb(b, d, c, g)) && a.noopener && (g.opener = null);
-        if (g)
-          try {
-            g.focus();
-          } catch (h) {
-          }
-        return g;
-      }
-      function Be(a) {
-        return new D(function(b) {
-          function c() {
-            Fd(2e3).then(function() {
-              if (!a || a.closed)
-                b();
-              else
-                return c();
-            });
-          }
-          return c();
-        });
-      }
-      var Ce = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, De = /^[^@]+@[^@]+$/;
-      function Ee() {
-        var a = null;
-        return new D(function(b) {
-          l.document.readyState == "complete" ? b() : (a = function() {
-            b();
-          }, od(window, "load", a));
-        }).o(function(b) {
-          xd(window, "load", a);
-          throw b;
-        });
-      }
-      function Fe() {
-        return Ge(void 0) ? Ee().then(function() {
-          return new D(function(a, b) {
-            var c = l.document, d = setTimeout(function() {
-              b(Error("Cordova framework is not ready."));
-            }, 1e3);
-            c.addEventListener("deviceready", function() {
-              clearTimeout(d);
-              a();
-            }, false);
-          });
-        }) : F(Error("Cordova must run in an Android or iOS file scheme."));
-      }
-      function Ge(a) {
-        a = a || K();
-        return !(He() !== "file:" && He() !== "ionic:" || !a.toLowerCase().match(/iphone|ipad|ipod|android/));
-      }
-      function Ie() {
-        var a = l.window;
-        try {
-          return !(!a || a == a.top);
-        } catch (b) {
-          return false;
-        }
-      }
-      function Je() {
-        return typeof l.WorkerGlobalScope !== "undefined" && typeof l.importScripts === "function";
-      }
-      function Ke() {
-        return firebase2.INTERNAL.hasOwnProperty("reactNative") ? "ReactNative" : firebase2.INTERNAL.hasOwnProperty("node") ? "Node" : Je() ? "Worker" : "Browser";
-      }
-      function Le() {
-        var a = Ke();
-        return a === "ReactNative" || a === "Node";
-      }
-      function Me() {
-        for (var a = 50, b = []; 0 < a; )
-          b.push("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(Math.floor(62 * Math.random()))), a--;
-        return b.join("");
-      }
-      var Ae = "Firefox", we = "Chrome";
-      function ve(a) {
-        var b = a.toLowerCase();
-        if (x(b, "opera/") || x(b, "opr/") || x(b, "opios/"))
-          return "Opera";
-        if (x(b, "iemobile"))
-          return "IEMobile";
-        if (x(b, "msie") || x(b, "trident/"))
-          return "IE";
-        if (x(b, "edge/"))
-          return "Edge";
-        if (x(b, "firefox/"))
-          return Ae;
-        if (x(b, "silk/"))
-          return "Silk";
-        if (x(b, "blackberry"))
-          return "Blackberry";
-        if (x(b, "webos"))
-          return "Webos";
-        if (!x(b, "safari/") || x(b, "chrome/") || x(b, "crios/") || x(b, "android"))
-          if (!x(b, "chrome/") && !x(b, "crios/") || x(b, "edge/")) {
-            if (x(b, "android"))
-              return "Android";
-            if ((a = a.match(/([a-zA-Z\d\.]+)\/[a-zA-Z\d\.]*$/)) && a.length == 2)
-              return a[1];
-          } else
-            return we;
-        else
-          return "Safari";
-        return "Other";
-      }
-      var Ne = {md: "FirebaseCore-web", od: "FirebaseUI-web"};
-      function Oe(a, b) {
-        b = b || [];
-        var c = [], d = {}, e;
-        for (e in Ne)
-          d[Ne[e]] = true;
-        for (e = 0; e < b.length; e++)
-          typeof d[b[e]] !== "undefined" && (delete d[b[e]], c.push(b[e]));
-        c.sort();
-        b = c;
-        b.length || (b = ["FirebaseCore-web"]);
-        c = Ke();
-        c === "Browser" ? (d = K(), c = ve(d)) : c === "Worker" && (d = K(), c = ve(d) + "-" + c);
-        return c + "/JsCore/" + a + "/" + b.join(",");
-      }
-      function K() {
-        return l.navigator && l.navigator.userAgent || "";
-      }
-      function L(a, b) {
-        a = a.split(".");
-        b = b || l;
-        for (var c = 0; c < a.length && typeof b == "object" && b != null; c++)
-          b = b[a[c]];
-        c != a.length && (b = void 0);
-        return b;
-      }
-      function Pe() {
-        try {
-          var a = l.localStorage, b = Qe();
-          if (a)
-            return a.setItem(b, "1"), a.removeItem(b), qe() ? !!l.indexedDB : true;
-        } catch (c) {
-          return Je() && !!l.indexedDB;
-        }
-        return false;
-      }
-      function Re() {
-        return (Se() || He() === "chrome-extension:" || Ge()) && !Le() && Pe() && !Je();
-      }
-      function Se() {
-        return He() === "http:" || He() === "https:";
-      }
-      function He() {
-        return l.location && l.location.protocol || null;
-      }
-      function Te(a) {
-        a = a || K();
-        return xe(a) || ve(a) == Ae ? false : true;
-      }
-      function Ue(a) {
-        return typeof a === "undefined" ? null : ke(a);
-      }
-      function Ve(a) {
-        var b = {}, c;
-        for (c in a)
-          a.hasOwnProperty(c) && a[c] !== null && a[c] !== void 0 && (b[c] = a[c]);
-        return b;
-      }
-      function We(a) {
-        if (a !== null)
-          return JSON.parse(a);
-      }
-      function Qe(a) {
-        return a ? a : Math.floor(1e9 * Math.random()).toString();
-      }
-      function Xe(a) {
-        a = a || K();
-        return ve(a) == "Safari" || a.toLowerCase().match(/iphone|ipad|ipod/) ? false : true;
-      }
-      function Ye() {
-        var a = l.___jsl;
-        if (a && a.H) {
-          for (var b in a.H)
-            if (a.H[b].r = a.H[b].r || [], a.H[b].L = a.H[b].L || [], a.H[b].r = a.H[b].L.concat(), a.CP)
-              for (var c = 0; c < a.CP.length; c++)
-                a.CP[c] = null;
-        }
-      }
-      function Ze(a, b) {
-        if (a > b)
-          throw Error("Short delay should be less than long delay!");
-        this.a = a;
-        this.c = b;
-        a = K();
-        b = Ke();
-        this.b = xe(a) || b === "ReactNative";
-      }
-      Ze.prototype.get = function() {
-        var a = l.navigator;
-        return (a && typeof a.onLine === "boolean" && (Se() || He() === "chrome-extension:" || typeof a.connection !== "undefined") ? a.onLine : 1) ? this.b ? this.c : this.a : Math.min(5e3, this.a);
-      };
-      function $e() {
-        var a = l.document;
-        return a && typeof a.visibilityState !== "undefined" ? a.visibilityState == "visible" : true;
-      }
-      function af() {
-        var a = l.document, b = null;
-        return $e() || !a ? E() : new D(function(c) {
-          b = function() {
-            $e() && (a.removeEventListener("visibilitychange", b, false), c());
-          };
-          a.addEventListener("visibilitychange", b, false);
-        }).o(function(c) {
-          a.removeEventListener("visibilitychange", b, false);
-          throw c;
-        });
-      }
-      function bf(a) {
-        try {
-          var b = new Date(parseInt(a, 10));
-          if (!isNaN(b.getTime()) && !/[^0-9]/.test(a))
-            return b.toUTCString();
-        } catch (c) {
-        }
-        return null;
-      }
-      function cf() {
-        return !(!L("fireauth.oauthhelper", l) && !L("fireauth.iframe", l));
-      }
-      function df() {
-        var a = l.navigator;
-        return a && a.serviceWorker && a.serviceWorker.controller || null;
-      }
-      function ef() {
-        var a = l.navigator;
-        return a && a.serviceWorker ? E().then(function() {
-          return a.serviceWorker.ready;
-        }).then(function(b) {
-          return b.active || null;
-        }).o(function() {
-          return null;
-        }) : E(null);
-      }
-      ;
-      var ff = {};
-      function gf(a) {
-        ff[a] || (ff[a] = true, typeof console !== "undefined" && typeof console.warn === "function" && console.warn(a));
-      }
-      ;
-      var hf;
-      try {
-        var jf = {};
-        Object.defineProperty(jf, "abcd", {configurable: true, enumerable: true, value: 1});
-        Object.defineProperty(jf, "abcd", {configurable: true, enumerable: true, value: 2});
-        hf = jf.abcd == 2;
-      } catch (a) {
-        hf = false;
-      }
-      function M(a, b, c) {
-        hf ? Object.defineProperty(a, b, {configurable: true, enumerable: true, value: c}) : a[b] = c;
-      }
-      function N(a, b) {
-        if (b)
-          for (var c in b)
-            b.hasOwnProperty(c) && M(a, c, b[c]);
-      }
-      function kf(a) {
-        var b = {};
-        N(b, a);
-        return b;
-      }
-      function lf(a) {
-        var b = {}, c;
-        for (c in a)
-          a.hasOwnProperty(c) && (b[c] = a[c]);
-        return b;
-      }
-      function mf(a, b) {
-        if (!b || !b.length)
-          return true;
-        if (!a)
-          return false;
-        for (var c = 0; c < b.length; c++) {
-          var d = a[b[c]];
-          if (d === void 0 || d === null || d === "")
-            return false;
-        }
-        return true;
-      }
-      function nf(a) {
-        var b = a;
-        if (typeof a == "object" && a != null) {
-          b = "length" in a ? [] : {};
-          for (var c in a)
-            M(b, c, nf(a[c]));
-        }
-        return b;
-      }
-      ;
-      function of(a) {
-        var b = a && (a[pf] ? "phone" : null);
-        if (b && a && a[qf]) {
-          M(this, "uid", a[qf]);
-          M(this, "displayName", a[rf] || null);
-          var c = null;
-          a[sf] && (c = new Date(a[sf]).toUTCString());
-          M(this, "enrollmentTime", c);
-          M(this, "factorId", b);
-        } else
-          throw new t("internal-error", "Internal assert: invalid MultiFactorInfo object");
-      }
-      of.prototype.w = function() {
-        return {uid: this.uid, displayName: this.displayName, factorId: this.factorId, enrollmentTime: this.enrollmentTime};
-      };
-      function tf(a) {
-        try {
-          var b = new uf(a);
-        } catch (c) {
-          b = null;
-        }
-        return b;
-      }
-      var rf = "displayName", sf = "enrolledAt", qf = "mfaEnrollmentId", pf = "phoneInfo";
-      function uf(a) {
-        of.call(this, a);
-        M(this, "phoneNumber", a[pf]);
-      }
-      r(uf, of);
-      uf.prototype.w = function() {
-        var a = uf.bb.w.call(this);
-        a.phoneNumber = this.phoneNumber;
-        return a;
-      };
-      function vf(a) {
-        var b = {}, c = a[wf], d = a[xf], e = a[yf];
-        a = tf(a[zf]);
-        if (!e || e != Af && e != Bf && !c || e == Bf && !d || e == Cf && !a)
-          throw Error("Invalid checkActionCode response!");
-        e == Bf ? (b[Df] = c || null, b[Ef] = c || null, b[Ff] = d) : (b[Df] = d || null, b[Ef] = d || null, b[Ff] = c || null);
-        b[Gf] = a || null;
-        M(this, Hf, e);
-        M(this, If, nf(b));
-      }
-      var Cf = "REVERT_SECOND_FACTOR_ADDITION", Af = "EMAIL_SIGNIN", Bf = "VERIFY_AND_CHANGE_EMAIL", wf = "email", zf = "mfaInfo", xf = "newEmail", yf = "requestType", Ff = "email", Df = "fromEmail", Gf = "multiFactorInfo", Ef = "previousEmail", If = "data", Hf = "operation";
-      function Jf(a) {
-        a = J(a);
-        var b = be(a, Kf) || null, c = be(a, Lf) || null, d = be(a, Mf) || null;
-        d = d ? Nf[d] || null : null;
-        if (!b || !c || !d)
-          throw new t("argument-error", Kf + ", " + Lf + "and " + Mf + " are required in a valid action code URL.");
-        N(this, {apiKey: b, operation: d, code: c, continueUrl: be(a, Of) || null, languageCode: be(a, Pf) || null, tenantId: be(a, Qf) || null});
-      }
-      var Kf = "apiKey", Lf = "oobCode", Of = "continueUrl", Pf = "languageCode", Mf = "mode", Qf = "tenantId", Nf = {recoverEmail: "RECOVER_EMAIL", resetPassword: "PASSWORD_RESET", revertSecondFactorAddition: Cf, signIn: Af, verifyAndChangeEmail: Bf, verifyEmail: "VERIFY_EMAIL"};
-      function Rf(a) {
-        try {
-          return new Jf(a);
-        } catch (b) {
-          return null;
-        }
-      }
-      ;
-      function Sf(a) {
-        var b = a[Tf];
-        if (typeof b === "undefined")
-          throw new t("missing-continue-uri");
-        if (typeof b !== "string" || typeof b === "string" && !b.length)
-          throw new t("invalid-continue-uri");
-        this.h = b;
-        this.b = this.a = null;
-        this.g = false;
-        var c = a[Uf];
-        if (c && typeof c === "object") {
-          b = c[Vf];
-          var d = c[Wf];
-          c = c[Xf];
-          if (typeof b === "string" && b.length) {
-            this.a = b;
-            if (typeof d !== "undefined" && typeof d !== "boolean")
-              throw new t("argument-error", Wf + " property must be a boolean when specified.");
-            this.g = !!d;
-            if (typeof c !== "undefined" && (typeof c !== "string" || typeof c === "string" && !c.length))
-              throw new t("argument-error", Xf + " property must be a non empty string when specified.");
-            this.b = c || null;
-          } else {
-            if (typeof b !== "undefined")
-              throw new t("argument-error", Vf + " property must be a non empty string when specified.");
-            if (typeof d !== "undefined" || typeof c !== "undefined")
-              throw new t("missing-android-pkg-name");
-          }
-        } else if (typeof c !== "undefined")
-          throw new t("argument-error", Uf + " property must be a non null object when specified.");
-        this.f = null;
-        if ((b = a[Yf]) && typeof b === "object")
-          if (b = b[Zf], typeof b === "string" && b.length)
-            this.f = b;
-          else {
-            if (typeof b !== "undefined")
-              throw new t("argument-error", Zf + " property must be a non empty string when specified.");
-          }
-        else if (typeof b !== "undefined")
-          throw new t("argument-error", Yf + " property must be a non null object when specified.");
-        b = a[$f];
-        if (typeof b !== "undefined" && typeof b !== "boolean")
-          throw new t("argument-error", $f + " property must be a boolean when specified.");
-        this.c = !!b;
-        a = a[ag];
-        if (typeof a !== "undefined" && (typeof a !== "string" || typeof a === "string" && !a.length))
-          throw new t("argument-error", ag + " property must be a non empty string when specified.");
-        this.i = a || null;
-      }
-      var Uf = "android", ag = "dynamicLinkDomain", $f = "handleCodeInApp", Yf = "iOS", Tf = "url", Wf = "installApp", Xf = "minimumVersion", Vf = "packageName", Zf = "bundleId";
-      function bg(a) {
-        var b = {};
-        b.continueUrl = a.h;
-        b.canHandleCodeInApp = a.c;
-        if (b.androidPackageName = a.a)
-          b.androidMinimumVersion = a.b, b.androidInstallApp = a.g;
-        b.iOSBundleId = a.f;
-        b.dynamicLinkDomain = a.i;
-        for (var c in b)
-          b[c] === null && delete b[c];
-        return b;
-      }
-      ;
-      function cg(a) {
-        return Ra(a, function(b) {
-          b = b.toString(16);
-          return 1 < b.length ? b : "0" + b;
-        }).join("");
-      }
-      ;
-      var dg = null;
-      function eg(a) {
-        var b = [];
-        fg(a, function(c) {
-          b.push(c);
-        });
-        return b;
-      }
-      function fg(a, b) {
-        function c(m) {
-          for (; d < a.length; ) {
-            var p = a.charAt(d++), v = dg[p];
-            if (v != null)
-              return v;
-            if (!/^[\s\xa0]*$/.test(p))
-              throw Error("Unknown base64 encoding at char: " + p);
-          }
-          return m;
-        }
-        gg();
-        for (var d = 0; ; ) {
-          var e = c(-1), f = c(0), g = c(64), h = c(64);
-          if (h === 64 && e === -1)
-            break;
-          b(e << 2 | f >> 4);
-          g != 64 && (b(f << 4 & 240 | g >> 2), h != 64 && b(g << 6 & 192 | h));
-        }
-      }
-      function gg() {
-        if (!dg) {
-          dg = {};
-          for (var a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""), b = ["+/=", "+/", "-_=", "-_.", "-_"], c = 0; 5 > c; c++)
-            for (var d = a.concat(b[c].split("")), e = 0; e < d.length; e++) {
-              var f = d[e];
-              dg[f] === void 0 && (dg[f] = e);
-            }
-        }
-      }
-      ;
-      function hg(a) {
-        var b = ig(a);
-        if (!(b && b.sub && b.iss && b.aud && b.exp))
-          throw Error("Invalid JWT");
-        this.h = a;
-        this.a = b.exp;
-        this.i = b.sub;
-        a = Date.now() / 1e3;
-        this.g = b.iat || (a > this.a ? this.a : a);
-        this.b = b.provider_id || b.firebase && b.firebase.sign_in_provider || null;
-        this.f = b.firebase && b.firebase.tenant || null;
-        this.c = !!b.is_anonymous || this.b == "anonymous";
-      }
-      hg.prototype.T = function() {
-        return this.f;
-      };
-      hg.prototype.l = function() {
-        return this.c;
-      };
-      hg.prototype.toString = function() {
-        return this.h;
-      };
-      function jg(a) {
-        try {
-          return new hg(a);
-        } catch (b) {
-          return null;
-        }
-      }
-      function ig(a) {
-        if (!a)
-          return null;
-        a = a.split(".");
-        if (a.length != 3)
-          return null;
-        a = a[1];
-        for (var b = (4 - a.length % 4) % 4, c = 0; c < b; c++)
-          a += ".";
-        try {
-          var d = eg(a);
-          a = [];
-          for (c = b = 0; b < d.length; ) {
-            var e = d[b++];
-            if (128 > e)
-              a[c++] = String.fromCharCode(e);
-            else if (191 < e && 224 > e) {
-              var f = d[b++];
-              a[c++] = String.fromCharCode((e & 31) << 6 | f & 63);
-            } else if (239 < e && 365 > e) {
-              f = d[b++];
-              var g = d[b++], h = d[b++], m = ((e & 7) << 18 | (f & 63) << 12 | (g & 63) << 6 | h & 63) - 65536;
-              a[c++] = String.fromCharCode(55296 + (m >> 10));
-              a[c++] = String.fromCharCode(56320 + (m & 1023));
-            } else
-              f = d[b++], g = d[b++], a[c++] = String.fromCharCode((e & 15) << 12 | (f & 63) << 6 | g & 63);
-          }
-          return JSON.parse(a.join(""));
-        } catch (p) {
-        }
-        return null;
-      }
-      ;
-      var kg = "oauth_consumer_key oauth_nonce oauth_signature oauth_signature_method oauth_timestamp oauth_token oauth_version".split(" "), lg = ["client_id", "response_type", "scope", "redirect_uri", "state"], mg = {nd: {Ja: "locale", va: 700, ua: 600, fa: "facebook.com", Ya: lg}, pd: {Ja: null, va: 500, ua: 750, fa: "github.com", Ya: lg}, qd: {Ja: "hl", va: 515, ua: 680, fa: "google.com", Ya: lg}, wd: {Ja: "lang", va: 485, ua: 705, fa: "twitter.com", Ya: kg}, kd: {Ja: "locale", va: 640, ua: 600, fa: "apple.com", Ya: []}};
-      function ng(a) {
-        for (var b in mg)
-          if (mg[b].fa == a)
-            return mg[b];
-        return null;
-      }
-      ;
-      function og(a) {
-        var b = {};
-        b["facebook.com"] = pg;
-        b["google.com"] = qg;
-        b["github.com"] = rg;
-        b["twitter.com"] = sg;
-        var c = a && a[tg];
-        try {
-          if (c)
-            return b[c] ? new b[c](a) : new ug(a);
-          if (typeof a[vg] !== "undefined")
-            return new wg(a);
-        } catch (d) {
-        }
-        return null;
-      }
-      var vg = "idToken", tg = "providerId";
-      function wg(a) {
-        var b = a[tg];
-        if (!b && a[vg]) {
-          var c = jg(a[vg]);
-          c && c.b && (b = c.b);
-        }
-        if (!b)
-          throw Error("Invalid additional user info!");
-        if (b == "anonymous" || b == "custom")
-          b = null;
-        c = false;
-        typeof a.isNewUser !== "undefined" ? c = !!a.isNewUser : a.kind === "identitytoolkit#SignupNewUserResponse" && (c = true);
-        M(this, "providerId", b);
-        M(this, "isNewUser", c);
-      }
-      function ug(a) {
-        wg.call(this, a);
-        a = We(a.rawUserInfo || "{}");
-        M(this, "profile", nf(a || {}));
-      }
-      r(ug, wg);
-      function pg(a) {
-        ug.call(this, a);
-        if (this.providerId != "facebook.com")
-          throw Error("Invalid provider ID!");
-      }
-      r(pg, ug);
-      function rg(a) {
-        ug.call(this, a);
-        if (this.providerId != "github.com")
-          throw Error("Invalid provider ID!");
-        M(this, "username", this.profile && this.profile.login || null);
-      }
-      r(rg, ug);
-      function qg(a) {
-        ug.call(this, a);
-        if (this.providerId != "google.com")
-          throw Error("Invalid provider ID!");
-      }
-      r(qg, ug);
-      function sg(a) {
-        ug.call(this, a);
-        if (this.providerId != "twitter.com")
-          throw Error("Invalid provider ID!");
-        M(this, "username", a.screenName || null);
-      }
-      r(sg, ug);
-      function xg(a) {
-        var b = J(a), c = be(b, "link"), d = be(J(c), "link");
-        b = be(b, "deep_link_id");
-        return be(J(b), "link") || b || d || c || a;
-      }
-      ;
-      function yg(a, b) {
-        if (!a && !b)
-          throw new t("internal-error", "Internal assert: no raw session string available");
-        if (a && b)
-          throw new t("internal-error", "Internal assert: unable to determine the session type");
-        this.a = a || null;
-        this.b = b || null;
-        this.type = this.a ? zg : Ag;
-      }
-      var zg = "enroll", Ag = "signin";
-      yg.prototype.Ha = function() {
-        return this.a ? E(this.a) : E(this.b);
-      };
-      yg.prototype.w = function() {
-        return this.type == zg ? {multiFactorSession: {idToken: this.a}} : {multiFactorSession: {pendingCredential: this.b}};
-      };
-      function Bg() {
-      }
-      Bg.prototype.ka = function() {
-      };
-      Bg.prototype.b = function() {
-      };
-      Bg.prototype.c = function() {
-      };
-      Bg.prototype.w = function() {
-      };
-      function Cg(a, b) {
-        return a.then(function(c) {
-          if (c[Dg]) {
-            var d = jg(c[Dg]);
-            if (!d || b != d.i)
-              throw new t("user-mismatch");
-            return c;
-          }
-          throw new t("user-mismatch");
-        }).o(function(c) {
-          throw c && c.code && c.code == xa + "user-not-found" ? new t("user-mismatch") : c;
-        });
-      }
-      function Eg(a, b) {
-        if (b)
-          this.a = b;
-        else
-          throw new t("internal-error", "failed to construct a credential");
-        M(this, "providerId", a);
-        M(this, "signInMethod", a);
-      }
-      Eg.prototype.ka = function(a) {
-        return Fg(a, Gg(this));
-      };
-      Eg.prototype.b = function(a, b) {
-        var c = Gg(this);
-        c.idToken = b;
-        return Hg(a, c);
-      };
-      Eg.prototype.c = function(a, b) {
-        return Cg(Ig(a, Gg(this)), b);
-      };
-      function Gg(a) {
-        return {pendingToken: a.a, requestUri: "http://localhost"};
-      }
-      Eg.prototype.w = function() {
-        return {providerId: this.providerId, signInMethod: this.signInMethod, pendingToken: this.a};
-      };
-      function Jg(a) {
-        if (a && a.providerId && a.signInMethod && a.providerId.indexOf("saml.") == 0 && a.pendingToken)
-          try {
-            return new Eg(a.providerId, a.pendingToken);
-          } catch (b) {
-          }
-        return null;
-      }
-      function Kg(a, b, c) {
-        this.a = null;
-        if (b.idToken || b.accessToken)
-          b.idToken && M(this, "idToken", b.idToken), b.accessToken && M(this, "accessToken", b.accessToken), b.nonce && !b.pendingToken && M(this, "nonce", b.nonce), b.pendingToken && (this.a = b.pendingToken);
-        else if (b.oauthToken && b.oauthTokenSecret)
-          M(this, "accessToken", b.oauthToken), M(this, "secret", b.oauthTokenSecret);
-        else
-          throw new t("internal-error", "failed to construct a credential");
-        M(this, "providerId", a);
-        M(this, "signInMethod", c);
-      }
-      Kg.prototype.ka = function(a) {
-        return Fg(a, Lg(this));
-      };
-      Kg.prototype.b = function(a, b) {
-        var c = Lg(this);
-        c.idToken = b;
-        return Hg(a, c);
-      };
-      Kg.prototype.c = function(a, b) {
-        var c = Lg(this);
-        return Cg(Ig(a, c), b);
-      };
-      function Lg(a) {
-        var b = {};
-        a.idToken && (b.id_token = a.idToken);
-        a.accessToken && (b.access_token = a.accessToken);
-        a.secret && (b.oauth_token_secret = a.secret);
-        b.providerId = a.providerId;
-        a.nonce && !a.a && (b.nonce = a.nonce);
-        b = {postBody: fe(b).toString(), requestUri: "http://localhost"};
-        a.a && (delete b.postBody, b.pendingToken = a.a);
-        return b;
-      }
-      Kg.prototype.w = function() {
-        var a = {providerId: this.providerId, signInMethod: this.signInMethod};
-        this.idToken && (a.oauthIdToken = this.idToken);
-        this.accessToken && (a.oauthAccessToken = this.accessToken);
-        this.secret && (a.oauthTokenSecret = this.secret);
-        this.nonce && (a.nonce = this.nonce);
-        this.a && (a.pendingToken = this.a);
-        return a;
-      };
-      function Mg(a) {
-        if (a && a.providerId && a.signInMethod) {
-          var b = {idToken: a.oauthIdToken, accessToken: a.oauthTokenSecret ? null : a.oauthAccessToken, oauthTokenSecret: a.oauthTokenSecret, oauthToken: a.oauthTokenSecret && a.oauthAccessToken, nonce: a.nonce, pendingToken: a.pendingToken};
-          try {
-            return new Kg(a.providerId, b, a.signInMethod);
-          } catch (c) {
-          }
-        }
-        return null;
-      }
-      function Ng(a, b) {
-        this.Qc = b || [];
-        N(this, {providerId: a, isOAuthProvider: true});
-        this.Jb = {};
-        this.qb = (ng(a) || {}).Ja || null;
-        this.pb = null;
-      }
-      Ng.prototype.Ka = function(a) {
-        this.Jb = nb(a);
-        return this;
-      };
-      function Og(a) {
-        if (typeof a !== "string" || a.indexOf("saml.") != 0)
-          throw new t("argument-error", 'SAML provider IDs must be prefixed with "saml."');
-        Ng.call(this, a, []);
-      }
-      r(Og, Ng);
-      function Pg(a) {
-        Ng.call(this, a, lg);
-        this.a = [];
-      }
-      r(Pg, Ng);
-      Pg.prototype.Ca = function(a) {
-        Va(this.a, a) || this.a.push(a);
-        return this;
-      };
-      Pg.prototype.Rb = function() {
-        return Za(this.a);
-      };
-      Pg.prototype.credential = function(a, b) {
-        var c;
-        n(a) ? c = {idToken: a.idToken || null, accessToken: a.accessToken || null, nonce: a.rawNonce || null} : c = {idToken: a || null, accessToken: b || null};
-        if (!c.idToken && !c.accessToken)
-          throw new t("argument-error", "credential failed: must provide the ID token and/or the access token.");
-        return new Kg(this.providerId, c, this.providerId);
-      };
-      function Qg() {
-        Pg.call(this, "facebook.com");
-      }
-      r(Qg, Pg);
-      M(Qg, "PROVIDER_ID", "facebook.com");
-      M(Qg, "FACEBOOK_SIGN_IN_METHOD", "facebook.com");
-      function Rg(a) {
-        if (!a)
-          throw new t("argument-error", "credential failed: expected 1 argument (the OAuth access token).");
-        var b = a;
-        n(a) && (b = a.accessToken);
-        return new Qg().credential({accessToken: b});
-      }
-      function Sg() {
-        Pg.call(this, "github.com");
-      }
-      r(Sg, Pg);
-      M(Sg, "PROVIDER_ID", "github.com");
-      M(Sg, "GITHUB_SIGN_IN_METHOD", "github.com");
-      function Tg(a) {
-        if (!a)
-          throw new t("argument-error", "credential failed: expected 1 argument (the OAuth access token).");
-        var b = a;
-        n(a) && (b = a.accessToken);
-        return new Sg().credential({accessToken: b});
-      }
-      function Ug() {
-        Pg.call(this, "google.com");
-        this.Ca("profile");
-      }
-      r(Ug, Pg);
-      M(Ug, "PROVIDER_ID", "google.com");
-      M(Ug, "GOOGLE_SIGN_IN_METHOD", "google.com");
-      function Vg(a, b) {
-        var c = a;
-        n(a) && (c = a.idToken, b = a.accessToken);
-        return new Ug().credential({idToken: c, accessToken: b});
-      }
-      function Wg() {
-        Ng.call(this, "twitter.com", kg);
-      }
-      r(Wg, Ng);
-      M(Wg, "PROVIDER_ID", "twitter.com");
-      M(Wg, "TWITTER_SIGN_IN_METHOD", "twitter.com");
-      function Xg(a, b) {
-        var c = a;
-        n(c) || (c = {oauthToken: a, oauthTokenSecret: b});
-        if (!c.oauthToken || !c.oauthTokenSecret)
-          throw new t("argument-error", "credential failed: expected 2 arguments (the OAuth access token and secret).");
-        return new Kg("twitter.com", c, "twitter.com");
-      }
-      function Yg(a, b, c) {
-        this.a = a;
-        this.f = b;
-        M(this, "providerId", "password");
-        M(this, "signInMethod", c === Zg.EMAIL_LINK_SIGN_IN_METHOD ? Zg.EMAIL_LINK_SIGN_IN_METHOD : Zg.EMAIL_PASSWORD_SIGN_IN_METHOD);
-      }
-      Yg.prototype.ka = function(a) {
-        return this.signInMethod == Zg.EMAIL_LINK_SIGN_IN_METHOD ? O(a, $g, {email: this.a, oobCode: this.f}) : O(a, ah, {email: this.a, password: this.f});
-      };
-      Yg.prototype.b = function(a, b) {
-        return this.signInMethod == Zg.EMAIL_LINK_SIGN_IN_METHOD ? O(a, bh, {idToken: b, email: this.a, oobCode: this.f}) : O(a, ch, {idToken: b, email: this.a, password: this.f});
-      };
-      Yg.prototype.c = function(a, b) {
-        return Cg(this.ka(a), b);
-      };
-      Yg.prototype.w = function() {
-        return {email: this.a, password: this.f, signInMethod: this.signInMethod};
-      };
-      function dh(a) {
-        return a && a.email && a.password ? new Yg(a.email, a.password, a.signInMethod) : null;
-      }
-      function Zg() {
-        N(this, {providerId: "password", isOAuthProvider: false});
-      }
-      function eh(a, b) {
-        b = fh(b);
-        if (!b)
-          throw new t("argument-error", "Invalid email link!");
-        return new Yg(a, b.code, Zg.EMAIL_LINK_SIGN_IN_METHOD);
-      }
-      function fh(a) {
-        a = xg(a);
-        return (a = Rf(a)) && a.operation === Af ? a : null;
-      }
-      N(Zg, {PROVIDER_ID: "password"});
-      N(Zg, {EMAIL_LINK_SIGN_IN_METHOD: "emailLink"});
-      N(Zg, {EMAIL_PASSWORD_SIGN_IN_METHOD: "password"});
-      function gh(a) {
-        if (!(a.fb && a.eb || a.La && a.ea))
-          throw new t("internal-error");
-        this.a = a;
-        M(this, "providerId", "phone");
-        this.fa = "phone";
-        M(this, "signInMethod", "phone");
-      }
-      gh.prototype.ka = function(a) {
-        return a.gb(hh(this));
-      };
-      gh.prototype.b = function(a, b) {
-        var c = hh(this);
-        c.idToken = b;
-        return O(a, ih, c);
-      };
-      gh.prototype.c = function(a, b) {
-        var c = hh(this);
-        c.operation = "REAUTH";
-        a = O(a, jh, c);
-        return Cg(a, b);
-      };
-      gh.prototype.w = function() {
-        var a = {providerId: "phone"};
-        this.a.fb && (a.verificationId = this.a.fb);
-        this.a.eb && (a.verificationCode = this.a.eb);
-        this.a.La && (a.temporaryProof = this.a.La);
-        this.a.ea && (a.phoneNumber = this.a.ea);
-        return a;
-      };
-      function kh(a) {
-        if (a && a.providerId === "phone" && (a.verificationId && a.verificationCode || a.temporaryProof && a.phoneNumber)) {
-          var b = {};
-          w(["verificationId", "verificationCode", "temporaryProof", "phoneNumber"], function(c) {
-            a[c] && (b[c] = a[c]);
-          });
-          return new gh(b);
-        }
-        return null;
-      }
-      function hh(a) {
-        return a.a.La && a.a.ea ? {temporaryProof: a.a.La, phoneNumber: a.a.ea} : {sessionInfo: a.a.fb, code: a.a.eb};
-      }
-      function lh(a) {
-        try {
-          this.a = a || firebase2.auth();
-        } catch (b) {
-          throw new t("argument-error", "Either an instance of firebase.auth.Auth must be passed as an argument to the firebase.auth.PhoneAuthProvider constructor, or the default firebase App instance must be initialized via firebase.initializeApp().");
-        }
-        N(this, {providerId: "phone", isOAuthProvider: false});
-      }
-      lh.prototype.gb = function(a, b) {
-        var c = this.a.a;
-        return E(b.verify()).then(function(d) {
-          if (typeof d !== "string")
-            throw new t("argument-error", "An implementation of firebase.auth.ApplicationVerifier.prototype.verify() must return a firebase.Promise that resolves with a string.");
-          switch (b.type) {
-            case "recaptcha":
-              var e = n(a) ? a.session : null, f = n(a) ? a.phoneNumber : a, g;
-              e && e.type == zg ? g = e.Ha().then(function(h) {
-                return mh(c, {idToken: h, phoneEnrollmentInfo: {phoneNumber: f, recaptchaToken: d}});
-              }) : e && e.type == Ag ? g = e.Ha().then(function(h) {
-                return nh(c, {mfaPendingCredential: h, mfaEnrollmentId: a.multiFactorHint && a.multiFactorHint.uid || a.multiFactorUid, phoneSignInInfo: {recaptchaToken: d}});
-              }) : g = oh(c, {phoneNumber: f, recaptchaToken: d});
-              return g.then(function(h) {
-                typeof b.reset === "function" && b.reset();
-                return h;
-              }, function(h) {
-                typeof b.reset === "function" && b.reset();
-                throw h;
-              });
-            default:
-              throw new t("argument-error", 'Only firebase.auth.ApplicationVerifiers with type="recaptcha" are currently supported.');
-          }
-        });
-      };
-      function ph(a, b) {
-        if (!a)
-          throw new t("missing-verification-id");
-        if (!b)
-          throw new t("missing-verification-code");
-        return new gh({fb: a, eb: b});
-      }
-      N(lh, {PROVIDER_ID: "phone"});
-      N(lh, {PHONE_SIGN_IN_METHOD: "phone"});
-      function qh(a) {
-        if (a.temporaryProof && a.phoneNumber)
-          return new gh({La: a.temporaryProof, ea: a.phoneNumber});
-        var b = a && a.providerId;
-        if (!b || b === "password")
-          return null;
-        var c = a && a.oauthAccessToken, d = a && a.oauthTokenSecret, e = a && a.nonce, f = a && a.oauthIdToken, g = a && a.pendingToken;
-        try {
-          switch (b) {
-            case "google.com":
-              return Vg(f, c);
-            case "facebook.com":
-              return Rg(c);
-            case "github.com":
-              return Tg(c);
-            case "twitter.com":
-              return Xg(c, d);
-            default:
-              return c || d || f || g ? g ? b.indexOf("saml.") == 0 ? new Eg(b, g) : new Kg(b, {
-                pendingToken: g,
-                idToken: a.oauthIdToken,
-                accessToken: a.oauthAccessToken
-              }, b) : new Pg(b).credential({idToken: f, accessToken: c, rawNonce: e}) : null;
-          }
-        } catch (h) {
-          return null;
-        }
-      }
-      function rh(a) {
-        if (!a.isOAuthProvider)
-          throw new t("invalid-oauth-provider");
-      }
-      ;
-      function sh(a, b, c, d, e, f, g) {
-        this.c = a;
-        this.b = b || null;
-        this.g = c || null;
-        this.f = d || null;
-        this.i = f || null;
-        this.h = g || null;
-        this.a = e || null;
-        if (this.g || this.a) {
-          if (this.g && this.a)
-            throw new t("invalid-auth-event");
-          if (this.g && !this.f)
-            throw new t("invalid-auth-event");
-        } else
-          throw new t("invalid-auth-event");
-      }
-      sh.prototype.getUid = function() {
-        var a = [];
-        a.push(this.c);
-        this.b && a.push(this.b);
-        this.f && a.push(this.f);
-        this.h && a.push(this.h);
-        return a.join("-");
-      };
-      sh.prototype.T = function() {
-        return this.h;
-      };
-      sh.prototype.w = function() {
-        return {type: this.c, eventId: this.b, urlResponse: this.g, sessionId: this.f, postBody: this.i, tenantId: this.h, error: this.a && this.a.w()};
-      };
-      function th(a) {
-        a = a || {};
-        return a.type ? new sh(a.type, a.eventId, a.urlResponse, a.sessionId, a.error && Aa(a.error), a.postBody, a.tenantId) : null;
-      }
-      ;
-      function uh() {
-        this.b = null;
-        this.a = [];
-      }
-      var vh = null;
-      function wh(a) {
-        var b = vh;
-        b.a.push(a);
-        b.b || (b.b = function(c) {
-          for (var d = 0; d < b.a.length; d++)
-            b.a[d](c);
-        }, a = L("universalLinks.subscribe", l), typeof a === "function" && a(null, b.b));
-      }
-      ;
-      function xh(a) {
-        var b = "unauthorized-domain", c = void 0, d = J(a);
-        a = d.a;
-        d = d.c;
-        d == "chrome-extension" ? c = Qb("This chrome extension ID (chrome-extension://%s) is not authorized to run this operation. Add it to the OAuth redirect domains list in the Firebase console -> Auth section -> Sign in method tab.", a) : d == "http" || d == "https" ? c = Qb("This domain (%s) is not authorized to run this operation. Add it to the OAuth redirect domains list in the Firebase console -> Auth section -> Sign in method tab.", a) : b = "operation-not-supported-in-this-environment";
-        t.call(this, b, c);
-      }
-      r(xh, t);
-      function yh(a, b, c) {
-        t.call(this, a, c);
-        a = b || {};
-        a.Kb && M(this, "email", a.Kb);
-        a.ea && M(this, "phoneNumber", a.ea);
-        a.credential && M(this, "credential", a.credential);
-        a.$b && M(this, "tenantId", a.$b);
-      }
-      r(yh, t);
-      yh.prototype.w = function() {
-        var a = {code: this.code, message: this.message};
-        this.email && (a.email = this.email);
-        this.phoneNumber && (a.phoneNumber = this.phoneNumber);
-        this.tenantId && (a.tenantId = this.tenantId);
-        var b = this.credential && this.credential.w();
-        b && z(a, b);
-        return a;
-      };
-      yh.prototype.toJSON = function() {
-        return this.w();
-      };
-      function zh(a) {
-        if (a.code) {
-          var b = a.code || "";
-          b.indexOf(xa) == 0 && (b = b.substring(xa.length));
-          var c = {credential: qh(a), $b: a.tenantId};
-          if (a.email)
-            c.Kb = a.email;
-          else if (a.phoneNumber)
-            c.ea = a.phoneNumber;
-          else if (!c.credential)
-            return new t(b, a.message || void 0);
-          return new yh(b, c, a.message);
-        }
-        return null;
-      }
-      ;
-      function Ah() {
-      }
-      Ah.prototype.c = null;
-      function Bh(a) {
-        return a.c || (a.c = a.b());
-      }
-      ;
-      var Ch;
-      function Dh() {
-      }
-      r(Dh, Ah);
-      Dh.prototype.a = function() {
-        var a = Eh(this);
-        return a ? new ActiveXObject(a) : new XMLHttpRequest();
-      };
-      Dh.prototype.b = function() {
-        var a = {};
-        Eh(this) && (a[0] = true, a[1] = true);
-        return a;
-      };
-      function Eh(a) {
-        if (!a.f && typeof XMLHttpRequest == "undefined" && typeof ActiveXObject != "undefined") {
-          for (var b = ["MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"], c = 0; c < b.length; c++) {
-            var d = b[c];
-            try {
-              return new ActiveXObject(d), a.f = d;
-            } catch (e) {
-            }
-          }
-          throw Error("Could not create ActiveXObject. ActiveX might be disabled, or MSXML might not be installed");
-        }
-        return a.f;
-      }
-      Ch = new Dh();
-      function Fh() {
-      }
-      r(Fh, Ah);
-      Fh.prototype.a = function() {
-        var a = new XMLHttpRequest();
-        if ("withCredentials" in a)
-          return a;
-        if (typeof XDomainRequest != "undefined")
-          return new Gh();
-        throw Error("Unsupported browser");
-      };
-      Fh.prototype.b = function() {
-        return {};
-      };
-      function Gh() {
-        this.a = new XDomainRequest();
-        this.readyState = 0;
-        this.onreadystatechange = null;
-        this.responseType = this.responseText = this.response = "";
-        this.status = -1;
-        this.statusText = "";
-        this.a.onload = q(this.qc, this);
-        this.a.onerror = q(this.Tb, this);
-        this.a.onprogress = q(this.rc, this);
-        this.a.ontimeout = q(this.vc, this);
-      }
-      k = Gh.prototype;
-      k.open = function(a, b, c) {
-        if (c != null && !c)
-          throw Error("Only async requests are supported.");
-        this.a.open(a, b);
-      };
-      k.send = function(a) {
-        if (a)
-          if (typeof a == "string")
-            this.a.send(a);
-          else
-            throw Error("Only string data is supported");
-        else
-          this.a.send();
-      };
-      k.abort = function() {
-        this.a.abort();
-      };
-      k.setRequestHeader = function() {
-      };
-      k.getResponseHeader = function(a) {
-        return a.toLowerCase() == "content-type" ? this.a.contentType : "";
-      };
-      k.qc = function() {
-        this.status = 200;
-        this.response = this.responseText = this.a.responseText;
-        Hh(this, 4);
-      };
-      k.Tb = function() {
-        this.status = 500;
-        this.response = this.responseText = "";
-        Hh(this, 4);
-      };
-      k.vc = function() {
-        this.Tb();
-      };
-      k.rc = function() {
-        this.status = 200;
-        Hh(this, 1);
-      };
-      function Hh(a, b) {
-        a.readyState = b;
-        if (a.onreadystatechange)
-          a.onreadystatechange();
-      }
-      k.getAllResponseHeaders = function() {
-        return "content-type: " + this.a.contentType;
-      };
-      function Ih(a, b, c) {
-        this.reset(a, b, c, void 0, void 0);
-      }
-      Ih.prototype.a = null;
-      var Jh = 0;
-      Ih.prototype.reset = function(a, b, c, d, e) {
-        typeof e == "number" || Jh++;
-        d || va();
-        delete this.a;
-      };
-      function Kh(a) {
-        this.f = a;
-        this.b = this.c = this.a = null;
-      }
-      function Lh(a, b) {
-        this.name = a;
-        this.value = b;
-      }
-      Lh.prototype.toString = function() {
-        return this.name;
-      };
-      var Mh = new Lh("SEVERE", 1e3), Nh = new Lh("WARNING", 900), Oh = new Lh("CONFIG", 700), Ph = new Lh("FINE", 500);
-      function Qh(a) {
-        if (a.c)
-          return a.c;
-        if (a.a)
-          return Qh(a.a);
-        Ga("Root logger has no level set.");
-        return null;
-      }
-      Kh.prototype.log = function(a, b, c) {
-        if (a.value >= Qh(this).value)
-          for (oa(b) && (b = b()), a = new Ih(a, String(b), this.f), c && (a.a = c), c = this; c; )
-            c = c.a;
-      };
-      var Rh = {}, Sh = null;
-      function Th(a) {
-        Sh || (Sh = new Kh(""), Rh[""] = Sh, Sh.c = Oh);
-        var b;
-        if (!(b = Rh[a])) {
-          b = new Kh(a);
-          var c = a.lastIndexOf("."), d = a.substr(c + 1);
-          c = Th(a.substr(0, c));
-          c.b || (c.b = {});
-          c.b[d] = b;
-          b.a = c;
-          Rh[a] = b;
-        }
-        return b;
-      }
-      ;
-      function Uh(a, b) {
-        a && a.log(Ph, b, void 0);
-      }
-      ;
-      function Vh(a) {
-        this.f = a;
-      }
-      r(Vh, Ah);
-      Vh.prototype.a = function() {
-        return new Wh(this.f);
-      };
-      Vh.prototype.b = function(a) {
-        return function() {
-          return a;
-        };
-      }({});
-      function Wh(a) {
-        H.call(this);
-        this.u = a;
-        this.h = void 0;
-        this.readyState = Xh;
-        this.status = 0;
-        this.responseType = this.responseText = this.response = this.statusText = "";
-        this.onreadystatechange = null;
-        this.l = new Headers();
-        this.b = null;
-        this.s = "GET";
-        this.f = "";
-        this.a = false;
-        this.i = Th("goog.net.FetchXmlHttp");
-        this.m = this.c = this.g = null;
-      }
-      r(Wh, H);
-      var Xh = 0;
-      k = Wh.prototype;
-      k.open = function(a, b) {
-        if (this.readyState != Xh)
-          throw this.abort(), Error("Error reopening a connection");
-        this.s = a;
-        this.f = b;
-        this.readyState = 1;
-        Yh(this);
-      };
-      k.send = function(a) {
-        if (this.readyState != 1)
-          throw this.abort(), Error("need to call open() first. ");
-        this.a = true;
-        var b = {headers: this.l, method: this.s, credentials: this.h, cache: void 0};
-        a && (b.body = a);
-        this.u.fetch(new Request(this.f, b)).then(this.uc.bind(this), this.Va.bind(this));
-      };
-      k.abort = function() {
-        this.response = this.responseText = "";
-        this.l = new Headers();
-        this.status = 0;
-        this.c && this.c.cancel("Request was aborted.");
-        1 <= this.readyState && this.a && this.readyState != 4 && (this.a = false, Zh(this));
-        this.readyState = Xh;
-      };
-      k.uc = function(a) {
-        this.a && (this.g = a, this.b || (this.status = this.g.status, this.statusText = this.g.statusText, this.b = a.headers, this.readyState = 2, Yh(this)), this.a && (this.readyState = 3, Yh(this), this.a && (this.responseType === "arraybuffer" ? a.arrayBuffer().then(this.sc.bind(this), this.Va.bind(this)) : typeof l.ReadableStream !== "undefined" && "body" in a ? (this.response = this.responseText = "", this.c = a.body.getReader(), this.m = new TextDecoder(), $h(this)) : a.text().then(this.tc.bind(this), this.Va.bind(this)))));
-      };
-      function $h(a) {
-        a.c.read().then(a.pc.bind(a)).catch(a.Va.bind(a));
-      }
-      k.pc = function(a) {
-        if (this.a) {
-          var b = this.m.decode(a.value ? a.value : new Uint8Array(0), {stream: !a.done});
-          b && (this.response = this.responseText += b);
-          a.done ? Zh(this) : Yh(this);
-          this.readyState == 3 && $h(this);
-        }
-      };
-      k.tc = function(a) {
-        this.a && (this.response = this.responseText = a, Zh(this));
-      };
-      k.sc = function(a) {
-        this.a && (this.response = a, Zh(this));
-      };
-      k.Va = function(a) {
-        var b = this.i;
-        b && b.log(Nh, "Failed to fetch url " + this.f, a instanceof Error ? a : Error(a));
-        this.a && Zh(this);
-      };
-      function Zh(a) {
-        a.readyState = 4;
-        a.g = null;
-        a.c = null;
-        a.m = null;
-        Yh(a);
-      }
-      k.setRequestHeader = function(a, b) {
-        this.l.append(a, b);
-      };
-      k.getResponseHeader = function(a) {
-        return this.b ? this.b.get(a.toLowerCase()) || "" : ((a = this.i) && a.log(Nh, "Attempting to get response header but no headers have been received for url: " + this.f, void 0), "");
-      };
-      k.getAllResponseHeaders = function() {
-        if (!this.b) {
-          var a = this.i;
-          a && a.log(Nh, "Attempting to get all response headers but no headers have been received for url: " + this.f, void 0);
-          return "";
-        }
-        a = [];
-        for (var b = this.b.entries(), c = b.next(); !c.done; )
-          c = c.value, a.push(c[0] + ": " + c[1]), c = b.next();
-        return a.join("\r\n");
-      };
-      function Yh(a) {
-        a.onreadystatechange && a.onreadystatechange.call(a);
-      }
-      Object.defineProperty(Wh.prototype, "withCredentials", {get: function() {
-        return this.h === "include";
-      }, set: function(a) {
-        this.h = a ? "include" : "same-origin";
-      }});
-      function ai(a) {
-        H.call(this);
-        this.headers = new Jd();
-        this.D = a || null;
-        this.c = false;
-        this.C = this.a = null;
-        this.h = this.P = this.l = "";
-        this.f = this.N = this.i = this.J = false;
-        this.g = 0;
-        this.s = null;
-        this.m = bi;
-        this.u = this.S = false;
-      }
-      r(ai, H);
-      var bi = "";
-      ai.prototype.b = Th("goog.net.XhrIo");
-      var ci = /^https?$/i, di = ["POST", "PUT"];
-      function ei(a, b, c, d, e) {
-        if (a.a)
-          throw Error("[goog.net.XhrIo] Object is active with another request=" + a.l + "; newUri=" + b);
-        c = c ? c.toUpperCase() : "GET";
-        a.l = b;
-        a.h = "";
-        a.P = c;
-        a.J = false;
-        a.c = true;
-        a.a = a.D ? a.D.a() : Ch.a();
-        a.C = a.D ? Bh(a.D) : Bh(Ch);
-        a.a.onreadystatechange = q(a.Wb, a);
-        try {
-          Uh(a.b, fi(a, "Opening Xhr")), a.N = true, a.a.open(c, String(b), true), a.N = false;
-        } catch (g) {
-          Uh(a.b, fi(a, "Error opening Xhr: " + g.message));
-          gi(a, g);
-          return;
-        }
-        b = d || "";
-        var f = new Jd(a.headers);
-        e && Id(e, function(g, h) {
-          f.set(h, g);
-        });
-        e = Ta(f.Y());
-        d = l.FormData && b instanceof l.FormData;
-        !Va(di, c) || e || d || f.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-        f.forEach(function(g, h) {
-          this.a.setRequestHeader(h, g);
-        }, a);
-        a.m && (a.a.responseType = a.m);
-        "withCredentials" in a.a && a.a.withCredentials !== a.S && (a.a.withCredentials = a.S);
-        try {
-          hi(a), 0 < a.g && (a.u = ii(a.a), Uh(a.b, fi(a, "Will abort after " + a.g + "ms if incomplete, xhr2 " + a.u)), a.u ? (a.a.timeout = a.g, a.a.ontimeout = q(a.Ma, a)) : a.s = Ed(a.Ma, a.g, a)), Uh(a.b, fi(a, "Sending request")), a.i = true, a.a.send(b), a.i = false;
-        } catch (g) {
-          Uh(a.b, fi(a, "Send error: " + g.message)), gi(a, g);
-        }
-      }
-      function ii(a) {
-        return Wb && fc(9) && typeof a.timeout === "number" && a.ontimeout !== void 0;
-      }
-      function Ua(a) {
-        return a.toLowerCase() == "content-type";
-      }
-      k = ai.prototype;
-      k.Ma = function() {
-        typeof ha != "undefined" && this.a && (this.h = "Timed out after " + this.g + "ms, aborting", Uh(this.b, fi(this, this.h)), this.dispatchEvent("timeout"), this.abort(8));
-      };
-      function gi(a, b) {
-        a.c = false;
-        a.a && (a.f = true, a.a.abort(), a.f = false);
-        a.h = b;
-        ji(a);
-        ki(a);
-      }
-      function ji(a) {
-        a.J || (a.J = true, a.dispatchEvent("complete"), a.dispatchEvent("error"));
-      }
-      k.abort = function() {
-        this.a && this.c && (Uh(this.b, fi(this, "Aborting")), this.c = false, this.f = true, this.a.abort(), this.f = false, this.dispatchEvent("complete"), this.dispatchEvent("abort"), ki(this));
-      };
-      k.Da = function() {
-        this.a && (this.c && (this.c = false, this.f = true, this.a.abort(), this.f = false), ki(this, true));
-        ai.bb.Da.call(this);
-      };
-      k.Wb = function() {
-        this.ya || (this.N || this.i || this.f ? li(this) : this.Jc());
-      };
-      k.Jc = function() {
-        li(this);
-      };
-      function li(a) {
-        if (a.c && typeof ha != "undefined") {
-          if (a.C[1] && mi(a) == 4 && ni(a) == 2)
-            Uh(a.b, fi(a, "Local request error detected and ignored"));
-          else if (a.i && mi(a) == 4)
-            Ed(a.Wb, 0, a);
-          else if (a.dispatchEvent("readystatechange"), mi(a) == 4) {
-            Uh(a.b, fi(a, "Request complete"));
-            a.c = false;
-            try {
-              var b = ni(a);
-              a:
-                switch (b) {
-                  case 200:
-                  case 201:
-                  case 202:
-                  case 204:
-                  case 206:
-                  case 304:
-                  case 1223:
-                    var c = true;
-                    break a;
-                  default:
-                    c = false;
-                }
-              var d;
-              if (!(d = c)) {
-                var e;
-                if (e = b === 0) {
-                  var f = String(a.l).match(Md)[1] || null;
-                  if (!f && l.self && l.self.location) {
-                    var g = l.self.location.protocol;
-                    f = g.substr(0, g.length - 1);
-                  }
-                  e = !ci.test(f ? f.toLowerCase() : "");
-                }
-                d = e;
-              }
-              if (d)
-                a.dispatchEvent("complete"), a.dispatchEvent("success");
-              else {
-                try {
-                  var h = 2 < mi(a) ? a.a.statusText : "";
-                } catch (m) {
-                  Uh(a.b, "Can not get status: " + m.message), h = "";
-                }
-                a.h = h + " [" + ni(a) + "]";
-                ji(a);
-              }
-            } finally {
-              ki(a);
-            }
-          }
-        }
-      }
-      function ki(a, b) {
-        if (a.a) {
-          hi(a);
-          var c = a.a, d = a.C[0] ? la : null;
-          a.a = null;
-          a.C = null;
-          b || a.dispatchEvent("ready");
-          try {
-            c.onreadystatechange = d;
-          } catch (e) {
-            (a = a.b) && a.log(Mh, "Problem encountered resetting onreadystatechange: " + e.message, void 0);
-          }
-        }
-      }
-      function hi(a) {
-        a.a && a.u && (a.a.ontimeout = null);
-        a.s && (l.clearTimeout(a.s), a.s = null);
-      }
-      function mi(a) {
-        return a.a ? a.a.readyState : 0;
-      }
-      function ni(a) {
-        try {
-          return 2 < mi(a) ? a.a.status : -1;
-        } catch (b) {
-          return -1;
-        }
-      }
-      function oi(a) {
-        try {
-          return a.a ? a.a.responseText : "";
-        } catch (b) {
-          return Uh(a.b, "Can not get responseText: " + b.message), "";
-        }
-      }
-      k.getResponse = function() {
-        try {
-          if (!this.a)
-            return null;
-          if ("response" in this.a)
-            return this.a.response;
-          switch (this.m) {
-            case bi:
-            case "text":
-              return this.a.responseText;
-            case "arraybuffer":
-              if ("mozResponseArrayBuffer" in this.a)
-                return this.a.mozResponseArrayBuffer;
-          }
-          var a = this.b;
-          a && a.log(Mh, "Response type " + this.m + " is not supported on this browser", void 0);
-          return null;
-        } catch (b) {
-          return Uh(this.b, "Can not get response: " + b.message), null;
-        }
-      };
-      function fi(a, b) {
-        return b + " [" + a.P + " " + a.l + " " + ni(a) + "]";
-      }
-      ;
-      function pi(a) {
-        var b = qi;
-        this.g = [];
-        this.u = b;
-        this.s = a || null;
-        this.f = this.a = false;
-        this.c = void 0;
-        this.v = this.C = this.i = false;
-        this.h = 0;
-        this.b = null;
-        this.l = 0;
-      }
-      pi.prototype.cancel = function(a) {
-        if (this.a)
-          this.c instanceof pi && this.c.cancel();
-        else {
-          if (this.b) {
-            var b = this.b;
-            delete this.b;
-            a ? b.cancel(a) : (b.l--, 0 >= b.l && b.cancel());
-          }
-          this.u ? this.u.call(this.s, this) : this.v = true;
-          this.a || (a = new ri(this), si(this), ti(this, false, a));
-        }
-      };
-      pi.prototype.m = function(a, b) {
-        this.i = false;
-        ti(this, a, b);
-      };
-      function ti(a, b, c) {
-        a.a = true;
-        a.c = c;
-        a.f = !b;
-        ui(a);
-      }
-      function si(a) {
-        if (a.a) {
-          if (!a.v)
-            throw new vi(a);
-          a.v = false;
-        }
-      }
-      function wi(a, b) {
-        xi(a, null, b, void 0);
-      }
-      function xi(a, b, c, d) {
-        a.g.push([b, c, d]);
-        a.a && ui(a);
-      }
-      pi.prototype.then = function(a, b, c) {
-        var d, e, f = new D(function(g, h) {
-          d = g;
-          e = h;
-        });
-        xi(this, d, function(g) {
-          g instanceof ri ? f.cancel() : e(g);
-        });
-        return f.then(a, b, c);
-      };
-      pi.prototype.$goog_Thenable = true;
-      function yi(a) {
-        return Sa(a.g, function(b) {
-          return oa(b[1]);
-        });
-      }
-      function ui(a) {
-        if (a.h && a.a && yi(a)) {
-          var b = a.h, c = zi[b];
-          c && (l.clearTimeout(c.a), delete zi[b]);
-          a.h = 0;
-        }
-        a.b && (a.b.l--, delete a.b);
-        b = a.c;
-        for (var d = c = false; a.g.length && !a.i; ) {
-          var e = a.g.shift(), f = e[0], g = e[1];
-          e = e[2];
-          if (f = a.f ? g : f)
-            try {
-              var h = f.call(e || a.s, b);
-              h !== void 0 && (a.f = a.f && (h == b || h instanceof Error), a.c = b = h);
-              if (Ea(b) || typeof l.Promise === "function" && b instanceof l.Promise)
-                d = true, a.i = true;
-            } catch (m) {
-              b = m, a.f = true, yi(a) || (c = true);
-            }
-        }
-        a.c = b;
-        d && (h = q(a.m, a, true), d = q(a.m, a, false), b instanceof pi ? (xi(b, h, d), b.C = true) : b.then(h, d));
-        c && (b = new Ai(b), zi[b.a] = b, a.h = b.a);
-      }
-      function vi() {
-        u.call(this);
-      }
-      r(vi, u);
-      vi.prototype.message = "Deferred has already fired";
-      vi.prototype.name = "AlreadyCalledError";
-      function ri() {
-        u.call(this);
-      }
-      r(ri, u);
-      ri.prototype.message = "Deferred was canceled";
-      ri.prototype.name = "CanceledError";
-      function Ai(a) {
-        this.a = l.setTimeout(q(this.c, this), 0);
-        this.b = a;
-      }
-      Ai.prototype.c = function() {
-        delete zi[this.a];
-        throw this.b;
-      };
-      var zi = {};
-      function Bi(a) {
-        var b = {}, c = b.document || document, d = yb(a).toString(), e = oc(document, "SCRIPT"), f = {Xb: e, Ma: void 0}, g = new pi(f), h = null, m = b.timeout != null ? b.timeout : 5e3;
-        0 < m && (h = window.setTimeout(function() {
-          Ci(e, true);
-          var p = new Di(Ei, "Timeout reached for loading script " + d);
-          si(g);
-          ti(g, false, p);
-        }, m), f.Ma = h);
-        e.onload = e.onreadystatechange = function() {
-          e.readyState && e.readyState != "loaded" && e.readyState != "complete" || (Ci(e, b.xd || false, h), si(g), ti(g, true, null));
-        };
-        e.onerror = function() {
-          Ci(e, true, h);
-          var p = new Di(Fi, "Error while loading script " + d);
-          si(g);
-          ti(g, false, p);
-        };
-        f = b.attributes || {};
-        z(f, {type: "text/javascript", charset: "UTF-8"});
-        lc(e, f);
-        Ob(e, a);
-        Gi(c).appendChild(e);
-        return g;
-      }
-      function Gi(a) {
-        var b;
-        return (b = (a || document).getElementsByTagName("HEAD")) && b.length != 0 ? b[0] : a.documentElement;
-      }
-      function qi() {
-        if (this && this.Xb) {
-          var a = this.Xb;
-          a && a.tagName == "SCRIPT" && Ci(a, true, this.Ma);
-        }
-      }
-      function Ci(a, b, c) {
-        c != null && l.clearTimeout(c);
-        a.onload = la;
-        a.onerror = la;
-        a.onreadystatechange = la;
-        b && window.setTimeout(function() {
-          a && a.parentNode && a.parentNode.removeChild(a);
-        }, 0);
-      }
-      var Fi = 0, Ei = 1;
-      function Di(a, b) {
-        var c = "Jsloader error (code #" + a + ")";
-        b && (c += ": " + b);
-        u.call(this, c);
-        this.code = a;
-      }
-      r(Di, u);
-      function Hi(a) {
-        this.f = a;
-      }
-      r(Hi, Ah);
-      Hi.prototype.a = function() {
-        return new this.f();
-      };
-      Hi.prototype.b = function() {
-        return {};
-      };
-      function Ii(a, b, c) {
-        this.c = a;
-        a = b || {};
-        this.l = a.secureTokenEndpoint || "https://securetoken.googleapis.com/v1/token";
-        this.m = a.secureTokenTimeout || Ji;
-        this.g = nb(a.secureTokenHeaders || Ki);
-        this.h = a.firebaseEndpoint || "https://www.googleapis.com/identitytoolkit/v3/relyingparty/";
-        this.i = a.identityPlatformEndpoint || "https://identitytoolkit.googleapis.com/v2/";
-        this.v = a.firebaseTimeout || Li;
-        this.a = nb(a.firebaseHeaders || Mi);
-        c && (this.a["X-Client-Version"] = c, this.g["X-Client-Version"] = c);
-        c = Ke() == "Node";
-        c = l.XMLHttpRequest || c && firebase2.INTERNAL.node && firebase2.INTERNAL.node.XMLHttpRequest;
-        if (!c && !Je())
-          throw new t("internal-error", "The XMLHttpRequest compatibility library was not found.");
-        this.f = void 0;
-        Je() ? this.f = new Vh(self) : Le() ? this.f = new Hi(c) : this.f = new Fh();
-        this.b = null;
-      }
-      var Ni, Dg = "idToken", Ji = new Ze(3e4, 6e4), Ki = {"Content-Type": "application/x-www-form-urlencoded"}, Li = new Ze(3e4, 6e4), Mi = {"Content-Type": "application/json"};
-      function Oi(a, b) {
-        b ? a.a["X-Firebase-Locale"] = b : delete a.a["X-Firebase-Locale"];
-      }
-      function Pi(a, b) {
-        b && (a.l = Qi("https://securetoken.googleapis.com/v1/token", b), a.h = Qi("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", b), a.i = Qi("https://identitytoolkit.googleapis.com/v2/", b));
-      }
-      function Qi(a, b) {
-        a = J(a);
-        b = J(b.url);
-        a.f = a.a + a.f;
-        Pd(a, b.c);
-        a.a = b.a;
-        Qd(a, b.g);
-        return a.toString();
-      }
-      function Ri(a, b) {
-        b ? (a.a["X-Client-Version"] = b, a.g["X-Client-Version"] = b) : (delete a.a["X-Client-Version"], delete a.g["X-Client-Version"]);
-      }
-      Ii.prototype.T = function() {
-        return this.b;
-      };
-      function Si(a, b, c, d, e, f, g) {
-        ue() || Je() ? a = q(a.u, a) : (Ni || (Ni = new D(function(h, m) {
-          Ti(h, m);
-        })), a = q(a.s, a));
-        a(b, c, d, e, f, g);
-      }
-      Ii.prototype.u = function(a, b, c, d, e, f) {
-        if (Je() && (typeof l.fetch === "undefined" || typeof l.Headers === "undefined" || typeof l.Request === "undefined"))
-          throw new t("operation-not-supported-in-this-environment", "fetch, Headers and Request native APIs or equivalent Polyfills must be available to support HTTP requests from a Worker environment.");
-        var g = new ai(this.f);
-        if (f) {
-          g.g = Math.max(0, f);
-          var h = setTimeout(function() {
-            g.dispatchEvent("timeout");
-          }, f);
-        }
-        qd(g, "complete", function() {
-          h && clearTimeout(h);
-          var m = null;
-          try {
-            m = JSON.parse(oi(this)) || null;
-          } catch (p) {
-            m = null;
-          }
-          b && b(m);
-        });
-        wd(g, "ready", function() {
-          h && clearTimeout(h);
-          Xc(this);
-        });
-        wd(g, "timeout", function() {
-          h && clearTimeout(h);
-          Xc(this);
-          b && b(null);
-        });
-        ei(g, a, c, d, e);
-      };
-      var Ui = new qb(rb, "https://apis.google.com/js/client.js?onload=%{onload}"), Vi = "__fcb" + Math.floor(1e6 * Math.random()).toString();
-      function Ti(a, b) {
-        if (((window.gapi || {}).client || {}).request)
-          a();
-        else {
-          l[Vi] = function() {
-            ((window.gapi || {}).client || {}).request ? a() : b(Error("CORS_UNSUPPORTED"));
-          };
-          var c = zb(Ui, {onload: Vi});
-          wi(Bi(c), function() {
-            b(Error("CORS_UNSUPPORTED"));
-          });
-        }
-      }
-      Ii.prototype.s = function(a, b, c, d, e) {
-        var f = this;
-        Ni.then(function() {
-          window.gapi.client.setApiKey(f.c);
-          var g = window.gapi.auth.getToken();
-          window.gapi.auth.setToken(null);
-          window.gapi.client.request({path: a, method: c, body: d, headers: e, authType: "none", callback: function(h) {
-            window.gapi.auth.setToken(g);
-            b && b(h);
-          }});
-        }).o(function(g) {
-          b && b({error: {message: g && g.message || "CORS_UNSUPPORTED"}});
-        });
-      };
-      function Wi(a, b) {
-        return new D(function(c, d) {
-          b.grant_type == "refresh_token" && b.refresh_token || b.grant_type == "authorization_code" && b.code ? Si(a, a.l + "?key=" + encodeURIComponent(a.c), function(e) {
-            e ? e.error ? d(Xi(e)) : e.access_token && e.refresh_token ? c(e) : d(new t("internal-error")) : d(new t("network-request-failed"));
-          }, "POST", fe(b).toString(), a.g, a.m.get()) : d(new t("internal-error"));
-        });
-      }
-      function Yi(a, b, c, d, e, f, g) {
-        var h = J(b + c);
-        I(h, "key", a.c);
-        g && I(h, "cb", Date.now().toString());
-        var m = d == "GET";
-        if (m)
-          for (var p in e)
-            e.hasOwnProperty(p) && I(h, p, e[p]);
-        return new D(function(v, B) {
-          Si(a, h.toString(), function(A) {
-            A ? A.error ? B(Xi(A, f || {})) : v(A) : B(new t("network-request-failed"));
-          }, d, m ? void 0 : ke(Ve(e)), a.a, a.v.get());
-        });
-      }
-      function Zi(a) {
-        a = a.email;
-        if (typeof a !== "string" || !De.test(a))
-          throw new t("invalid-email");
-      }
-      function $i(a) {
-        "email" in a && Zi(a);
-      }
-      function aj(a, b) {
-        return O(a, bj, {identifier: b, continueUri: Se() ? re() : "http://localhost"}).then(function(c) {
-          return c.signinMethods || [];
-        });
-      }
-      function cj(a) {
-        return O(a, dj, {}).then(function(b) {
-          return b.authorizedDomains || [];
-        });
-      }
-      function P(a) {
-        if (!a[Dg]) {
-          if (a.mfaPendingCredential)
-            throw new t("multi-factor-auth-required", null, nb(a));
-          throw new t("internal-error");
-        }
-      }
-      function ej(a) {
-        if (a.phoneNumber || a.temporaryProof) {
-          if (!a.phoneNumber || !a.temporaryProof)
-            throw new t("internal-error");
-        } else {
-          if (!a.sessionInfo)
-            throw new t("missing-verification-id");
-          if (!a.code)
-            throw new t("missing-verification-code");
-        }
-      }
-      Ii.prototype.Ab = function() {
-        return O(this, fj, {});
-      };
-      Ii.prototype.Cb = function(a, b) {
-        return O(this, gj, {idToken: a, email: b});
-      };
-      Ii.prototype.Db = function(a, b) {
-        return O(this, ch, {idToken: a, password: b});
-      };
-      var hj = {displayName: "DISPLAY_NAME", photoUrl: "PHOTO_URL"};
-      k = Ii.prototype;
-      k.Eb = function(a, b) {
-        var c = {idToken: a}, d = [];
-        lb(hj, function(e, f) {
-          var g = b[f];
-          g === null ? d.push(e) : f in b && (c[f] = g);
-        });
-        d.length && (c.deleteAttribute = d);
-        return O(this, gj, c);
-      };
-      k.wb = function(a, b) {
-        a = {requestType: "PASSWORD_RESET", email: a};
-        z(a, b);
-        return O(this, ij, a);
-      };
-      k.xb = function(a, b) {
-        a = {requestType: "EMAIL_SIGNIN", email: a};
-        z(a, b);
-        return O(this, jj, a);
-      };
-      k.vb = function(a, b) {
-        a = {requestType: "VERIFY_EMAIL", idToken: a};
-        z(a, b);
-        return O(this, kj, a);
-      };
-      k.Fb = function(a, b, c) {
-        a = {requestType: "VERIFY_AND_CHANGE_EMAIL", idToken: a, newEmail: b};
-        z(a, c);
-        return O(this, lj, a);
-      };
-      function oh(a, b) {
-        return O(a, mj, b);
-      }
-      k.gb = function(a) {
-        return O(this, nj, a);
-      };
-      function mh(a, b) {
-        return O(a, oj, b).then(function(c) {
-          return c.phoneSessionInfo.sessionInfo;
-        });
-      }
-      function pj(a) {
-        if (!a.phoneVerificationInfo)
-          throw new t("internal-error");
-        if (!a.phoneVerificationInfo.sessionInfo)
-          throw new t("missing-verification-id");
-        if (!a.phoneVerificationInfo.code)
-          throw new t("missing-verification-code");
-      }
-      function nh(a, b) {
-        return O(a, qj, b).then(function(c) {
-          return c.phoneResponseInfo.sessionInfo;
-        });
-      }
-      function rj(a, b, c) {
-        return O(a, sj, {idToken: b, deleteProvider: c});
-      }
-      function tj(a) {
-        if (!a.requestUri || !a.sessionId && !a.postBody && !a.pendingToken)
-          throw new t("internal-error");
-      }
-      function uj(a, b) {
-        b.oauthIdToken && b.providerId && b.providerId.indexOf("oidc.") == 0 && !b.pendingToken && (a.sessionId ? b.nonce = a.sessionId : a.postBody && (a = new Ud(a.postBody), je(a, "nonce") && (b.nonce = a.get("nonce"))));
-        return b;
-      }
-      function vj(a) {
-        var b = null;
-        a.needConfirmation ? (a.code = "account-exists-with-different-credential", b = zh(a)) : a.errorMessage == "FEDERATED_USER_ID_ALREADY_LINKED" ? (a.code = "credential-already-in-use", b = zh(a)) : a.errorMessage == "EMAIL_EXISTS" ? (a.code = "email-already-in-use", b = zh(a)) : a.errorMessage && (b = wj(a.errorMessage));
-        if (b)
-          throw b;
-        P(a);
-      }
-      function Fg(a, b) {
-        b.returnIdpCredential = true;
-        return O(a, xj, b);
-      }
-      function Hg(a, b) {
-        b.returnIdpCredential = true;
-        return O(a, yj, b);
-      }
-      function Ig(a, b) {
-        b.returnIdpCredential = true;
-        b.autoCreate = false;
-        return O(a, zj, b);
-      }
-      function Aj(a) {
-        if (!a.oobCode)
-          throw new t("invalid-action-code");
-      }
-      k.ob = function(a, b) {
-        return O(this, Bj, {oobCode: a, newPassword: b});
-      };
-      k.Sa = function(a) {
-        return O(this, Cj, {oobCode: a});
-      };
-      k.kb = function(a) {
-        return O(this, Dj, {oobCode: a});
-      };
-      var Dj = {endpoint: "setAccountInfo", A: Aj, Z: "email", B: true}, Cj = {endpoint: "resetPassword", A: Aj, G: function(a) {
-        var b = a.requestType;
-        if (!b || !a.email && b != "EMAIL_SIGNIN" && b != "VERIFY_AND_CHANGE_EMAIL")
-          throw new t("internal-error");
-      }, B: true}, Ej = {endpoint: "signupNewUser", A: function(a) {
-        Zi(a);
-        if (!a.password)
-          throw new t("weak-password");
-      }, G: P, V: true, B: true}, bj = {endpoint: "createAuthUri", B: true}, Fj = {endpoint: "deleteAccount", O: ["idToken"]}, sj = {endpoint: "setAccountInfo", O: ["idToken", "deleteProvider"], A: function(a) {
-        if (!Array.isArray(a.deleteProvider))
-          throw new t("internal-error");
-      }}, $g = {endpoint: "emailLinkSignin", O: ["email", "oobCode"], A: Zi, G: P, V: true, B: true}, bh = {endpoint: "emailLinkSignin", O: ["idToken", "email", "oobCode"], A: Zi, G: P, V: true}, Gj = {endpoint: "accounts/mfaEnrollment:finalize", O: ["idToken", "phoneVerificationInfo"], A: pj, G: P, B: true, Na: true}, Hj = {endpoint: "accounts/mfaSignIn:finalize", O: ["mfaPendingCredential", "phoneVerificationInfo"], A: pj, G: P, B: true, Na: true}, Ij = {endpoint: "getAccountInfo"}, jj = {endpoint: "getOobConfirmationCode", O: ["requestType"], A: function(a) {
-        if (a.requestType != "EMAIL_SIGNIN")
-          throw new t("internal-error");
-        Zi(a);
-      }, Z: "email", B: true}, kj = {endpoint: "getOobConfirmationCode", O: ["idToken", "requestType"], A: function(a) {
-        if (a.requestType != "VERIFY_EMAIL")
-          throw new t("internal-error");
-      }, Z: "email", B: true}, lj = {endpoint: "getOobConfirmationCode", O: ["idToken", "newEmail", "requestType"], A: function(a) {
-        if (a.requestType != "VERIFY_AND_CHANGE_EMAIL")
-          throw new t("internal-error");
-      }, Z: "email", B: true}, ij = {endpoint: "getOobConfirmationCode", O: ["requestType"], A: function(a) {
-        if (a.requestType != "PASSWORD_RESET")
-          throw new t("internal-error");
-        Zi(a);
-      }, Z: "email", B: true}, dj = {mb: true, endpoint: "getProjectConfig", Vb: "GET"}, Jj = {mb: true, endpoint: "getRecaptchaParam", Vb: "GET", G: function(a) {
-        if (!a.recaptchaSiteKey)
-          throw new t("internal-error");
-      }}, Bj = {endpoint: "resetPassword", A: Aj, Z: "email", B: true}, mj = {endpoint: "sendVerificationCode", O: ["phoneNumber", "recaptchaToken"], Z: "sessionInfo", B: true}, gj = {endpoint: "setAccountInfo", O: ["idToken"], A: $i, V: true}, ch = {
-        endpoint: "setAccountInfo",
-        O: ["idToken"],
-        A: function(a) {
-          $i(a);
-          if (!a.password)
-            throw new t("weak-password");
-        },
-        G: P,
-        V: true
-      }, fj = {endpoint: "signupNewUser", G: P, V: true, B: true}, oj = {endpoint: "accounts/mfaEnrollment:start", O: ["idToken", "phoneEnrollmentInfo"], A: function(a) {
-        if (!a.phoneEnrollmentInfo)
-          throw new t("internal-error");
-        if (!a.phoneEnrollmentInfo.phoneNumber)
-          throw new t("missing-phone-number");
-        if (!a.phoneEnrollmentInfo.recaptchaToken)
-          throw new t("missing-app-credential");
-      }, G: function(a) {
-        if (!a.phoneSessionInfo || !a.phoneSessionInfo.sessionInfo)
-          throw new t("internal-error");
-      }, B: true, Na: true}, qj = {
-        endpoint: "accounts/mfaSignIn:start",
-        O: ["mfaPendingCredential", "mfaEnrollmentId", "phoneSignInInfo"],
-        A: function(a) {
-          if (!a.phoneSignInInfo || !a.phoneSignInInfo.recaptchaToken)
-            throw new t("missing-app-credential");
-        },
-        G: function(a) {
-          if (!a.phoneResponseInfo || !a.phoneResponseInfo.sessionInfo)
-            throw new t("internal-error");
-        },
-        B: true,
-        Na: true
-      }, xj = {endpoint: "verifyAssertion", A: tj, Za: uj, G: vj, V: true, B: true}, zj = {endpoint: "verifyAssertion", A: tj, Za: uj, G: function(a) {
-        if (a.errorMessage && a.errorMessage == "USER_NOT_FOUND")
-          throw new t("user-not-found");
-        if (a.errorMessage)
-          throw wj(a.errorMessage);
-        P(a);
-      }, V: true, B: true}, yj = {endpoint: "verifyAssertion", A: function(a) {
-        tj(a);
-        if (!a.idToken)
-          throw new t("internal-error");
-      }, Za: uj, G: vj, V: true}, Kj = {endpoint: "verifyCustomToken", A: function(a) {
-        if (!a.token)
-          throw new t("invalid-custom-token");
-      }, G: P, V: true, B: true}, ah = {endpoint: "verifyPassword", A: function(a) {
-        Zi(a);
-        if (!a.password)
-          throw new t("wrong-password");
-      }, G: P, V: true, B: true}, nj = {endpoint: "verifyPhoneNumber", A: ej, G: P, B: true}, ih = {
-        endpoint: "verifyPhoneNumber",
-        A: function(a) {
-          if (!a.idToken)
-            throw new t("internal-error");
-          ej(a);
-        },
-        G: function(a) {
-          if (a.temporaryProof)
-            throw a.code = "credential-already-in-use", zh(a);
-          P(a);
-        }
-      }, jh = {Ib: {USER_NOT_FOUND: "user-not-found"}, endpoint: "verifyPhoneNumber", A: ej, G: P, B: true}, Lj = {endpoint: "accounts/mfaEnrollment:withdraw", O: ["idToken", "mfaEnrollmentId"], G: function(a) {
-        if (!!a[Dg] ^ !!a.refreshToken)
-          throw new t("internal-error");
-      }, B: true, Na: true};
-      function O(a, b, c) {
-        if (!mf(c, b.O))
-          return F(new t("internal-error"));
-        var d = !!b.Na, e = b.Vb || "POST", f;
-        return E(c).then(b.A).then(function() {
-          b.V && (c.returnSecureToken = true);
-          b.B && a.b && typeof c.tenantId === "undefined" && (c.tenantId = a.b);
-          return d ? Yi(a, a.i, b.endpoint, e, c, b.Ib, b.mb || false) : Yi(a, a.h, b.endpoint, e, c, b.Ib, b.mb || false);
-        }).then(function(g) {
-          f = g;
-          return b.Za ? b.Za(c, f) : f;
-        }).then(b.G).then(function() {
-          if (!b.Z)
-            return f;
-          if (!(b.Z in f))
-            throw new t("internal-error");
-          return f[b.Z];
-        });
-      }
-      function wj(a) {
-        return Xi({error: {errors: [{message: a}], code: 400, message: a}});
-      }
-      function Xi(a, b) {
-        var c = (a.error && a.error.errors && a.error.errors[0] || {}).reason || "";
-        var d = {keyInvalid: "invalid-api-key", ipRefererBlocked: "app-not-authorized"};
-        if (c = d[c] ? new t(d[c]) : null)
-          return c;
-        c = a.error && a.error.message || "";
-        d = {
-          INVALID_CUSTOM_TOKEN: "invalid-custom-token",
-          CREDENTIAL_MISMATCH: "custom-token-mismatch",
-          MISSING_CUSTOM_TOKEN: "internal-error",
-          INVALID_IDENTIFIER: "invalid-email",
-          MISSING_CONTINUE_URI: "internal-error",
-          INVALID_EMAIL: "invalid-email",
-          INVALID_PASSWORD: "wrong-password",
-          USER_DISABLED: "user-disabled",
-          MISSING_PASSWORD: "internal-error",
-          EMAIL_EXISTS: "email-already-in-use",
-          PASSWORD_LOGIN_DISABLED: "operation-not-allowed",
-          INVALID_IDP_RESPONSE: "invalid-credential",
-          INVALID_PENDING_TOKEN: "invalid-credential",
-          FEDERATED_USER_ID_ALREADY_LINKED: "credential-already-in-use",
-          MISSING_OR_INVALID_NONCE: "missing-or-invalid-nonce",
-          INVALID_MESSAGE_PAYLOAD: "invalid-message-payload",
-          INVALID_RECIPIENT_EMAIL: "invalid-recipient-email",
-          INVALID_SENDER: "invalid-sender",
-          EMAIL_NOT_FOUND: "user-not-found",
-          RESET_PASSWORD_EXCEED_LIMIT: "too-many-requests",
-          EXPIRED_OOB_CODE: "expired-action-code",
-          INVALID_OOB_CODE: "invalid-action-code",
-          MISSING_OOB_CODE: "internal-error",
-          INVALID_PROVIDER_ID: "invalid-provider-id",
-          CREDENTIAL_TOO_OLD_LOGIN_AGAIN: "requires-recent-login",
-          INVALID_ID_TOKEN: "invalid-user-token",
-          TOKEN_EXPIRED: "user-token-expired",
-          USER_NOT_FOUND: "user-token-expired",
-          CORS_UNSUPPORTED: "cors-unsupported",
-          DYNAMIC_LINK_NOT_ACTIVATED: "dynamic-link-not-activated",
-          INVALID_APP_ID: "invalid-app-id",
-          TOO_MANY_ATTEMPTS_TRY_LATER: "too-many-requests",
-          WEAK_PASSWORD: "weak-password",
-          OPERATION_NOT_ALLOWED: "operation-not-allowed",
-          USER_CANCELLED: "user-cancelled",
-          CAPTCHA_CHECK_FAILED: "captcha-check-failed",
-          INVALID_APP_CREDENTIAL: "invalid-app-credential",
-          INVALID_CODE: "invalid-verification-code",
-          INVALID_PHONE_NUMBER: "invalid-phone-number",
-          INVALID_SESSION_INFO: "invalid-verification-id",
-          INVALID_TEMPORARY_PROOF: "invalid-credential",
-          MISSING_APP_CREDENTIAL: "missing-app-credential",
-          MISSING_CODE: "missing-verification-code",
-          MISSING_PHONE_NUMBER: "missing-phone-number",
-          MISSING_SESSION_INFO: "missing-verification-id",
-          QUOTA_EXCEEDED: "quota-exceeded",
-          SESSION_EXPIRED: "code-expired",
-          REJECTED_CREDENTIAL: "rejected-credential",
-          INVALID_CONTINUE_URI: "invalid-continue-uri",
-          MISSING_ANDROID_PACKAGE_NAME: "missing-android-pkg-name",
-          MISSING_IOS_BUNDLE_ID: "missing-ios-bundle-id",
-          UNAUTHORIZED_DOMAIN: "unauthorized-continue-uri",
-          INVALID_DYNAMIC_LINK_DOMAIN: "invalid-dynamic-link-domain",
-          INVALID_OAUTH_CLIENT_ID: "invalid-oauth-client-id",
-          INVALID_CERT_HASH: "invalid-cert-hash",
-          UNSUPPORTED_TENANT_OPERATION: "unsupported-tenant-operation",
-          INVALID_TENANT_ID: "invalid-tenant-id",
-          TENANT_ID_MISMATCH: "tenant-id-mismatch",
-          ADMIN_ONLY_OPERATION: "admin-restricted-operation",
-          INVALID_MFA_PENDING_CREDENTIAL: "invalid-multi-factor-session",
-          MFA_ENROLLMENT_NOT_FOUND: "multi-factor-info-not-found",
-          MISSING_MFA_PENDING_CREDENTIAL: "missing-multi-factor-session",
-          MISSING_MFA_ENROLLMENT_ID: "missing-multi-factor-info",
-          EMAIL_CHANGE_NEEDS_VERIFICATION: "email-change-needs-verification",
-          SECOND_FACTOR_EXISTS: "second-factor-already-in-use",
-          SECOND_FACTOR_LIMIT_EXCEEDED: "maximum-second-factor-count-exceeded",
-          UNSUPPORTED_FIRST_FACTOR: "unsupported-first-factor",
-          UNVERIFIED_EMAIL: "unverified-email"
-        };
-        z(d, b || {});
-        b = (b = c.match(/^[^\s]+\s*:\s*([\s\S]*)$/)) && 1 < b.length ? b[1] : void 0;
-        for (var e in d)
-          if (c.indexOf(e) === 0)
-            return new t(d[e], b);
-        !b && a && (b = Ue(a));
-        return new t("internal-error", b);
-      }
-      ;
-      function Mj(a) {
-        this.b = a;
-        this.a = null;
-        this.sb = Nj(this);
-      }
-      function Nj(a) {
-        return Oj().then(function() {
-          return new D(function(b, c) {
-            L("gapi.iframes.getContext")().open({where: document.body, url: a.b, messageHandlersFilter: L("gapi.iframes.CROSS_ORIGIN_IFRAMES_FILTER"), attributes: {style: {position: "absolute", top: "-100px", width: "1px", height: "1px"}}, dontclear: true}, function(d) {
-              function e() {
-                clearTimeout(f);
-                b();
-              }
-              a.a = d;
-              a.a.restyle({setHideOnLeave: false});
-              var f = setTimeout(function() {
-                c(Error("Network Error"));
-              }, Pj.get());
-              d.ping(e).then(e, function() {
-                c(Error("Network Error"));
-              });
-            });
-          });
-        });
-      }
-      function Qj(a, b) {
-        return a.sb.then(function() {
-          return new D(function(c) {
-            a.a.send(b.type, b, c, L("gapi.iframes.CROSS_ORIGIN_IFRAMES_FILTER"));
-          });
-        });
-      }
-      function Rj(a, b) {
-        a.sb.then(function() {
-          a.a.register("authEvent", b, L("gapi.iframes.CROSS_ORIGIN_IFRAMES_FILTER"));
-        });
-      }
-      var Sj = new qb(rb, "https://apis.google.com/js/api.js?onload=%{onload}"), Tj = new Ze(3e4, 6e4), Pj = new Ze(5e3, 15e3), Uj = null;
-      function Oj() {
-        return Uj ? Uj : Uj = new D(function(a, b) {
-          function c() {
-            Ye();
-            L("gapi.load")("gapi.iframes", {callback: a, ontimeout: function() {
-              Ye();
-              b(Error("Network Error"));
-            }, timeout: Tj.get()});
-          }
-          if (L("gapi.iframes.Iframe"))
-            a();
-          else if (L("gapi.load"))
-            c();
-          else {
-            var d = "__iframefcb" + Math.floor(1e6 * Math.random()).toString();
-            l[d] = function() {
-              L("gapi.load") ? c() : b(Error("Network Error"));
-            };
-            d = zb(Sj, {onload: d});
-            E(Bi(d)).o(function() {
-              b(Error("Network Error"));
-            });
-          }
-        }).o(function(a) {
-          Uj = null;
-          throw a;
-        });
-      }
-      ;
-      function Vj(a, b, c, d) {
-        this.l = a;
-        this.h = b;
-        this.i = c;
-        this.g = d;
-        this.f = null;
-        this.g ? (a = J(this.g.url), a = ce(a.c, a.a, a.g, "/emulator/auth/iframe")) : a = ce("https", this.l, null, "/__/auth/iframe");
-        this.a = a;
-        I(this.a, "apiKey", this.h);
-        I(this.a, "appName", this.i);
-        this.b = null;
-        this.c = [];
-      }
-      Vj.prototype.toString = function() {
-        this.f ? I(this.a, "v", this.f) : ie(this.a.b, "v");
-        this.b ? I(this.a, "eid", this.b) : ie(this.a.b, "eid");
-        this.c.length ? I(this.a, "fw", this.c.join(",")) : ie(this.a.b, "fw");
-        return this.a.toString();
-      };
-      function Wj(a, b, c, d, e, f) {
-        this.u = a;
-        this.s = b;
-        this.c = c;
-        this.m = d;
-        this.v = f;
-        this.i = this.g = this.l = null;
-        this.a = e;
-        this.h = this.f = null;
-      }
-      Wj.prototype.zb = function(a) {
-        this.h = a;
-        return this;
-      };
-      Wj.prototype.toString = function() {
-        if (this.v) {
-          var a = J(this.v.url);
-          a = ce(a.c, a.a, a.g, "/emulator/auth/handler");
-        } else
-          a = ce("https", this.u, null, "/__/auth/handler");
-        I(a, "apiKey", this.s);
-        I(a, "appName", this.c);
-        I(a, "authType", this.m);
-        if (this.a.isOAuthProvider) {
-          var b = this.a;
-          try {
-            var c = firebase2.app(this.c).auth().la();
-          } catch (h) {
-            c = null;
-          }
-          b.pb = c;
-          I(a, "providerId", this.a.providerId);
-          c = this.a;
-          b = Ve(c.Jb);
-          for (var d in b)
-            b[d] = b[d].toString();
-          d = c.Qc;
-          b = nb(b);
-          for (var e = 0; e < d.length; e++) {
-            var f = d[e];
-            f in b && delete b[f];
-          }
-          c.qb && c.pb && !b[c.qb] && (b[c.qb] = c.pb);
-          mb(b) || I(a, "customParameters", Ue(b));
-        }
-        typeof this.a.Rb === "function" && (c = this.a.Rb(), c.length && I(a, "scopes", c.join(",")));
-        this.l ? I(a, "redirectUrl", this.l) : ie(a.b, "redirectUrl");
-        this.g ? I(a, "eventId", this.g) : ie(a.b, "eventId");
-        this.i ? I(a, "v", this.i) : ie(a.b, "v");
-        if (this.b)
-          for (var g in this.b)
-            this.b.hasOwnProperty(g) && !be(a, g) && I(a, g, this.b[g]);
-        this.h ? I(a, "tid", this.h) : ie(a.b, "tid");
-        this.f ? I(a, "eid", this.f) : ie(a.b, "eid");
-        g = Xj(this.c);
-        g.length && I(a, "fw", g.join(","));
-        return a.toString();
-      };
-      function Xj(a) {
-        try {
-          return firebase2.app(a).auth().Ga();
-        } catch (b) {
-          return [];
-        }
-      }
-      function Yj(a, b, c, d, e, f) {
-        this.s = a;
-        this.g = b;
-        this.b = c;
-        this.f = f;
-        this.c = d || null;
-        this.i = e || null;
-        this.l = this.u = this.C = null;
-        this.h = [];
-        this.m = this.a = null;
-      }
-      function Zj(a) {
-        var b = re();
-        return cj(a).then(function(c) {
-          a: {
-            var d = J(b), e = d.c;
-            d = d.a;
-            for (var f = 0; f < c.length; f++) {
-              var g = c[f];
-              var h = d;
-              var m = e;
-              g.indexOf("chrome-extension://") == 0 ? h = J(g).a == h && m == "chrome-extension" : m != "http" && m != "https" ? h = false : Ce.test(g) ? h = h == g : (g = g.split(".").join("\\."), h = new RegExp("^(.+\\." + g + "|" + g + ")$", "i").test(h));
-              if (h) {
-                c = true;
-                break a;
-              }
-            }
-            c = false;
-          }
-          if (!c)
-            throw new xh(re());
-        });
-      }
-      function ak(a) {
-        if (a.m)
-          return a.m;
-        a.m = Ee().then(function() {
-          if (!a.u) {
-            var b = a.c, c = a.i, d = Xj(a.b), e = new Vj(a.s, a.g, a.b, a.f);
-            e.f = b;
-            e.b = c;
-            e.c = Za(d || []);
-            a.u = e.toString();
-          }
-          a.v = new Mj(a.u);
-          bk(a);
-        });
-        return a.m;
-      }
-      k = Yj.prototype;
-      k.Pb = function(a, b, c) {
-        var d = new t("popup-closed-by-user"), e = new t("web-storage-unsupported"), f = this, g = false;
-        return this.ma().then(function() {
-          ck(f).then(function(h) {
-            h || (a && ye(a), b(e), g = true);
-          });
-        }).o(function() {
-        }).then(function() {
-          if (!g)
-            return Be(a);
-        }).then(function() {
-          if (!g)
-            return Fd(c).then(function() {
-              b(d);
-            });
-        });
-      };
-      k.Yb = function() {
-        var a = K();
-        return !Te(a) && !Xe(a);
-      };
-      k.Ub = function() {
-        return false;
-      };
-      k.Nb = function(a, b, c, d, e, f, g, h) {
-        if (!a)
-          return F(new t("popup-blocked"));
-        if (g && !Te())
-          return this.ma().o(function(p) {
-            ye(a);
-            e(p);
-          }), d(), E();
-        this.a || (this.a = Zj(dk(this)));
-        var m = this;
-        return this.a.then(function() {
-          var p = m.ma().o(function(v) {
-            ye(a);
-            e(v);
-            throw v;
-          });
-          d();
-          return p;
-        }).then(function() {
-          rh(c);
-          if (!g) {
-            var p = ek(m.s, m.g, m.b, b, c, null, f, m.c, void 0, m.i, h, m.f);
-            se(p, a);
-          }
-        }).o(function(p) {
-          p.code == "auth/network-request-failed" && (m.a = null);
-          throw p;
-        });
-      };
-      function dk(a) {
-        a.l || (a.C = a.c ? Oe(a.c, Xj(a.b)) : null, a.l = new Ii(a.g, Ca(a.i), a.C), a.f && Pi(a.l, a.f));
-        return a.l;
-      }
-      k.Ob = function(a, b, c, d) {
-        this.a || (this.a = Zj(dk(this)));
-        var e = this;
-        return this.a.then(function() {
-          rh(b);
-          var f = ek(e.s, e.g, e.b, a, b, re(), c, e.c, void 0, e.i, d, e.f);
-          se(f);
-        }).o(function(f) {
-          f.code == "auth/network-request-failed" && (e.a = null);
-          throw f;
-        });
-      };
-      k.ma = function() {
-        var a = this;
-        return ak(this).then(function() {
-          return a.v.sb;
-        }).o(function() {
-          a.a = null;
-          throw new t("network-request-failed");
-        });
-      };
-      k.ac = function() {
-        return true;
-      };
-      function ek(a, b, c, d, e, f, g, h, m, p, v, B) {
-        a = new Wj(a, b, c, d, e, B);
-        a.l = f;
-        a.g = g;
-        a.i = h;
-        a.b = nb(m || null);
-        a.f = p;
-        return a.zb(v).toString();
-      }
-      function bk(a) {
-        if (!a.v)
-          throw Error("IfcHandler must be initialized!");
-        Rj(a.v, function(b) {
-          var c = {};
-          if (b && b.authEvent) {
-            var d = false;
-            b = th(b.authEvent);
-            for (c = 0; c < a.h.length; c++)
-              d = a.h[c](b) || d;
-            c = {};
-            c.status = d ? "ACK" : "ERROR";
-            return E(c);
-          }
-          c.status = "ERROR";
-          return E(c);
-        });
-      }
-      function ck(a) {
-        var b = {type: "webStorageSupport"};
-        return ak(a).then(function() {
-          return Qj(a.v, b);
-        }).then(function(c) {
-          if (c && c.length && typeof c[0].webStorageSupport !== "undefined")
-            return c[0].webStorageSupport;
-          throw Error();
-        });
-      }
-      k.Ea = function(a) {
-        this.h.push(a);
-      };
-      k.Ta = function(a) {
-        Xa(this.h, function(b) {
-          return b == a;
-        });
-      };
-      function fk(a) {
-        this.a = a || firebase2.INTERNAL.reactNative && firebase2.INTERNAL.reactNative.AsyncStorage;
-        if (!this.a)
-          throw new t("internal-error", "The React Native compatibility library was not found.");
-        this.type = "asyncStorage";
-      }
-      k = fk.prototype;
-      k.get = function(a) {
-        return E(this.a.getItem(a)).then(function(b) {
-          return b && We(b);
-        });
-      };
-      k.set = function(a, b) {
-        return E(this.a.setItem(a, Ue(b)));
-      };
-      k.U = function(a) {
-        return E(this.a.removeItem(a));
-      };
-      k.ca = function() {
-      };
-      k.ia = function() {
-      };
-      function gk(a) {
-        this.b = a;
-        this.a = {};
-        this.f = q(this.c, this);
-      }
-      var hk = [];
-      function ik() {
-        var a = Je() ? self : null;
-        w(hk, function(c) {
-          c.b == a && (b = c);
-        });
-        if (!b) {
-          var b = new gk(a);
-          hk.push(b);
-        }
-        return b;
-      }
-      gk.prototype.c = function(a) {
-        var b = a.data.eventType, c = a.data.eventId, d = this.a[b];
-        if (d && 0 < d.length) {
-          a.ports[0].postMessage({status: "ack", eventId: c, eventType: b, response: null});
-          var e = [];
-          w(d, function(f) {
-            e.push(E().then(function() {
-              return f(a.origin, a.data.data);
-            }));
-          });
-          Jc(e).then(function(f) {
-            var g = [];
-            w(f, function(h) {
-              g.push({fulfilled: h.Qb, value: h.value, reason: h.reason ? h.reason.message : void 0});
-            });
-            w(g, function(h) {
-              for (var m in h)
-                typeof h[m] === "undefined" && delete h[m];
-            });
-            a.ports[0].postMessage({
-              status: "done",
-              eventId: c,
-              eventType: b,
-              response: g
-            });
-          });
-        }
-      };
-      function jk(a, b, c) {
-        mb(a.a) && a.b.addEventListener("message", a.f);
-        typeof a.a[b] === "undefined" && (a.a[b] = []);
-        a.a[b].push(c);
-      }
-      ;
-      function kk(a) {
-        this.a = a;
-      }
-      kk.prototype.postMessage = function(a, b) {
-        this.a.postMessage(a, b);
-      };
-      function lk(a) {
-        this.c = a;
-        this.b = false;
-        this.a = [];
-      }
-      function mk(a, b, c, d) {
-        var e, f = c || {}, g, h, m, p = null;
-        if (a.b)
-          return F(Error("connection_unavailable"));
-        var v = d ? 800 : 50, B = typeof MessageChannel !== "undefined" ? new MessageChannel() : null;
-        return new D(function(A, Q) {
-          B ? (e = Math.floor(Math.random() * Math.pow(10, 20)).toString(), B.port1.start(), h = setTimeout(function() {
-            Q(Error("unsupported_event"));
-          }, v), g = function(ya) {
-            ya.data.eventId === e && (ya.data.status === "ack" ? (clearTimeout(h), m = setTimeout(function() {
-              Q(Error("timeout"));
-            }, 3e3)) : ya.data.status === "done" ? (clearTimeout(m), typeof ya.data.response !== "undefined" ? A(ya.data.response) : Q(Error("unknown_error"))) : (clearTimeout(h), clearTimeout(m), Q(Error("invalid_response"))));
-          }, p = {messageChannel: B, onMessage: g}, a.a.push(p), B.port1.addEventListener("message", g), a.c.postMessage({eventType: b, eventId: e, data: f}, [B.port2])) : Q(Error("connection_unavailable"));
-        }).then(function(A) {
-          nk(a, p);
-          return A;
-        }).o(function(A) {
-          nk(a, p);
-          throw A;
-        });
-      }
-      function nk(a, b) {
-        if (b) {
-          var c = b.messageChannel, d = b.onMessage;
-          c && (c.port1.removeEventListener("message", d), c.port1.close());
-          Xa(a.a, function(e) {
-            return e == b;
-          });
-        }
-      }
-      lk.prototype.close = function() {
-        for (; 0 < this.a.length; )
-          nk(this, this.a[0]);
-        this.b = true;
-      };
-      function ok() {
-        if (!pk())
-          throw new t("web-storage-unsupported");
-        this.c = {};
-        this.a = [];
-        this.b = 0;
-        this.m = l.indexedDB;
-        this.type = "indexedDB";
-        this.g = this.v = this.f = this.l = null;
-        this.s = false;
-        this.h = null;
-        var a = this;
-        Je() && self ? (this.v = ik(), jk(this.v, "keyChanged", function(b, c) {
-          return qk(a).then(function(d) {
-            0 < d.length && w(a.a, function(e) {
-              e(d);
-            });
-            return {keyProcessed: Va(d, c.key)};
-          });
-        }), jk(this.v, "ping", function() {
-          return E(["keyChanged"]);
-        })) : ef().then(function(b) {
-          if (a.h = b)
-            a.g = new lk(new kk(b)), mk(a.g, "ping", null, true).then(function(c) {
-              c[0].fulfilled && Va(c[0].value, "keyChanged") && (a.s = true);
-            }).o(function() {
-            });
-        });
-      }
-      var rk;
-      function sk(a) {
-        return new D(function(b, c) {
-          var d = a.m.deleteDatabase("firebaseLocalStorageDb");
-          d.onsuccess = function() {
-            b();
-          };
-          d.onerror = function(e) {
-            c(Error(e.target.error));
-          };
-        });
-      }
-      function tk(a) {
-        return new D(function(b, c) {
-          var d = a.m.open("firebaseLocalStorageDb", 1);
-          d.onerror = function(e) {
-            try {
-              e.preventDefault();
-            } catch (f) {
-            }
-            c(Error(e.target.error));
-          };
-          d.onupgradeneeded = function(e) {
-            e = e.target.result;
-            try {
-              e.createObjectStore("firebaseLocalStorage", {keyPath: "fbase_key"});
-            } catch (f) {
-              c(f);
-            }
-          };
-          d.onsuccess = function(e) {
-            e = e.target.result;
-            e.objectStoreNames.contains("firebaseLocalStorage") ? b(e) : sk(a).then(function() {
-              return tk(a);
-            }).then(function(f) {
-              b(f);
-            }).o(function(f) {
-              c(f);
-            });
-          };
-        });
-      }
-      function uk(a) {
-        a.i || (a.i = tk(a));
-        return a.i;
-      }
-      function vk(a, b) {
-        function c(e, f) {
-          uk(a).then(b).then(e).o(function(g) {
-            if (3 < ++d)
-              f(g);
-            else
-              return uk(a).then(function(h) {
-                h.close();
-                a.i = void 0;
-                return c(e, f);
-              }).o(function(h) {
-                f(h);
-              });
-          });
-        }
-        var d = 0;
-        return new D(c);
-      }
-      function pk() {
-        try {
-          return !!l.indexedDB;
-        } catch (a) {
-          return false;
-        }
-      }
-      function wk(a) {
-        return a.objectStore("firebaseLocalStorage");
-      }
-      function xk(a, b) {
-        return a.transaction(["firebaseLocalStorage"], b ? "readwrite" : "readonly");
-      }
-      function yk(a) {
-        return new D(function(b, c) {
-          a.onsuccess = function(d) {
-            d && d.target ? b(d.target.result) : b();
-          };
-          a.onerror = function(d) {
-            c(d.target.error);
-          };
-        });
-      }
-      k = ok.prototype;
-      k.set = function(a, b) {
-        var c = this, d = false;
-        return vk(this, function(e) {
-          e = wk(xk(e, true));
-          return yk(e.get(a));
-        }).then(function(e) {
-          return vk(c, function(f) {
-            f = wk(xk(f, true));
-            if (e)
-              return e.value = b, yk(f.put(e));
-            c.b++;
-            d = true;
-            var g = {};
-            g.fbase_key = a;
-            g.value = b;
-            return yk(f.add(g));
-          });
-        }).then(function() {
-          c.c[a] = b;
-          return zk(c, a);
-        }).oa(function() {
-          d && c.b--;
-        });
-      };
-      function zk(a, b) {
-        return a.g && a.h && df() === a.h ? mk(a.g, "keyChanged", {key: b}, a.s).then(function() {
-        }).o(function() {
-        }) : E();
-      }
-      k.get = function(a) {
-        return vk(this, function(b) {
-          return yk(wk(xk(b, false)).get(a));
-        }).then(function(b) {
-          return b && b.value;
-        });
-      };
-      k.U = function(a) {
-        var b = this, c = false;
-        return vk(this, function(d) {
-          c = true;
-          b.b++;
-          return yk(wk(xk(d, true))["delete"](a));
-        }).then(function() {
-          delete b.c[a];
-          return zk(b, a);
-        }).oa(function() {
-          c && b.b--;
-        });
-      };
-      function qk(a) {
-        return uk(a).then(function(b) {
-          var c = wk(xk(b, false));
-          return c.getAll ? yk(c.getAll()) : new D(function(d, e) {
-            var f = [], g = c.openCursor();
-            g.onsuccess = function(h) {
-              (h = h.target.result) ? (f.push(h.value), h["continue"]()) : d(f);
-            };
-            g.onerror = function(h) {
-              e(h.target.error);
-            };
-          });
-        }).then(function(b) {
-          var c = {}, d = [];
-          if (a.b == 0) {
-            for (d = 0; d < b.length; d++)
-              c[b[d].fbase_key] = b[d].value;
-            d = te(a.c, c);
-            a.c = c;
-          }
-          return d;
-        });
-      }
-      k.ca = function(a) {
-        this.a.length == 0 && Ak(this);
-        this.a.push(a);
-      };
-      k.ia = function(a) {
-        Xa(this.a, function(b) {
-          return b == a;
-        });
-        this.a.length == 0 && Bk(this);
-      };
-      function Ak(a) {
-        function b() {
-          a.f = setTimeout(function() {
-            a.l = qk(a).then(function(c) {
-              0 < c.length && w(a.a, function(d) {
-                d(c);
-              });
-            }).then(function() {
-              b();
-            }).o(function(c) {
-              c.message != "STOP_EVENT" && b();
-            });
-          }, 800);
-        }
-        Bk(a);
-        b();
-      }
-      function Bk(a) {
-        a.l && a.l.cancel("STOP_EVENT");
-        a.f && (clearTimeout(a.f), a.f = null);
-      }
-      ;
-      function Ck(a) {
-        var b = this, c = null;
-        this.a = [];
-        this.type = "indexedDB";
-        this.c = a;
-        this.b = E().then(function() {
-          if (pk()) {
-            var d = Qe(), e = "__sak" + d;
-            rk || (rk = new ok());
-            c = rk;
-            return c.set(e, d).then(function() {
-              return c.get(e);
-            }).then(function(f) {
-              if (f !== d)
-                throw Error("indexedDB not supported!");
-              return c.U(e);
-            }).then(function() {
-              return c;
-            }).o(function() {
-              return b.c;
-            });
-          }
-          return b.c;
-        }).then(function(d) {
-          b.type = d.type;
-          d.ca(function(e) {
-            w(b.a, function(f) {
-              f(e);
-            });
-          });
-          return d;
-        });
-      }
-      k = Ck.prototype;
-      k.get = function(a) {
-        return this.b.then(function(b) {
-          return b.get(a);
-        });
-      };
-      k.set = function(a, b) {
-        return this.b.then(function(c) {
-          return c.set(a, b);
-        });
-      };
-      k.U = function(a) {
-        return this.b.then(function(b) {
-          return b.U(a);
-        });
-      };
-      k.ca = function(a) {
-        this.a.push(a);
-      };
-      k.ia = function(a) {
-        Xa(this.a, function(b) {
-          return b == a;
-        });
-      };
-      function Dk() {
-        this.a = {};
-        this.type = "inMemory";
-      }
-      k = Dk.prototype;
-      k.get = function(a) {
-        return E(this.a[a]);
-      };
-      k.set = function(a, b) {
-        this.a[a] = b;
-        return E();
-      };
-      k.U = function(a) {
-        delete this.a[a];
-        return E();
-      };
-      k.ca = function() {
-      };
-      k.ia = function() {
-      };
-      function Ek() {
-        if (!Fk()) {
-          if (Ke() == "Node")
-            throw new t("internal-error", "The LocalStorage compatibility library was not found.");
-          throw new t("web-storage-unsupported");
-        }
-        this.a = Gk() || firebase2.INTERNAL.node.localStorage;
-        this.type = "localStorage";
-      }
-      function Gk() {
-        try {
-          var a = l.localStorage, b = Qe();
-          a && (a.setItem(b, "1"), a.removeItem(b));
-          return a;
-        } catch (c) {
-          return null;
-        }
-      }
-      function Fk() {
-        var a = Ke() == "Node";
-        a = Gk() || a && firebase2.INTERNAL.node && firebase2.INTERNAL.node.localStorage;
-        if (!a)
-          return false;
-        try {
-          return a.setItem("__sak", "1"), a.removeItem("__sak"), true;
-        } catch (b) {
-          return false;
-        }
-      }
-      k = Ek.prototype;
-      k.get = function(a) {
-        var b = this;
-        return E().then(function() {
-          var c = b.a.getItem(a);
-          return We(c);
-        });
-      };
-      k.set = function(a, b) {
-        var c = this;
-        return E().then(function() {
-          var d = Ue(b);
-          d === null ? c.U(a) : c.a.setItem(a, d);
-        });
-      };
-      k.U = function(a) {
-        var b = this;
-        return E().then(function() {
-          b.a.removeItem(a);
-        });
-      };
-      k.ca = function(a) {
-        l.window && nd(l.window, "storage", a);
-      };
-      k.ia = function(a) {
-        l.window && xd(l.window, "storage", a);
-      };
-      function Hk() {
-        this.type = "nullStorage";
-      }
-      k = Hk.prototype;
-      k.get = function() {
-        return E(null);
-      };
-      k.set = function() {
-        return E();
-      };
-      k.U = function() {
-        return E();
-      };
-      k.ca = function() {
-      };
-      k.ia = function() {
-      };
-      function Ik() {
-        if (!Jk()) {
-          if (Ke() == "Node")
-            throw new t("internal-error", "The SessionStorage compatibility library was not found.");
-          throw new t("web-storage-unsupported");
-        }
-        this.a = Kk() || firebase2.INTERNAL.node.sessionStorage;
-        this.type = "sessionStorage";
-      }
-      function Kk() {
-        try {
-          var a = l.sessionStorage, b = Qe();
-          a && (a.setItem(b, "1"), a.removeItem(b));
-          return a;
-        } catch (c) {
-          return null;
-        }
-      }
-      function Jk() {
-        var a = Ke() == "Node";
-        a = Kk() || a && firebase2.INTERNAL.node && firebase2.INTERNAL.node.sessionStorage;
-        if (!a)
-          return false;
-        try {
-          return a.setItem("__sak", "1"), a.removeItem("__sak"), true;
-        } catch (b) {
-          return false;
-        }
-      }
-      k = Ik.prototype;
-      k.get = function(a) {
-        var b = this;
-        return E().then(function() {
-          var c = b.a.getItem(a);
-          return We(c);
-        });
-      };
-      k.set = function(a, b) {
-        var c = this;
-        return E().then(function() {
-          var d = Ue(b);
-          d === null ? c.U(a) : c.a.setItem(a, d);
-        });
-      };
-      k.U = function(a) {
-        var b = this;
-        return E().then(function() {
-          b.a.removeItem(a);
-        });
-      };
-      k.ca = function() {
-      };
-      k.ia = function() {
-      };
-      function Lk() {
-        var a = {};
-        a.Browser = Mk;
-        a.Node = Nk;
-        a.ReactNative = Ok;
-        a.Worker = Pk;
-        this.a = a[Ke()];
-      }
-      var Qk, Mk = {F: Ek, cb: Ik}, Nk = {F: Ek, cb: Ik}, Ok = {F: fk, cb: Hk}, Pk = {F: Ek, cb: Hk};
-      var Rk = {rd: "local", NONE: "none", td: "session"};
-      function Sk(a) {
-        var b = new t("invalid-persistence-type"), c = new t("unsupported-persistence-type");
-        a: {
-          for (d in Rk)
-            if (Rk[d] == a) {
-              var d = true;
-              break a;
-            }
-          d = false;
-        }
-        if (!d || typeof a !== "string")
-          throw b;
-        switch (Ke()) {
-          case "ReactNative":
-            if (a === "session")
-              throw c;
-            break;
-          case "Node":
-            if (a !== "none")
-              throw c;
-            break;
-          case "Worker":
-            if (a === "session" || !pk() && a !== "none")
-              throw c;
-            break;
-          default:
-            if (!Pe() && a !== "none")
-              throw c;
-        }
-      }
-      function Tk() {
-        var a = !Xe(K()) && Ie() ? true : false, b = Te(), c = Pe();
-        this.m = a;
-        this.h = b;
-        this.l = c;
-        this.a = {};
-        Qk || (Qk = new Lk());
-        a = Qk;
-        try {
-          this.g = !qe() && cf() || !l.indexedDB ? new a.a.F() : new Ck(Je() ? new Dk() : new a.a.F());
-        } catch (d) {
-          this.g = new Dk(), this.h = true;
-        }
-        try {
-          this.i = new a.a.cb();
-        } catch (d) {
-          this.i = new Dk();
-        }
-        this.v = new Dk();
-        this.f = q(this.Zb, this);
-        this.b = {};
-      }
-      var Uk;
-      function Vk() {
-        Uk || (Uk = new Tk());
-        return Uk;
-      }
-      function Wk(a, b) {
-        switch (b) {
-          case "session":
-            return a.i;
-          case "none":
-            return a.v;
-          default:
-            return a.g;
-        }
-      }
-      function Xk(a, b) {
-        return "firebase:" + a.name + (b ? ":" + b : "");
-      }
-      function Yk(a, b, c) {
-        var d = Xk(b, c), e = Wk(a, b.F);
-        return a.get(b, c).then(function(f) {
-          var g = null;
-          try {
-            g = We(l.localStorage.getItem(d));
-          } catch (h) {
-          }
-          if (g && !f)
-            return l.localStorage.removeItem(d), a.set(b, g, c);
-          g && f && e.type != "localStorage" && l.localStorage.removeItem(d);
-        });
-      }
-      k = Tk.prototype;
-      k.get = function(a, b) {
-        return Wk(this, a.F).get(Xk(a, b));
-      };
-      function Zk(a, b, c) {
-        c = Xk(b, c);
-        b.F == "local" && (a.b[c] = null);
-        return Wk(a, b.F).U(c);
-      }
-      k.set = function(a, b, c) {
-        var d = Xk(a, c), e = this, f = Wk(this, a.F);
-        return f.set(d, b).then(function() {
-          return f.get(d);
-        }).then(function(g) {
-          a.F == "local" && (e.b[d] = g);
-        });
-      };
-      k.addListener = function(a, b, c) {
-        a = Xk(a, b);
-        this.l && (this.b[a] = l.localStorage.getItem(a));
-        mb(this.a) && (Wk(this, "local").ca(this.f), this.h || (qe() || !cf()) && l.indexedDB || !this.l || $k(this));
-        this.a[a] || (this.a[a] = []);
-        this.a[a].push(c);
-      };
-      k.removeListener = function(a, b, c) {
-        a = Xk(a, b);
-        this.a[a] && (Xa(this.a[a], function(d) {
-          return d == c;
-        }), this.a[a].length == 0 && delete this.a[a]);
-        mb(this.a) && (Wk(this, "local").ia(this.f), al(this));
-      };
-      function $k(a) {
-        al(a);
-        a.c = setInterval(function() {
-          for (var b in a.a) {
-            var c = l.localStorage.getItem(b), d = a.b[b];
-            c != d && (a.b[b] = c, c = new bd({type: "storage", key: b, target: window, oldValue: d, newValue: c, a: true}), a.Zb(c));
-          }
-        }, 1e3);
-      }
-      function al(a) {
-        a.c && (clearInterval(a.c), a.c = null);
-      }
-      k.Zb = function(a) {
-        if (a && a.g) {
-          var b = a.a.key;
-          if (b == null)
-            for (var c in this.a) {
-              var d = this.b[c];
-              typeof d === "undefined" && (d = null);
-              var e = l.localStorage.getItem(c);
-              e !== d && (this.b[c] = e, this.nb(c));
-            }
-          else if (b.indexOf("firebase:") == 0 && this.a[b]) {
-            typeof a.a.a !== "undefined" ? Wk(this, "local").ia(this.f) : al(this);
-            if (this.m) {
-              if (c = l.localStorage.getItem(b), d = a.a.newValue, d !== c)
-                d !== null ? l.localStorage.setItem(b, d) : l.localStorage.removeItem(b);
-              else if (this.b[b] === d && typeof a.a.a === "undefined")
-                return;
-            }
-            var f = this;
-            c = function() {
-              if (typeof a.a.a !== "undefined" || f.b[b] !== l.localStorage.getItem(b))
-                f.b[b] = l.localStorage.getItem(b), f.nb(b);
-            };
-            Wb && ic && ic == 10 && l.localStorage.getItem(b) !== a.a.newValue && a.a.newValue !== a.a.oldValue ? setTimeout(c, 10) : c();
-          }
-        } else
-          w(a, q(this.nb, this));
-      };
-      k.nb = function(a) {
-        this.a[a] && w(this.a[a], function(b) {
-          b();
-        });
-      };
-      function bl(a) {
-        this.a = a;
-        this.b = Vk();
-      }
-      var cl = {name: "authEvent", F: "local"};
-      function dl(a) {
-        return a.b.get(cl, a.a).then(function(b) {
-          return th(b);
-        });
-      }
-      ;
-      function el() {
-        this.a = Vk();
-      }
-      ;
-      function fl() {
-        this.b = -1;
-      }
-      ;
-      function gl(a, b) {
-        this.b = hl;
-        this.f = l.Uint8Array ? new Uint8Array(this.b) : Array(this.b);
-        this.g = this.c = 0;
-        this.a = [];
-        this.i = a;
-        this.h = b;
-        this.l = l.Int32Array ? new Int32Array(64) : Array(64);
-        il === void 0 && (l.Int32Array ? il = new Int32Array(jl) : il = jl);
-        this.reset();
-      }
-      var il;
-      r(gl, fl);
-      for (var hl = 64, kl = hl - 1, ll = [], ml = 0; ml < kl; ml++)
-        ll[ml] = 0;
-      var nl = Ya(128, ll);
-      gl.prototype.reset = function() {
-        this.g = this.c = 0;
-        this.a = l.Int32Array ? new Int32Array(this.h) : Za(this.h);
-      };
-      function ol(a) {
-        for (var b = a.f, c = a.l, d = 0, e = 0; e < b.length; )
-          c[d++] = b[e] << 24 | b[e + 1] << 16 | b[e + 2] << 8 | b[e + 3], e = 4 * d;
-        for (b = 16; 64 > b; b++) {
-          e = c[b - 15] | 0;
-          d = c[b - 2] | 0;
-          var f = (c[b - 16] | 0) + ((e >>> 7 | e << 25) ^ (e >>> 18 | e << 14) ^ e >>> 3) | 0, g = (c[b - 7] | 0) + ((d >>> 17 | d << 15) ^ (d >>> 19 | d << 13) ^ d >>> 10) | 0;
-          c[b] = f + g | 0;
-        }
-        d = a.a[0] | 0;
-        e = a.a[1] | 0;
-        var h = a.a[2] | 0, m = a.a[3] | 0, p = a.a[4] | 0, v = a.a[5] | 0, B = a.a[6] | 0;
-        f = a.a[7] | 0;
-        for (b = 0; 64 > b; b++) {
-          var A = ((d >>> 2 | d << 30) ^ (d >>> 13 | d << 19) ^ (d >>> 22 | d << 10)) + (d & e ^ d & h ^ e & h) | 0;
-          g = p & v ^ ~p & B;
-          f = f + ((p >>> 6 | p << 26) ^ (p >>> 11 | p << 21) ^ (p >>> 25 | p << 7)) | 0;
-          g = g + (il[b] | 0) | 0;
-          g = f + (g + (c[b] | 0) | 0) | 0;
-          f = B;
-          B = v;
-          v = p;
-          p = m + g | 0;
-          m = h;
-          h = e;
-          e = d;
-          d = g + A | 0;
-        }
-        a.a[0] = a.a[0] + d | 0;
-        a.a[1] = a.a[1] + e | 0;
-        a.a[2] = a.a[2] + h | 0;
-        a.a[3] = a.a[3] + m | 0;
-        a.a[4] = a.a[4] + p | 0;
-        a.a[5] = a.a[5] + v | 0;
-        a.a[6] = a.a[6] + B | 0;
-        a.a[7] = a.a[7] + f | 0;
-      }
-      function pl(a, b, c) {
-        c === void 0 && (c = b.length);
-        var d = 0, e = a.c;
-        if (typeof b === "string")
-          for (; d < c; )
-            a.f[e++] = b.charCodeAt(d++), e == a.b && (ol(a), e = 0);
-        else if (na(b))
-          for (; d < c; ) {
-            var f = b[d++];
-            if (!(typeof f == "number" && 0 <= f && 255 >= f && f == (f | 0)))
-              throw Error("message must be a byte array");
-            a.f[e++] = f;
-            e == a.b && (ol(a), e = 0);
-          }
-        else
-          throw Error("message must be string or array");
-        a.c = e;
-        a.g += c;
-      }
-      var jl = [
-        1116352408,
-        1899447441,
-        3049323471,
-        3921009573,
-        961987163,
-        1508970993,
-        2453635748,
-        2870763221,
-        3624381080,
-        310598401,
-        607225278,
-        1426881987,
-        1925078388,
-        2162078206,
-        2614888103,
-        3248222580,
-        3835390401,
-        4022224774,
-        264347078,
-        604807628,
-        770255983,
-        1249150122,
-        1555081692,
-        1996064986,
-        2554220882,
-        2821834349,
-        2952996808,
-        3210313671,
-        3336571891,
-        3584528711,
-        113926993,
-        338241895,
-        666307205,
-        773529912,
-        1294757372,
-        1396182291,
-        1695183700,
-        1986661051,
-        2177026350,
-        2456956037,
-        2730485921,
-        2820302411,
-        3259730800,
-        3345764771,
-        3516065817,
-        3600352804,
-        4094571909,
-        275423344,
-        430227734,
-        506948616,
-        659060556,
-        883997877,
-        958139571,
-        1322822218,
-        1537002063,
-        1747873779,
-        1955562222,
-        2024104815,
-        2227730452,
-        2361852424,
-        2428436474,
-        2756734187,
-        3204031479,
-        3329325298
-      ];
-      function ql() {
-        gl.call(this, 8, rl);
-      }
-      r(ql, gl);
-      var rl = [1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600822924, 528734635, 1541459225];
-      function sl(a, b, c, d, e, f) {
-        this.v = a;
-        this.i = b;
-        this.l = c;
-        this.m = d || null;
-        this.u = e || null;
-        this.s = f;
-        this.h = b + ":" + c;
-        this.C = new el();
-        this.g = new bl(this.h);
-        this.f = null;
-        this.b = [];
-        this.a = this.c = null;
-      }
-      function tl(a) {
-        return new t("invalid-cordova-configuration", a);
-      }
-      k = sl.prototype;
-      k.ma = function() {
-        return this.Ia ? this.Ia : this.Ia = Fe().then(function() {
-          if (typeof L("universalLinks.subscribe", l) !== "function")
-            throw tl("cordova-universal-links-plugin-fix is not installed");
-          if (typeof L("BuildInfo.packageName", l) === "undefined")
-            throw tl("cordova-plugin-buildinfo is not installed");
-          if (typeof L("cordova.plugins.browsertab.openUrl", l) !== "function")
-            throw tl("cordova-plugin-browsertab is not installed");
-          if (typeof L("cordova.InAppBrowser.open", l) !== "function")
-            throw tl("cordova-plugin-inappbrowser is not installed");
-        }, function() {
-          throw new t("cordova-not-ready");
-        });
-      };
-      function ul() {
-        for (var a = 20, b = []; 0 < a; )
-          b.push("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(Math.floor(62 * Math.random()))), a--;
-        return b.join("");
-      }
-      function vl(a) {
-        var b = new ql();
-        pl(b, a);
-        a = [];
-        var c = 8 * b.g;
-        56 > b.c ? pl(b, nl, 56 - b.c) : pl(b, nl, b.b - (b.c - 56));
-        for (var d = 63; 56 <= d; d--)
-          b.f[d] = c & 255, c /= 256;
-        ol(b);
-        for (d = c = 0; d < b.i; d++)
-          for (var e = 24; 0 <= e; e -= 8)
-            a[c++] = b.a[d] >> e & 255;
-        return cg(a);
-      }
-      k.Pb = function(a, b) {
-        b(new t("operation-not-supported-in-this-environment"));
-        return E();
-      };
-      k.Nb = function() {
-        return F(new t("operation-not-supported-in-this-environment"));
-      };
-      k.ac = function() {
-        return false;
-      };
-      k.Yb = function() {
-        return true;
-      };
-      k.Ub = function() {
-        return true;
-      };
-      k.Ob = function(a, b, c, d) {
-        if (this.c)
-          return F(new t("redirect-operation-pending"));
-        var e = this, f = l.document, g = null, h = null, m = null, p = null;
-        return this.c = E().then(function() {
-          rh(b);
-          return wl(e);
-        }).then(function() {
-          return xl(e, a, b, c, d);
-        }).then(function() {
-          return new D(function(v, B) {
-            h = function() {
-              var A = L("cordova.plugins.browsertab.close", l);
-              v();
-              typeof A === "function" && A();
-              e.a && typeof e.a.close === "function" && (e.a.close(), e.a = null);
-              return false;
-            };
-            e.Ea(h);
-            m = function() {
-              g || (g = Fd(2e3).then(function() {
-                B(new t("redirect-cancelled-by-user"));
-              }));
-            };
-            p = function() {
-              $e() && m();
-            };
-            f.addEventListener("resume", m, false);
-            K().toLowerCase().match(/android/) || f.addEventListener("visibilitychange", p, false);
-          }).o(function(v) {
-            return yl(e).then(function() {
-              throw v;
-            });
-          });
-        }).oa(function() {
-          m && f.removeEventListener("resume", m, false);
-          p && f.removeEventListener("visibilitychange", p, false);
-          g && g.cancel();
-          h && e.Ta(h);
-          e.c = null;
-        });
-      };
-      function xl(a, b, c, d, e) {
-        var f = ul(), g = new sh(b, d, null, f, new t("no-auth-event"), null, e), h = L("BuildInfo.packageName", l);
-        if (typeof h !== "string")
-          throw new t("invalid-cordova-configuration");
-        var m = L("BuildInfo.displayName", l), p = {};
-        if (K().toLowerCase().match(/iphone|ipad|ipod/))
-          p.ibi = h;
-        else if (K().toLowerCase().match(/android/))
-          p.apn = h;
-        else
-          return F(new t("operation-not-supported-in-this-environment"));
-        m && (p.appDisplayName = m);
-        f = vl(f);
-        p.sessionId = f;
-        var v = ek(a.v, a.i, a.l, b, c, null, d, a.m, p, a.u, e, a.s);
-        return a.ma().then(function() {
-          var B = a.h;
-          return a.C.a.set(cl, g.w(), B);
-        }).then(function() {
-          var B = L("cordova.plugins.browsertab.isAvailable", l);
-          if (typeof B !== "function")
-            throw new t("invalid-cordova-configuration");
-          var A = null;
-          B(function(Q) {
-            if (Q) {
-              A = L("cordova.plugins.browsertab.openUrl", l);
-              if (typeof A !== "function")
-                throw new t("invalid-cordova-configuration");
-              A(v);
-            } else {
-              A = L("cordova.InAppBrowser.open", l);
-              if (typeof A !== "function")
-                throw new t("invalid-cordova-configuration");
-              Q = K();
-              a.a = A(v, Q.match(/(iPad|iPhone|iPod).*OS 7_\d/i) || Q.match(/(iPad|iPhone|iPod).*OS 8_\d/i) ? "_blank" : "_system", "location=yes");
-            }
-          });
-        });
-      }
-      function zl(a, b) {
-        for (var c = 0; c < a.b.length; c++)
-          try {
-            a.b[c](b);
-          } catch (d) {
-          }
-      }
-      function wl(a) {
-        a.f || (a.f = a.ma().then(function() {
-          return new D(function(b) {
-            function c(d) {
-              b(d);
-              a.Ta(c);
-              return false;
-            }
-            a.Ea(c);
-            Al(a);
-          });
-        }));
-        return a.f;
-      }
-      function yl(a) {
-        var b = null;
-        return dl(a.g).then(function(c) {
-          b = c;
-          c = a.g;
-          return Zk(c.b, cl, c.a);
-        }).then(function() {
-          return b;
-        });
-      }
-      function Al(a) {
-        function b(g) {
-          d = true;
-          e && e.cancel();
-          yl(a).then(function(h) {
-            var m = c;
-            if (h && g && g.url) {
-              var p = null;
-              m = xg(g.url);
-              m.indexOf("/__/auth/callback") != -1 && (p = J(m), p = We(be(p, "firebaseError") || null), p = (p = typeof p === "object" ? Aa(p) : null) ? new sh(h.c, h.b, null, null, p, null, h.T()) : new sh(h.c, h.b, m, h.f, null, null, h.T()));
-              m = p || c;
-            }
-            zl(a, m);
-          });
-        }
-        var c = new sh("unknown", null, null, null, new t("no-auth-event")), d = false, e = Fd(500).then(function() {
-          return yl(a).then(function() {
-            d || zl(a, c);
-          });
-        }), f = l.handleOpenURL;
-        l.handleOpenURL = function(g) {
-          g.toLowerCase().indexOf(L("BuildInfo.packageName", l).toLowerCase() + "://") == 0 && b({url: g});
-          if (typeof f === "function")
-            try {
-              f(g);
-            } catch (h) {
-              console.error(h);
-            }
-        };
-        vh || (vh = new uh());
-        wh(b);
-      }
-      k.Ea = function(a) {
-        this.b.push(a);
-        wl(this).o(function(b) {
-          b.code === "auth/invalid-cordova-configuration" && (b = new sh("unknown", null, null, null, new t("no-auth-event")), a(b));
-        });
-      };
-      k.Ta = function(a) {
-        Xa(this.b, function(b) {
-          return b == a;
-        });
-      };
-      function Bl(a) {
-        this.a = a;
-        this.b = Vk();
-      }
-      var Cl = {name: "pendingRedirect", F: "session"};
-      function Dl(a) {
-        return a.b.set(Cl, "pending", a.a);
-      }
-      function El(a) {
-        return Zk(a.b, Cl, a.a);
-      }
-      function Fl(a) {
-        return a.b.get(Cl, a.a).then(function(b) {
-          return b == "pending";
-        });
-      }
-      ;
-      function Gl(a, b, c, d) {
-        this.i = {};
-        this.u = 0;
-        this.D = a;
-        this.v = b;
-        this.m = c;
-        this.J = d;
-        this.h = [];
-        this.f = false;
-        this.l = q(this.s, this);
-        this.b = new Hl();
-        this.C = new Il();
-        this.g = new Bl(Jl(this.v, this.m));
-        this.c = {};
-        this.c.unknown = this.b;
-        this.c.signInViaRedirect = this.b;
-        this.c.linkViaRedirect = this.b;
-        this.c.reauthViaRedirect = this.b;
-        this.c.signInViaPopup = this.C;
-        this.c.linkViaPopup = this.C;
-        this.c.reauthViaPopup = this.C;
-        this.a = Kl(this.D, this.v, this.m, Da, this.J);
-      }
-      function Kl(a, b, c, d, e) {
-        var f = firebase2.SDK_VERSION || null;
-        return Ge() ? new sl(a, b, c, f, d, e) : new Yj(a, b, c, f, d, e);
-      }
-      Gl.prototype.reset = function() {
-        this.f = false;
-        this.a.Ta(this.l);
-        this.a = Kl(this.D, this.v, this.m, null, this.J);
-        this.i = {};
-      };
-      function Ll(a) {
-        a.f || (a.f = true, a.a.Ea(a.l));
-        var b = a.a;
-        return a.a.ma().o(function(c) {
-          a.a == b && a.reset();
-          throw c;
-        });
-      }
-      function Ml(a) {
-        a.a.Yb() && Ll(a).o(function(b) {
-          var c = new sh("unknown", null, null, null, new t("operation-not-supported-in-this-environment"));
-          Nl(b) && a.s(c);
-        });
-        a.a.Ub() || Ol(a.b);
-      }
-      function Pl(a, b) {
-        Va(a.h, b) || a.h.push(b);
-        a.f || Fl(a.g).then(function(c) {
-          c ? El(a.g).then(function() {
-            Ll(a).o(function(d) {
-              var e = new sh("unknown", null, null, null, new t("operation-not-supported-in-this-environment"));
-              Nl(d) && a.s(e);
-            });
-          }) : Ml(a);
-        }).o(function() {
-          Ml(a);
-        });
-      }
-      function Ql(a, b) {
-        Xa(a.h, function(c) {
-          return c == b;
-        });
-      }
-      Gl.prototype.s = function(a) {
-        if (!a)
-          throw new t("invalid-auth-event");
-        6e5 <= Date.now() - this.u && (this.i = {}, this.u = 0);
-        if (a && a.getUid() && this.i.hasOwnProperty(a.getUid()))
-          return false;
-        for (var b = false, c = 0; c < this.h.length; c++) {
-          var d = this.h[c];
-          if (d.Gb(a.c, a.b)) {
-            if (b = this.c[a.c])
-              b.h(a, d), a && (a.f || a.b) && (this.i[a.getUid()] = true, this.u = Date.now());
-            b = true;
-            break;
-          }
-        }
-        Ol(this.b);
-        return b;
-      };
-      var Rl = new Ze(2e3, 1e4), Sl = new Ze(3e4, 6e4);
-      Gl.prototype.ra = function() {
-        return this.b.ra();
-      };
-      function Tl(a, b, c, d, e, f, g) {
-        return a.a.Nb(b, c, d, function() {
-          a.f || (a.f = true, a.a.Ea(a.l));
-        }, function() {
-          a.reset();
-        }, e, f, g);
-      }
-      function Nl(a) {
-        return a && a.code == "auth/cordova-not-ready" ? true : false;
-      }
-      function Ul(a, b, c, d, e) {
-        var f;
-        return Dl(a.g).then(function() {
-          return a.a.Ob(b, c, d, e).o(function(g) {
-            if (Nl(g))
-              throw new t("operation-not-supported-in-this-environment");
-            f = g;
-            return El(a.g).then(function() {
-              throw f;
-            });
-          }).then(function() {
-            return a.a.ac() ? new D(function() {
-            }) : El(a.g).then(function() {
-              return a.ra();
-            }).then(function() {
-            }).o(function() {
-            });
-          });
-        });
-      }
-      function Vl(a, b, c, d, e) {
-        return a.a.Pb(d, function(f) {
-          b.na(c, null, f, e);
-        }, Rl.get());
-      }
-      var Wl = {};
-      function Jl(a, b, c) {
-        a = a + ":" + b;
-        c && (a = a + ":" + c.url);
-        return a;
-      }
-      function Xl(a, b, c, d) {
-        var e = Jl(b, c, d);
-        Wl[e] || (Wl[e] = new Gl(a, b, c, d));
-        return Wl[e];
-      }
-      function Hl() {
-        this.b = null;
-        this.f = [];
-        this.c = [];
-        this.a = null;
-        this.i = this.g = false;
-      }
-      Hl.prototype.reset = function() {
-        this.b = null;
-        this.a && (this.a.cancel(), this.a = null);
-      };
-      Hl.prototype.h = function(a, b) {
-        if (a) {
-          this.reset();
-          this.g = true;
-          var c = a.c, d = a.b, e = a.a && a.a.code == "auth/web-storage-unsupported", f = a.a && a.a.code == "auth/operation-not-supported-in-this-environment";
-          this.i = !(!e && !f);
-          c != "unknown" || e || f ? a.a ? (Yl(this, true, null, a.a), E()) : b.Fa(c, d) ? Zl(this, a, b) : F(new t("invalid-auth-event")) : (Yl(this, false, null, null), E());
-        } else
-          F(new t("invalid-auth-event"));
-      };
-      function Ol(a) {
-        a.g || (a.g = true, Yl(a, false, null, null));
-      }
-      function $l(a) {
-        a.g && !a.i && Yl(a, false, null, null);
-      }
-      function Zl(a, b, c) {
-        c = c.Fa(b.c, b.b);
-        var d = b.g, e = b.f, f = b.i, g = b.T(), h = !!b.c.match(/Redirect$/);
-        c(d, e, g, f).then(function(m) {
-          Yl(a, h, m, null);
-        }).o(function(m) {
-          Yl(a, h, null, m);
-        });
-      }
-      function am(a, b) {
-        a.b = function() {
-          return F(b);
-        };
-        if (a.c.length)
-          for (var c = 0; c < a.c.length; c++)
-            a.c[c](b);
-      }
-      function bm(a, b) {
-        a.b = function() {
-          return E(b);
-        };
-        if (a.f.length)
-          for (var c = 0; c < a.f.length; c++)
-            a.f[c](b);
-      }
-      function Yl(a, b, c, d) {
-        b ? d ? am(a, d) : bm(a, c) : bm(a, {user: null});
-        a.f = [];
-        a.c = [];
-      }
-      Hl.prototype.ra = function() {
-        var a = this;
-        return new D(function(b, c) {
-          a.b ? a.b().then(b, c) : (a.f.push(b), a.c.push(c), cm(a));
-        });
-      };
-      function cm(a) {
-        var b = new t("timeout");
-        a.a && a.a.cancel();
-        a.a = Fd(Sl.get()).then(function() {
-          a.b || (a.g = true, Yl(a, true, null, b));
-        });
-      }
-      function Il() {
-      }
-      Il.prototype.h = function(a, b) {
-        if (a) {
-          var c = a.c, d = a.b;
-          a.a ? (b.na(a.c, null, a.a, a.b), E()) : b.Fa(c, d) ? dm(a, b) : F(new t("invalid-auth-event"));
-        } else
-          F(new t("invalid-auth-event"));
-      };
-      function dm(a, b) {
-        var c = a.b, d = a.c;
-        b.Fa(d, c)(a.g, a.f, a.T(), a.i).then(function(e) {
-          b.na(d, e, null, c);
-        }).o(function(e) {
-          b.na(d, null, e, c);
-        });
-      }
-      ;
-      function em() {
-        this.jb = false;
-        Object.defineProperty(this, "appVerificationDisabled", {get: function() {
-          return this.jb;
-        }, set: function(a) {
-          this.jb = a;
-        }, enumerable: false});
-      }
-      ;
-      function fm(a, b) {
-        this.a = b;
-        M(this, "verificationId", a);
-      }
-      fm.prototype.confirm = function(a) {
-        a = ph(this.verificationId, a);
-        return this.a(a);
-      };
-      function gm(a, b, c, d) {
-        return new lh(a).gb(b, c).then(function(e) {
-          return new fm(e, d);
-        });
-      }
-      ;
-      function hm(a) {
-        var b = ig(a);
-        if (!(b && b.exp && b.auth_time && b.iat))
-          throw new t("internal-error", "An internal error occurred. The token obtained by Firebase appears to be malformed. Please retry the operation.");
-        N(this, {token: a, expirationTime: bf(1e3 * b.exp), authTime: bf(1e3 * b.auth_time), issuedAtTime: bf(1e3 * b.iat), signInProvider: b.firebase && b.firebase.sign_in_provider ? b.firebase.sign_in_provider : null, signInSecondFactor: b.firebase && b.firebase.sign_in_second_factor ? b.firebase.sign_in_second_factor : null, claims: b});
-      }
-      ;
-      function im(a, b, c) {
-        var d = b && b[jm];
-        if (!d)
-          throw new t("argument-error", "Internal assert: Invalid MultiFactorResolver");
-        this.a = a;
-        this.f = nb(b);
-        this.g = c;
-        this.c = new yg(null, d);
-        this.b = [];
-        var e = this;
-        w(b[km] || [], function(f) {
-          (f = tf(f)) && e.b.push(f);
-        });
-        M(this, "auth", this.a);
-        M(this, "session", this.c);
-        M(this, "hints", this.b);
-      }
-      var km = "mfaInfo", jm = "mfaPendingCredential";
-      im.prototype.Rc = function(a) {
-        var b = this;
-        return a.tb(this.a.a, this.c).then(function(c) {
-          var d = nb(b.f);
-          delete d[km];
-          delete d[jm];
-          z(d, c);
-          return b.g(d);
-        });
-      };
-      function lm(a, b, c, d) {
-        t.call(this, "multi-factor-auth-required", d, b);
-        this.b = new im(a, b, c);
-        M(this, "resolver", this.b);
-      }
-      r(lm, t);
-      function mm(a, b, c) {
-        if (a && n(a.serverResponse) && a.code === "auth/multi-factor-auth-required")
-          try {
-            return new lm(b, a.serverResponse, c, a.message);
-          } catch (d) {
-          }
-        return null;
-      }
-      ;
-      function nm() {
-      }
-      nm.prototype.tb = function(a, b, c) {
-        return b.type == zg ? om(this, a, b, c) : pm(this, a, b);
-      };
-      function om(a, b, c, d) {
-        return c.Ha().then(function(e) {
-          e = {idToken: e};
-          typeof d !== "undefined" && (e.displayName = d);
-          z(e, {phoneVerificationInfo: hh(a.a)});
-          return O(b, Gj, e);
-        });
-      }
-      function pm(a, b, c) {
-        return c.Ha().then(function(d) {
-          d = {mfaPendingCredential: d};
-          z(d, {phoneVerificationInfo: hh(a.a)});
-          return O(b, Hj, d);
-        });
-      }
-      function qm(a) {
-        M(this, "factorId", a.fa);
-        this.a = a;
-      }
-      r(qm, nm);
-      function rm(a) {
-        qm.call(this, a);
-        if (this.a.fa != lh.PROVIDER_ID)
-          throw new t("argument-error", "firebase.auth.PhoneMultiFactorAssertion requires a valid firebase.auth.PhoneAuthCredential");
-      }
-      r(rm, qm);
-      function sm(a, b) {
-        G.call(this, a);
-        for (var c in b)
-          this[c] = b[c];
-      }
-      r(sm, G);
-      function tm(a, b) {
-        this.a = a;
-        this.b = [];
-        this.c = q(this.yc, this);
-        nd(this.a, "userReloaded", this.c);
-        var c = [];
-        b && b.multiFactor && b.multiFactor.enrolledFactors && w(b.multiFactor.enrolledFactors, function(d) {
-          var e = null, f = {};
-          if (d) {
-            d.uid && (f[qf] = d.uid);
-            d.displayName && (f[rf] = d.displayName);
-            d.enrollmentTime && (f[sf] = new Date(d.enrollmentTime).toISOString());
-            d.phoneNumber && (f[pf] = d.phoneNumber);
-            try {
-              e = new uf(f);
-            } catch (g) {
-            }
-            d = e;
-          } else
-            d = null;
-          d && c.push(d);
-        });
-        um(this, c);
-      }
-      function vm(a) {
-        var b = [];
-        w(a.mfaInfo || [], function(c) {
-          (c = tf(c)) && b.push(c);
-        });
-        return b;
-      }
-      k = tm.prototype;
-      k.yc = function(a) {
-        um(this, vm(a.hd));
-      };
-      function um(a, b) {
-        a.b = b;
-        M(a, "enrolledFactors", b);
-      }
-      k.Sb = function() {
-        return this.a.I().then(function(a) {
-          return new yg(a, null);
-        });
-      };
-      k.fc = function(a, b) {
-        var c = this, d = this.a.a;
-        return this.Sb().then(function(e) {
-          return a.tb(d, e, b);
-        }).then(function(e) {
-          wm2(c.a, e);
-          return c.a.reload();
-        });
-      };
-      k.bd = function(a) {
-        var b = this, c = typeof a === "string" ? a : a.uid, d = this.a.a;
-        return this.a.I().then(function(e) {
-          return O(d, Lj, {idToken: e, mfaEnrollmentId: c});
-        }).then(function(e) {
-          var f = Qa(b.b, function(g) {
-            return g.uid != c;
-          });
-          um(b, f);
-          wm2(b.a, e);
-          return b.a.reload().o(function(g) {
-            if (g.code != "auth/user-token-expired")
-              throw g;
-          });
-        });
-      };
-      k.w = function() {
-        return {multiFactor: {enrolledFactors: Ra(this.b, function(a) {
-          return a.w();
-        })}};
-      };
-      function xm(a, b, c) {
-        this.h = a;
-        this.i = b;
-        this.g = c;
-        this.c = 3e4;
-        this.f = 96e4;
-        this.b = null;
-        this.a = this.c;
-        if (this.f < this.c)
-          throw Error("Proactive refresh lower bound greater than upper bound!");
-      }
-      xm.prototype.start = function() {
-        this.a = this.c;
-        ym(this, true);
-      };
-      function zm(a, b) {
-        if (b)
-          return a.a = a.c, a.g();
-        b = a.a;
-        a.a *= 2;
-        a.a > a.f && (a.a = a.f);
-        return b;
-      }
-      function ym(a, b) {
-        a.stop();
-        a.b = Fd(zm(a, b)).then(function() {
-          return af();
-        }).then(function() {
-          return a.h();
-        }).then(function() {
-          ym(a, true);
-        }).o(function(c) {
-          a.i(c) && ym(a, false);
-        });
-      }
-      xm.prototype.stop = function() {
-        this.b && (this.b.cancel(), this.b = null);
-      };
-      function Am(a) {
-        this.f = a;
-        this.b = this.a = null;
-        this.c = Date.now();
-      }
-      Am.prototype.w = function() {
-        return {apiKey: this.f.c, refreshToken: this.a, accessToken: this.b && this.b.toString(), expirationTime: this.c};
-      };
-      function Bm(a, b) {
-        typeof b === "undefined" && (a.b ? (b = a.b, b = b.a - b.g) : b = 0);
-        a.c = Date.now() + 1e3 * b;
-      }
-      function Cm(a, b) {
-        a.b = jg(b[Dg] || "");
-        a.a = b.refreshToken;
-        b = b.expiresIn;
-        Bm(a, typeof b !== "undefined" ? Number(b) : void 0);
-      }
-      function Dm(a, b) {
-        a.b = b.b;
-        a.a = b.a;
-        a.c = b.c;
-      }
-      function Em(a, b) {
-        return Wi(a.f, b).then(function(c) {
-          a.b = jg(c.access_token);
-          a.a = c.refresh_token;
-          Bm(a, c.expires_in);
-          return {accessToken: a.b.toString(), refreshToken: a.a};
-        }).o(function(c) {
-          c.code == "auth/user-token-expired" && (a.a = null);
-          throw c;
-        });
-      }
-      Am.prototype.getToken = function(a) {
-        a = !!a;
-        return this.b && !this.a ? F(new t("user-token-expired")) : a || !this.b || Date.now() > this.c - 3e4 ? this.a ? Em(this, {grant_type: "refresh_token", refresh_token: this.a}) : E(null) : E({accessToken: this.b.toString(), refreshToken: this.a});
-      };
-      function Fm(a, b) {
-        this.a = a || null;
-        this.b = b || null;
-        N(this, {lastSignInTime: bf(b || null), creationTime: bf(a || null)});
-      }
-      function Gm(a) {
-        return new Fm(a.a, a.b);
-      }
-      Fm.prototype.w = function() {
-        return {lastLoginAt: this.b, createdAt: this.a};
-      };
-      function Hm(a, b, c, d, e, f) {
-        N(this, {uid: a, displayName: d || null, photoURL: e || null, email: c || null, phoneNumber: f || null, providerId: b});
-      }
-      function Im(a, b, c) {
-        this.N = [];
-        this.l = a.apiKey;
-        this.m = a.appName;
-        this.s = a.authDomain || null;
-        var d = firebase2.SDK_VERSION ? Oe(firebase2.SDK_VERSION) : null;
-        this.a = new Ii(this.l, Ca(Da), d);
-        (this.u = a.emulatorConfig || null) && Pi(this.a, this.u);
-        this.h = new Am(this.a);
-        Jm(this, b[Dg]);
-        Cm(this.h, b);
-        M(this, "refreshToken", this.h.a);
-        Km(this, c || {});
-        H.call(this);
-        this.P = false;
-        this.s && Re() && (this.b = Xl(this.s, this.l, this.m, this.u));
-        this.W = [];
-        this.i = null;
-        this.D = Lm(this);
-        this.ba = q(this.ib, this);
-        var e = this;
-        this.za = null;
-        this.Pa = function(f) {
-          e.xa(f.h);
-        };
-        this.qa = null;
-        this.Ba = function(f) {
-          Mm(e, f.c);
-        };
-        this.$ = null;
-        this.aa = [];
-        this.Oa = function(f) {
-          Nm(e, f.f);
-        };
-        this.ja = null;
-        this.S = new tm(this, c);
-        M(this, "multiFactor", this.S);
-      }
-      r(Im, H);
-      Im.prototype.xa = function(a) {
-        this.za = a;
-        Oi(this.a, a);
-      };
-      function Mm(a, b) {
-        a.u = b;
-        Pi(a.a, b);
-        a.b && (b = a.b, a.b = Xl(a.s, a.l, a.m, a.u), a.P && (Ql(b, a), Pl(a.b, a)));
-      }
-      Im.prototype.la = function() {
-        return this.za;
-      };
-      function Om(a, b) {
-        a.qa && xd(a.qa, "languageCodeChanged", a.Pa);
-        (a.qa = b) && nd(b, "languageCodeChanged", a.Pa);
-      }
-      function Pm(a, b) {
-        a.$ && xd(a.$, "emulatorConfigChanged", a.Ba);
-        (a.$ = b) && nd(b, "emulatorConfigChanged", a.Ba);
-      }
-      function Nm(a, b) {
-        a.aa = b;
-        Ri(a.a, firebase2.SDK_VERSION ? Oe(firebase2.SDK_VERSION, a.aa) : null);
-      }
-      Im.prototype.Ga = function() {
-        return Za(this.aa);
-      };
-      function Qm(a, b) {
-        a.ja && xd(a.ja, "frameworkChanged", a.Oa);
-        (a.ja = b) && nd(b, "frameworkChanged", a.Oa);
-      }
-      Im.prototype.ib = function() {
-        this.D.b && (this.D.stop(), this.D.start());
-      };
-      function Rm(a) {
-        try {
-          return firebase2.app(a.m).auth();
-        } catch (b) {
-          throw new t("internal-error", "No firebase.auth.Auth instance is available for the Firebase App '" + a.m + "'!");
-        }
-      }
-      function Lm(a) {
-        return new xm(function() {
-          return a.I(true);
-        }, function(b) {
-          return b && b.code == "auth/network-request-failed" ? true : false;
-        }, function() {
-          var b = a.h.c - Date.now() - 3e5;
-          return 0 < b ? b : 0;
-        });
-      }
-      function Sm(a) {
-        a.J || a.D.b || (a.D.start(), xd(a, "tokenChanged", a.ba), nd(a, "tokenChanged", a.ba));
-      }
-      function Tm(a) {
-        xd(a, "tokenChanged", a.ba);
-        a.D.stop();
-      }
-      function Jm(a, b) {
-        a.Aa = b;
-        M(a, "_lat", b);
-      }
-      function Um(a, b) {
-        Xa(a.W, function(c) {
-          return c == b;
-        });
-      }
-      function Vm(a) {
-        for (var b = [], c = 0; c < a.W.length; c++)
-          b.push(a.W[c](a));
-        return Jc(b).then(function() {
-          return a;
-        });
-      }
-      function Wm(a) {
-        a.b && !a.P && (a.P = true, Pl(a.b, a));
-      }
-      function Km(a, b) {
-        N(a, {uid: b.uid, displayName: b.displayName || null, photoURL: b.photoURL || null, email: b.email || null, emailVerified: b.emailVerified || false, phoneNumber: b.phoneNumber || null, isAnonymous: b.isAnonymous || false, tenantId: b.tenantId || null, metadata: new Fm(b.createdAt, b.lastLoginAt), providerData: []});
-        a.a.b = a.tenantId;
-      }
-      M(Im.prototype, "providerId", "firebase");
-      function Xm() {
-      }
-      function Ym(a) {
-        return E().then(function() {
-          if (a.J)
-            throw new t("app-deleted");
-        });
-      }
-      function Zm(a) {
-        return Ra(a.providerData, function(b) {
-          return b.providerId;
-        });
-      }
-      function $m(a, b) {
-        b && (an(a, b.providerId), a.providerData.push(b));
-      }
-      function an(a, b) {
-        Xa(a.providerData, function(c) {
-          return c.providerId == b;
-        });
-      }
-      function bn(a, b, c) {
-        (b != "uid" || c) && a.hasOwnProperty(b) && M(a, b, c);
-      }
-      function cn(a, b) {
-        a != b && (N(a, {uid: b.uid, displayName: b.displayName, photoURL: b.photoURL, email: b.email, emailVerified: b.emailVerified, phoneNumber: b.phoneNumber, isAnonymous: b.isAnonymous, tenantId: b.tenantId, providerData: []}), b.metadata ? M(a, "metadata", Gm(b.metadata)) : M(a, "metadata", new Fm()), w(b.providerData, function(c) {
-          $m(a, c);
-        }), Dm(a.h, b.h), M(a, "refreshToken", a.h.a), um(a.S, b.S.b));
-      }
-      k = Im.prototype;
-      k.reload = function() {
-        var a = this;
-        return R(this, Ym(this).then(function() {
-          return dn(a).then(function() {
-            return Vm(a);
-          }).then(Xm);
-        }));
-      };
-      function dn(a) {
-        return a.I().then(function(b) {
-          var c = a.isAnonymous;
-          return en(a, b).then(function() {
-            c || bn(a, "isAnonymous", false);
-            return b;
-          });
-        });
-      }
-      k.oc = function(a) {
-        return this.I(a).then(function(b) {
-          return new hm(b);
-        });
-      };
-      k.I = function(a) {
-        var b = this;
-        return R(this, Ym(this).then(function() {
-          return b.h.getToken(a);
-        }).then(function(c) {
-          if (!c)
-            throw new t("internal-error");
-          c.accessToken != b.Aa && (Jm(b, c.accessToken), b.dispatchEvent(new sm("tokenChanged")));
-          bn(b, "refreshToken", c.refreshToken);
-          return c.accessToken;
-        }));
-      };
-      function wm2(a, b) {
-        b[Dg] && a.Aa != b[Dg] && (Cm(a.h, b), a.dispatchEvent(new sm("tokenChanged")), Jm(a, b[Dg]), bn(a, "refreshToken", a.h.a));
-      }
-      function en(a, b) {
-        return O(a.a, Ij, {idToken: b}).then(q(a.Kc, a));
-      }
-      k.Kc = function(a) {
-        a = a.users;
-        if (!a || !a.length)
-          throw new t("internal-error");
-        a = a[0];
-        Km(this, {uid: a.localId, displayName: a.displayName, photoURL: a.photoUrl, email: a.email, emailVerified: !!a.emailVerified, phoneNumber: a.phoneNumber, lastLoginAt: a.lastLoginAt, createdAt: a.createdAt, tenantId: a.tenantId});
-        for (var b = fn(a), c = 0; c < b.length; c++)
-          $m(this, b[c]);
-        bn(this, "isAnonymous", !(this.email && a.passwordHash) && !(this.providerData && this.providerData.length));
-        this.dispatchEvent(new sm("userReloaded", {hd: a}));
-      };
-      function fn(a) {
-        return (a = a.providerUserInfo) && a.length ? Ra(a, function(b) {
-          return new Hm(b.rawId, b.providerId, b.email, b.displayName, b.photoUrl, b.phoneNumber);
-        }) : [];
-      }
-      k.Lc = function(a) {
-        gf("firebase.User.prototype.reauthenticateAndRetrieveDataWithCredential is deprecated. Please use firebase.User.prototype.reauthenticateWithCredential instead.");
-        return this.ub(a);
-      };
-      k.ub = function(a) {
-        var b = this, c = null;
-        return R(this, a.c(this.a, this.uid).then(function(d) {
-          wm2(b, d);
-          c = gn(b, d, "reauthenticate");
-          b.i = null;
-          return b.reload();
-        }).then(function() {
-          return c;
-        }), true);
-      };
-      function hn(a, b) {
-        return dn(a).then(function() {
-          if (Va(Zm(a), b))
-            return Vm(a).then(function() {
-              throw new t("provider-already-linked");
-            });
-        });
-      }
-      k.Cc = function(a) {
-        gf("firebase.User.prototype.linkAndRetrieveDataWithCredential is deprecated. Please use firebase.User.prototype.linkWithCredential instead.");
-        return this.rb(a);
-      };
-      k.rb = function(a) {
-        var b = this, c = null;
-        return R(this, hn(this, a.providerId).then(function() {
-          return b.I();
-        }).then(function(d) {
-          return a.b(b.a, d);
-        }).then(function(d) {
-          c = gn(b, d, "link");
-          return jn(b, d);
-        }).then(function() {
-          return c;
-        }));
-      };
-      k.Dc = function(a, b) {
-        var c = this;
-        return R(this, hn(this, "phone").then(function() {
-          return gm(Rm(c), a, b, q(c.rb, c));
-        }));
-      };
-      k.Mc = function(a, b) {
-        var c = this;
-        return R(this, E().then(function() {
-          return gm(Rm(c), a, b, q(c.ub, c));
-        }), true);
-      };
-      function gn(a, b, c) {
-        var d = qh(b);
-        b = og(b);
-        return kf({user: a, credential: d, additionalUserInfo: b, operationType: c});
-      }
-      function jn(a, b) {
-        wm2(a, b);
-        return a.reload().then(function() {
-          return a;
-        });
-      }
-      k.Cb = function(a) {
-        var b = this;
-        return R(this, this.I().then(function(c) {
-          return b.a.Cb(c, a);
-        }).then(function(c) {
-          wm2(b, c);
-          return b.reload();
-        }));
-      };
-      k.ed = function(a) {
-        var b = this;
-        return R(this, this.I().then(function(c) {
-          return a.b(b.a, c);
-        }).then(function(c) {
-          wm2(b, c);
-          return b.reload();
-        }));
-      };
-      k.Db = function(a) {
-        var b = this;
-        return R(this, this.I().then(function(c) {
-          return b.a.Db(c, a);
-        }).then(function(c) {
-          wm2(b, c);
-          return b.reload();
-        }));
-      };
-      k.Eb = function(a) {
-        if (a.displayName === void 0 && a.photoURL === void 0)
-          return Ym(this);
-        var b = this;
-        return R(this, this.I().then(function(c) {
-          return b.a.Eb(c, {displayName: a.displayName, photoUrl: a.photoURL});
-        }).then(function(c) {
-          wm2(b, c);
-          bn(b, "displayName", c.displayName || null);
-          bn(b, "photoURL", c.photoUrl || null);
-          w(b.providerData, function(d) {
-            d.providerId === "password" && (M(d, "displayName", b.displayName), M(d, "photoURL", b.photoURL));
-          });
-          return Vm(b);
-        }).then(Xm));
-      };
-      k.cd = function(a) {
-        var b = this;
-        return R(this, dn(this).then(function(c) {
-          return Va(Zm(b), a) ? rj(b.a, c, [a]).then(function(d) {
-            var e = {};
-            w(d.providerUserInfo || [], function(f) {
-              e[f.providerId] = true;
-            });
-            w(Zm(b), function(f) {
-              e[f] || an(b, f);
-            });
-            e[lh.PROVIDER_ID] || M(b, "phoneNumber", null);
-            return Vm(b);
-          }) : Vm(b).then(function() {
-            throw new t("no-such-provider");
-          });
-        }));
-      };
-      k.delete = function() {
-        var a = this;
-        return R(this, this.I().then(function(b) {
-          return O(a.a, Fj, {idToken: b});
-        }).then(function() {
-          a.dispatchEvent(new sm("userDeleted"));
-        })).then(function() {
-          for (var b = 0; b < a.N.length; b++)
-            a.N[b].cancel("app-deleted");
-          Om(a, null);
-          Pm(a, null);
-          Qm(a, null);
-          a.N = [];
-          a.J = true;
-          Tm(a);
-          M(a, "refreshToken", null);
-          a.b && Ql(a.b, a);
-        });
-      };
-      k.Gb = function(a, b) {
-        return a == "linkViaPopup" && (this.g || null) == b && this.f || a == "reauthViaPopup" && (this.g || null) == b && this.f || a == "linkViaRedirect" && (this.ga || null) == b || a == "reauthViaRedirect" && (this.ga || null) == b ? true : false;
-      };
-      k.na = function(a, b, c, d) {
-        a != "linkViaPopup" && a != "reauthViaPopup" || d != (this.g || null) || (c && this.C ? this.C(c) : b && !c && this.f && this.f(b), this.c && (this.c.cancel(), this.c = null), delete this.f, delete this.C);
-      };
-      k.Fa = function(a, b) {
-        return a == "linkViaPopup" && b == (this.g || null) ? q(this.Lb, this) : a == "reauthViaPopup" && b == (this.g || null) ? q(this.Mb, this) : a == "linkViaRedirect" && (this.ga || null) == b ? q(this.Lb, this) : a == "reauthViaRedirect" && (this.ga || null) == b ? q(this.Mb, this) : null;
-      };
-      k.Ec = function(a) {
-        var b = this;
-        return kn(this, "linkViaPopup", a, function() {
-          return hn(b, a.providerId).then(function() {
-            return Vm(b);
-          });
-        }, false);
-      };
-      k.Nc = function(a) {
-        return kn(this, "reauthViaPopup", a, function() {
-          return E();
-        }, true);
-      };
-      function kn(a, b, c, d, e) {
-        if (!Re())
-          return F(new t("operation-not-supported-in-this-environment"));
-        if (a.i && !e)
-          return F(a.i);
-        var f = ng(c.providerId), g = Qe(a.uid + ":::"), h = null;
-        (!Te() || Ie()) && a.s && c.isOAuthProvider && (h = ek(a.s, a.l, a.m, b, c, null, g, firebase2.SDK_VERSION || null, null, null, a.tenantId, a.u));
-        var m = ze(h, f && f.va, f && f.ua);
-        d = d().then(function() {
-          ln(a);
-          if (!e)
-            return a.I().then(function() {
-            });
-        }).then(function() {
-          return Tl(a.b, m, b, c, g, !!h, a.tenantId);
-        }).then(function() {
-          return new D(function(p, v) {
-            a.na(b, null, new t("cancelled-popup-request"), a.g || null);
-            a.f = p;
-            a.C = v;
-            a.g = g;
-            a.c = Vl(a.b, a, b, m, g);
-          });
-        }).then(function(p) {
-          m && ye(m);
-          return p ? kf(p) : null;
-        }).o(function(p) {
-          m && ye(m);
-          throw p;
-        });
-        return R(a, d, e);
-      }
-      k.Fc = function(a) {
-        var b = this;
-        return mn(this, "linkViaRedirect", a, function() {
-          return hn(b, a.providerId);
-        }, false);
-      };
-      k.Oc = function(a) {
-        return mn(this, "reauthViaRedirect", a, function() {
-          return E();
-        }, true);
-      };
-      function mn(a, b, c, d, e) {
-        if (!Re())
-          return F(new t("operation-not-supported-in-this-environment"));
-        if (a.i && !e)
-          return F(a.i);
-        var f = null, g = Qe(a.uid + ":::");
-        d = d().then(function() {
-          ln(a);
-          if (!e)
-            return a.I().then(function() {
-            });
-        }).then(function() {
-          a.ga = g;
-          return Vm(a);
-        }).then(function(h) {
-          a.ha && (h = a.ha, h = h.b.set(nn, a.w(), h.a));
-          return h;
-        }).then(function() {
-          return Ul(a.b, b, c, g, a.tenantId);
-        }).o(function(h) {
-          f = h;
-          if (a.ha)
-            return on(a.ha);
-          throw f;
-        }).then(function() {
-          if (f)
-            throw f;
-        });
-        return R(a, d, e);
-      }
-      function ln(a) {
-        if (!a.b || !a.P) {
-          if (a.b && !a.P)
-            throw new t("internal-error");
-          throw new t("auth-domain-config-required");
-        }
-      }
-      k.Lb = function(a, b, c, d) {
-        var e = this;
-        this.c && (this.c.cancel(), this.c = null);
-        var f = null;
-        c = this.I().then(function(g) {
-          return Hg(e.a, {requestUri: a, postBody: d, sessionId: b, idToken: g});
-        }).then(function(g) {
-          f = gn(e, g, "link");
-          return jn(e, g);
-        }).then(function() {
-          return f;
-        });
-        return R(this, c);
-      };
-      k.Mb = function(a, b, c, d) {
-        var e = this;
-        this.c && (this.c.cancel(), this.c = null);
-        var f = null, g = E().then(function() {
-          return Cg(Ig(e.a, {requestUri: a, sessionId: b, postBody: d, tenantId: c}), e.uid);
-        }).then(function(h) {
-          f = gn(e, h, "reauthenticate");
-          wm2(e, h);
-          e.i = null;
-          return e.reload();
-        }).then(function() {
-          return f;
-        });
-        return R(this, g, true);
-      };
-      k.vb = function(a) {
-        var b = this, c = null;
-        return R(this, this.I().then(function(d) {
-          c = d;
-          return typeof a === "undefined" || mb(a) ? {} : bg(new Sf(a));
-        }).then(function(d) {
-          return b.a.vb(c, d);
-        }).then(function(d) {
-          if (b.email != d)
-            return b.reload();
-        }).then(function() {
-        }));
-      };
-      k.Fb = function(a, b) {
-        var c = this, d = null;
-        return R(this, this.I().then(function(e) {
-          d = e;
-          return typeof b === "undefined" || mb(b) ? {} : bg(new Sf(b));
-        }).then(function(e) {
-          return c.a.Fb(d, a, e);
-        }).then(function(e) {
-          if (c.email != e)
-            return c.reload();
-        }).then(function() {
-        }));
-      };
-      function R(a, b, c) {
-        var d = pn(a, b, c);
-        a.N.push(d);
-        d.oa(function() {
-          Wa(a.N, d);
-        });
-        return d.o(function(e) {
-          var f = null;
-          e && e.code === "auth/multi-factor-auth-required" && (f = mm(e.w(), Rm(a), q(a.jc, a)));
-          throw f || e;
-        });
-      }
-      k.jc = function(a) {
-        var b = null, c = this;
-        a = Cg(E(a), c.uid).then(function(d) {
-          b = gn(c, d, "reauthenticate");
-          wm2(c, d);
-          c.i = null;
-          return c.reload();
-        }).then(function() {
-          return b;
-        });
-        return R(this, a, true);
-      };
-      function pn(a, b, c) {
-        return a.i && !c ? (b.cancel(), F(a.i)) : b.o(function(d) {
-          !d || d.code != "auth/user-disabled" && d.code != "auth/user-token-expired" || (a.i || a.dispatchEvent(new sm("userInvalidated")), a.i = d);
-          throw d;
-        });
-      }
-      k.toJSON = function() {
-        return this.w();
-      };
-      k.w = function() {
-        var a = {uid: this.uid, displayName: this.displayName, photoURL: this.photoURL, email: this.email, emailVerified: this.emailVerified, phoneNumber: this.phoneNumber, isAnonymous: this.isAnonymous, tenantId: this.tenantId, providerData: [], apiKey: this.l, appName: this.m, authDomain: this.s, stsTokenManager: this.h.w(), redirectEventId: this.ga || null};
-        this.metadata && z(a, this.metadata.w());
-        w(this.providerData, function(b) {
-          a.providerData.push(lf(b));
-        });
-        z(a, this.S.w());
-        return a;
-      };
-      function qn(a) {
-        if (!a.apiKey)
-          return null;
-        var b = {apiKey: a.apiKey, authDomain: a.authDomain, appName: a.appName, emulatorConfig: a.emulatorConfig}, c = {};
-        if (a.stsTokenManager && a.stsTokenManager.accessToken) {
-          c[Dg] = a.stsTokenManager.accessToken;
-          c.refreshToken = a.stsTokenManager.refreshToken || null;
-          var d = a.stsTokenManager.expirationTime;
-          d && (c.expiresIn = (d - Date.now()) / 1e3);
-        } else
-          return null;
-        var e = new Im(b, c, a);
-        a.providerData && w(a.providerData, function(f) {
-          f && $m(e, kf(f));
-        });
-        a.redirectEventId && (e.ga = a.redirectEventId);
-        return e;
-      }
-      function rn(a, b, c, d) {
-        var e = new Im(a, b);
-        c && (e.ha = c);
-        d && Nm(e, d);
-        return e.reload().then(function() {
-          return e;
-        });
-      }
-      function sn(a, b, c, d) {
-        var e = a.h, f = {};
-        f[Dg] = e.b && e.b.toString();
-        f.refreshToken = e.a;
-        b = new Im(b || {apiKey: a.l, authDomain: a.s, appName: a.m}, f);
-        c && (b.ha = c);
-        d && Nm(b, d);
-        cn(b, a);
-        return b;
-      }
-      ;
-      function tn(a) {
-        this.a = a;
-        this.b = Vk();
-      }
-      var nn = {name: "redirectUser", F: "session"};
-      function on(a) {
-        return Zk(a.b, nn, a.a);
-      }
-      function un(a, b) {
-        return a.b.get(nn, a.a).then(function(c) {
-          c && b && (c.authDomain = b);
-          return qn(c || {});
-        });
-      }
-      ;
-      function vn(a) {
-        this.a = a;
-        this.b = Vk();
-        this.c = null;
-        this.f = wn(this);
-        this.b.addListener(xn("local"), this.a, q(this.g, this));
-      }
-      vn.prototype.g = function() {
-        var a = this, b = xn("local");
-        yn(this, function() {
-          return E().then(function() {
-            return a.c && a.c.F != "local" ? a.b.get(b, a.a) : null;
-          }).then(function(c) {
-            if (c)
-              return zn(a, "local").then(function() {
-                a.c = b;
-              });
-          });
-        });
-      };
-      function zn(a, b) {
-        var c = [], d;
-        for (d in Rk)
-          Rk[d] !== b && c.push(Zk(a.b, xn(Rk[d]), a.a));
-        c.push(Zk(a.b, An, a.a));
-        return Ic(c);
-      }
-      function wn(a) {
-        var b = xn("local"), c = xn("session"), d = xn("none");
-        return Yk(a.b, b, a.a).then(function() {
-          return a.b.get(c, a.a);
-        }).then(function(e) {
-          return e ? c : a.b.get(d, a.a).then(function(f) {
-            return f ? d : a.b.get(b, a.a).then(function(g) {
-              return g ? b : a.b.get(An, a.a).then(function(h) {
-                return h ? xn(h) : b;
-              });
-            });
-          });
-        }).then(function(e) {
-          a.c = e;
-          return zn(a, e.F);
-        }).o(function() {
-          a.c || (a.c = b);
-        });
-      }
-      var An = {name: "persistence", F: "session"};
-      function xn(a) {
-        return {name: "authUser", F: a};
-      }
-      vn.prototype.yb = function(a) {
-        var b = null, c = this;
-        Sk(a);
-        return yn(this, function() {
-          return a != c.c.F ? c.b.get(c.c, c.a).then(function(d) {
-            b = d;
-            return zn(c, a);
-          }).then(function() {
-            c.c = xn(a);
-            if (b)
-              return c.b.set(c.c, b, c.a);
-          }) : E();
-        });
-      };
-      function Bn(a) {
-        return yn(a, function() {
-          return a.b.set(An, a.c.F, a.a);
-        });
-      }
-      function Cn(a, b) {
-        return yn(a, function() {
-          return a.b.set(a.c, b.w(), a.a);
-        });
-      }
-      function Dn(a) {
-        return yn(a, function() {
-          return Zk(a.b, a.c, a.a);
-        });
-      }
-      function En(a, b, c) {
-        return yn(a, function() {
-          return a.b.get(a.c, a.a).then(function(d) {
-            d && b && (d.authDomain = b);
-            d && c && (d.emulatorConfig = c);
-            return qn(d || {});
-          });
-        });
-      }
-      function yn(a, b) {
-        a.f = a.f.then(b, b);
-        return a.f;
-      }
-      ;
-      function Fn(a) {
-        this.l = false;
-        M(this, "settings", new em());
-        M(this, "app", a);
-        if (S(this).options && S(this).options.apiKey)
-          a = firebase2.SDK_VERSION ? Oe(firebase2.SDK_VERSION) : null, this.a = new Ii(S(this).options && S(this).options.apiKey, Ca(Da), a);
-        else
-          throw new t("invalid-api-key");
-        this.P = [];
-        this.s = [];
-        this.N = [];
-        this.Pa = firebase2.INTERNAL.createSubscribe(q(this.zc, this));
-        this.W = void 0;
-        this.ib = firebase2.INTERNAL.createSubscribe(q(this.Ac, this));
-        Gn(this, null);
-        this.i = new vn(S(this).options.apiKey + ":" + S(this).name);
-        this.D = new tn(S(this).options.apiKey + ":" + S(this).name);
-        this.$ = T(this, Hn(this));
-        this.h = T(this, In(this));
-        this.ba = false;
-        this.ja = q(this.Zc, this);
-        this.Ba = q(this.da, this);
-        this.qa = q(this.mc, this);
-        this.za = q(this.wc, this);
-        this.Aa = q(this.xc, this);
-        this.b = null;
-        Jn(this);
-        this.INTERNAL = {};
-        this.INTERNAL["delete"] = q(this.delete, this);
-        this.INTERNAL.logFramework = q(this.Gc, this);
-        this.u = 0;
-        H.call(this);
-        Kn(this);
-        this.J = [];
-        this.R = null;
-      }
-      r(Fn, H);
-      function Ln(a) {
-        G.call(this, "languageCodeChanged");
-        this.h = a;
-      }
-      r(Ln, G);
-      function Mn(a) {
-        G.call(this, "emulatorConfigChanged");
-        this.c = a;
-      }
-      r(Mn, G);
-      function Nn(a) {
-        G.call(this, "frameworkChanged");
-        this.f = a;
-      }
-      r(Nn, G);
-      k = Fn.prototype;
-      k.yb = function(a) {
-        a = this.i.yb(a);
-        return T(this, a);
-      };
-      k.xa = function(a) {
-        this.aa === a || this.l || (this.aa = a, Oi(this.a, this.aa), this.dispatchEvent(new Ln(this.la())));
-      };
-      k.la = function() {
-        return this.aa;
-      };
-      k.fd = function() {
-        var a = l.navigator;
-        this.xa(a ? a.languages && a.languages[0] || a.language || a.userLanguage || null : null);
-      };
-      k.gd = function(a, b) {
-        if (!this.R) {
-          if (!/^https?:\/\//.test(a))
-            throw new t("argument-error", "Emulator URL must start with a valid scheme (http:// or https://).");
-          b = b ? !!b.disableWarnings : false;
-          On(b);
-          this.R = {url: a, ec: b};
-          this.settings.jb = true;
-          Pi(this.a, this.R);
-          this.dispatchEvent(new Mn(this.R));
-        }
-      };
-      function On(a) {
-        typeof console !== "undefined" && typeof console.info === "function" && console.info("WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.");
-        l.document && !a && Ee().then(function() {
-          var b = l.document.createElement("div");
-          b.innerText = "Running in emulator mode. Do not use with production credentials.";
-          b.style.position = "fixed";
-          b.style.width = "100%";
-          b.style.backgroundColor = "#ffffff";
-          b.style.border = ".1em solid #000000";
-          b.style.color = "#b50000";
-          b.style.bottom = "0px";
-          b.style.left = "0px";
-          b.style.margin = "0px";
-          b.style.zIndex = 1e4;
-          b.style.textAlign = "center";
-          b.classList.add("firebase-emulator-warning");
-          l.document.body.appendChild(b);
-        });
-      }
-      k.Gc = function(a) {
-        this.J.push(a);
-        Ri(this.a, firebase2.SDK_VERSION ? Oe(firebase2.SDK_VERSION, this.J) : null);
-        this.dispatchEvent(new Nn(this.J));
-      };
-      k.Ga = function() {
-        return Za(this.J);
-      };
-      k.zb = function(a) {
-        this.S === a || this.l || (this.S = a, this.a.b = this.S);
-      };
-      k.T = function() {
-        return this.S;
-      };
-      function Kn(a) {
-        Object.defineProperty(a, "lc", {get: function() {
-          return this.la();
-        }, set: function(b) {
-          this.xa(b);
-        }, enumerable: false});
-        a.aa = null;
-        Object.defineProperty(a, "ti", {get: function() {
-          return this.T();
-        }, set: function(b) {
-          this.zb(b);
-        }, enumerable: false});
-        a.S = null;
-        Object.defineProperty(a, "emulatorConfig", {get: function() {
-          if (this.R) {
-            var b = J(this.R.url);
-            b = kf({protocol: b.c, host: b.a, port: b.g, options: kf({disableWarnings: this.R.ec})});
-          } else
-            b = null;
-          return b;
-        }, enumerable: false});
-      }
-      k.toJSON = function() {
-        return {apiKey: S(this).options.apiKey, authDomain: S(this).options.authDomain, appName: S(this).name, currentUser: U(this) && U(this).w()};
-      };
-      function Pn(a) {
-        return a.Oa || F(new t("auth-domain-config-required"));
-      }
-      function Jn(a) {
-        var b = S(a).options.authDomain, c = S(a).options.apiKey;
-        b && Re() && (a.Oa = a.$.then(function() {
-          if (!a.l) {
-            a.b = Xl(b, c, S(a).name, a.R);
-            Pl(a.b, a);
-            U(a) && Wm(U(a));
-            if (a.m) {
-              Wm(a.m);
-              var d = a.m;
-              d.xa(a.la());
-              Om(d, a);
-              d = a.m;
-              Nm(d, a.J);
-              Qm(d, a);
-              d = a.m;
-              Mm(d, a.R);
-              Pm(d, a);
-              a.m = null;
-            }
-            return a.b;
-          }
-        }));
-      }
-      k.Gb = function(a, b) {
-        switch (a) {
-          case "unknown":
-          case "signInViaRedirect":
-            return true;
-          case "signInViaPopup":
-            return this.g == b && !!this.f;
-          default:
-            return false;
-        }
-      };
-      k.na = function(a, b, c, d) {
-        a == "signInViaPopup" && this.g == d && (c && this.C ? this.C(c) : b && !c && this.f && this.f(b), this.c && (this.c.cancel(), this.c = null), delete this.f, delete this.C);
-      };
-      k.Fa = function(a, b) {
-        return a == "signInViaRedirect" || a == "signInViaPopup" && this.g == b && this.f ? q(this.ic, this) : null;
-      };
-      k.ic = function(a, b, c, d) {
-        var e = this, f = {requestUri: a, postBody: d, sessionId: b, tenantId: c};
-        this.c && (this.c.cancel(), this.c = null);
-        return e.$.then(function() {
-          return Qn(e, Fg(e.a, f));
-        });
-      };
-      k.Xc = function(a) {
-        if (!Re())
-          return F(new t("operation-not-supported-in-this-environment"));
-        var b = this, c = ng(a.providerId), d = Qe(), e = null;
-        (!Te() || Ie()) && S(this).options.authDomain && a.isOAuthProvider && (e = ek(S(this).options.authDomain, S(this).options.apiKey, S(this).name, "signInViaPopup", a, null, d, firebase2.SDK_VERSION || null, null, null, this.T(), this.R));
-        var f = ze(e, c && c.va, c && c.ua);
-        c = Pn(this).then(function(g) {
-          return Tl(g, f, "signInViaPopup", a, d, !!e, b.T());
-        }).then(function() {
-          return new D(function(g, h) {
-            b.na("signInViaPopup", null, new t("cancelled-popup-request"), b.g);
-            b.f = g;
-            b.C = h;
-            b.g = d;
-            b.c = Vl(b.b, b, "signInViaPopup", f, d);
-          });
-        }).then(function(g) {
-          f && ye(f);
-          return g ? kf(g) : null;
-        }).o(function(g) {
-          f && ye(f);
-          throw g;
-        });
-        return T(this, c);
-      };
-      k.Yc = function(a) {
-        if (!Re())
-          return F(new t("operation-not-supported-in-this-environment"));
-        var b = this, c = Pn(this).then(function() {
-          return Bn(b.i);
-        }).then(function() {
-          return Ul(b.b, "signInViaRedirect", a, void 0, b.T());
-        });
-        return T(this, c);
-      };
-      function Rn(a) {
-        if (!Re())
-          return F(new t("operation-not-supported-in-this-environment"));
-        var b = Pn(a).then(function() {
-          return a.b.ra();
-        }).then(function(c) {
-          return c ? kf(c) : null;
-        });
-        return T(a, b);
-      }
-      k.ra = function() {
-        var a = this;
-        return Rn(this).then(function(b) {
-          a.b && $l(a.b.b);
-          return b;
-        }).o(function(b) {
-          a.b && $l(a.b.b);
-          throw b;
-        });
-      };
-      k.dd = function(a) {
-        if (!a)
-          return F(new t("null-user"));
-        if (this.S != a.tenantId)
-          return F(new t("tenant-id-mismatch"));
-        var b = this, c = {};
-        c.apiKey = S(this).options.apiKey;
-        c.authDomain = S(this).options.authDomain;
-        c.appName = S(this).name;
-        var d = sn(a, c, b.D, b.Ga());
-        return T(this, this.h.then(function() {
-          if (S(b).options.apiKey != a.l)
-            return d.reload();
-        }).then(function() {
-          if (U(b) && a.uid == U(b).uid)
-            return cn(U(b), a), b.da(a);
-          Gn(b, d);
-          Wm(d);
-          return b.da(d);
-        }).then(function() {
-          Sn(b);
-        }));
-      };
-      function Tn(a, b) {
-        var c = {};
-        c.apiKey = S(a).options.apiKey;
-        c.authDomain = S(a).options.authDomain;
-        c.appName = S(a).name;
-        a.R && (c.emulatorConfig = a.R);
-        return a.$.then(function() {
-          return rn(c, b, a.D, a.Ga());
-        }).then(function(d) {
-          if (U(a) && d.uid == U(a).uid)
-            return cn(U(a), d), a.da(d);
-          Gn(a, d);
-          Wm(d);
-          return a.da(d);
-        }).then(function() {
-          Sn(a);
-        });
-      }
-      function Gn(a, b) {
-        U(a) && (Um(U(a), a.Ba), xd(U(a), "tokenChanged", a.qa), xd(U(a), "userDeleted", a.za), xd(U(a), "userInvalidated", a.Aa), Tm(U(a)));
-        b && (b.W.push(a.Ba), nd(b, "tokenChanged", a.qa), nd(b, "userDeleted", a.za), nd(b, "userInvalidated", a.Aa), 0 < a.u && Sm(b));
-        M(a, "currentUser", b);
-        b && (b.xa(a.la()), Om(b, a), Nm(b, a.J), Qm(b, a), Mm(b, a.R), Pm(b, a));
-      }
-      k.Bb = function() {
-        var a = this, b = this.h.then(function() {
-          a.b && $l(a.b.b);
-          if (!U(a))
-            return E();
-          Gn(a, null);
-          return Dn(a.i).then(function() {
-            Sn(a);
-          });
-        });
-        return T(this, b);
-      };
-      function Un(a) {
-        var b = un(a.D, S(a).options.authDomain).then(function(c) {
-          if (a.m = c)
-            c.ha = a.D;
-          return on(a.D);
-        });
-        return T(a, b);
-      }
-      function Hn(a) {
-        var b = S(a).options.authDomain, c = Un(a).then(function() {
-          return En(a.i, b, a.R);
-        }).then(function(d) {
-          return d ? (d.ha = a.D, a.m && (a.m.ga || null) == (d.ga || null) ? d : d.reload().then(function() {
-            return Cn(a.i, d).then(function() {
-              return d;
-            });
-          }).o(function(e) {
-            return e.code == "auth/network-request-failed" ? d : Dn(a.i);
-          })) : null;
-        }).then(function(d) {
-          Gn(a, d || null);
-        });
-        return T(a, c);
-      }
-      function In(a) {
-        return a.$.then(function() {
-          return Rn(a);
-        }).o(function() {
-        }).then(function() {
-          if (!a.l)
-            return a.ja();
-        }).o(function() {
-        }).then(function() {
-          if (!a.l) {
-            a.ba = true;
-            var b = a.i;
-            b.b.addListener(xn("local"), b.a, a.ja);
-          }
-        });
-      }
-      k.Zc = function() {
-        var a = this;
-        return En(this.i, S(this).options.authDomain).then(function(b) {
-          if (!a.l) {
-            var c;
-            if (c = U(a) && b) {
-              c = U(a).uid;
-              var d = b.uid;
-              c = c === void 0 || c === null || c === "" || d === void 0 || d === null || d === "" ? false : c == d;
-            }
-            if (c)
-              return cn(U(a), b), U(a).I();
-            if (U(a) || b)
-              Gn(a, b), b && (Wm(b), b.ha = a.D), a.b && Pl(a.b, a), Sn(a);
-          }
-        });
-      };
-      k.da = function(a) {
-        return Cn(this.i, a);
-      };
-      k.mc = function() {
-        Sn(this);
-        this.da(U(this));
-      };
-      k.wc = function() {
-        this.Bb();
-      };
-      k.xc = function() {
-        this.Bb();
-      };
-      function Qn(a, b) {
-        var c = null, d = null;
-        return T(a, b.then(function(e) {
-          c = qh(e);
-          d = og(e);
-          return Tn(a, e);
-        }, function(e) {
-          var f = null;
-          e && e.code === "auth/multi-factor-auth-required" && (f = mm(e.w(), a, q(a.kc, a)));
-          throw f || e;
-        }).then(function() {
-          return kf({user: U(a), credential: c, additionalUserInfo: d, operationType: "signIn"});
-        }));
-      }
-      k.kc = function(a) {
-        var b = this;
-        return this.h.then(function() {
-          return Qn(b, E(a));
-        });
-      };
-      k.zc = function(a) {
-        var b = this;
-        this.addAuthTokenListener(function() {
-          a.next(U(b));
-        });
-      };
-      k.Ac = function(a) {
-        var b = this;
-        Vn(this, function() {
-          a.next(U(b));
-        });
-      };
-      k.Ic = function(a, b, c) {
-        var d = this;
-        this.ba && Promise.resolve().then(function() {
-          typeof a === "function" ? a(U(d)) : typeof a.next === "function" && a.next(U(d));
-        });
-        return this.Pa(a, b, c);
-      };
-      k.Hc = function(a, b, c) {
-        var d = this;
-        this.ba && Promise.resolve().then(function() {
-          d.W = d.getUid();
-          typeof a === "function" ? a(U(d)) : typeof a.next === "function" && a.next(U(d));
-        });
-        return this.ib(a, b, c);
-      };
-      k.nc = function(a) {
-        var b = this, c = this.h.then(function() {
-          return U(b) ? U(b).I(a).then(function(d) {
-            return {accessToken: d};
-          }) : null;
-        });
-        return T(this, c);
-      };
-      k.Tc = function(a) {
-        var b = this;
-        return this.h.then(function() {
-          return Qn(b, O(b.a, Kj, {token: a}));
-        }).then(function(c) {
-          var d = c.user;
-          bn(d, "isAnonymous", false);
-          b.da(d);
-          return c;
-        });
-      };
-      k.Uc = function(a, b) {
-        var c = this;
-        return this.h.then(function() {
-          return Qn(c, O(c.a, ah, {email: a, password: b}));
-        });
-      };
-      k.dc = function(a, b) {
-        var c = this;
-        return this.h.then(function() {
-          return Qn(c, O(c.a, Ej, {email: a, password: b}));
-        });
-      };
-      k.ab = function(a) {
-        var b = this;
-        return this.h.then(function() {
-          return Qn(b, a.ka(b.a));
-        });
-      };
-      k.Sc = function(a) {
-        gf("firebase.auth.Auth.prototype.signInAndRetrieveDataWithCredential is deprecated. Please use firebase.auth.Auth.prototype.signInWithCredential instead.");
-        return this.ab(a);
-      };
-      k.Ab = function() {
-        var a = this;
-        return this.h.then(function() {
-          var b = U(a);
-          if (b && b.isAnonymous) {
-            var c = kf({providerId: null, isNewUser: false});
-            return kf({user: b, credential: null, additionalUserInfo: c, operationType: "signIn"});
-          }
-          return Qn(a, a.a.Ab()).then(function(d) {
-            var e = d.user;
-            bn(e, "isAnonymous", true);
-            a.da(e);
-            return d;
-          });
-        });
-      };
-      function S(a) {
-        return a.app;
-      }
-      function U(a) {
-        return a.currentUser;
-      }
-      k.getUid = function() {
-        return U(this) && U(this).uid || null;
-      };
-      function Wn(a) {
-        return U(a) && U(a)._lat || null;
-      }
-      function Sn(a) {
-        if (a.ba) {
-          for (var b = 0; b < a.s.length; b++)
-            if (a.s[b])
-              a.s[b](Wn(a));
-          if (a.W !== a.getUid() && a.N.length) {
-            for (a.W = a.getUid(), b = 0; b < a.N.length; b++)
-              if (a.N[b])
-                a.N[b](Wn(a));
-          }
-        }
-      }
-      k.cc = function(a) {
-        this.addAuthTokenListener(a);
-        this.u++;
-        0 < this.u && U(this) && Sm(U(this));
-      };
-      k.Pc = function(a) {
-        var b = this;
-        w(this.s, function(c) {
-          c == a && b.u--;
-        });
-        0 > this.u && (this.u = 0);
-        this.u == 0 && U(this) && Tm(U(this));
-        this.removeAuthTokenListener(a);
-      };
-      k.addAuthTokenListener = function(a) {
-        var b = this;
-        this.s.push(a);
-        T(this, this.h.then(function() {
-          b.l || Va(b.s, a) && a(Wn(b));
-        }));
-      };
-      k.removeAuthTokenListener = function(a) {
-        Xa(this.s, function(b) {
-          return b == a;
-        });
-      };
-      function Vn(a, b) {
-        a.N.push(b);
-        T(a, a.h.then(function() {
-          !a.l && Va(a.N, b) && a.W !== a.getUid() && (a.W = a.getUid(), b(Wn(a)));
-        }));
-      }
-      k.delete = function() {
-        this.l = true;
-        for (var a = 0; a < this.P.length; a++)
-          this.P[a].cancel("app-deleted");
-        this.P = [];
-        this.i && (a = this.i, a.b.removeListener(xn("local"), a.a, this.ja));
-        this.b && (Ql(this.b, this), $l(this.b.b));
-        return Promise.resolve();
-      };
-      function T(a, b) {
-        a.P.push(b);
-        b.oa(function() {
-          Wa(a.P, b);
-        });
-        return b;
-      }
-      k.hc = function(a) {
-        return T(this, aj(this.a, a));
-      };
-      k.Bc = function(a) {
-        return !!fh(a);
-      };
-      k.xb = function(a, b) {
-        var c = this;
-        return T(this, E().then(function() {
-          var d = new Sf(b);
-          if (!d.c)
-            throw new t("argument-error", $f + " must be true when sending sign in link to email");
-          return bg(d);
-        }).then(function(d) {
-          return c.a.xb(a, d);
-        }).then(function() {
-        }));
-      };
-      k.jd = function(a) {
-        return this.Sa(a).then(function(b) {
-          return b.data.email;
-        });
-      };
-      k.ob = function(a, b) {
-        return T(this, this.a.ob(a, b).then(function() {
-        }));
-      };
-      k.Sa = function(a) {
-        return T(this, this.a.Sa(a).then(function(b) {
-          return new vf(b);
-        }));
-      };
-      k.kb = function(a) {
-        return T(this, this.a.kb(a).then(function() {
-        }));
-      };
-      k.wb = function(a, b) {
-        var c = this;
-        return T(this, E().then(function() {
-          return typeof b === "undefined" || mb(b) ? {} : bg(new Sf(b));
-        }).then(function(d) {
-          return c.a.wb(a, d);
-        }).then(function() {
-        }));
-      };
-      k.Wc = function(a, b) {
-        return T(this, gm(this, a, b, q(this.ab, this)));
-      };
-      k.Vc = function(a, b) {
-        var c = this;
-        return T(this, E().then(function() {
-          var d = b || re(), e = eh(a, d);
-          d = fh(d);
-          if (!d)
-            throw new t("argument-error", "Invalid email link!");
-          if (d.tenantId !== c.T())
-            throw new t("tenant-id-mismatch");
-          return c.ab(e);
-        }));
-      };
-      function Xn() {
-      }
-      Xn.prototype.render = function() {
-      };
-      Xn.prototype.reset = function() {
-      };
-      Xn.prototype.getResponse = function() {
-      };
-      Xn.prototype.execute = function() {
-      };
-      function Yn() {
-        this.a = {};
-        this.b = 1e12;
-      }
-      var Zn = null;
-      Yn.prototype.render = function(a, b) {
-        this.a[this.b.toString()] = new $n(a, b);
-        return this.b++;
-      };
-      Yn.prototype.reset = function(a) {
-        var b = ao(this, a);
-        a = bo(a);
-        b && a && (b.delete(), delete this.a[a]);
-      };
-      Yn.prototype.getResponse = function(a) {
-        return (a = ao(this, a)) ? a.getResponse() : null;
-      };
-      Yn.prototype.execute = function(a) {
-        (a = ao(this, a)) && a.execute();
-      };
-      function ao(a, b) {
-        return (b = bo(b)) ? a.a[b] || null : null;
-      }
-      function bo(a) {
-        return (a = typeof a === "undefined" ? 1e12 : a) ? a.toString() : null;
-      }
-      function $n(a, b) {
-        this.g = false;
-        this.c = b;
-        this.a = this.b = null;
-        this.h = this.c.size !== "invisible";
-        this.f = kc(a);
-        var c = this;
-        this.i = function() {
-          c.execute();
-        };
-        this.h ? this.execute() : nd(this.f, "click", this.i);
-      }
-      $n.prototype.getResponse = function() {
-        co(this);
-        return this.b;
-      };
-      $n.prototype.execute = function() {
-        co(this);
-        var a = this;
-        this.a || (this.a = setTimeout(function() {
-          a.b = Me();
-          var b = a.c.callback, c = a.c["expired-callback"];
-          if (b)
-            try {
-              b(a.b);
-            } catch (d) {
-            }
-          a.a = setTimeout(function() {
-            a.a = null;
-            a.b = null;
-            if (c)
-              try {
-                c();
-              } catch (d) {
-              }
-            a.h && a.execute();
-          }, 6e4);
-        }, 500));
-      };
-      $n.prototype.delete = function() {
-        co(this);
-        this.g = true;
-        clearTimeout(this.a);
-        this.a = null;
-        xd(this.f, "click", this.i);
-      };
-      function co(a) {
-        if (a.g)
-          throw Error("reCAPTCHA mock was already deleted!");
-      }
-      ;
-      function eo() {
-      }
-      M(eo, "FACTOR_ID", "phone");
-      function fo() {
-      }
-      fo.prototype.g = function() {
-        Zn || (Zn = new Yn());
-        return E(Zn);
-      };
-      fo.prototype.c = function() {
-      };
-      var go = null;
-      function ho() {
-        this.b = l.grecaptcha ? Infinity : 0;
-        this.f = null;
-        this.a = "__rcb" + Math.floor(1e6 * Math.random()).toString();
-      }
-      var io = new qb(rb, "https://www.google.com/recaptcha/api.js?onload=%{onload}&render=explicit&hl=%{hl}"), jo = new Ze(3e4, 6e4);
-      ho.prototype.g = function(a) {
-        var b = this;
-        return new D(function(c, d) {
-          var e = setTimeout(function() {
-            d(new t("network-request-failed"));
-          }, jo.get());
-          if (!l.grecaptcha || a !== b.f && !b.b) {
-            l[b.a] = function() {
-              if (l.grecaptcha) {
-                b.f = a;
-                var g = l.grecaptcha.render;
-                l.grecaptcha.render = function(h, m) {
-                  h = g(h, m);
-                  b.b++;
-                  return h;
-                };
-                clearTimeout(e);
-                c(l.grecaptcha);
-              } else
-                clearTimeout(e), d(new t("internal-error"));
-              delete l[b.a];
-            };
-            var f = zb(io, {onload: b.a, hl: a || ""});
-            E(Bi(f)).o(function() {
-              clearTimeout(e);
-              d(new t("internal-error", "Unable to load external reCAPTCHA dependencies!"));
-            });
-          } else
-            clearTimeout(e), c(l.grecaptcha);
-        });
-      };
-      ho.prototype.c = function() {
-        this.b--;
-      };
-      var ko = null;
-      function lo(a, b, c, d, e, f, g) {
-        M(this, "type", "recaptcha");
-        this.c = this.f = null;
-        this.J = false;
-        this.v = b;
-        this.g = null;
-        g ? (go || (go = new fo()), g = go) : (ko || (ko = new ho()), g = ko);
-        this.m = g;
-        this.a = c || {theme: "light", type: "image"};
-        this.h = [];
-        if (this.a[mo])
-          throw new t("argument-error", "sitekey should not be provided for reCAPTCHA as one is automatically provisioned for the current project.");
-        this.i = this.a[no] === "invisible";
-        if (!l.document)
-          throw new t("operation-not-supported-in-this-environment", "RecaptchaVerifier is only supported in a browser HTTP/HTTPS environment with DOM support.");
-        if (!kc(b) || !this.i && kc(b).hasChildNodes())
-          throw new t("argument-error", "reCAPTCHA container is either not found or already contains inner elements!");
-        this.s = new Ii(a, f || null, e || null);
-        this.u = d || function() {
-          return null;
-        };
-        var h = this;
-        this.l = [];
-        var m = this.a[oo];
-        this.a[oo] = function(v) {
-          po(h, v);
-          if (typeof m === "function")
-            m(v);
-          else if (typeof m === "string") {
-            var B = L(m, l);
-            typeof B === "function" && B(v);
-          }
-        };
-        var p = this.a[qo];
-        this.a[qo] = function() {
-          po(h, null);
-          if (typeof p === "function")
-            p();
-          else if (typeof p === "string") {
-            var v = L(p, l);
-            typeof v === "function" && v();
-          }
-        };
-      }
-      var oo = "callback", qo = "expired-callback", mo = "sitekey", no = "size";
-      function po(a, b) {
-        for (var c = 0; c < a.l.length; c++)
-          try {
-            a.l[c](b);
-          } catch (d) {
-          }
-      }
-      function ro(a, b) {
-        Xa(a.l, function(c) {
-          return c == b;
-        });
-      }
-      function so(a, b) {
-        a.h.push(b);
-        b.oa(function() {
-          Wa(a.h, b);
-        });
-        return b;
-      }
-      k = lo.prototype;
-      k.Ia = function() {
-        var a = this;
-        return this.f ? this.f : this.f = so(this, E().then(function() {
-          if (Se() && !Je())
-            return Ee();
-          throw new t("operation-not-supported-in-this-environment", "RecaptchaVerifier is only supported in a browser HTTP/HTTPS environment.");
-        }).then(function() {
-          return a.m.g(a.u());
-        }).then(function(b) {
-          a.g = b;
-          return O(a.s, Jj, {});
-        }).then(function(b) {
-          a.a[mo] = b.recaptchaSiteKey;
-        }).o(function(b) {
-          a.f = null;
-          throw b;
-        }));
-      };
-      k.render = function() {
-        to(this);
-        var a = this;
-        return so(this, this.Ia().then(function() {
-          if (a.c === null) {
-            var b = a.v;
-            if (!a.i) {
-              var c = kc(b);
-              b = nc("DIV");
-              c.appendChild(b);
-            }
-            a.c = a.g.render(b, a.a);
-          }
-          return a.c;
-        }));
-      };
-      k.verify = function() {
-        to(this);
-        var a = this;
-        return so(this, this.render().then(function(b) {
-          return new D(function(c) {
-            var d = a.g.getResponse(b);
-            if (d)
-              c(d);
-            else {
-              var e = function(f) {
-                f && (ro(a, e), c(f));
-              };
-              a.l.push(e);
-              a.i && a.g.execute(a.c);
-            }
-          });
-        }));
-      };
-      k.reset = function() {
-        to(this);
-        this.c !== null && this.g.reset(this.c);
-      };
-      function to(a) {
-        if (a.J)
-          throw new t("internal-error", "RecaptchaVerifier instance has been destroyed.");
-      }
-      k.clear = function() {
-        to(this);
-        this.J = true;
-        this.m.c();
-        for (var a = 0; a < this.h.length; a++)
-          this.h[a].cancel("RecaptchaVerifier instance has been destroyed.");
-        if (!this.i) {
-          a = kc(this.v);
-          for (var b; b = a.firstChild; )
-            a.removeChild(b);
-        }
-      };
-      function uo(a, b, c) {
-        var d = false;
-        try {
-          this.b = c || firebase2.app();
-        } catch (g) {
-          throw new t("argument-error", "No firebase.app.App instance is currently initialized.");
-        }
-        if (this.b.options && this.b.options.apiKey)
-          c = this.b.options.apiKey;
-        else
-          throw new t("invalid-api-key");
-        var e = this, f = null;
-        try {
-          f = this.b.auth().Ga();
-        } catch (g) {
-        }
-        try {
-          d = this.b.auth().settings.appVerificationDisabledForTesting;
-        } catch (g) {
-        }
-        f = firebase2.SDK_VERSION ? Oe(firebase2.SDK_VERSION, f) : null;
-        lo.call(this, c, a, b, function() {
-          try {
-            var g = e.b.auth().la();
-          } catch (h) {
-            g = null;
-          }
-          return g;
-        }, f, Ca(Da), d);
-      }
-      r(uo, lo);
-      function vo(a, b, c, d) {
-        a: {
-          c = Array.prototype.slice.call(c);
-          var e = 0;
-          for (var f = false, g = 0; g < b.length; g++)
-            if (b[g].optional)
-              f = true;
-            else {
-              if (f)
-                throw new t("internal-error", "Argument validator encountered a required argument after an optional argument.");
-              e++;
-            }
-          f = b.length;
-          if (c.length < e || f < c.length)
-            d = "Expected " + (e == f ? e == 1 ? "1 argument" : e + " arguments" : e + "-" + f + " arguments") + " but got " + c.length + ".";
-          else {
-            for (e = 0; e < c.length; e++)
-              if (f = b[e].optional && c[e] === void 0, !b[e].M(c[e]) && !f) {
-                b = b[e];
-                if (0 > e || e >= wo.length)
-                  throw new t("internal-error", "Argument validator received an unsupported number of arguments.");
-                c = wo[e];
-                d = (d ? "" : c + " argument ") + (b.name ? '"' + b.name + '" ' : "") + "must be " + b.K + ".";
-                break a;
-              }
-            d = null;
-          }
-        }
-        if (d)
-          throw new t("argument-error", a + " failed: " + d);
-      }
-      var wo = "First Second Third Fourth Fifth Sixth Seventh Eighth Ninth".split(" ");
-      function V(a, b) {
-        return {name: a || "", K: "a valid string", optional: !!b, M: function(c) {
-          return typeof c === "string";
-        }};
-      }
-      function xo(a, b) {
-        return {name: a || "", K: "a boolean", optional: !!b, M: function(c) {
-          return typeof c === "boolean";
-        }};
-      }
-      function W(a, b) {
-        return {name: a || "", K: "a valid object", optional: !!b, M: n};
-      }
-      function yo(a, b) {
-        return {name: a || "", K: "a function", optional: !!b, M: function(c) {
-          return typeof c === "function";
-        }};
-      }
-      function zo(a, b) {
-        return {name: a || "", K: "null", optional: !!b, M: function(c) {
-          return c === null;
-        }};
-      }
-      function Ao() {
-        return {name: "", K: "an HTML element", optional: false, M: function(a) {
-          return !!(a && a instanceof Element);
-        }};
-      }
-      function Bo() {
-        return {name: "auth", K: "an instance of Firebase Auth", optional: true, M: function(a) {
-          return !!(a && a instanceof Fn);
-        }};
-      }
-      function Co() {
-        return {name: "app", K: "an instance of Firebase App", optional: true, M: function(a) {
-          return !!(a && a instanceof firebase2.app.App);
-        }};
-      }
-      function Do(a) {
-        return {name: a ? a + "Credential" : "credential", K: a ? "a valid " + a + " credential" : "a valid credential", optional: false, M: function(b) {
-          if (!b)
-            return false;
-          var c = !a || b.providerId === a;
-          return !(!b.ka || !c);
-        }};
-      }
-      function Eo() {
-        return {name: "multiFactorAssertion", K: "a valid multiFactorAssertion", optional: false, M: function(a) {
-          return a ? !!a.tb : false;
-        }};
-      }
-      function Fo() {
-        return {name: "authProvider", K: "a valid Auth provider", optional: false, M: function(a) {
-          return !!(a && a.providerId && a.hasOwnProperty && a.hasOwnProperty("isOAuthProvider"));
-        }};
-      }
-      function Go(a, b) {
-        return n(a) && typeof a.type === "string" && a.type === b && typeof a.Ha === "function";
-      }
-      function Ho(a) {
-        return n(a) && typeof a.uid === "string";
-      }
-      function Io() {
-        return {name: "applicationVerifier", K: "an implementation of firebase.auth.ApplicationVerifier", optional: false, M: function(a) {
-          return !(!a || typeof a.type !== "string" || typeof a.verify !== "function");
-        }};
-      }
-      function X(a, b, c, d) {
-        return {name: c || "", K: a.K + " or " + b.K, optional: !!d, M: function(e) {
-          return a.M(e) || b.M(e);
-        }};
-      }
-      ;
-      function Y(a, b) {
-        for (var c in b) {
-          var d = b[c].name;
-          a[d] = Jo(d, a[c], b[c].j);
-        }
-      }
-      function Ko(a, b) {
-        for (var c in b) {
-          var d = b[c].name;
-          d !== c && Object.defineProperty(a, d, {get: ua(function(e) {
-            return this[e];
-          }, c), set: ua(function(e, f, g, h) {
-            vo(e, [g], [h], true);
-            this[f] = h;
-          }, d, c, b[c].lb), enumerable: true});
-        }
-      }
-      function Z(a, b, c, d) {
-        a[b] = Jo(b, c, d);
-      }
-      function Jo(a, b, c) {
-        function d() {
-          var g = Array.prototype.slice.call(arguments);
-          vo(e, c, g);
-          return b.apply(this, g);
-        }
-        if (!c)
-          return b;
-        var e = Lo(a), f;
-        for (f in b)
-          d[f] = b[f];
-        for (f in b.prototype)
-          d.prototype[f] = b.prototype[f];
-        return d;
-      }
-      function Lo(a) {
-        a = a.split(".");
-        return a[a.length - 1];
-      }
-      ;
-      Y(Fn.prototype, {
-        kb: {name: "applyActionCode", j: [V("code")]},
-        Sa: {name: "checkActionCode", j: [V("code")]},
-        ob: {name: "confirmPasswordReset", j: [V("code"), V("newPassword")]},
-        dc: {name: "createUserWithEmailAndPassword", j: [V("email"), V("password")]},
-        hc: {name: "fetchSignInMethodsForEmail", j: [V("email")]},
-        ra: {name: "getRedirectResult", j: []},
-        Bc: {name: "isSignInWithEmailLink", j: [V("emailLink")]},
-        Hc: {name: "onAuthStateChanged", j: [X(W(), yo(), "nextOrObserver"), yo("opt_error", true), yo("opt_completed", true)]},
-        Ic: {
-          name: "onIdTokenChanged",
-          j: [X(W(), yo(), "nextOrObserver"), yo("opt_error", true), yo("opt_completed", true)]
-        },
-        wb: {name: "sendPasswordResetEmail", j: [V("email"), X(W("opt_actionCodeSettings", true), zo(null, true), "opt_actionCodeSettings", true)]},
-        xb: {name: "sendSignInLinkToEmail", j: [V("email"), W("actionCodeSettings")]},
-        yb: {name: "setPersistence", j: [V("persistence")]},
-        Sc: {name: "signInAndRetrieveDataWithCredential", j: [Do()]},
-        Ab: {name: "signInAnonymously", j: []},
-        ab: {name: "signInWithCredential", j: [Do()]},
-        Tc: {name: "signInWithCustomToken", j: [V("token")]},
-        Uc: {name: "signInWithEmailAndPassword", j: [V("email"), V("password")]},
-        Vc: {name: "signInWithEmailLink", j: [V("email"), V("emailLink", true)]},
-        Wc: {name: "signInWithPhoneNumber", j: [V("phoneNumber"), Io()]},
-        Xc: {name: "signInWithPopup", j: [Fo()]},
-        Yc: {name: "signInWithRedirect", j: [Fo()]},
-        dd: {name: "updateCurrentUser", j: [X(function(a) {
-          return {name: "user", K: "an instance of Firebase User", optional: !!a, M: function(b) {
-            return !!(b && b instanceof Im);
-          }};
-        }(), zo(), "user")]},
-        Bb: {name: "signOut", j: []},
-        toJSON: {name: "toJSON", j: [V(null, true)]},
-        fd: {name: "useDeviceLanguage", j: []},
-        gd: {name: "useEmulator", j: [V("url"), W("options", true)]},
-        jd: {name: "verifyPasswordResetCode", j: [V("code")]}
-      });
-      Ko(Fn.prototype, {lc: {name: "languageCode", lb: X(V(), zo(), "languageCode")}, ti: {name: "tenantId", lb: X(V(), zo(), "tenantId")}});
-      Fn.Persistence = Rk;
-      Fn.Persistence.LOCAL = "local";
-      Fn.Persistence.SESSION = "session";
-      Fn.Persistence.NONE = "none";
-      Y(Im.prototype, {
-        "delete": {name: "delete", j: []},
-        oc: {name: "getIdTokenResult", j: [xo("opt_forceRefresh", true)]},
-        I: {name: "getIdToken", j: [xo("opt_forceRefresh", true)]},
-        Cc: {name: "linkAndRetrieveDataWithCredential", j: [Do()]},
-        rb: {name: "linkWithCredential", j: [Do()]},
-        Dc: {name: "linkWithPhoneNumber", j: [V("phoneNumber"), Io()]},
-        Ec: {name: "linkWithPopup", j: [Fo()]},
-        Fc: {name: "linkWithRedirect", j: [Fo()]},
-        Lc: {name: "reauthenticateAndRetrieveDataWithCredential", j: [Do()]},
-        ub: {name: "reauthenticateWithCredential", j: [Do()]},
-        Mc: {
-          name: "reauthenticateWithPhoneNumber",
-          j: [V("phoneNumber"), Io()]
-        },
-        Nc: {name: "reauthenticateWithPopup", j: [Fo()]},
-        Oc: {name: "reauthenticateWithRedirect", j: [Fo()]},
-        reload: {name: "reload", j: []},
-        vb: {name: "sendEmailVerification", j: [X(W("opt_actionCodeSettings", true), zo(null, true), "opt_actionCodeSettings", true)]},
-        toJSON: {name: "toJSON", j: [V(null, true)]},
-        cd: {name: "unlink", j: [V("provider")]},
-        Cb: {name: "updateEmail", j: [V("email")]},
-        Db: {name: "updatePassword", j: [V("password")]},
-        ed: {name: "updatePhoneNumber", j: [Do("phone")]},
-        Eb: {name: "updateProfile", j: [W("profile")]},
-        Fb: {name: "verifyBeforeUpdateEmail", j: [V("email"), X(W("opt_actionCodeSettings", true), zo(null, true), "opt_actionCodeSettings", true)]}
-      });
-      Y(Yn.prototype, {execute: {name: "execute"}, render: {name: "render"}, reset: {name: "reset"}, getResponse: {name: "getResponse"}});
-      Y(Xn.prototype, {execute: {name: "execute"}, render: {name: "render"}, reset: {name: "reset"}, getResponse: {name: "getResponse"}});
-      Y(D.prototype, {oa: {name: "finally"}, o: {name: "catch"}, then: {name: "then"}});
-      Ko(em.prototype, {appVerificationDisabled: {name: "appVerificationDisabledForTesting", lb: xo("appVerificationDisabledForTesting")}});
-      Y(fm.prototype, {confirm: {name: "confirm", j: [V("verificationCode")]}});
-      Z(Bg, "fromJSON", function(a) {
-        a = typeof a === "string" ? JSON.parse(a) : a;
-        for (var b, c = [Mg, dh, kh, Jg], d = 0; d < c.length; d++)
-          if (b = c[d](a))
-            return b;
-        return null;
-      }, [X(V(), W(), "json")]);
-      Z(Zg, "credential", function(a, b) {
-        return new Yg(a, b);
-      }, [V("email"), V("password")]);
-      Y(Yg.prototype, {w: {name: "toJSON", j: [V(null, true)]}});
-      Y(Qg.prototype, {Ca: {name: "addScope", j: [V("scope")]}, Ka: {name: "setCustomParameters", j: [W("customOAuthParameters")]}});
-      Z(Qg, "credential", Rg, [X(V(), W(), "token")]);
-      Z(Zg, "credentialWithLink", eh, [V("email"), V("emailLink")]);
-      Y(Sg.prototype, {Ca: {name: "addScope", j: [V("scope")]}, Ka: {name: "setCustomParameters", j: [W("customOAuthParameters")]}});
-      Z(Sg, "credential", Tg, [X(V(), W(), "token")]);
-      Y(Ug.prototype, {Ca: {name: "addScope", j: [V("scope")]}, Ka: {name: "setCustomParameters", j: [W("customOAuthParameters")]}});
-      Z(Ug, "credential", Vg, [X(V(), X(W(), zo()), "idToken"), X(V(), zo(), "accessToken", true)]);
-      Y(Wg.prototype, {Ka: {name: "setCustomParameters", j: [W("customOAuthParameters")]}});
-      Z(Wg, "credential", Xg, [X(V(), W(), "token"), V("secret", true)]);
-      Y(Pg.prototype, {Ca: {name: "addScope", j: [V("scope")]}, credential: {name: "credential", j: [X(V(), X(W(), zo()), "optionsOrIdToken"), X(V(), zo(), "accessToken", true)]}, Ka: {name: "setCustomParameters", j: [W("customOAuthParameters")]}});
-      Y(Kg.prototype, {w: {name: "toJSON", j: [V(null, true)]}});
-      Y(Eg.prototype, {w: {name: "toJSON", j: [V(null, true)]}});
-      Z(lh, "credential", ph, [V("verificationId"), V("verificationCode")]);
-      Y(lh.prototype, {gb: {name: "verifyPhoneNumber", j: [X(V(), function(a, b) {
-        return {name: a || "phoneInfoOptions", K: "valid phone info options", optional: !!b, M: function(c) {
-          return c ? c.session && c.phoneNumber ? Go(c.session, zg) && typeof c.phoneNumber === "string" : c.session && c.multiFactorHint ? Go(c.session, Ag) && Ho(c.multiFactorHint) : c.session && c.multiFactorUid ? Go(c.session, Ag) && typeof c.multiFactorUid === "string" : c.phoneNumber ? typeof c.phoneNumber === "string" : false : false;
-        }};
-      }(), "phoneInfoOptions"), Io()]}});
-      Y(gh.prototype, {w: {name: "toJSON", j: [V(null, true)]}});
-      Y(t.prototype, {toJSON: {name: "toJSON", j: [V(null, true)]}});
-      Y(yh.prototype, {toJSON: {name: "toJSON", j: [V(null, true)]}});
-      Y(xh.prototype, {toJSON: {name: "toJSON", j: [V(null, true)]}});
-      Y(lm.prototype, {toJSON: {name: "toJSON", j: [V(null, true)]}});
-      Y(im.prototype, {Rc: {name: "resolveSignIn", j: [Eo()]}});
-      Y(tm.prototype, {Sb: {name: "getSession", j: []}, fc: {name: "enroll", j: [Eo(), V("displayName", true)]}, bd: {name: "unenroll", j: [X({name: "multiFactorInfo", K: "a valid multiFactorInfo", optional: false, M: Ho}, V(), "multiFactorInfoIdentifier")]}});
-      Y(uo.prototype, {clear: {name: "clear", j: []}, render: {name: "render", j: []}, verify: {name: "verify", j: []}});
-      Z(Jf, "parseLink", Rf, [V("link")]);
-      Z(eo, "assertion", function(a) {
-        return new rm(a);
-      }, [Do("phone")]);
-      (function() {
-        if (typeof firebase2 !== "undefined" && firebase2.INTERNAL && firebase2.INTERNAL.registerComponent) {
-          var a = {ActionCodeInfo: {Operation: {EMAIL_SIGNIN: Af, PASSWORD_RESET: "PASSWORD_RESET", RECOVER_EMAIL: "RECOVER_EMAIL", REVERT_SECOND_FACTOR_ADDITION: Cf, VERIFY_AND_CHANGE_EMAIL: Bf, VERIFY_EMAIL: "VERIFY_EMAIL"}}, Auth: Fn, AuthCredential: Bg, Error: t};
-          Z(a, "EmailAuthProvider", Zg, []);
-          Z(a, "FacebookAuthProvider", Qg, []);
-          Z(a, "GithubAuthProvider", Sg, []);
-          Z(a, "GoogleAuthProvider", Ug, []);
-          Z(a, "TwitterAuthProvider", Wg, []);
-          Z(a, "OAuthProvider", Pg, [V("providerId")]);
-          Z(a, "SAMLAuthProvider", Og, [V("providerId")]);
-          Z(a, "PhoneAuthProvider", lh, [Bo()]);
-          Z(a, "RecaptchaVerifier", uo, [X(V(), Ao(), "recaptchaContainer"), W("recaptchaParameters", true), Co()]);
-          Z(a, "ActionCodeURL", Jf, []);
-          Z(a, "PhoneMultiFactorGenerator", eo, []);
-          firebase2.INTERNAL.registerComponent({name: "auth", instanceFactory: function(b) {
-            b = b.getProvider("app").getImmediate();
-            return new Fn(b);
-          }, multipleInstances: false, serviceProps: a, instantiationMode: "LAZY", type: "PUBLIC"});
-          firebase2.INTERNAL.registerComponent({
-            name: "auth-internal",
-            instanceFactory: function(b) {
-              b = b.getProvider("auth").getImmediate();
-              return {getUid: q(b.getUid, b), getToken: q(b.nc, b), addAuthTokenListener: q(b.cc, b), removeAuthTokenListener: q(b.Pc, b)};
-            },
-            multipleInstances: false,
-            instantiationMode: "LAZY",
-            type: "PRIVATE"
-          });
-          firebase2.registerVersion("@firebase/auth", "0.16.7");
-          firebase2.INTERNAL.extendNamespace({User: Im});
-        } else
-          throw Error("Cannot find the firebase namespace; be sure to include firebase-app.js before this library.");
-      })();
-    }).apply(typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {});
+    var fetchImpl__default = /* @__PURE__ */ _interopDefaultLegacy(fetchImpl);
+    register.FetchProvider.initialize(fetchImpl__default["default"], fetchImpl.Headers, fetchImpl.Response);
+    function getAuth2(app$1) {
+      var provider = app._getProvider(app$1, "auth-exp");
+      if (provider.isInitialized()) {
+        return provider.getImmediate();
+      }
+      return register.initializeAuth(app$1);
+    }
+    register.registerAuth("Node");
+    exports2.ActionCodeURL = register.ActionCodeURL;
+    exports2.AuthCredential = register.AuthCredential;
+    exports2.EmailAuthCredential = register.EmailAuthCredential;
+    exports2.EmailAuthProvider = register.EmailAuthProvider;
+    exports2.FacebookAuthProvider = register.FacebookAuthProvider;
+    exports2.GithubAuthProvider = register.GithubAuthProvider;
+    exports2.GoogleAuthProvider = register.GoogleAuthProvider;
+    exports2.OAuthCredential = register.OAuthCredential;
+    exports2.OAuthProvider = register.OAuthProvider;
+    exports2.PhoneAuthCredential = register.PhoneAuthCredential;
+    exports2.SAMLAuthProvider = register.SAMLAuthProvider;
+    exports2.TwitterAuthProvider = register.TwitterAuthProvider;
+    exports2.applyActionCode = register.applyActionCode;
+    exports2.checkActionCode = register.checkActionCode;
+    exports2.confirmPasswordReset = register.confirmPasswordReset;
+    exports2.createUserWithEmailAndPassword = register.createUserWithEmailAndPassword;
+    exports2.debugErrorMap = register.debugErrorMap;
+    exports2.deleteUser = register.deleteUser;
+    exports2.fetchSignInMethodsForEmail = register.fetchSignInMethodsForEmail;
+    exports2.getAdditionalUserInfo = register.getAdditionalUserInfo;
+    exports2.getIdToken = register.getIdToken;
+    exports2.getIdTokenResult = register.getIdTokenResult;
+    exports2.getMultiFactorResolver = register.getMultiFactorResolver;
+    exports2.inMemoryPersistence = register.inMemoryPersistence;
+    exports2.initializeAuth = register.initializeAuth;
+    exports2.isSignInWithEmailLink = register.isSignInWithEmailLink;
+    exports2.linkWithCredential = register.linkWithCredential;
+    exports2.multiFactor = register.multiFactor;
+    exports2.onAuthStateChanged = register.onAuthStateChanged;
+    exports2.onIdTokenChanged = register.onIdTokenChanged;
+    exports2.parseActionCodeURL = register.parseActionCodeURL;
+    exports2.prodErrorMap = register.prodErrorMap;
+    exports2.reauthenticateWithCredential = register.reauthenticateWithCredential;
+    exports2.reload = register.reload;
+    exports2.sendEmailVerification = register.sendEmailVerification;
+    exports2.sendPasswordResetEmail = register.sendPasswordResetEmail;
+    exports2.sendSignInLinkToEmail = register.sendSignInLinkToEmail;
+    exports2.setPersistence = register.setPersistence;
+    exports2.signInAnonymously = register.signInAnonymously;
+    exports2.signInWithCredential = register.signInWithCredential;
+    exports2.signInWithCustomToken = register.signInWithCustomToken;
+    exports2.signInWithEmailAndPassword = register.signInWithEmailAndPassword;
+    exports2.signInWithEmailLink = register.signInWithEmailLink;
+    exports2.signOut = register.signOut;
+    exports2.unlink = register.unlink;
+    exports2.updateCurrentUser = register.updateCurrentUser;
+    exports2.updateEmail = register.updateEmail;
+    exports2.updatePassword = register.updatePassword;
+    exports2.updateProfile = register.updateProfile;
+    exports2.useAuthEmulator = register.useAuthEmulator;
+    exports2.useDeviceLanguage = register.useDeviceLanguage;
+    exports2.verifyBeforeUpdateEmail = register.verifyBeforeUpdateEmail;
+    exports2.verifyPasswordResetCode = register.verifyPasswordResetCode;
+    exports2.getAuth = getAuth2;
   }
 });
 
@@ -13207,7 +9692,7 @@ var require_http_proxy = __commonJS({
 var require_package = __commonJS({
   "node_modules/@grpc/grpc-js/package.json"(exports2, module2) {
     module2.exports = {
-      _from: "@grpc/grpc-js@^1.3.2",
+      _from: "@grpc/grpc-js@^1.0.0",
       _id: "@grpc/grpc-js@1.3.3",
       _inBundle: false,
       _integrity: "sha512-KkKZrX3fVTBYCtUk8I+Y4xWaauEEOIR1mIGoPFUK8C+a9TTub5dmjowJpFGz0dqYj//wJcgVR9fqpoNhSYFfHQ==",
@@ -13216,20 +9701,21 @@ var require_package = __commonJS({
       _requested: {
         type: "range",
         registry: true,
-        raw: "@grpc/grpc-js@^1.3.2",
+        raw: "@grpc/grpc-js@^1.0.0",
         name: "@grpc/grpc-js",
         escapedName: "@grpc%2fgrpc-js",
         scope: "@grpc",
-        rawSpec: "^1.3.2",
+        rawSpec: "^1.0.0",
         saveSpec: null,
-        fetchSpec: "^1.3.2"
+        fetchSpec: "^1.0.0"
       },
       _requiredBy: [
-        "/@firebase/firestore"
+        "/@firebase/firestore",
+        "/@firebase/firestore-compat"
       ],
       _resolved: "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.3.tgz",
       _shasum: "479764be3044f44c9fe38702643f59ea1a5374cb",
-      _spec: "@grpc/grpc-js@^1.3.2",
+      _spec: "@grpc/grpc-js@^1.0.0",
       _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream\\node_modules\\@firebase\\firestore",
       author: {
         name: "Google Inc."
@@ -24154,21 +20640,29 @@ var require_src3 = __commonJS({
   }
 });
 
-// node_modules/@firebase/firestore/dist/node-cjs/database-faf39e5b-0bb5e962.js
-var require_database_faf39e5b_0bb5e962 = __commonJS({
-  "node_modules/@firebase/firestore/dist/node-cjs/database-faf39e5b-0bb5e962.js"(exports2) {
+// node_modules/@firebase/firestore/dist/exp/index.node.cjs.js
+var require_index_node_cjs2 = __commonJS({
+  "node_modules/@firebase/firestore/dist/exp/index.node.cjs.js"(exports2) {
     "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
     var tslib = require_tslib();
-    var util = require_index_node_cjs();
+    var app = require_index_cjs3();
+    var component = require_index_cjs();
     var logger = require_index_cjs2();
     var util$1 = require("util");
+    var util = require_index_node_cjs();
     var crypto = require("crypto");
     var grpcJs = require_src();
     var package_json = require_package();
     var path = require("path");
     var protoLoader = require_src3();
-    var version = "8.6.8";
-    var SDK_VERSION = version;
+    var name = "@firebase/firestore";
+    var version = "0.0.900-exp.d92a36260";
+    var version$1 = "8.6.1";
+    var SDK_VERSION = version$1;
+    function setSDKVersion(version2) {
+      SDK_VERSION = version2;
+    }
     var ListenSequence = function() {
       function ListenSequence2(previousValue, sequenceNumberSyncer) {
         var _this = this;
@@ -24764,8 +21258,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     DbBundle.store = "bundles";
     DbBundle.keyPath = "bundleId";
     var DbNamedQuery = function() {
-      function DbNamedQuery2(name, readTime, bundledQuery) {
-        this.name = name;
+      function DbNamedQuery2(name2, readTime, bundledQuery) {
+        this.name = name2;
         this.readTime = readTime;
         this.bundledQuery = bundledQuery;
       }
@@ -24948,10 +21442,10 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         }
         return p;
       };
-      PersistencePromise2.forEach = function(collection2, f) {
+      PersistencePromise2.forEach = function(collection3, f) {
         var _this = this;
         var promises = [];
-        collection2.forEach(function(r, s2) {
+        collection3.forEach(function(r, s2) {
           promises.push(f.call(_this, r, s2));
         });
         return this.waitFor(promises);
@@ -25013,8 +21507,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       return SimpleDbTransaction2;
     }();
     var SimpleDb = function() {
-      function SimpleDb2(name, version2, schemaConverter) {
-        this.name = name;
+      function SimpleDb2(name2, version2, schemaConverter) {
+        this.name = name2;
         this.version = version2;
         this.schemaConverter = schemaConverter;
         var iOSVersion = SimpleDb2.getIOSVersion(util.getUA());
@@ -25022,9 +21516,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           logError("Firestore persistence suffers from a bug in iOS 12.2 Safari that may cause your app to stop working. See https://stackoverflow.com/q/56496296/110915 for details and a potential workaround.");
         }
       }
-      SimpleDb2.delete = function(name) {
-        logDebug(LOG_TAG, "Removing database:", name);
-        return wrapRequest(window.indexedDB.deleteDatabase(name)).toPromise();
+      SimpleDb2.delete = function(name2) {
+        logDebug(LOG_TAG, "Removing database:", name2);
+        return wrapRequest(window.indexedDB.deleteDatabase(name2)).toPromise();
       };
       SimpleDb2.isAvailable = function() {
         if (typeof indexedDB === "undefined") {
@@ -25754,8 +22248,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       DocumentKey2.fromPath = function(path2) {
         return new DocumentKey2(ResourcePath.fromString(path2));
       };
-      DocumentKey2.fromName = function(name) {
-        return new DocumentKey2(ResourcePath.fromString(name).popFirst(5));
+      DocumentKey2.fromName = function(name2) {
+        return new DocumentKey2(ResourcePath.fromString(name2).popFirst(5));
       };
       DocumentKey2.prototype.hasCollectionId = function(collectionId) {
         return this.path.length >= 2 && this.path.get(this.path.length - 2) === collectionId;
@@ -26099,116 +22593,114 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function isMapValue(value) {
       return !!value && "mapValue" in value;
     }
-    function deepClone(source) {
-      if (source.geoPointValue) {
-        return {geoPointValue: Object.assign({}, source.geoPointValue)};
-      } else if (source.timestampValue) {
-        return {timestampValue: Object.assign({}, normalizeTimestamp(source.timestampValue))};
-      } else if (source.mapValue) {
-        var target_1 = {mapValue: {fields: {}}};
-        forEach(source.mapValue.fields, function(key, val) {
-          return target_1.mapValue.fields[key] = deepClone(val);
-        });
-        return target_1;
-      } else if (source.arrayValue) {
-        var target = {arrayValue: {values: []}};
-        for (var i = 0; i < (source.arrayValue.values || []).length; ++i) {
-          target.arrayValue.values[i] = deepClone(source.arrayValue.values[i]);
-        }
-        return target;
-      } else {
-        return Object.assign({}, source);
-      }
-    }
     var ObjectValue = function() {
-      function ObjectValue2(value) {
-        this.value = value;
+      function ObjectValue2(proto) {
+        this.overlayMap = new Map();
+        this.partialValue = proto;
       }
       ObjectValue2.empty = function() {
         return new ObjectValue2({mapValue: {}});
       };
       ObjectValue2.prototype.field = function(path2) {
-        if (path2.isEmpty()) {
-          return this.value;
-        } else {
-          var currentLevel = this.value;
-          for (var i = 0; i < path2.length - 1; ++i) {
-            currentLevel = (currentLevel.mapValue.fields || {})[path2.get(i)];
-            if (!isMapValue(currentLevel)) {
-              return null;
-            }
-          }
-          currentLevel = (currentLevel.mapValue.fields || {})[path2.lastSegment()];
-          return currentLevel || null;
-        }
+        return ObjectValue2.extractNestedValue(this.buildProto(), path2);
+      };
+      ObjectValue2.prototype.toProto = function() {
+        return this.field(FieldPath.emptyPath());
       };
       ObjectValue2.prototype.set = function(path2, value) {
-        var fieldsMap = this.getFieldsMap(path2.popLast());
-        fieldsMap[path2.lastSegment()] = deepClone(value);
+        this.setOverlay(path2, value);
       };
       ObjectValue2.prototype.setAll = function(data) {
         var _this = this;
-        var parent = FieldPath.emptyPath();
-        var upserts = {};
-        var deletes = [];
-        data.forEach(function(value, path2) {
-          if (!parent.isImmediateParentOf(path2)) {
-            var fieldsMap_1 = _this.getFieldsMap(parent);
-            _this.applyChanges(fieldsMap_1, upserts, deletes);
-            upserts = {};
-            deletes = [];
-            parent = path2.popLast();
-          }
+        data.forEach(function(value, fieldPath) {
           if (value) {
-            upserts[path2.lastSegment()] = deepClone(value);
+            _this.set(fieldPath, value);
           } else {
-            deletes.push(path2.lastSegment());
+            _this.delete(fieldPath);
           }
         });
-        var fieldsMap = this.getFieldsMap(parent);
-        this.applyChanges(fieldsMap, upserts, deletes);
       };
       ObjectValue2.prototype.delete = function(path2) {
-        var nestedValue = this.field(path2.popLast());
-        if (isMapValue(nestedValue) && nestedValue.mapValue.fields) {
-          delete nestedValue.mapValue.fields[path2.lastSegment()];
-        }
+        this.setOverlay(path2, null);
       };
       ObjectValue2.prototype.isEqual = function(other) {
-        return valueEquals(this.value, other.value);
+        return valueEquals(this.buildProto(), other.buildProto());
       };
-      ObjectValue2.prototype.getFieldsMap = function(path2) {
-        var current = this.value;
-        if (!current.mapValue.fields) {
-          current.mapValue = {fields: {}};
-        }
-        for (var i = 0; i < path2.length; ++i) {
-          var next = current.mapValue.fields[path2.get(i)];
-          if (!isMapValue(next) || !next.mapValue.fields) {
-            next = {mapValue: {fields: {}}};
-            current.mapValue.fields[path2.get(i)] = next;
+      ObjectValue2.prototype.setOverlay = function(path2, value) {
+        var currentLevel = this.overlayMap;
+        for (var i = 0; i < path2.length - 1; ++i) {
+          var currentSegment = path2.get(i);
+          var currentValue = currentLevel.get(currentSegment);
+          if (currentValue instanceof Map) {
+            currentLevel = currentValue;
+          } else if (currentValue && typeOrder(currentValue) === 10) {
+            currentValue = new Map(Object.entries(currentValue.mapValue.fields || {}));
+            currentLevel.set(currentSegment, currentValue);
+            currentLevel = currentValue;
+          } else {
+            currentValue = new Map();
+            currentLevel.set(currentSegment, currentValue);
+            currentLevel = currentValue;
           }
-          current = next;
         }
-        return current.mapValue.fields;
+        currentLevel.set(path2.lastSegment(), value);
       };
-      ObjectValue2.prototype.applyChanges = function(fieldsMap, inserts, deletes) {
-        forEach(inserts, function(key, val) {
-          return fieldsMap[key] = val;
+      ObjectValue2.prototype.applyOverlay = function(currentPath, currentOverlays) {
+        var _this = this;
+        var modified = false;
+        var existingValue = ObjectValue2.extractNestedValue(this.partialValue, currentPath);
+        var resultAtPath = isMapValue(existingValue) ? Object.assign({}, existingValue.mapValue.fields) : {};
+        currentOverlays.forEach(function(value, pathSegment) {
+          if (value instanceof Map) {
+            var nested = _this.applyOverlay(currentPath.child(pathSegment), value);
+            if (nested != null) {
+              resultAtPath[pathSegment] = nested;
+              modified = true;
+            }
+          } else if (value !== null) {
+            resultAtPath[pathSegment] = value;
+            modified = true;
+          } else if (resultAtPath.hasOwnProperty(pathSegment)) {
+            delete resultAtPath[pathSegment];
+            modified = true;
+          }
         });
-        for (var _i = 0, deletes_1 = deletes; _i < deletes_1.length; _i++) {
-          var field = deletes_1[_i];
-          delete fieldsMap[field];
+        return modified ? {mapValue: {fields: resultAtPath}} : null;
+      };
+      ObjectValue2.prototype.buildProto = function() {
+        var mergedResult = this.applyOverlay(FieldPath.emptyPath(), this.overlayMap);
+        if (mergedResult != null) {
+          this.partialValue = mergedResult;
+          this.overlayMap.clear();
+        }
+        return this.partialValue;
+      };
+      ObjectValue2.extractNestedValue = function(proto, path2) {
+        if (path2.isEmpty()) {
+          return proto;
+        } else {
+          var value = proto;
+          for (var i = 0; i < path2.length - 1; ++i) {
+            if (!value.mapValue.fields) {
+              return null;
+            }
+            value = value.mapValue.fields[path2.get(i)];
+            if (!isMapValue(value)) {
+              return null;
+            }
+          }
+          value = (value.mapValue.fields || {})[path2.lastSegment()];
+          return value || null;
         }
       };
       ObjectValue2.prototype.clone = function() {
-        return new ObjectValue2(deepClone(this.value));
+        return new ObjectValue2(this.buildProto());
       };
       return ObjectValue2;
     }();
     function extractFieldMask(value) {
       var fields = [];
-      forEach(value.fields, function(key, value2) {
+      forEach(value.fields || {}, function(key, value2) {
         var currentPath = new FieldPath([key]);
         if (isMapValue(value2)) {
           var nestedMask = extractFieldMask(value2.mapValue);
@@ -26316,7 +22808,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return new MutableDocument2(this.key, this.documentType, this.version, this.data.clone(), this.documentState);
       };
       MutableDocument2.prototype.toString = function() {
-        return "Document(" + this.key + ", " + this.version + ", " + JSON.stringify(this.data.value) + ", " + ("{documentType: " + this.documentType + "}), ") + ("{documentState: " + this.documentState + "})");
+        return "Document(" + this.key + ", " + this.version + ", " + JSON.stringify(this.data.toProto()) + ", " + ("{documentType: " + this.documentType + "}), ") + ("{documentState: " + this.documentState + "})");
       };
       return MutableDocument2;
     }();
@@ -26508,8 +23000,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       FieldFilter2.createKeyFieldInFilter = function(field, op, value) {
         return op === "in" ? new KeyFieldInFilter(field, value) : new KeyFieldNotInFilter(field, value);
       };
-      FieldFilter2.prototype.matches = function(doc2) {
-        var other = doc2.data.field(this.field);
+      FieldFilter2.prototype.matches = function(doc3) {
+        var other = doc3.data.field(this.field);
         if (this.op === "!=") {
           return other !== null && this.matchesComparison(valueCompare(other, this.value));
         }
@@ -26561,8 +23053,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         _this.key = DocumentKey.fromName(value.referenceValue);
         return _this;
       }
-      KeyFieldFilter2.prototype.matches = function(doc2) {
-        var comparison = DocumentKey.comparator(doc2.key, this.key);
+      KeyFieldFilter2.prototype.matches = function(doc3) {
+        var comparison = DocumentKey.comparator(doc3.key, this.key);
         return this.matchesComparison(comparison);
       };
       return KeyFieldFilter2;
@@ -26574,9 +23066,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         _this.keys = extractDocumentKeysFromArrayValue("in", value);
         return _this;
       }
-      KeyFieldInFilter2.prototype.matches = function(doc2) {
+      KeyFieldInFilter2.prototype.matches = function(doc3) {
         return this.keys.some(function(key) {
-          return key.isEqual(doc2.key);
+          return key.isEqual(doc3.key);
         });
       };
       return KeyFieldInFilter2;
@@ -26588,9 +23080,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         _this.keys = extractDocumentKeysFromArrayValue("not-in", value);
         return _this;
       }
-      KeyFieldNotInFilter2.prototype.matches = function(doc2) {
+      KeyFieldNotInFilter2.prototype.matches = function(doc3) {
         return !this.keys.some(function(key) {
-          return key.isEqual(doc2.key);
+          return key.isEqual(doc3.key);
         });
       };
       return KeyFieldNotInFilter2;
@@ -26606,8 +23098,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function ArrayContainsFilter2(field, value) {
         return _super.call(this, field, "array-contains", value) || this;
       }
-      ArrayContainsFilter2.prototype.matches = function(doc2) {
-        var other = doc2.data.field(this.field);
+      ArrayContainsFilter2.prototype.matches = function(doc3) {
+        var other = doc3.data.field(this.field);
         return isArray(other) && arrayValueContains(other.arrayValue, this.value);
       };
       return ArrayContainsFilter2;
@@ -26617,8 +23109,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function InFilter2(field, value) {
         return _super.call(this, field, "in", value) || this;
       }
-      InFilter2.prototype.matches = function(doc2) {
-        var other = doc2.data.field(this.field);
+      InFilter2.prototype.matches = function(doc3) {
+        var other = doc3.data.field(this.field);
         return other !== null && arrayValueContains(this.value.arrayValue, other);
       };
       return InFilter2;
@@ -26628,11 +23120,11 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function NotInFilter2(field, value) {
         return _super.call(this, field, "not-in", value) || this;
       }
-      NotInFilter2.prototype.matches = function(doc2) {
+      NotInFilter2.prototype.matches = function(doc3) {
         if (arrayValueContains(this.value.arrayValue, {nullValue: "NULL_VALUE"})) {
           return false;
         }
-        var other = doc2.data.field(this.field);
+        var other = doc3.data.field(this.field);
         return other !== null && !arrayValueContains(this.value.arrayValue, other);
       };
       return NotInFilter2;
@@ -26642,9 +23134,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function ArrayContainsAnyFilter2(field, value) {
         return _super.call(this, field, "array-contains-any", value) || this;
       }
-      ArrayContainsAnyFilter2.prototype.matches = function(doc2) {
+      ArrayContainsAnyFilter2.prototype.matches = function(doc3) {
         var _this = this;
-        var other = doc2.data.field(this.field);
+        var other = doc3.data.field(this.field);
         if (!isArray(other) || !other.arrayValue.values) {
           return false;
         }
@@ -26685,16 +23177,16 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function orderByEquals(left, right) {
       return left.dir === right.dir && left.field.isEqual(right.field);
     }
-    function sortsBeforeDocument(bound, orderBy2, doc2) {
+    function sortsBeforeDocument(bound, orderBy2, doc3) {
       var comparison = 0;
       for (var i = 0; i < bound.position.length; i++) {
         var orderByComponent = orderBy2[i];
-        var component = bound.position[i];
+        var component2 = bound.position[i];
         if (orderByComponent.field.isKeyField()) {
-          comparison = DocumentKey.comparator(DocumentKey.fromName(component.referenceValue), doc2.key);
+          comparison = DocumentKey.comparator(DocumentKey.fromName(component2.referenceValue), doc3.key);
         } else {
-          var docValue = doc2.data.field(orderByComponent.field);
-          comparison = valueCompare(component, docValue);
+          var docValue = doc3.data.field(orderByComponent.field);
+          comparison = valueCompare(component2, docValue);
         }
         if (orderByComponent.dir === "desc") {
           comparison = comparison * -1;
@@ -26884,42 +23376,42 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function stringifyQuery(query2) {
       return "Query(target=" + stringifyTarget(queryToTarget(query2)) + "; limitType=" + query2.limitType + ")";
     }
-    function queryMatches(query2, doc2) {
-      return doc2.isFoundDocument() && queryMatchesPathAndCollectionGroup(query2, doc2) && queryMatchesOrderBy(query2, doc2) && queryMatchesFilters(query2, doc2) && queryMatchesBounds(query2, doc2);
+    function queryMatches(query2, doc3) {
+      return doc3.isFoundDocument() && queryMatchesPathAndCollectionGroup(query2, doc3) && queryMatchesOrderBy(query2, doc3) && queryMatchesFilters(query2, doc3) && queryMatchesBounds(query2, doc3);
     }
-    function queryMatchesPathAndCollectionGroup(query2, doc2) {
-      var docPath = doc2.key.path;
+    function queryMatchesPathAndCollectionGroup(query2, doc3) {
+      var docPath = doc3.key.path;
       if (query2.collectionGroup !== null) {
-        return doc2.key.hasCollectionId(query2.collectionGroup) && query2.path.isPrefixOf(docPath);
+        return doc3.key.hasCollectionId(query2.collectionGroup) && query2.path.isPrefixOf(docPath);
       } else if (DocumentKey.isDocumentKey(query2.path)) {
         return query2.path.isEqual(docPath);
       } else {
         return query2.path.isImmediateParentOf(docPath);
       }
     }
-    function queryMatchesOrderBy(query2, doc2) {
+    function queryMatchesOrderBy(query2, doc3) {
       for (var _i = 0, _d = query2.explicitOrderBy; _i < _d.length; _i++) {
         var orderBy_3 = _d[_i];
-        if (!orderBy_3.field.isKeyField() && doc2.data.field(orderBy_3.field) === null) {
+        if (!orderBy_3.field.isKeyField() && doc3.data.field(orderBy_3.field) === null) {
           return false;
         }
       }
       return true;
     }
-    function queryMatchesFilters(query2, doc2) {
+    function queryMatchesFilters(query2, doc3) {
       for (var _i = 0, _d = query2.filters; _i < _d.length; _i++) {
         var filter = _d[_i];
-        if (!filter.matches(doc2)) {
+        if (!filter.matches(doc3)) {
           return false;
         }
       }
       return true;
     }
-    function queryMatchesBounds(query2, doc2) {
-      if (query2.startAt && !sortsBeforeDocument(query2.startAt, queryOrderBy(query2), doc2)) {
+    function queryMatchesBounds(query2, doc3) {
+      if (query2.startAt && !sortsBeforeDocument(query2.startAt, queryOrderBy(query2), doc3)) {
         return false;
       }
-      if (query2.endAt && sortsBeforeDocument(query2.endAt, queryOrderBy(query2), doc2)) {
+      if (query2.endAt && sortsBeforeDocument(query2.endAt, queryOrderBy(query2), doc3)) {
         return false;
       }
       return true;
@@ -28528,16 +25020,16 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function toResourceName(databaseId, path2) {
       return fullyQualifiedPrefixPath(databaseId).child("documents").child(path2).canonicalString();
     }
-    function fromResourceName(name) {
-      var resource = ResourcePath.fromString(name);
+    function fromResourceName(name2) {
+      var resource = ResourcePath.fromString(name2);
       hardAssert(isValidResourceName(resource));
       return resource;
     }
     function toName(serializer, key) {
       return toResourceName(serializer.databaseId, key.path);
     }
-    function fromName(serializer, name) {
-      var resource = fromResourceName(name);
+    function fromName(serializer, name2) {
+      var resource = fromResourceName(name2);
       if (resource.get(1) !== serializer.databaseId.projectId) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Tried to deserialize key from different project: " + resource.get(1) + " vs " + serializer.databaseId.projectId);
       }
@@ -28549,8 +25041,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function toQueryPath(serializer, path2) {
       return toResourceName(serializer.databaseId, path2);
     }
-    function fromQueryPath(name) {
-      var resourceName = fromResourceName(name);
+    function fromQueryPath(name2) {
+      var resourceName = fromResourceName(name2);
       if (resourceName.length === 4) {
         return ResourcePath.emptyPath();
       }
@@ -28580,13 +25072,13 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function toMutationDocument(serializer, key, fields) {
       return {
         name: toName(serializer, key),
-        fields: fields.value.mapValue.fields
+        fields: fields.toProto().mapValue.fields
       };
     }
     function toDocument(serializer, document2) {
       return {
         name: toName(serializer, document2.key),
-        fields: document2.data.value.mapValue.fields,
+        fields: document2.data.toProto().mapValue.fields,
         updateTime: toTimestamp(serializer, document2.version.toTimestamp())
       };
     }
@@ -28600,13 +25092,13 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       }
       return hasCommittedMutations ? result.setHasCommittedMutations() : result;
     }
-    function fromFound(serializer, doc2) {
-      hardAssert(!!doc2.found);
-      assertPresent(doc2.found.name);
-      assertPresent(doc2.found.updateTime);
-      var key = fromName(serializer, doc2.found.name);
-      var version2 = fromVersion(doc2.found.updateTime);
-      var data = new ObjectValue({mapValue: {fields: doc2.found.fields}});
+    function fromFound(serializer, doc3) {
+      hardAssert(!!doc3.found);
+      assertPresent(doc3.found.name);
+      assertPresent(doc3.found.updateTime);
+      var key = fromName(serializer, doc3.found.name);
+      var version2 = fromVersion(doc3.found.updateTime);
+      var data = new ObjectValue({mapValue: {fields: doc3.found.fields}});
       return MutableDocument.newFoundDocument(key, version2, data);
     }
     function fromMissing(serializer, result) {
@@ -28855,8 +25347,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     function fromDocumentsTarget(documentsTarget) {
       var count = documentsTarget.documents.length;
       hardAssert(count === 1);
-      var name = documentsTarget.documents[0];
-      return queryToTarget(newQueryForPath(fromQueryPath(name)));
+      var name2 = documentsTarget.documents[0];
+      return queryToTarget(newQueryForPath(fromQueryPath(name2)));
     }
     function toQueryTarget(serializer, target) {
       var result = {structuredQuery: {}};
@@ -29501,17 +25993,17 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return removedDocuments;
       });
     }
-    function dbDocumentSize(doc2) {
-      if (!doc2) {
+    function dbDocumentSize(doc3) {
+      if (!doc3) {
         return 0;
       }
       var value;
-      if (doc2.document) {
-        value = doc2.document;
-      } else if (doc2.unknownDocument) {
-        value = doc2.unknownDocument;
-      } else if (doc2.noDocument) {
-        value = doc2.noDocument;
+      if (doc3.document) {
+        value = doc3.document;
+      } else if (doc3.unknownDocument) {
+        value = doc3.unknownDocument;
+      } else if (doc3.noDocument) {
+        value = doc3.noDocument;
       } else {
         throw fail();
       }
@@ -30505,9 +26997,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         this.serializer = serializer;
         this.indexManager = indexManager;
       }
-      IndexedDbRemoteDocumentCacheImpl2.prototype.addEntry = function(transaction, key, doc2) {
+      IndexedDbRemoteDocumentCacheImpl2.prototype.addEntry = function(transaction, key, doc3) {
         var documentStore = remoteDocumentsStore(transaction);
-        return documentStore.put(dbKey(key), doc2);
+        return documentStore.put(dbKey(key), doc3);
       };
       IndexedDbRemoteDocumentCacheImpl2.prototype.removeEntry = function(transaction, documentKey) {
         var store = remoteDocumentsStore(transaction);
@@ -30530,9 +27022,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       IndexedDbRemoteDocumentCacheImpl2.prototype.getSizedEntry = function(transaction, documentKey) {
         var _this = this;
         return remoteDocumentsStore(transaction).get(dbKey(documentKey)).next(function(dbRemoteDoc) {
-          var doc2 = _this.maybeDecodeDocument(documentKey, dbRemoteDoc);
+          var doc3 = _this.maybeDecodeDocument(documentKey, dbRemoteDoc);
           return {
-            document: doc2,
+            document: doc3,
             size: dbDocumentSize(dbRemoteDoc)
           };
         });
@@ -30541,8 +27033,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var _this = this;
         var results = mutableDocumentMap();
         return this.forEachDbEntry(transaction, documentKeys, function(key, dbRemoteDoc) {
-          var doc2 = _this.maybeDecodeDocument(key, dbRemoteDoc);
-          results = results.insert(key, doc2);
+          var doc3 = _this.maybeDecodeDocument(key, dbRemoteDoc);
+          results = results.insert(key, doc3);
         }).next(function() {
           return results;
         });
@@ -30552,8 +27044,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var results = mutableDocumentMap();
         var sizeMap = new SortedMap(DocumentKey.comparator);
         return this.forEachDbEntry(transaction, documentKeys, function(key, dbRemoteDoc) {
-          var doc2 = _this.maybeDecodeDocument(key, dbRemoteDoc);
-          results = results.insert(key, doc2);
+          var doc3 = _this.maybeDecodeDocument(key, dbRemoteDoc);
+          results = results.insert(key, doc3);
           sizeMap = sizeMap.insert(key, dbDocumentSize(dbRemoteDoc));
         }).next(function() {
           return {documents: results, sizeMap};
@@ -30655,8 +27147,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       var documentsStore = remoteDocumentsStore(transaction);
       var range = IDBKeyRange.lowerBound(lastReadTime, true);
       return documentsStore.iterate({index: DbRemoteDocument.readTimeIndex, range}, function(_, dbRemoteDoc) {
-        var doc2 = fromDbRemoteDocument(remoteDocumentCacheImpl.serializer, dbRemoteDoc);
-        changedDocs = changedDocs.insert(doc2.key, doc2);
+        var doc3 = fromDbRemoteDocument(remoteDocumentCacheImpl.serializer, dbRemoteDoc);
+        changedDocs = changedDocs.insert(doc3.key, doc3);
         lastReadTime = dbRemoteDoc.readTime;
       }).next(function() {
         return {
@@ -30825,8 +27317,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       SchemaConverter2.prototype.addDocumentGlobal = function(txn) {
         var byteCount = 0;
-        return txn.store(DbRemoteDocument.store).iterate(function(_, doc2) {
-          byteCount += dbDocumentSize(doc2);
+        return txn.store(DbRemoteDocument.store).iterate(function(_, doc3) {
+          byteCount += dbDocumentSize(doc3);
         }).next(function() {
           var metadata = new DbRemoteDocumentGlobal(byteCount);
           return txn.store(DbRemoteDocumentGlobal.store).put(DbRemoteDocumentGlobal.key, metadata);
@@ -30859,7 +27351,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
             return documentTargetStore2.put(new DbTargetDocument(0, encodeResourcePath(path2), metadata.highestListenSequenceNumber));
           };
           var promises = [];
-          return documentsStore.iterate(function(key, doc2) {
+          return documentsStore.iterate(function(key, doc3) {
             var path2 = new ResourcePath(key);
             var docSentinelKey = sentinelKey$1(path2);
             promises.push(documentTargetStore2.get(docSentinelKey).next(function(maybeSentinel) {
@@ -31547,12 +28039,12 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         });
       };
       LocalDocumentsView2.prototype.getDocumentInternal = function(transaction, key, inBatches) {
-        return this.remoteDocumentCache.getEntry(transaction, key).next(function(doc2) {
+        return this.remoteDocumentCache.getEntry(transaction, key).next(function(doc3) {
           for (var _i = 0, inBatches_1 = inBatches; _i < inBatches_1.length; _i++) {
             var batch = inBatches_1[_i];
-            batch.applyToLocalView(doc2);
+            batch.applyToLocalView(doc3);
           }
-          return doc2;
+          return doc3;
         });
       };
       LocalDocumentsView2.prototype.applyLocalMutationsToDocuments = function(docs, batches) {
@@ -31603,8 +28095,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           return PersistencePromise.forEach(parents, function(parent) {
             var collectionQuery = asCollectionQueryAtPath(query2, parent.child(collectionId));
             return _this.getDocumentsMatchingCollectionQuery(transaction, collectionQuery, sinceReadTime).next(function(r) {
-              r.forEach(function(key, doc2) {
-                results = results.insert(key, doc2);
+              r.forEach(function(key, doc3) {
+                results = results.insert(key, doc3);
               });
             });
           }).next(function() {
@@ -31641,8 +28133,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
             }
           });
         }).next(function() {
-          results.forEach(function(key, doc2) {
-            if (!queryMatches(query2, doc2)) {
+          results.forEach(function(key, doc3) {
+            if (!queryMatches(query2, doc3)) {
               results = results.remove(key);
             }
           });
@@ -31662,9 +28154,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         }
         var mergedDocuments = existingDocuments;
         return this.remoteDocumentCache.getEntries(transaction, missingBaseDocEntriesForPatching).next(function(missingBaseDocs) {
-          missingBaseDocs.forEach(function(key, doc2) {
-            if (doc2.isFoundDocument()) {
-              mergedDocuments = mergedDocuments.insert(key, doc2);
+          missingBaseDocs.forEach(function(key, doc3) {
+            if (doc3.isFoundDocument()) {
+              mergedDocuments = mergedDocuments.insert(key, doc3);
             }
           });
           return mergedDocuments;
@@ -31772,7 +28264,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
             var mutation = mutations_2[_i];
             var baseValue = extractMutationBaseValue(mutation, existingDocs.get(mutation.key));
             if (baseValue != null) {
-              baseMutations.push(new PatchMutation(mutation.key, baseValue, extractFieldMask(baseValue.value.mapValue), Precondition.exists(true)));
+              baseMutations.push(new PatchMutation(mutation.key, baseValue, extractFieldMask(baseValue.toProto().mapValue), Precondition.exists(true)));
             }
           }
           return localStoreImpl.mutationQueue.addMutationBatch(txn, localWriteTime, baseMutations, mutations);
@@ -31853,7 +28345,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           }
         });
         var changedDocs = mutableDocumentMap();
-        remoteEvent.documentUpdates.forEach(function(key, doc2) {
+        remoteEvent.documentUpdates.forEach(function(key, doc3) {
           if (remoteEvent.resolvedLimboDocuments.has(key)) {
             promises.push(localStoreImpl.persistence.referenceDelegate.updateLimboDocument(txn, key));
           }
@@ -31886,17 +28378,17 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       });
       return documentBuffer.getEntries(txn, updatedKeys).next(function(existingDocs) {
         var changedDocs = mutableDocumentMap();
-        documents.forEach(function(key, doc2) {
+        documents.forEach(function(key, doc3) {
           var existingDoc = existingDocs.get(key);
           var docReadTime = (documentVersions === null || documentVersions === void 0 ? void 0 : documentVersions.get(key)) || globalVersion;
-          if (doc2.isNoDocument() && doc2.version.isEqual(SnapshotVersion.min())) {
+          if (doc3.isNoDocument() && doc3.version.isEqual(SnapshotVersion.min())) {
             documentBuffer.removeEntry(key, docReadTime);
-            changedDocs = changedDocs.insert(key, doc2);
-          } else if (!existingDoc.isValidDocument() || doc2.version.compareTo(existingDoc.version) > 0 || doc2.version.compareTo(existingDoc.version) === 0 && existingDoc.hasPendingWrites) {
-            documentBuffer.addEntry(doc2, docReadTime);
-            changedDocs = changedDocs.insert(key, doc2);
+            changedDocs = changedDocs.insert(key, doc3);
+          } else if (!existingDoc.isValidDocument() || doc3.version.compareTo(existingDoc.version) > 0 || doc3.version.compareTo(existingDoc.version) === 0 && existingDoc.hasPendingWrites) {
+            documentBuffer.addEntry(doc3, docReadTime);
+            changedDocs = changedDocs.insert(key, doc3);
           } else {
-            logDebug(LOG_TAG$4, "Ignoring outdated watch update for ", key, ". Current version:", existingDoc.version, " Watch version:", doc2.version);
+            logDebug(LOG_TAG$4, "Ignoring outdated watch update for ", key, ". Current version:", existingDoc.version, " Watch version:", doc3.version);
           }
         });
         return changedDocs;
@@ -32076,13 +28568,13 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       docKeys.forEach(function(docKey) {
         promiseChain = promiseChain.next(function() {
           return documentBuffer.getEntry(txn, docKey);
-        }).next(function(doc2) {
+        }).next(function(doc3) {
           var ackVersion = batchResult.docVersions.get(docKey);
           hardAssert(ackVersion !== null);
-          if (doc2.version.compareTo(ackVersion) < 0) {
-            batch.applyToRemoteDocument(doc2, batchResult);
-            if (doc2.isValidDocument()) {
-              documentBuffer.addEntry(doc2, batchResult.commitVersion);
+          if (doc3.version.compareTo(ackVersion) < 0) {
+            batch.applyToRemoteDocument(doc3, batchResult);
+            if (doc3.isValidDocument()) {
+              documentBuffer.addEntry(doc3, batchResult.commitVersion);
             }
           }
         });
@@ -32504,13 +28996,13 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         this.docs = documentEntryMap();
         this.size = 0;
       }
-      MemoryRemoteDocumentCacheImpl2.prototype.addEntry = function(transaction, doc2, readTime) {
-        var key = doc2.key;
+      MemoryRemoteDocumentCacheImpl2.prototype.addEntry = function(transaction, doc3, readTime) {
+        var key = doc3.key;
         var entry = this.docs.get(key);
         var previousSize = entry ? entry.size : 0;
-        var currentSize = this.sizer(doc2);
+        var currentSize = this.sizer(doc3);
         this.docs = this.docs.insert(key, {
-          document: doc2.clone(),
+          document: doc3.clone(),
           size: currentSize,
           readTime
         });
@@ -32582,9 +29074,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       MemoryRemoteDocumentChangeBuffer2.prototype.applyChanges = function(transaction) {
         var _this = this;
         var promises = [];
-        this.changes.forEach(function(key, doc2) {
-          if (doc2.document.isValidDocument()) {
-            promises.push(_this.documentCache.addEntry(transaction, doc2.document, _this.getReadTime(key)));
+        this.changes.forEach(function(key, doc3) {
+          if (doc3.document.isValidDocument()) {
+            promises.push(_this.documentCache.addEntry(transaction, doc3.document, _this.getReadTime(key)));
           } else {
             _this.documentCache.removeEntry(key);
           }
@@ -32723,8 +29215,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         this._started = true;
         this.referenceDelegate = referenceDelegateFactory(this);
         this.targetCache = new MemoryTargetCache(this);
-        var sizer = function(doc2) {
-          return _this.referenceDelegate.documentSize(doc2);
+        var sizer = function(doc3) {
+          return _this.referenceDelegate.documentSize(doc3);
         };
         this.indexManager = new MemoryIndexManager();
         this.remoteDocumentCache = newMemoryRemoteDocumentCache(this.indexManager, sizer);
@@ -32879,7 +29371,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           }
         });
       };
-      MemoryEagerDelegate2.prototype.documentSize = function(doc2) {
+      MemoryEagerDelegate2.prototype.documentSize = function(doc3) {
         return 0;
       };
       MemoryEagerDelegate2.prototype.isReferenced = function(txn, key) {
@@ -32921,8 +29413,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
             logDebug("QueryEngine", "Re-using previous result from %s to execute query: %s", lastLimboFreeSnapshotVersion.toString(), stringifyQuery(query2));
           }
           return _this.localDocumentsView.getDocumentsMatchingQuery(transaction, query2, lastLimboFreeSnapshotVersion).next(function(updatedResults) {
-            previousResults.forEach(function(doc2) {
-              updatedResults = updatedResults.insert(doc2.key, doc2);
+            previousResults.forEach(function(doc3) {
+              updatedResults = updatedResults.insert(doc3.key, doc3);
             });
             return updatedResults;
           });
@@ -33722,7 +30214,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       oneofs: false
     };
     function loadProtos() {
-      var root = path.resolve(__dirname, "../protos");
+      var root = path.resolve(__dirname, "src/protos");
       var firestoreProtoFile = path.join(root, "google/firestore/v1/firestore.proto");
       var packageDefinition = protoLoader.loadSync(firestoreProtoFile, Object.assign(Object.assign({}, protoLoaderOptions), {includeDirs: [root]}));
       return grpcJs.loadPackageDefinition(packageDefinition);
@@ -34193,14 +30685,14 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
               response = _d.sent();
               docs = new Map();
               response.forEach(function(proto) {
-                var doc2 = fromBatchGetDocumentsResponse(datastoreImpl.serializer, proto);
-                docs.set(doc2.key.toString(), doc2);
+                var doc3 = fromBatchGetDocumentsResponse(datastoreImpl.serializer, proto);
+                docs.set(doc3.key.toString(), doc3);
               });
               result = [];
               keys.forEach(function(key) {
-                var doc2 = docs.get(key.toString());
-                hardAssert(!!doc2);
-                result.push(doc2);
+                var doc3 = docs.get(key.toString());
+                hardAssert(!!doc3);
+                result.push(doc3);
               });
               return [2, result];
           }
@@ -35064,8 +31556,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return this.sortedSet.isEmpty();
       };
       DocumentSet2.prototype.indexOf = function(key) {
-        var doc2 = this.keyedMap.get(key);
-        return doc2 ? this.sortedSet.indexOf(doc2) : -1;
+        var doc3 = this.keyedMap.get(key);
+        return doc3 ? this.sortedSet.indexOf(doc3) : -1;
       };
       Object.defineProperty(DocumentSet2.prototype, "size", {
         get: function() {
@@ -35080,16 +31572,16 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           return false;
         });
       };
-      DocumentSet2.prototype.add = function(doc2) {
-        var set = this.delete(doc2.key);
-        return set.copy(set.keyedMap.insert(doc2.key, doc2), set.sortedSet.insert(doc2, null));
+      DocumentSet2.prototype.add = function(doc3) {
+        var set = this.delete(doc3.key);
+        return set.copy(set.keyedMap.insert(doc3.key, doc3), set.sortedSet.insert(doc3, null));
       };
       DocumentSet2.prototype.delete = function(key) {
-        var doc2 = this.get(key);
-        if (!doc2) {
+        var doc3 = this.get(key);
+        if (!doc3) {
           return this;
         }
-        return this.copy(this.keyedMap.remove(key), this.sortedSet.remove(doc2));
+        return this.copy(this.keyedMap.remove(key), this.sortedSet.remove(doc3));
       };
       DocumentSet2.prototype.isEqual = function(other) {
         if (!(other instanceof DocumentSet2)) {
@@ -35111,8 +31603,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       DocumentSet2.prototype.toString = function() {
         var docStrings = [];
-        this.forEach(function(doc2) {
-          docStrings.push(doc2.toString());
+        this.forEach(function(doc3) {
+          docStrings.push(doc3.toString());
         });
         if (docStrings.length === 0) {
           return "DocumentSet ()";
@@ -35195,8 +31687,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       }
       ViewSnapshot2.fromInitialDocuments = function(query2, documents, mutatedKeys, fromCache) {
         var changes = [];
-        documents.forEach(function(doc2) {
-          changes.push({type: 0, doc: doc2});
+        documents.forEach(function(doc3) {
+          changes.push({type: 0, doc: doc3});
         });
         return new ViewSnapshot2(query2, documents, DocumentSet.emptySet(documents), changes, mutatedKeys, fromCache, true, false);
       };
@@ -35482,8 +31974,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function BundleConverterImpl2(serializer) {
         this.serializer = serializer;
       }
-      BundleConverterImpl2.prototype.toDocumentKey = function(name) {
-        return fromName(this.serializer, name);
+      BundleConverterImpl2.prototype.toDocumentKey = function(name2) {
+        return fromName(this.serializer, name2);
       };
       BundleConverterImpl2.prototype.toMutableDocument = function(bundledDoc) {
         if (bundledDoc.metadata.exists) {
@@ -35767,9 +32259,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         }
         var oldLimboDocuments = this.limboDocuments;
         this.limboDocuments = documentKeySet();
-        this.documentSet.forEach(function(doc2) {
-          if (_this.shouldBeInLimbo(doc2.key)) {
-            _this.limboDocuments = _this.limboDocuments.add(doc2.key);
+        this.documentSet.forEach(function(doc3) {
+          if (_this.shouldBeInLimbo(doc3.key)) {
+            _this.limboDocuments = _this.limboDocuments.add(doc3.key);
           }
         });
         var changes = [];
@@ -37105,17 +33597,6 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Function " + functionName + "() cannot be called with an empty " + argumentName + ".");
       }
     }
-    function validateSetOptions(methodName, options2) {
-      if (options2 === void 0) {
-        return {
-          merge: false
-        };
-      }
-      if (options2.mergeFields !== void 0 && options2.merge !== void 0) {
-        throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid options passed to function " + methodName + '(): You cannot specify both "merge" and "mergeFields".');
-      }
-      return options2;
-    }
     function validateIsNotUsedTogether(optionName1, argument1, optionName2, argument2) {
       if (argument1 === true && argument2 === true) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, optionName1 + " and " + optionName2 + " cannot be used together.");
@@ -37416,8 +33897,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
                 return [4, invokeBatchGetDocumentsRpc(this.datastore, keys)];
               case 1:
                 docs = _d.sent();
-                docs.forEach(function(doc2) {
-                  return _this.recordVersion(doc2);
+                docs.forEach(function(doc3) {
+                  return _this.recordVersion(doc3);
                 });
                 return [2, docs];
             }
@@ -37468,22 +33949,22 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           });
         });
       };
-      Transaction2.prototype.recordVersion = function(doc2) {
+      Transaction2.prototype.recordVersion = function(doc3) {
         var docVersion;
-        if (doc2.isFoundDocument()) {
-          docVersion = doc2.version;
-        } else if (doc2.isNoDocument()) {
+        if (doc3.isFoundDocument()) {
+          docVersion = doc3.version;
+        } else if (doc3.isNoDocument()) {
           docVersion = SnapshotVersion.min();
         } else {
           throw fail();
         }
-        var existingVersion = this.readVersions.get(doc2.key.toString());
+        var existingVersion = this.readVersions.get(doc3.key.toString());
         if (existingVersion) {
           if (!docVersion.isEqual(existingVersion)) {
             throw new FirestoreError(Code.ABORTED, "Document version changed between two reads.");
           }
         } else {
-          this.readVersions.set(doc2.key.toString(), docVersion);
+          this.readVersions.set(doc3.key.toString(), docVersion);
         }
       };
       Transaction2.prototype.precondition = function(key) {
@@ -38229,7 +34710,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       return newBundleReader(toByteStreamReader(content), serializer);
     }
     var DatabaseInfo = function() {
-      function DatabaseInfo2(databaseId, appId, persistenceKey, host, ssl, forceLongPolling, autoDetectLongPolling, useFetchStreams) {
+      function DatabaseInfo2(databaseId, appId, persistenceKey, host, ssl, forceLongPolling, autoDetectLongPolling) {
         this.databaseId = databaseId;
         this.appId = appId;
         this.persistenceKey = persistenceKey;
@@ -38237,7 +34718,6 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         this.ssl = ssl;
         this.forceLongPolling = forceLongPolling;
         this.autoDetectLongPolling = autoDetectLongPolling;
-        this.useFetchStreams = useFetchStreams;
       }
       return DatabaseInfo2;
     }();
@@ -38270,7 +34750,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       }
     }
     function makeDatabaseInfo(databaseId, appId, persistenceKey, settings) {
-      return new DatabaseInfo(databaseId, appId, persistenceKey, settings.host, settings.ssl, settings.experimentalForceLongPolling, settings.experimentalAutoDetectLongPolling, settings.useFetchStreams);
+      return new DatabaseInfo(databaseId, appId, persistenceKey, settings.host, settings.ssl, settings.experimentalForceLongPolling, settings.experimentalAutoDetectLongPolling);
     }
     var OAuthToken = function() {
       function OAuthToken2(value, user) {
@@ -38327,16 +34807,20 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       function FirebaseCredentialsProvider2(authProvider) {
         var _this = this;
         this.currentUser = User.UNAUTHENTICATED;
-        this.authDeferred = new Deferred();
+        this.receivedInitialUser = new Deferred();
         this.tokenCounter = 0;
+        this.changeListener = function() {
+          return Promise.resolve();
+        };
+        this.invokeChangeListener = false;
         this.forceRefresh = false;
         this.auth = null;
         this.asyncQueue = null;
         this.tokenListener = function() {
           _this.tokenCounter++;
           _this.currentUser = _this.getUser();
-          _this.authDeferred.resolve();
-          if (_this.changeListener) {
+          _this.receivedInitialUser.resolve();
+          if (_this.invokeChangeListener) {
             _this.asyncQueue.enqueueRetryable(function() {
               return _this.changeListener(_this.currentUser);
             });
@@ -38345,6 +34829,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var registerAuth = function(auth) {
           logDebug("FirebaseCredentialsProvider", "Auth detected");
           _this.auth = auth;
+          _this.awaitTokenAndRaiseInitialEvent();
           _this.auth.addAuthTokenListener(_this.tokenListener);
         };
         authProvider.onInit(function(auth) {
@@ -38355,9 +34840,11 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
             var auth = authProvider.getImmediate({optional: true});
             if (auth) {
               registerAuth(auth);
-            } else {
+            } else if (_this.invokeChangeListener) {
               logDebug("FirebaseCredentialsProvider", "Auth not yet detected");
-              _this.authDeferred.resolve();
+              _this.asyncQueue.enqueueRetryable(function() {
+                return _this.changeListener(_this.currentUser);
+              });
             }
           }
         }, 0);
@@ -38388,25 +34875,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         this.forceRefresh = true;
       };
       FirebaseCredentialsProvider2.prototype.setChangeListener = function(asyncQueue, changeListener) {
-        var _this = this;
+        this.invokeChangeListener = true;
         this.asyncQueue = asyncQueue;
-        this.asyncQueue.enqueueRetryable(function() {
-          return tslib.__awaiter(_this, void 0, void 0, function() {
-            return tslib.__generator(this, function(_d) {
-              switch (_d.label) {
-                case 0:
-                  return [4, this.authDeferred.promise];
-                case 1:
-                  _d.sent();
-                  return [4, changeListener(this.currentUser)];
-                case 2:
-                  _d.sent();
-                  this.changeListener = changeListener;
-                  return [2];
-              }
-            });
-          });
-        });
+        this.changeListener = changeListener;
       };
       FirebaseCredentialsProvider2.prototype.removeChangeListener = function() {
         if (this.auth) {
@@ -38420,6 +34891,29 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var currentUid = this.auth && this.auth.getUid();
         hardAssert(currentUid === null || typeof currentUid === "string");
         return new User(currentUid);
+      };
+      FirebaseCredentialsProvider2.prototype.awaitTokenAndRaiseInitialEvent = function() {
+        var _this = this;
+        if (this.invokeChangeListener) {
+          this.invokeChangeListener = false;
+          this.asyncQueue.enqueueRetryable(function() {
+            return tslib.__awaiter(_this, void 0, void 0, function() {
+              return tslib.__generator(this, function(_d) {
+                switch (_d.label) {
+                  case 0:
+                    return [4, this.receivedInitialUser.promise];
+                  case 1:
+                    _d.sent();
+                    return [4, this.changeListener(this.currentUser)];
+                  case 2:
+                    _d.sent();
+                    this.invokeChangeListener = true;
+                    return [2];
+                }
+              });
+            });
+          });
+        }
       };
       return FirebaseCredentialsProvider2;
     }();
@@ -38513,11 +35007,10 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         }
         this.experimentalForceLongPolling = !!settings.experimentalForceLongPolling;
         this.experimentalAutoDetectLongPolling = !!settings.experimentalAutoDetectLongPolling;
-        this.useFetchStreams = !!settings.useFetchStreams;
         validateIsNotUsedTogether("experimentalForceLongPolling", settings.experimentalForceLongPolling, "experimentalAutoDetectLongPolling", settings.experimentalAutoDetectLongPolling);
       }
       FirestoreSettings2.prototype.isEqual = function(other) {
-        return this.host === other.host && this.ssl === other.ssl && this.credentials === other.credentials && this.cacheSizeBytes === other.cacheSizeBytes && this.experimentalForceLongPolling === other.experimentalForceLongPolling && this.experimentalAutoDetectLongPolling === other.experimentalAutoDetectLongPolling && this.ignoreUndefinedProperties === other.ignoreUndefinedProperties && this.useFetchStreams === other.useFetchStreams;
+        return this.host === other.host && this.ssl === other.ssl && this.credentials === other.credentials && this.cacheSizeBytes === other.cacheSizeBytes && this.experimentalForceLongPolling === other.experimentalForceLongPolling && this.experimentalAutoDetectLongPolling === other.experimentalAutoDetectLongPolling && this.ignoreUndefinedProperties === other.ignoreUndefinedProperties;
       };
       return FirestoreSettings2;
     }();
@@ -38595,11 +35088,11 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       return FirebaseFirestore2;
     }();
-    function databaseIdFromApp(app) {
-      if (!Object.prototype.hasOwnProperty.apply(app.options, ["projectId"])) {
+    function databaseIdFromApp(app2) {
+      if (!Object.prototype.hasOwnProperty.apply(app2.options, ["projectId"])) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, '"projectId" not provided in firebase.initializeApp.');
       }
-      return new DatabaseId(app.options.projectId);
+      return new DatabaseId(app2.options.projectId);
     }
     function useFirestoreEmulator(firestore, host, port, options2) {
       if (options2 === void 0) {
@@ -38711,7 +35204,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       return CollectionReference2;
     }(Query);
-    function collection(parent, path2) {
+    function collection2(parent, path2) {
       var pathSegments = [];
       for (var _i = 2; _i < arguments.length; _i++) {
         pathSegments[_i - 2] = arguments[_i];
@@ -38739,7 +35232,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       }
       return new Query(firestore, null, newQueryForCollectionGroup(collectionId));
     }
-    function doc(parent, path2) {
+    function doc2(parent, path2) {
       var pathSegments = [];
       for (var _i = 2; _i < arguments.length; _i++) {
         pathSegments[_i - 2] = arguments[_i];
@@ -39043,6 +35536,22 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       return FirebaseFirestore$12;
     }(FirebaseFirestore);
+    function initializeFirestore(app$1, settings) {
+      var provider = app._getProvider(app$1, "firestore-exp");
+      if (provider.isInitialized()) {
+        throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore can only be initialized once per app.");
+      }
+      if (settings.cacheSizeBytes !== void 0 && settings.cacheSizeBytes !== CACHE_SIZE_UNLIMITED && settings.cacheSizeBytes < LRU_MINIMUM_CACHE_SIZE_BYTES) {
+        throw new FirestoreError(Code.INVALID_ARGUMENT, "cacheSizeBytes must be at least " + LRU_MINIMUM_CACHE_SIZE_BYTES);
+      }
+      return provider.initialize({options: settings});
+    }
+    function getFirestore2(app$1) {
+      if (app$1 === void 0) {
+        app$1 = app.getApp();
+      }
+      return app._getProvider(app$1, "firestore-exp").getImmediate();
+    }
     function ensureFirestoreConfigured(firestore) {
       if (!firestore._firestoreClient) {
         configureFirestore(firestore);
@@ -39162,6 +35671,10 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientDisableNetwork(client);
     }
+    function terminate(firestore) {
+      app._removeServiceInstance(firestore.app, "firestore-exp");
+      return firestore._delete();
+    }
     function loadBundle(firestore, bundleData) {
       firestore = cast(firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
@@ -39169,10 +35682,10 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       firestoreClientLoadBundle(client, firestore._databaseId, bundleData, resultTask);
       return resultTask;
     }
-    function namedQuery(firestore, name) {
+    function namedQuery(firestore, name2) {
       firestore = cast(firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
-      return firestoreClientGetNamedQuery(client, name).then(function(namedQuery2) {
+      return firestoreClientGetNamedQuery(client, name2).then(function(namedQuery2) {
         if (!namedQuery2) {
           return null;
         }
@@ -39183,6 +35696,19 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       if (firestore._initialized || firestore._terminated) {
         throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore has already been started and persistence can no longer be enabled. You can only enable persistence before calling any other methods on a Firestore object.");
       }
+    }
+    function registerFirestore(variant) {
+      setSDKVersion(app.SDK_VERSION);
+      app._registerComponent(new component.Component("firestore-exp", function(container, _d) {
+        var settings = _d.options;
+        var app2 = container.getProvider("app-exp").getImmediate();
+        var firestoreInstance = new FirebaseFirestore$1(app2, container.getProvider("auth-internal"));
+        if (settings) {
+          firestoreInstance._setSettings(settings);
+        }
+        return firestoreInstance;
+      }, "PUBLIC"));
+      app.registerVersion(name, version, variant);
     }
     var FieldPath$1 = function() {
       function FieldPath$12() {
@@ -39202,6 +35728,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       };
       return FieldPath$12;
     }();
+    function documentId() {
+      return new FieldPath$1(DOCUMENT_KEY_NAME);
+    }
     var Bytes = function() {
       function Bytes2(byteString) {
         this._byteString = byteString;
@@ -39499,8 +36028,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var parsedElements = this._elements.map(function(element) {
           return parseData(element, parseContext);
         });
-        var arrayUnion = new ArrayUnionTransformOperation(parsedElements);
-        return new FieldTransform(context.path, arrayUnion);
+        var arrayUnion2 = new ArrayUnionTransformOperation(parsedElements);
+        return new FieldTransform(context.path, arrayUnion2);
       };
       ArrayUnionFieldValueImpl2.prototype.isEqual = function(other) {
         return this === other;
@@ -39519,8 +36048,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var parsedElements = this._elements.map(function(element) {
           return parseData(element, parseContext);
         });
-        var arrayUnion = new ArrayRemoveTransformOperation(parsedElements);
-        return new FieldTransform(context.path, arrayUnion);
+        var arrayUnion2 = new ArrayRemoveTransformOperation(parsedElements);
+        return new FieldTransform(context.path, arrayUnion2);
       };
       ArrayRemoveFieldValueImpl2.prototype.isEqual = function(other) {
         return this === other;
@@ -39808,7 +36337,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           var snapshot = new QueryDocumentSnapshot(this._firestore, this._userDataWriter, this._key, this._document, null);
           return this._converter.fromFirestore(snapshot);
         } else {
-          return this._userDataWriter.convertValue(this._document.data.value);
+          return this._userDataWriter.convertValue(this._document.data.toProto());
         }
       };
       DocumentSnapshot2.prototype.get = function(fieldPath) {
@@ -39873,7 +36402,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           var snapshot = new QueryDocumentSnapshot$1(this._firestore, this._userDataWriter, this._key, this._document, this.metadata, null);
           return this._converter.fromFirestore(snapshot, options2);
         } else {
-          return this._userDataWriter.convertValue(this._document.data.value, options2.serverTimestamps);
+          return this._userDataWriter.convertValue(this._document.data.toProto(), options2.serverTimestamps);
         }
       };
       DocumentSnapshot$12.prototype.get = function(fieldPath, options2) {
@@ -39914,8 +36443,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       Object.defineProperty(QuerySnapshot2.prototype, "docs", {
         get: function() {
           var result = [];
-          this.forEach(function(doc2) {
-            return result.push(doc2);
+          this.forEach(function(doc3) {
+            return result.push(doc3);
           });
           return result;
         },
@@ -39938,8 +36467,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       });
       QuerySnapshot2.prototype.forEach = function(callback, thisArg) {
         var _this = this;
-        this._snapshot.docs.forEach(function(doc2) {
-          callback.call(thisArg, new QueryDocumentSnapshot$1(_this._firestore, _this._userDataWriter, doc2.key, doc2, new SnapshotMetadata(_this._snapshot.mutatedKeys.has(doc2.key), _this._snapshot.fromCache), _this.query.converter));
+        this._snapshot.docs.forEach(function(doc3) {
+          callback.call(thisArg, new QueryDocumentSnapshot$1(_this._firestore, _this._userDataWriter, doc3.key, doc3, new SnapshotMetadata(_this._snapshot.mutatedKeys.has(doc3.key), _this._snapshot.fromCache), _this.query.converter));
         });
       };
       QuerySnapshot2.prototype.docChanges = function(options2) {
@@ -39963,11 +36492,11 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var lastDoc_1;
         var index_1 = 0;
         return querySnapshot._snapshot.docChanges.map(function(change) {
-          var doc2 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
+          var doc3 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
           lastDoc_1 = change.doc;
           return {
             type: "added",
-            doc: doc2,
+            doc: doc3,
             oldIndex: -1,
             newIndex: index_1++
           };
@@ -39977,7 +36506,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return querySnapshot._snapshot.docChanges.filter(function(change) {
           return includeMetadataChanges || change.type !== 3;
         }).map(function(change) {
-          var doc2 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
+          var doc3 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
           var oldIndex = -1;
           var newIndex = -1;
           if (change.type !== 0) {
@@ -39990,7 +36519,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           }
           return {
             type: resultChangeType(change.type),
-            doc: doc2,
+            doc: doc3,
             oldIndex,
             newIndex
           };
@@ -40210,17 +36739,17 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       validateNewOrderBy(query2, orderBy2);
       return orderBy2;
     }
-    function newQueryBoundFromDocument(query2, databaseId, methodName, doc2, before) {
-      if (!doc2) {
+    function newQueryBoundFromDocument(query2, databaseId, methodName, doc3, before) {
+      if (!doc3) {
         throw new FirestoreError(Code.NOT_FOUND, "Can't use a DocumentSnapshot that doesn't exist for " + (methodName + "()."));
       }
       var components = [];
       for (var _i = 0, _d = queryOrderBy(query2); _i < _d.length; _i++) {
         var orderBy_5 = _d[_i];
         if (orderBy_5.field.isKeyField()) {
-          components.push(refValue(databaseId, doc2.key));
+          components.push(refValue(databaseId, doc3.key));
         } else {
-          var value = doc2.data.field(orderBy_5.field);
+          var value = doc3.data.field(orderBy_5.field);
           if (isServerTimestamp(value)) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, 'Invalid query. You are trying to start or end a query using a document for which the field "' + orderBy_5.field + '" is an uncommitted server timestamp. (Since the value of this field is unknown, you cannot start/end a query with it.)');
           } else if (value !== null) {
@@ -40391,7 +36920,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       AbstractUserDataWriter2.prototype.convertObject = function(mapValue, serverTimestampBehavior) {
         var _this = this;
         var result = {};
-        forEach(mapValue.fields, function(key, value) {
+        forEach(mapValue.fields || {}, function(key, value) {
           result[key] = _this.convertValue(value, serverTimestampBehavior);
         });
         return result;
@@ -40423,8 +36952,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         var normalizedValue = normalizeTimestamp(value);
         return new Timestamp(normalizedValue.seconds, normalizedValue.nanos);
       };
-      AbstractUserDataWriter2.prototype.convertDocumentKey = function(name, expectedDatabaseId) {
-        var resourcePath = ResourcePath.fromString(name);
+      AbstractUserDataWriter2.prototype.convertDocumentKey = function(name2, expectedDatabaseId) {
+        var resourcePath = ResourcePath.fromString(name2);
         hardAssert(isValidResourceName(resourcePath));
         var databaseId = new DatabaseId(resourcePath.get(1), resourcePath.get(3));
         var key = new DocumentKey(resourcePath.popFirst(5));
@@ -40458,8 +36987,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       LiteUserDataWriter2.prototype.convertBytes = function(bytes) {
         return new Bytes(bytes);
       };
-      LiteUserDataWriter2.prototype.convertReference = function(name) {
-        var key = this.convertDocumentKey(name, this.firestore._databaseId);
+      LiteUserDataWriter2.prototype.convertReference = function(name2) {
+        var key = this.convertDocumentKey(name2, this.firestore._databaseId);
         return new DocumentReference(this.firestore, null, key);
       };
       return LiteUserDataWriter2;
@@ -40540,10 +37069,10 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
           if (!docs || docs.length !== 1) {
             return fail();
           }
-          var doc2 = docs[0];
-          if (doc2.isFoundDocument()) {
-            return new DocumentSnapshot(_this._firestore, userDataWriter, doc2.key, doc2, ref.converter);
-          } else if (doc2.isNoDocument()) {
+          var doc3 = docs[0];
+          if (doc3.isFoundDocument()) {
+            return new DocumentSnapshot(_this._firestore, userDataWriter, doc3.key, doc3, ref.converter);
+          } else if (doc3.isNoDocument()) {
             return new DocumentSnapshot(_this._firestore, userDataWriter, ref._key, null, ref.converter);
           } else {
             throw fail();
@@ -40596,7 +37125,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       }
       return false;
     }
-    function getDoc(reference) {
+    function getDoc2(reference) {
       reference = cast(reference, DocumentReference);
       var firestore = cast(reference.firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
@@ -40614,8 +37143,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       ExpUserDataWriter2.prototype.convertBytes = function(bytes) {
         return new Bytes(bytes);
       };
-      ExpUserDataWriter2.prototype.convertReference = function(name) {
-        var key = this.convertDocumentKey(name, this.firestore._databaseId);
+      ExpUserDataWriter2.prototype.convertReference = function(name2) {
+        var key = this.convertDocumentKey(name2, this.firestore._databaseId);
         return new DocumentReference(this.firestore, null, key);
       };
       return ExpUserDataWriter2;
@@ -40625,8 +37154,8 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       var firestore = cast(reference.firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      return firestoreClientGetDocumentFromLocalCache(client, reference._key).then(function(doc2) {
-        return new DocumentSnapshot$1(firestore, userDataWriter, reference._key, doc2, new SnapshotMetadata(doc2 !== null && doc2.hasLocalMutations, true), reference.converter);
+      return firestoreClientGetDocumentFromLocalCache(client, reference._key).then(function(doc3) {
+        return new DocumentSnapshot$1(firestore, userDataWriter, reference._key, doc3, new SnapshotMetadata(doc3 !== null && doc3.hasLocalMutations, true), reference.converter);
       });
     }
     function getDocFromServer(reference) {
@@ -40669,7 +37198,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return new QuerySnapshot(firestore, userDataWriter, query2, snapshot);
       });
     }
-    function setDoc(reference, data, options2) {
+    function setDoc2(reference, data, options2) {
       reference = cast(reference, DocumentReference);
       var firestore = cast(reference.firestore, FirebaseFirestore$1);
       var convertedValue = applyFirestoreDataConverter(reference.converter, data, options2);
@@ -40703,7 +37232,7 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
     }
     function addDoc(reference, data) {
       var firestore = cast(reference.firestore, FirebaseFirestore$1);
-      var docRef = doc(reference);
+      var docRef = doc2(reference);
       var convertedValue = applyFirestoreDataConverter(reference.converter, data);
       var dataReader = newUserDataReader(reference.firestore);
       var parsed = parseSetData(dataReader, "addDoc", docRef._key, convertedValue, reference.converter !== null, {});
@@ -40783,9 +37312,9 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
       return firestoreClientWrite(client, mutations);
     }
     function convertToDocSnapshot(firestore, ref, snapshot) {
-      var doc2 = snapshot.docs.get(ref._key);
+      var doc3 = snapshot.docs.get(ref._key);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      return new DocumentSnapshot$1(firestore, userDataWriter, ref._key, doc2, new SnapshotMetadata(snapshot.hasPendingWrites, snapshot.fromCache), ref.converter);
+      return new DocumentSnapshot$1(firestore, userDataWriter, ref._key, doc3, new SnapshotMetadata(snapshot.hasPendingWrites, snapshot.fromCache), ref.converter);
     }
     var Transaction$2 = function(_super) {
       tslib.__extends(Transaction$22, _super);
@@ -40810,946 +37339,107 @@ var require_database_faf39e5b_0bb5e962 = __commonJS({
         return updateFunction(new Transaction$2(firestore, internalTransaction));
       });
     }
-    function assertUint8ArrayAvailable() {
-      if (typeof Uint8Array === "undefined") {
-        throw new FirestoreError(Code.UNIMPLEMENTED, "Uint8Arrays are not available in this environment.");
-      }
-    }
-    var Blob2 = function() {
-      function Blob3(_delegate) {
-        this._delegate = _delegate;
-      }
-      Blob3.fromBase64String = function(base64) {
-        return new Blob3(Bytes.fromBase64String(base64));
-      };
-      Blob3.fromUint8Array = function(array) {
-        assertUint8ArrayAvailable();
-        return new Blob3(Bytes.fromUint8Array(array));
-      };
-      Blob3.prototype.toBase64 = function() {
-        return this._delegate.toBase64();
-      };
-      Blob3.prototype.toUint8Array = function() {
-        assertUint8ArrayAvailable();
-        return this._delegate.toUint8Array();
-      };
-      Blob3.prototype.isEqual = function(other) {
-        return this._delegate.isEqual(other._delegate);
-      };
-      Blob3.prototype.toString = function() {
-        return "Blob(base64: " + this.toBase64() + ")";
-      };
-      return Blob3;
-    }();
-    var IndexedDbPersistenceProvider = function() {
-      function IndexedDbPersistenceProvider2() {
-      }
-      IndexedDbPersistenceProvider2.prototype.enableIndexedDbPersistence = function(firestore, forceOwnership) {
-        return enableIndexedDbPersistence(firestore._delegate, {forceOwnership});
-      };
-      IndexedDbPersistenceProvider2.prototype.enableMultiTabIndexedDbPersistence = function(firestore) {
-        return enableMultiTabIndexedDbPersistence(firestore._delegate);
-      };
-      IndexedDbPersistenceProvider2.prototype.clearIndexedDbPersistence = function(firestore) {
-        return clearIndexedDbPersistence(firestore._delegate);
-      };
-      return IndexedDbPersistenceProvider2;
-    }();
-    var Firestore = function() {
-      function Firestore2(databaseIdOrApp, _delegate, _persistenceProvider) {
-        var _this = this;
-        this._delegate = _delegate;
-        this._persistenceProvider = _persistenceProvider;
-        this.INTERNAL = {
-          delete: function() {
-            return _this.terminate();
-          }
-        };
-        if (!(databaseIdOrApp instanceof DatabaseId)) {
-          this._appCompat = databaseIdOrApp;
-        }
-      }
-      Object.defineProperty(Firestore2.prototype, "_databaseId", {
-        get: function() {
-          return this._delegate._databaseId;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Firestore2.prototype.settings = function(settingsLiteral) {
-        var currentSettings = this._delegate._getSettings();
-        if (!settingsLiteral.merge && currentSettings.host !== settingsLiteral.host) {
-          logWarn("You are overriding the original host. If you did not intend to override your settings, use {merge: true}.");
-        }
-        if (settingsLiteral.merge) {
-          settingsLiteral = Object.assign(Object.assign({}, currentSettings), settingsLiteral);
-          delete settingsLiteral.merge;
-        }
-        this._delegate._setSettings(settingsLiteral);
-      };
-      Firestore2.prototype.useEmulator = function(host, port, options2) {
-        if (options2 === void 0) {
-          options2 = {};
-        }
-        useFirestoreEmulator(this._delegate, host, port, options2);
-      };
-      Firestore2.prototype.enableNetwork = function() {
-        return enableNetwork(this._delegate);
-      };
-      Firestore2.prototype.disableNetwork = function() {
-        return disableNetwork(this._delegate);
-      };
-      Firestore2.prototype.enablePersistence = function(settings) {
-        var synchronizeTabs = false;
-        var experimentalForceOwningTab = false;
-        if (settings) {
-          synchronizeTabs = !!settings.synchronizeTabs;
-          experimentalForceOwningTab = !!settings.experimentalForceOwningTab;
-          validateIsNotUsedTogether("synchronizeTabs", synchronizeTabs, "experimentalForceOwningTab", experimentalForceOwningTab);
-        }
-        return synchronizeTabs ? this._persistenceProvider.enableMultiTabIndexedDbPersistence(this) : this._persistenceProvider.enableIndexedDbPersistence(this, experimentalForceOwningTab);
-      };
-      Firestore2.prototype.clearPersistence = function() {
-        return this._persistenceProvider.clearIndexedDbPersistence(this);
-      };
-      Firestore2.prototype.terminate = function() {
-        if (this._appCompat) {
-          this._appCompat._removeServiceInstance("firestore");
-          this._appCompat._removeServiceInstance("firestore-exp");
-        }
-        return this._delegate._delete();
-      };
-      Firestore2.prototype.waitForPendingWrites = function() {
-        return waitForPendingWrites(this._delegate);
-      };
-      Firestore2.prototype.onSnapshotsInSync = function(arg) {
-        return onSnapshotsInSync(this._delegate, arg);
-      };
-      Object.defineProperty(Firestore2.prototype, "app", {
-        get: function() {
-          if (!this._appCompat) {
-            throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore was not initialized using the Firebase SDK. 'app' is not available");
-          }
-          return this._appCompat;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Firestore2.prototype.collection = function(pathString) {
-        try {
-          return new CollectionReference$1(this, collection(this._delegate, pathString));
-        } catch (e) {
-          throw replaceFunctionName(e, "collection()", "Firestore.collection()");
-        }
-      };
-      Firestore2.prototype.doc = function(pathString) {
-        try {
-          return new DocumentReference$1(this, doc(this._delegate, pathString));
-        } catch (e) {
-          throw replaceFunctionName(e, "doc()", "Firestore.doc()");
-        }
-      };
-      Firestore2.prototype.collectionGroup = function(collectionId) {
-        try {
-          return new Query$1(this, collectionGroup(this._delegate, collectionId));
-        } catch (e) {
-          throw replaceFunctionName(e, "collectionGroup()", "Firestore.collectionGroup()");
-        }
-      };
-      Firestore2.prototype.runTransaction = function(updateFunction) {
-        var _this = this;
-        return runTransaction(this._delegate, function(transaction) {
-          return updateFunction(new Transaction$3(_this, transaction));
-        });
-      };
-      Firestore2.prototype.batch = function() {
-        var _this = this;
-        ensureFirestoreConfigured(this._delegate);
-        return new WriteBatch$1(new WriteBatch(this._delegate, function(mutations) {
-          return executeWrite(_this._delegate, mutations);
-        }));
-      };
-      Firestore2.prototype.loadBundle = function(bundleData) {
-        throw new FirestoreError(Code.FAILED_PRECONDITION, '"loadBundle()" does not exist, have you imported "firebase/firestore/bundle"?');
-      };
-      Firestore2.prototype.namedQuery = function(name) {
-        throw new FirestoreError(Code.FAILED_PRECONDITION, '"namedQuery()" does not exist, have you imported "firebase/firestore/bundle"?');
-      };
-      return Firestore2;
-    }();
-    var UserDataWriter = function(_super) {
-      tslib.__extends(UserDataWriter2, _super);
-      function UserDataWriter2(firestore) {
-        var _this = _super.call(this) || this;
-        _this.firestore = firestore;
-        return _this;
-      }
-      UserDataWriter2.prototype.convertBytes = function(bytes) {
-        return new Blob2(new Bytes(bytes));
-      };
-      UserDataWriter2.prototype.convertReference = function(name) {
-        var key = this.convertDocumentKey(name, this.firestore._databaseId);
-        return DocumentReference$1.forKey(key, this.firestore, null);
-      };
-      return UserDataWriter2;
-    }(AbstractUserDataWriter);
-    function setLogLevel$1(level) {
-      setLogLevel(level);
-    }
-    var Transaction$3 = function() {
-      function Transaction$32(_firestore, _delegate) {
-        this._firestore = _firestore;
-        this._delegate = _delegate;
-        this._userDataWriter = new UserDataWriter(_firestore);
-      }
-      Transaction$32.prototype.get = function(documentRef) {
-        var _this = this;
-        var ref = castReference(documentRef);
-        return this._delegate.get(ref).then(function(result) {
-          return new DocumentSnapshot$2(_this._firestore, new DocumentSnapshot$1(_this._firestore._delegate, _this._userDataWriter, result._key, result._document, result.metadata, ref.converter));
-        });
-      };
-      Transaction$32.prototype.set = function(documentRef, data, options2) {
-        var ref = castReference(documentRef);
-        if (options2) {
-          validateSetOptions("Transaction.set", options2);
-          this._delegate.set(ref, data, options2);
-        } else {
-          this._delegate.set(ref, data);
-        }
-        return this;
-      };
-      Transaction$32.prototype.update = function(documentRef, dataOrField, value) {
-        var _d;
-        var moreFieldsAndValues = [];
-        for (var _i = 3; _i < arguments.length; _i++) {
-          moreFieldsAndValues[_i - 3] = arguments[_i];
-        }
-        var ref = castReference(documentRef);
-        if (arguments.length === 2) {
-          this._delegate.update(ref, dataOrField);
-        } else {
-          (_d = this._delegate).update.apply(_d, tslib.__spreadArray([ref, dataOrField, value], moreFieldsAndValues));
-        }
-        return this;
-      };
-      Transaction$32.prototype.delete = function(documentRef) {
-        var ref = castReference(documentRef);
-        this._delegate.delete(ref);
-        return this;
-      };
-      return Transaction$32;
-    }();
-    var WriteBatch$1 = function() {
-      function WriteBatch$12(_delegate) {
-        this._delegate = _delegate;
-      }
-      WriteBatch$12.prototype.set = function(documentRef, data, options2) {
-        var ref = castReference(documentRef);
-        if (options2) {
-          validateSetOptions("WriteBatch.set", options2);
-          this._delegate.set(ref, data, options2);
-        } else {
-          this._delegate.set(ref, data);
-        }
-        return this;
-      };
-      WriteBatch$12.prototype.update = function(documentRef, dataOrField, value) {
-        var _d;
-        var moreFieldsAndValues = [];
-        for (var _i = 3; _i < arguments.length; _i++) {
-          moreFieldsAndValues[_i - 3] = arguments[_i];
-        }
-        var ref = castReference(documentRef);
-        if (arguments.length === 2) {
-          this._delegate.update(ref, dataOrField);
-        } else {
-          (_d = this._delegate).update.apply(_d, tslib.__spreadArray([ref, dataOrField, value], moreFieldsAndValues));
-        }
-        return this;
-      };
-      WriteBatch$12.prototype.delete = function(documentRef) {
-        var ref = castReference(documentRef);
-        this._delegate.delete(ref);
-        return this;
-      };
-      WriteBatch$12.prototype.commit = function() {
-        return this._delegate.commit();
-      };
-      return WriteBatch$12;
-    }();
-    var FirestoreDataConverter = function() {
-      function FirestoreDataConverter2(_firestore, _userDataWriter, _delegate) {
-        this._firestore = _firestore;
-        this._userDataWriter = _userDataWriter;
-        this._delegate = _delegate;
-      }
-      FirestoreDataConverter2.prototype.fromFirestore = function(snapshot, options2) {
-        var expSnapshot = new QueryDocumentSnapshot$1(this._firestore._delegate, this._userDataWriter, snapshot._key, snapshot._document, snapshot.metadata, null);
-        return this._delegate.fromFirestore(new QueryDocumentSnapshot$2(this._firestore, expSnapshot), options2 !== null && options2 !== void 0 ? options2 : {});
-      };
-      FirestoreDataConverter2.prototype.toFirestore = function(modelObject, options2) {
-        if (!options2) {
-          return this._delegate.toFirestore(modelObject);
-        } else {
-          return this._delegate.toFirestore(modelObject, options2);
-        }
-      };
-      FirestoreDataConverter2.getInstance = function(firestore, converter) {
-        var converterMapByFirestore = FirestoreDataConverter2.INSTANCES;
-        var untypedConverterByConverter = converterMapByFirestore.get(firestore);
-        if (!untypedConverterByConverter) {
-          untypedConverterByConverter = new WeakMap();
-          converterMapByFirestore.set(firestore, untypedConverterByConverter);
-        }
-        var instance = untypedConverterByConverter.get(converter);
-        if (!instance) {
-          instance = new FirestoreDataConverter2(firestore, new UserDataWriter(firestore), converter);
-          untypedConverterByConverter.set(converter, instance);
-        }
-        return instance;
-      };
-      return FirestoreDataConverter2;
-    }();
-    FirestoreDataConverter.INSTANCES = new WeakMap();
-    var DocumentReference$1 = function() {
-      function DocumentReference$12(firestore, _delegate) {
-        this.firestore = firestore;
-        this._delegate = _delegate;
-        this._userDataWriter = new UserDataWriter(firestore);
-      }
-      DocumentReference$12.forPath = function(path2, firestore, converter) {
-        if (path2.length % 2 !== 0) {
-          throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid document reference. Document references must have an even number of segments, but " + (path2.canonicalString() + " has " + path2.length));
-        }
-        return new DocumentReference$12(firestore, new DocumentReference(firestore._delegate, converter, new DocumentKey(path2)));
-      };
-      DocumentReference$12.forKey = function(key, firestore, converter) {
-        return new DocumentReference$12(firestore, new DocumentReference(firestore._delegate, converter, key));
-      };
-      Object.defineProperty(DocumentReference$12.prototype, "id", {
-        get: function() {
-          return this._delegate.id;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentReference$12.prototype, "parent", {
-        get: function() {
-          return new CollectionReference$1(this.firestore, this._delegate.parent);
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentReference$12.prototype, "path", {
-        get: function() {
-          return this._delegate.path;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      DocumentReference$12.prototype.collection = function(pathString) {
-        try {
-          return new CollectionReference$1(this.firestore, collection(this._delegate, pathString));
-        } catch (e) {
-          throw replaceFunctionName(e, "collection()", "DocumentReference.collection()");
-        }
-      };
-      DocumentReference$12.prototype.isEqual = function(other) {
-        other = util.getModularInstance(other);
-        if (!(other instanceof DocumentReference)) {
-          return false;
-        }
-        return refEqual(this._delegate, other);
-      };
-      DocumentReference$12.prototype.set = function(value, options2) {
-        options2 = validateSetOptions("DocumentReference.set", options2);
-        try {
-          return setDoc(this._delegate, value, options2);
-        } catch (e) {
-          throw replaceFunctionName(e, "setDoc()", "DocumentReference.set()");
-        }
-      };
-      DocumentReference$12.prototype.update = function(fieldOrUpdateData, value) {
-        var moreFieldsAndValues = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-          moreFieldsAndValues[_i - 2] = arguments[_i];
-        }
-        try {
-          if (arguments.length === 1) {
-            return updateDoc(this._delegate, fieldOrUpdateData);
-          } else {
-            return updateDoc.apply(void 0, tslib.__spreadArray([this._delegate, fieldOrUpdateData, value], moreFieldsAndValues));
-          }
-        } catch (e) {
-          throw replaceFunctionName(e, "updateDoc()", "DocumentReference.update()");
-        }
-      };
-      DocumentReference$12.prototype.delete = function() {
-        return deleteDoc(this._delegate);
-      };
-      DocumentReference$12.prototype.onSnapshot = function() {
-        var _this = this;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        var options2 = extractSnapshotOptions(args);
-        var observer = wrapObserver(args, function(result) {
-          return new DocumentSnapshot$2(_this.firestore, new DocumentSnapshot$1(_this.firestore._delegate, _this._userDataWriter, result._key, result._document, result.metadata, _this._delegate.converter));
-        });
-        return onSnapshot(this._delegate, options2, observer);
-      };
-      DocumentReference$12.prototype.get = function(options2) {
-        var _this = this;
-        var snap;
-        if ((options2 === null || options2 === void 0 ? void 0 : options2.source) === "cache") {
-          snap = getDocFromCache(this._delegate);
-        } else if ((options2 === null || options2 === void 0 ? void 0 : options2.source) === "server") {
-          snap = getDocFromServer(this._delegate);
-        } else {
-          snap = getDoc(this._delegate);
-        }
-        return snap.then(function(result) {
-          return new DocumentSnapshot$2(_this.firestore, new DocumentSnapshot$1(_this.firestore._delegate, _this._userDataWriter, result._key, result._document, result.metadata, _this._delegate.converter));
-        });
-      };
-      DocumentReference$12.prototype.withConverter = function(converter) {
-        return new DocumentReference$12(this.firestore, converter ? this._delegate.withConverter(FirestoreDataConverter.getInstance(this.firestore, converter)) : this._delegate.withConverter(null));
-      };
-      return DocumentReference$12;
-    }();
-    function replaceFunctionName(e, original, updated) {
-      e.message = e.message.replace(original, updated);
-      return e;
-    }
-    function extractSnapshotOptions(args) {
-      for (var _i = 0, args_1 = args; _i < args_1.length; _i++) {
-        var arg = args_1[_i];
-        if (typeof arg === "object" && !isPartialObserver(arg)) {
-          return arg;
-        }
-      }
-      return {};
-    }
-    function wrapObserver(args, wrapper) {
-      var _a, _b;
-      var userObserver;
-      if (isPartialObserver(args[0])) {
-        userObserver = args[0];
-      } else if (isPartialObserver(args[1])) {
-        userObserver = args[1];
-      } else if (typeof args[0] === "function") {
-        userObserver = {
-          next: args[0],
-          error: args[1],
-          complete: args[2]
-        };
-      } else {
-        userObserver = {
-          next: args[1],
-          error: args[2],
-          complete: args[3]
-        };
-      }
-      return {
-        next: function(val) {
-          if (userObserver.next) {
-            userObserver.next(wrapper(val));
-          }
-        },
-        error: (_a = userObserver.error) === null || _a === void 0 ? void 0 : _a.bind(userObserver),
-        complete: (_b = userObserver.complete) === null || _b === void 0 ? void 0 : _b.bind(userObserver)
-      };
-    }
-    var DocumentSnapshot$2 = function() {
-      function DocumentSnapshot$22(_firestore, _delegate) {
-        this._firestore = _firestore;
-        this._delegate = _delegate;
-      }
-      Object.defineProperty(DocumentSnapshot$22.prototype, "ref", {
-        get: function() {
-          return new DocumentReference$1(this._firestore, this._delegate.ref);
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentSnapshot$22.prototype, "id", {
-        get: function() {
-          return this._delegate.id;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentSnapshot$22.prototype, "metadata", {
-        get: function() {
-          return this._delegate.metadata;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentSnapshot$22.prototype, "exists", {
-        get: function() {
-          return this._delegate.exists();
-        },
-        enumerable: false,
-        configurable: true
-      });
-      DocumentSnapshot$22.prototype.data = function(options2) {
-        return this._delegate.data(options2);
-      };
-      DocumentSnapshot$22.prototype.get = function(fieldPath, options2) {
-        return this._delegate.get(fieldPath, options2);
-      };
-      DocumentSnapshot$22.prototype.isEqual = function(other) {
-        return snapshotEqual(this._delegate, other._delegate);
-      };
-      return DocumentSnapshot$22;
-    }();
-    var QueryDocumentSnapshot$2 = function(_super) {
-      tslib.__extends(QueryDocumentSnapshot$22, _super);
-      function QueryDocumentSnapshot$22() {
-        return _super !== null && _super.apply(this, arguments) || this;
-      }
-      QueryDocumentSnapshot$22.prototype.data = function(options2) {
-        var data = this._delegate.data(options2);
-        return data;
-      };
-      return QueryDocumentSnapshot$22;
-    }(DocumentSnapshot$2);
-    var Query$1 = function() {
-      function Query$12(firestore, _delegate) {
-        this.firestore = firestore;
-        this._delegate = _delegate;
-        this._userDataWriter = new UserDataWriter(firestore);
-      }
-      Query$12.prototype.where = function(fieldPath, opStr, value) {
-        try {
-          return new Query$12(this.firestore, query(this._delegate, where(fieldPath, opStr, value)));
-        } catch (e) {
-          throw replaceFunctionName(e, /(orderBy|where)\(\)/, "Query.$1()");
-        }
-      };
-      Query$12.prototype.orderBy = function(fieldPath, directionStr) {
-        try {
-          return new Query$12(this.firestore, query(this._delegate, orderBy(fieldPath, directionStr)));
-        } catch (e) {
-          throw replaceFunctionName(e, /(orderBy|where)\(\)/, "Query.$1()");
-        }
-      };
-      Query$12.prototype.limit = function(n) {
-        try {
-          return new Query$12(this.firestore, query(this._delegate, limit(n)));
-        } catch (e) {
-          throw replaceFunctionName(e, "limit()", "Query.limit()");
-        }
-      };
-      Query$12.prototype.limitToLast = function(n) {
-        try {
-          return new Query$12(this.firestore, query(this._delegate, limitToLast(n)));
-        } catch (e) {
-          throw replaceFunctionName(e, "limitToLast()", "Query.limitToLast()");
-        }
-      };
-      Query$12.prototype.startAt = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        try {
-          return new Query$12(this.firestore, query(this._delegate, startAt.apply(void 0, args)));
-        } catch (e) {
-          throw replaceFunctionName(e, "startAt()", "Query.startAt()");
-        }
-      };
-      Query$12.prototype.startAfter = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        try {
-          return new Query$12(this.firestore, query(this._delegate, startAfter.apply(void 0, args)));
-        } catch (e) {
-          throw replaceFunctionName(e, "startAfter()", "Query.startAfter()");
-        }
-      };
-      Query$12.prototype.endBefore = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        try {
-          return new Query$12(this.firestore, query(this._delegate, endBefore.apply(void 0, args)));
-        } catch (e) {
-          throw replaceFunctionName(e, "endBefore()", "Query.endBefore()");
-        }
-      };
-      Query$12.prototype.endAt = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        try {
-          return new Query$12(this.firestore, query(this._delegate, endAt.apply(void 0, args)));
-        } catch (e) {
-          throw replaceFunctionName(e, "endAt()", "Query.endAt()");
-        }
-      };
-      Query$12.prototype.isEqual = function(other) {
-        return queryEqual(this._delegate, other._delegate);
-      };
-      Query$12.prototype.get = function(options2) {
-        var _this = this;
-        var query2;
-        if ((options2 === null || options2 === void 0 ? void 0 : options2.source) === "cache") {
-          query2 = getDocsFromCache(this._delegate);
-        } else if ((options2 === null || options2 === void 0 ? void 0 : options2.source) === "server") {
-          query2 = getDocsFromServer(this._delegate);
-        } else {
-          query2 = getDocs(this._delegate);
-        }
-        return query2.then(function(result) {
-          return new QuerySnapshot$1(_this.firestore, new QuerySnapshot(_this.firestore._delegate, _this._userDataWriter, _this._delegate, result._snapshot));
-        });
-      };
-      Query$12.prototype.onSnapshot = function() {
-        var _this = this;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        var options2 = extractSnapshotOptions(args);
-        var observer = wrapObserver(args, function(snap) {
-          return new QuerySnapshot$1(_this.firestore, new QuerySnapshot(_this.firestore._delegate, _this._userDataWriter, _this._delegate, snap._snapshot));
-        });
-        return onSnapshot(this._delegate, options2, observer);
-      };
-      Query$12.prototype.withConverter = function(converter) {
-        return new Query$12(this.firestore, converter ? this._delegate.withConverter(FirestoreDataConverter.getInstance(this.firestore, converter)) : this._delegate.withConverter(null));
-      };
-      return Query$12;
-    }();
-    var DocumentChange = function() {
-      function DocumentChange2(_firestore, _delegate) {
-        this._firestore = _firestore;
-        this._delegate = _delegate;
-      }
-      Object.defineProperty(DocumentChange2.prototype, "type", {
-        get: function() {
-          return this._delegate.type;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentChange2.prototype, "doc", {
-        get: function() {
-          return new QueryDocumentSnapshot$2(this._firestore, this._delegate.doc);
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentChange2.prototype, "oldIndex", {
-        get: function() {
-          return this._delegate.oldIndex;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(DocumentChange2.prototype, "newIndex", {
-        get: function() {
-          return this._delegate.newIndex;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      return DocumentChange2;
-    }();
-    var QuerySnapshot$1 = function() {
-      function QuerySnapshot$12(_firestore, _delegate) {
-        this._firestore = _firestore;
-        this._delegate = _delegate;
-      }
-      Object.defineProperty(QuerySnapshot$12.prototype, "query", {
-        get: function() {
-          return new Query$1(this._firestore, this._delegate.query);
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(QuerySnapshot$12.prototype, "metadata", {
-        get: function() {
-          return this._delegate.metadata;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(QuerySnapshot$12.prototype, "size", {
-        get: function() {
-          return this._delegate.size;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(QuerySnapshot$12.prototype, "empty", {
-        get: function() {
-          return this._delegate.empty;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(QuerySnapshot$12.prototype, "docs", {
-        get: function() {
-          var _this = this;
-          return this._delegate.docs.map(function(doc2) {
-            return new QueryDocumentSnapshot$2(_this._firestore, doc2);
-          });
-        },
-        enumerable: false,
-        configurable: true
-      });
-      QuerySnapshot$12.prototype.docChanges = function(options2) {
-        var _this = this;
-        return this._delegate.docChanges(options2).map(function(docChange) {
-          return new DocumentChange(_this._firestore, docChange);
-        });
-      };
-      QuerySnapshot$12.prototype.forEach = function(callback, thisArg) {
-        var _this = this;
-        this._delegate.forEach(function(snapshot) {
-          callback.call(thisArg, new QueryDocumentSnapshot$2(_this._firestore, snapshot));
-        });
-      };
-      QuerySnapshot$12.prototype.isEqual = function(other) {
-        return snapshotEqual(this._delegate, other._delegate);
-      };
-      return QuerySnapshot$12;
-    }();
-    var CollectionReference$1 = function(_super) {
-      tslib.__extends(CollectionReference$12, _super);
-      function CollectionReference$12(firestore, _delegate) {
-        var _this = _super.call(this, firestore, _delegate) || this;
-        _this.firestore = firestore;
-        _this._delegate = _delegate;
-        return _this;
-      }
-      Object.defineProperty(CollectionReference$12.prototype, "id", {
-        get: function() {
-          return this._delegate.id;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(CollectionReference$12.prototype, "path", {
-        get: function() {
-          return this._delegate.path;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(CollectionReference$12.prototype, "parent", {
-        get: function() {
-          var docRef = this._delegate.parent;
-          return docRef ? new DocumentReference$1(this.firestore, docRef) : null;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      CollectionReference$12.prototype.doc = function(documentPath) {
-        try {
-          if (documentPath === void 0) {
-            return new DocumentReference$1(this.firestore, doc(this._delegate));
-          } else {
-            return new DocumentReference$1(this.firestore, doc(this._delegate, documentPath));
-          }
-        } catch (e) {
-          throw replaceFunctionName(e, "doc()", "CollectionReference.doc()");
-        }
-      };
-      CollectionReference$12.prototype.add = function(data) {
-        var _this = this;
-        return addDoc(this._delegate, data).then(function(docRef) {
-          return new DocumentReference$1(_this.firestore, docRef);
-        });
-      };
-      CollectionReference$12.prototype.isEqual = function(other) {
-        return refEqual(this._delegate, other._delegate);
-      };
-      CollectionReference$12.prototype.withConverter = function(converter) {
-        return new CollectionReference$12(this.firestore, converter ? this._delegate.withConverter(FirestoreDataConverter.getInstance(this.firestore, converter)) : this._delegate.withConverter(null));
-      };
-      return CollectionReference$12;
-    }(Query$1);
-    function castReference(documentRef) {
-      return cast(documentRef, DocumentReference);
-    }
-    exports2.ArrayRemoveFieldValueImpl = ArrayRemoveFieldValueImpl;
-    exports2.ArrayUnionFieldValueImpl = ArrayUnionFieldValueImpl;
-    exports2.Blob = Blob2;
-    exports2.CACHE_SIZE_UNLIMITED = CACHE_SIZE_UNLIMITED;
-    exports2.CollectionReference$1 = CollectionReference$1;
-    exports2.DeleteFieldValueImpl = DeleteFieldValueImpl;
-    exports2.DocumentReference$1 = DocumentReference$1;
-    exports2.DocumentSnapshot$2 = DocumentSnapshot$2;
-    exports2.FieldPath = FieldPath;
-    exports2.FieldPath$1 = FieldPath$1;
-    exports2.FirebaseFirestore$1 = FirebaseFirestore$1;
-    exports2.Firestore = Firestore;
-    exports2.GeoPoint = GeoPoint;
-    exports2.IndexedDbPersistenceProvider = IndexedDbPersistenceProvider;
-    exports2.NumericIncrementFieldValueImpl = NumericIncrementFieldValueImpl;
-    exports2.Query$1 = Query$1;
-    exports2.QueryDocumentSnapshot$2 = QueryDocumentSnapshot$2;
-    exports2.QuerySnapshot$1 = QuerySnapshot$1;
-    exports2.ServerTimestampFieldValueImpl = ServerTimestampFieldValueImpl;
-    exports2.Timestamp = Timestamp;
-    exports2.Transaction$3 = Transaction$3;
-    exports2.WriteBatch$1 = WriteBatch$1;
-    exports2.loadBundle = loadBundle;
-    exports2.namedQuery = namedQuery;
-    exports2.setLogLevel$1 = setLogLevel$1;
-  }
-});
-
-// node_modules/@firebase/firestore/dist/node-cjs/index.js
-var require_node_cjs = __commonJS({
-  "node_modules/@firebase/firestore/dist/node-cjs/index.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    var tslib = require_tslib();
-    var firebase2 = require_index_node_cjs2();
-    var util = require_index_node_cjs();
-    var component = require_index_cjs();
-    require_index_cjs2();
-    require("util");
-    require("crypto");
-    require_src();
-    require_package();
-    require("path");
-    require_src3();
-    var databaseFaf39e5b = require_database_faf39e5b_0bb5e962();
-    function _interopDefaultLegacy(e) {
-      return e && typeof e === "object" && "default" in e ? e : {"default": e};
-    }
-    var firebase__default = /* @__PURE__ */ _interopDefaultLegacy(firebase2);
-    var name = "@firebase/firestore";
-    var version = "2.3.7";
     function deleteField() {
-      return new databaseFaf39e5b.DeleteFieldValueImpl("deleteField");
+      return new DeleteFieldValueImpl("deleteField");
     }
-    function serverTimestamp() {
-      return new databaseFaf39e5b.ServerTimestampFieldValueImpl("serverTimestamp");
+    function serverTimestamp$1() {
+      return new ServerTimestampFieldValueImpl("serverTimestamp");
     }
     function arrayUnion() {
       var elements = [];
       for (var _i = 0; _i < arguments.length; _i++) {
         elements[_i] = arguments[_i];
       }
-      return new databaseFaf39e5b.ArrayUnionFieldValueImpl("arrayUnion", elements);
+      return new ArrayUnionFieldValueImpl("arrayUnion", elements);
     }
     function arrayRemove() {
       var elements = [];
       for (var _i = 0; _i < arguments.length; _i++) {
         elements[_i] = arguments[_i];
       }
-      return new databaseFaf39e5b.ArrayRemoveFieldValueImpl("arrayRemove", elements);
+      return new ArrayRemoveFieldValueImpl("arrayRemove", elements);
     }
     function increment(n) {
-      return new databaseFaf39e5b.NumericIncrementFieldValueImpl("increment", n);
+      return new NumericIncrementFieldValueImpl("increment", n);
     }
-    var FieldPath = function() {
-      function FieldPath2() {
-        var fieldNames = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          fieldNames[_i] = arguments[_i];
-        }
-        this._delegate = new (databaseFaf39e5b.FieldPath$1.bind.apply(databaseFaf39e5b.FieldPath$1, tslib.__spreadArray([void 0], fieldNames)))();
-      }
-      FieldPath2.documentId = function() {
-        return new FieldPath2(databaseFaf39e5b.FieldPath.keyField().canonicalString());
-      };
-      FieldPath2.prototype.isEqual = function(other) {
-        other = util.getModularInstance(other);
-        if (!(other instanceof databaseFaf39e5b.FieldPath$1)) {
-          return false;
-        }
-        return this._delegate._internalPath.isEqual(other._internalPath);
-      };
-      return FieldPath2;
-    }();
-    var FieldValue = function() {
-      function FieldValue2(_delegate) {
-        this._delegate = _delegate;
-      }
-      FieldValue2.serverTimestamp = function() {
-        var delegate = serverTimestamp();
-        delegate._methodName = "FieldValue.serverTimestamp";
-        return new FieldValue2(delegate);
-      };
-      FieldValue2.delete = function() {
-        var delegate = deleteField();
-        delegate._methodName = "FieldValue.delete";
-        return new FieldValue2(delegate);
-      };
-      FieldValue2.arrayUnion = function() {
-        var elements = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          elements[_i] = arguments[_i];
-        }
-        var delegate = arrayUnion.apply(void 0, elements);
-        delegate._methodName = "FieldValue.arrayUnion";
-        return new FieldValue2(delegate);
-      };
-      FieldValue2.arrayRemove = function() {
-        var elements = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          elements[_i] = arguments[_i];
-        }
-        var delegate = arrayRemove.apply(void 0, elements);
-        delegate._methodName = "FieldValue.arrayRemove";
-        return new FieldValue2(delegate);
-      };
-      FieldValue2.increment = function(n) {
-        var delegate = increment(n);
-        delegate._methodName = "FieldValue.increment";
-        return new FieldValue2(delegate);
-      };
-      FieldValue2.prototype.isEqual = function(other) {
-        return this._delegate.isEqual(other._delegate);
-      };
-      return FieldValue2;
-    }();
-    var firestoreNamespace = {
-      Firestore: databaseFaf39e5b.Firestore,
-      GeoPoint: databaseFaf39e5b.GeoPoint,
-      Timestamp: databaseFaf39e5b.Timestamp,
-      Blob: databaseFaf39e5b.Blob,
-      Transaction: databaseFaf39e5b.Transaction$3,
-      WriteBatch: databaseFaf39e5b.WriteBatch$1,
-      DocumentReference: databaseFaf39e5b.DocumentReference$1,
-      DocumentSnapshot: databaseFaf39e5b.DocumentSnapshot$2,
-      Query: databaseFaf39e5b.Query$1,
-      QueryDocumentSnapshot: databaseFaf39e5b.QueryDocumentSnapshot$2,
-      QuerySnapshot: databaseFaf39e5b.QuerySnapshot$1,
-      CollectionReference: databaseFaf39e5b.CollectionReference$1,
-      FieldPath,
-      FieldValue,
-      setLogLevel: databaseFaf39e5b.setLogLevel$1,
-      CACHE_SIZE_UNLIMITED: databaseFaf39e5b.CACHE_SIZE_UNLIMITED
-    };
-    function configureForFirebase(firebase3, firestoreFactory) {
-      firebase3.INTERNAL.registerComponent(new component.Component("firestore", function(container) {
-        var app = container.getProvider("app").getImmediate();
-        return firestoreFactory(app, container.getProvider("auth-internal"));
-      }, "PUBLIC").setServiceProps(Object.assign({}, firestoreNamespace)));
-    }
-    function registerFirestore(instance) {
-      configureForFirebase(instance, function(app, auth) {
-        return new databaseFaf39e5b.Firestore(app, new databaseFaf39e5b.FirebaseFirestore$1(app, auth), new databaseFaf39e5b.IndexedDbPersistenceProvider());
+    function writeBatch(firestore) {
+      firestore = cast(firestore, FirebaseFirestore$1);
+      ensureFirestoreConfigured(firestore);
+      return new WriteBatch(firestore, function(mutations) {
+        return executeWrite(firestore, mutations);
       });
-      instance.registerVersion(name, version, "node");
     }
-    registerFirestore(firebase__default["default"]);
-    exports2.registerFirestore = registerFirestore;
+    registerFirestore("node");
+    exports2.AbstractUserDataWriter = AbstractUserDataWriter;
+    exports2.Bytes = Bytes;
+    exports2.CACHE_SIZE_UNLIMITED = CACHE_SIZE_UNLIMITED;
+    exports2.CollectionReference = CollectionReference;
+    exports2.DocumentReference = DocumentReference;
+    exports2.DocumentSnapshot = DocumentSnapshot$1;
+    exports2.FieldPath = FieldPath$1;
+    exports2.FieldValue = FieldValue;
+    exports2.FirebaseFirestore = FirebaseFirestore$1;
+    exports2.FirestoreError = FirestoreError;
+    exports2.GeoPoint = GeoPoint;
+    exports2.LoadBundleTask = LoadBundleTask;
+    exports2.Query = Query;
+    exports2.QueryConstraint = QueryConstraint;
+    exports2.QueryDocumentSnapshot = QueryDocumentSnapshot$1;
+    exports2.QuerySnapshot = QuerySnapshot;
+    exports2.SnapshotMetadata = SnapshotMetadata;
+    exports2.Timestamp = Timestamp;
+    exports2.Transaction = Transaction$2;
+    exports2.WriteBatch = WriteBatch;
+    exports2.addDoc = addDoc;
+    exports2.arrayRemove = arrayRemove;
+    exports2.arrayUnion = arrayUnion;
+    exports2.clearIndexedDbPersistence = clearIndexedDbPersistence;
+    exports2.collection = collection2;
+    exports2.collectionGroup = collectionGroup;
+    exports2.deleteDoc = deleteDoc;
+    exports2.deleteField = deleteField;
+    exports2.disableNetwork = disableNetwork;
+    exports2.doc = doc2;
+    exports2.documentId = documentId;
+    exports2.enableIndexedDbPersistence = enableIndexedDbPersistence;
+    exports2.enableMultiTabIndexedDbPersistence = enableMultiTabIndexedDbPersistence;
+    exports2.enableNetwork = enableNetwork;
+    exports2.endAt = endAt;
+    exports2.endBefore = endBefore;
+    exports2.ensureFirestoreConfigured = ensureFirestoreConfigured;
+    exports2.executeWrite = executeWrite;
+    exports2.getDoc = getDoc2;
+    exports2.getDocFromCache = getDocFromCache;
+    exports2.getDocFromServer = getDocFromServer;
+    exports2.getDocs = getDocs;
+    exports2.getDocsFromCache = getDocsFromCache;
+    exports2.getDocsFromServer = getDocsFromServer;
+    exports2.getFirestore = getFirestore2;
+    exports2.increment = increment;
+    exports2.initializeFirestore = initializeFirestore;
+    exports2.limit = limit;
+    exports2.limitToLast = limitToLast;
+    exports2.loadBundle = loadBundle;
+    exports2.namedQuery = namedQuery;
+    exports2.onSnapshot = onSnapshot;
+    exports2.onSnapshotsInSync = onSnapshotsInSync;
+    exports2.orderBy = orderBy;
+    exports2.query = query;
+    exports2.queryEqual = queryEqual;
+    exports2.refEqual = refEqual;
+    exports2.runTransaction = runTransaction;
+    exports2.serverTimestamp = serverTimestamp$1;
+    exports2.setDoc = setDoc2;
+    exports2.setLogLevel = setLogLevel;
+    exports2.snapshotEqual = snapshotEqual;
+    exports2.startAfter = startAfter;
+    exports2.startAt = startAt;
+    exports2.terminate = terminate;
+    exports2.updateDoc = updateDoc;
+    exports2.useFirestoreEmulator = useFirestoreEmulator;
+    exports2.waitForPendingWrites = waitForPendingWrites;
+    exports2.where = where;
+    exports2.writeBatch = writeBatch;
   }
 });
 
@@ -42197,10 +37887,10 @@ var validateHeaderValue = typeof import_http.default.validateHeaderValue === "fu
     throw err;
   }
 };
-var Headers2 = class extends URLSearchParams {
+var Headers = class extends URLSearchParams {
   constructor(init2) {
     let result = [];
-    if (init2 instanceof Headers2) {
+    if (init2 instanceof Headers) {
       const raw = init2.raw();
       for (const [name, values] of Object.entries(raw)) {
         result.push(...values.map((value) => [name, value]));
@@ -42317,12 +38007,12 @@ var Headers2 = class extends URLSearchParams {
     }, {});
   }
 };
-Object.defineProperties(Headers2.prototype, ["get", "entries", "forEach", "values"].reduce((result, property) => {
+Object.defineProperties(Headers.prototype, ["get", "entries", "forEach", "values"].reduce((result, property) => {
   result[property] = {enumerable: true};
   return result;
 }, {}));
 function fromRawHeaders(headers = []) {
-  return new Headers2(headers.reduce((result, value, index2, array) => {
+  return new Headers(headers.reduce((result, value, index2, array) => {
     if (index2 % 2 === 0) {
       result.push(array.slice(index2, index2 + 2));
     }
@@ -42346,7 +38036,7 @@ var Response2 = class extends Body {
   constructor(body = null, options2 = {}) {
     super(body, options2);
     const status = options2.status || 200;
-    const headers = new Headers2(options2.headers);
+    const headers = new Headers(options2.headers);
     if (body !== null && !headers.has("Content-Type")) {
       const contentType = extractContentType(body);
       if (contentType) {
@@ -42430,7 +38120,7 @@ var INTERNALS = Symbol("Request internals");
 var isRequest = (object) => {
   return typeof object === "object" && typeof object[INTERNALS] === "object";
 };
-var Request2 = class extends Body {
+var Request = class extends Body {
   constructor(input, init2 = {}) {
     let parsedURL;
     if (isRequest(input)) {
@@ -42448,7 +38138,7 @@ var Request2 = class extends Body {
     super(inputBody, {
       size: init2.size || input.size || 0
     });
-    const headers = new Headers2(init2.headers || input.headers || {});
+    const headers = new Headers(init2.headers || input.headers || {});
     if (inputBody !== null && !headers.has("Content-Type")) {
       const contentType = extractContentType(inputBody, this);
       if (contentType) {
@@ -42492,13 +38182,13 @@ var Request2 = class extends Body {
     return this[INTERNALS].signal;
   }
   clone() {
-    return new Request2(this);
+    return new Request(this);
   }
   get [Symbol.toStringTag]() {
     return "Request";
   }
 };
-Object.defineProperties(Request2.prototype, {
+Object.defineProperties(Request.prototype, {
   method: {enumerable: true},
   url: {enumerable: true},
   headers: {enumerable: true},
@@ -42508,7 +38198,7 @@ Object.defineProperties(Request2.prototype, {
 });
 var getNodeRequestOptions = (request) => {
   const {parsedURL} = request[INTERNALS];
-  const headers = new Headers2(request[INTERNALS].headers);
+  const headers = new Headers(request[INTERNALS].headers);
   if (!headers.has("Accept")) {
     headers.set("Accept", "*/*");
   }
@@ -42564,7 +38254,7 @@ var AbortError = class extends FetchBaseError {
 var supportedSchemas = new Set(["data:", "http:", "https:"]);
 async function fetch2(url, options_) {
   return new Promise((resolve2, reject) => {
-    const request = new Request2(url, options_);
+    const request = new Request(url, options_);
     const options2 = getNodeRequestOptions(request);
     if (!supportedSchemas.has(options2.protocol)) {
       throw new TypeError(`node-fetch cannot load ${url}. URL scheme "${options2.protocol.replace(/:$/, "")}" is not supported.`);
@@ -42641,7 +38331,7 @@ async function fetch2(url, options_) {
               return;
             }
             const requestOptions = {
-              headers: new Headers2(request.headers),
+              headers: new Headers(request.headers),
               follow: request.follow,
               counter: request.counter + 1,
               agent: request.agent,
@@ -42661,7 +38351,7 @@ async function fetch2(url, options_) {
               requestOptions.body = void 0;
               requestOptions.headers.delete("content-length");
             }
-            resolve2(fetch2(new Request2(locationURL, requestOptions)));
+            resolve2(fetch2(new Request(locationURL, requestOptions)));
             finalize();
             return;
           }
@@ -42740,8 +38430,8 @@ async function fetch2(url, options_) {
 }
 globalThis.fetch = fetch2;
 globalThis.Response = Response2;
-globalThis.Request = Request2;
-globalThis.Headers = Headers2;
+globalThis.Request = Request;
+globalThis.Headers = Headers;
 
 // node_modules/@sveltejs/kit/dist/ssr.js
 var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_$";
@@ -44106,16 +39796,8 @@ if (typeof HTMLElement === "function") {
 
 // .svelte-kit/output/server/app.js
 var import_app = __toModule(require_index_cjs3());
-
-// node_modules/firebase/auth/dist/index.cjs.js
-"use strict";
-require_auth();
-
-// node_modules/firebase/firestore/dist/index.node.cjs.js
-"use strict";
-require_node_cjs();
-
-// .svelte-kit/output/server/app.js
+var import_auth = __toModule(require_node());
+var import_firestore = __toModule(require_index_node_cjs2());
 var css$6 = {
   code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
   map: `{"version":3,"file":"root.svelte","sources":["root.svelte"],"sourcesContent":["<!-- This file is generated by @sveltejs/kit \u2014 do not edit it! -->\\n<script>\\n\\timport { setContext, afterUpdate, onMount } from 'svelte';\\n\\n\\t// stores\\n\\texport let stores;\\n\\texport let page;\\n\\n\\texport let components;\\n\\texport let props_0 = null;\\n\\texport let props_1 = null;\\n\\texport let props_2 = null;\\n\\n\\tsetContext('__svelte__', stores);\\n\\n\\t$: stores.page.set(page);\\n\\tafterUpdate(stores.page.notify);\\n\\n\\tlet mounted = false;\\n\\tlet navigated = false;\\n\\tlet title = null;\\n\\n\\tonMount(() => {\\n\\t\\tconst unsubscribe = stores.page.subscribe(() => {\\n\\t\\t\\tif (mounted) {\\n\\t\\t\\t\\tnavigated = true;\\n\\t\\t\\t\\ttitle = document.title || 'untitled page';\\n\\t\\t\\t}\\n\\t\\t});\\n\\n\\t\\tmounted = true;\\n\\t\\treturn unsubscribe;\\n\\t});\\n</script>\\n\\n<svelte:component this={components[0]} {...(props_0 || {})}>\\n\\t{#if components[1]}\\n\\t\\t<svelte:component this={components[1]} {...(props_1 || {})}>\\n\\t\\t\\t{#if components[2]}\\n\\t\\t\\t\\t<svelte:component this={components[2]} {...(props_2 || {})}/>\\n\\t\\t\\t{/if}\\n\\t\\t</svelte:component>\\n\\t{/if}\\n</svelte:component>\\n\\n{#if mounted}\\n\\t<div id=\\"svelte-announcer\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\">\\n\\t\\t{#if navigated}\\n\\t\\t\\t{title}\\n\\t\\t{/if}\\n\\t</div>\\n{/if}\\n\\n<style>\\n\\t#svelte-announcer {\\n\\t\\tposition: absolute;\\n\\t\\tleft: 0;\\n\\t\\ttop: 0;\\n\\t\\tclip: rect(0 0 0 0);\\n\\t\\tclip-path: inset(50%);\\n\\t\\toverflow: hidden;\\n\\t\\twhite-space: nowrap;\\n\\t\\twidth: 1px;\\n\\t\\theight: 1px;\\n\\t}\\n</style>"],"names":[],"mappings":"AAsDC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACnB,SAAS,CAAE,MAAM,GAAG,CAAC,CACrB,QAAQ,CAAE,MAAM,CAChB,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,AACZ,CAAC"}`
@@ -44186,9 +39868,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-75838fb3.js",
+      file: "/./_app/start-447a08e5.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-75838fb3.js", "/./_app/chunks/vendor-69e57727.js"]
+      js: ["/./_app/start-447a08e5.js", "/./_app/chunks/vendor-c5b255ff.js"]
     },
     fetched: void 0,
     floc: false,
@@ -44243,7 +39925,7 @@ var module_lookup = {
     return index;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-12700f8a.js", "css": ["/./_app/assets/pages/__layout.svelte-f59864f1.css"], "js": ["/./_app/pages/__layout.svelte-12700f8a.js", "/./_app/chunks/vendor-69e57727.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-c75dc3d3.js", "css": [], "js": ["/./_app/error.svelte-c75dc3d3.js", "/./_app/chunks/vendor-69e57727.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-c78c388e.js", "css": ["/./_app/assets/pages/index.svelte-5e871bef.css"], "js": ["/./_app/pages/index.svelte-c78c388e.js", "/./_app/chunks/vendor-69e57727.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-5efd397a.js", "css": ["/./_app/assets/pages/__layout.svelte-f59864f1.css"], "js": ["/./_app/pages/__layout.svelte-5efd397a.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f484e334.js", "css": [], "js": ["/./_app/error.svelte-f484e334.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-332406a6.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-332406a6.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -44320,15 +40002,15 @@ var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$binding
 </div>`;
 });
 var css$2 = {
-  code: ".float.svelte-j35ckw{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-j35ckw:hover{bottom:95px;padding:30px 50px}.float.svelte-j35ckw:active{box-shadow:none;bottom:38px}",
-  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t+ Add\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 95px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n\\t.float:active {\\r\\n\\t\\tbox-shadow: none;\\r\\n\\t\\tbottom: 38px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,cAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,oBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC,AAED,oBAAM,OAAO,AAAC,CAAC,AACd,UAAU,CAAE,IAAI,CAChB,MAAM,CAAE,IAAI,AACb,CAAC"}'
+  code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
+  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t+ Add\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
 };
 var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {onclick = () => void 0} = $$props;
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
   $$result.css.add(css$2);
-  return `<button class="${"float svelte-j35ckw"}">+ Add
+  return `<button class="${"float svelte-1uexowl"}">+ Add
 </button>`;
 });
 var css$1 = {
@@ -44341,13 +40023,15 @@ var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$binding
 </div>`;
 });
 var css = {
-  code: ".b-signin.svelte-1go3udn{margin:10px 0 0 0;font-size:large;font-weight:500;min-width:150px;min-height:70px;padding:0 30px;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.b-signout.svelte-1go3udn{font-style:italic;margin:10px 0 0 0;font-size:large;font-weight:500;min-width:150px;min-height:70px;padding:0px 30px;transition:padding 0.3s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.b-signout.svelte-1go3udn:signed-in{padding:10px 30px}button.svelte-1go3udn:hover{bottom:42px}button.svelte-1go3udn:active{box-shadow:none;bottom:38px}",
-  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport firebase from \\"firebase/app\\";\\r\\n\\timport \\"firebase/auth\\";\\r\\n\\t\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\t\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tfirebase.auth().onAuthStateChanged((user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\t\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new firebase.auth.GoogleAuthProvider();\\r\\n\\r\\n\\t\\tfirebase.auth()\\r\\n\\t\\t\\t.signInWithPopup(provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t/** @type {firebase.auth.OAuthCredential} */\\r\\n\\t\\t\\t\\tvar credential = result.credential;\\r\\n\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\tvar token = credential.accessToken;\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tfirebase.auth().signOut();\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n{#if !loggedIn}\\r\\n\\t<button class = b-signin on:click={signIn}>\\r\\n\\t\\tSign in with Google\\r\\n\\t</button>\\r\\n{:else}\\r\\n\\t<button class = b-signout on:click={signOut} style=\\"padding:0 0\\">\\r\\n\\t\\t<p>Signed in as {name}</p>\\r\\n\\t</button>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.b-signin {\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tmin-width: 150px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 0 30px;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\t.b-signout {\\r\\n\\t\\tfont-style: italic;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tmin-width: 150px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 0px 30px;\\r\\n\\t\\ttransition: padding 0.3s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\t.b-signout:signed-in{\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t}\\r\\n\\r\\n\\tbutton:hover {\\r\\n\\t\\t/* box-shadow: 0px 4px 10px var(--c_dark); */\\r\\n\\t\\tbottom: 42px;\\r\\n\\t}\\r\\n\\r\\n\\tbutton:active {\\r\\n\\t\\tbox-shadow: none;\\r\\n\\t\\tbottom: 38px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqEC,SAAS,eAAC,CAAC,AACV,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,SAAS,CAAE,KAAK,CAChB,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,CAAC,CAAC,IAAI,CAEf,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AACD,UAAU,eAAC,CAAC,AACX,UAAU,CAAE,MAAM,CAClB,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,SAAS,CAAE,KAAK,CAChB,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,GAAG,CAAC,IAAI,CACjB,UAAU,CAAE,OAAO,CAAC,IAAI,CAExB,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AACD,yBAAU,UAAU,CAAC,AACpB,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AAEb,MAAM,CAAE,IAAI,AACb,CAAC,AAED,qBAAM,OAAO,AAAC,CAAC,AACd,UAAU,CAAE,IAAI,CAChB,MAAM,CAAE,IAAI,AACb,CAAC"}`
+  code: ".dumb-container.svelte-rn3ix2{position:relative;z-index:10}.b-google.svelte-rn3ix2{position:relative;display:block;margin:10px 0 0 0;font-size:large;font-weight:500;width:270px;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-rn3ix2{width:400px}.b-google.loggedIn.svelte-rn3ix2:hover{opacity:0.4}.b-google-text.svelte-rn3ix2{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-rn3ix2{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.9;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
+  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { getApp } from \\"@firebase/app\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\tconst firebaseApp = getApp()\\r\\n\\tconst auth = getAuth(firebaseApp);\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithPopup(auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tauth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA6DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
 };
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let loggedIn = false;
   let name;
-  import_app.default.auth().onAuthStateChanged((user) => {
+  const firebaseApp = (0, import_app.getApp)();
+  const auth = (0, import_auth.getAuth)(firebaseApp);
+  (0, import_auth.onAuthStateChanged)(auth, (user) => {
     if (user) {
       user.uid;
       name = user.displayName;
@@ -44357,8 +40041,9 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
     }
   });
   $$result.css.add(css);
-  return `${!loggedIn ? `<button class="${"b-signin svelte-1go3udn"}">Sign in with Google
-	</button>` : `<button class="${"b-signout svelte-1go3udn"}" style="${"padding:0 0"}"><p>Signed in as ${escape2(name)}</p></button>`}`;
+  return `<div class="${"dumb-container svelte-rn3ix2"}"><button class="${["b-google svelte-rn3ix2", loggedIn ? "loggedIn" : ""].join(" ").trim()}"><span class="${"b-google-text svelte-rn3ix2"}">${escape2(loggedIn ? "Signed in as " + name : "Sign in with Google")}</span></button>
+	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
+</div>`;
 });
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const firebaseConfig = {
@@ -44370,13 +40055,13 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     appId: "1:70389726858:web:ce6df871a0d048ffc13773",
     measurementId: "G-M76SYZGGMZ"
   };
-  let app;
-  if (!import_app.default.apps.length) {
-    app = import_app.default.initializeApp(firebaseConfig);
+  let firebaseApp;
+  if (!(0, import_app.getApps)().length) {
+    firebaseApp = (0, import_app.initializeApp)(firebaseConfig);
   } else {
-    app = import_app.default.app();
+    firebaseApp = (0, import_app.getApp)();
   }
-  let db = import_app.default.firestore(app);
+  const db = (0, import_firestore.getFirestore)(firebaseApp);
   let streams = [];
   function appendStreams() {
     streams = [...streams, streams.length.toString()];
@@ -44389,11 +40074,11 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   }
   function setUserData() {
     var data = {streams};
-    db.collection("users").doc(import_app.default.auth().currentUser.uid).set(data);
+    (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid), data);
   }
   async function getUserData() {
-    const doc = await db.collection("users").doc(import_app.default.auth().currentUser.uid).get();
-    return doc.data();
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid));
+    return document2.data();
   }
   function buildFromUserData() {
     getUserData().then((data) => {
@@ -44402,7 +40087,7 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       }
     });
   }
-  import_app.default.auth().onAuthStateChanged((user) => {
+  (0, import_auth.getAuth)(firebaseApp).onAuthStateChanged((user) => {
     if (user) {
       buildFromUserData();
     } else {
@@ -44573,16 +40258,4 @@ and limitations under the License.
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-/**
- * Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.
- *
- * This can be used with JS designed for browsers to improve reuse of code and
- * allow the use of existing libraries.
- *
- * Usage: include("XMLHttpRequest.js") and use XMLHttpRequest per W3C specs.
- *
- * @author Dan DeFelippi <dan@driverdan.com>
- * @contributor David Ellis <d.f.ellis@ieee.org>
- * @license MIT
  */
