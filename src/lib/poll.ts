@@ -1,11 +1,12 @@
 
-class PollStream {
+export class PollStream {
 	private id: String; // Unique identifier, used in url
 	private owner: String;
 	private users: Array<String> = []; // Users who have access
 	private polls: Array<Poll> = [];
+	__type = 'PollStream'; // For deserialization
 
-	public PollStream(id: String, owner: String) {
+	constructor(id: String, owner: String) {
 		this.id = id; // generateId() ?
 		this.owner = owner;
 		this.addUser(owner);
@@ -19,25 +20,35 @@ class PollStream {
 		return this.id;
 	}
 
+	public getUsers() {
+		return [...this.users];
+	}
+
+	public getPolls() {
+		return [...this.polls];
+	}
+
 	public addUser(user: String) {
 		this.users.push(user);
 	}
 
 	public addPoll(poll: Poll) {
-		this.polls.push(poll);
+		this.polls = [...this.polls, poll];
 	}
 
 	public removePoll(poll: Poll) {
 		this.polls.slice(this.polls.indexOf(poll), 1);
+		this.polls = this.polls; // for Svelte
 	}
 }
 
-class Poll {
+export class Poll {
 	private question: String;
 	private answers: Map<String, Array<String>>; // Map<Answer, Array<UserID>>
 	private singleAnswer: boolean = true;
-
-	public Poll(question: String) {
+	__type = 'Poll'; // For deserialization
+	
+	constructor(question: String) {
 		this.question = question;
 	}
 

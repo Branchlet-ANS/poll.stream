@@ -5,6 +5,8 @@
 	import FloatingButtonContainer from '../lib/FloatingButtonContainer.svelte';
 	import GoogleButton from '../lib/GoogleButton.svelte';
 
+	import { PollStream, Poll } from '../lib/poll';
+	
 	import { initializeApp, getApps, getApp } from "@firebase/app"
 	import { getFirestore, collection, setDoc, doc, getDoc } from "@firebase/firestore";
 	import { getAuth } from '@firebase/auth';
@@ -26,10 +28,12 @@
 	}
 	const db = getFirestore(firebaseApp);
 
-	let streams = [];
-
+	let pollStreams = [];
+	
 	function appendStreams() {
-		streams = [...streams, streams.length.toString()];
+		var user = getAuth(firebaseApp).currentUser;
+		var uid = user == null ? "" : user.uid;
+		pollStreams = [...pollStreams, new PollStream("id", uid)];
 		setUserData()
 	}
 
@@ -37,16 +41,19 @@
 	* @param {any} stream
 	*/
 	function removeStream(stream) {
-		streams.splice(streams.indexOf(stream), 1);
-		streams = streams; // to notify Svelte
+		pollStreams.splice(pollStreams.indexOf(stream), 1);
+		pollStreams = pollStreams; // to notify Svelte
 		setUserData()
 	}
 
 	function setUserData() {
-		var data = {
-			streams: streams
+		var user = getAuth(firebaseApp).currentUser;
+		if (user != null) {
+			var data = {
+				pollStreams: JSON.stringify(pollStreams)
+			}
+			setDoc(doc(collection(db, "users"), getAuth(firebaseApp).currentUser.uid), data)
 		}
-		setDoc(doc(collection(db, "users"), getAuth(firebaseApp).currentUser.uid), data)
 	}
 
 	async function getUserData() {
@@ -54,13 +61,34 @@
 		return document.data();
 	}
 
+	function jsonProvider(key, value) {
+		if (typeof value === 'object') {
+			switch(value.__type) {
+				case 'PollStream':
+					return assign(new PollStream("", ""), value);
+				case 'Poll':
+					return assign(new Poll(""), value);
+				default:
+					return value;
+			}
+		}
+		else {
+			return value;
+		}
+	}
+	
+	function assign(obj, value) {
+		Object.assign(obj, value);
+		return obj;
+	}
+
 	function buildFromUserData() {
 		getUserData().then((data) => {
 			// for (const [key, value] of Object.entries(data)) {
 			// 	streams = [...streams, `data: ${key}: ${value}`];
 			// }
-			if (Object.keys(data).includes("streams")) {
-				streams = data.streams;
+			if (Object.keys(data).includes("pollStreams")) {
+				pollStreams = JSON.parse(data.pollStreams, jsonProvider);
 			}
 		});
 	}
@@ -69,7 +97,7 @@
 		if (user) {
 			buildFromUserData();
 		} else {
-			streams = [];
+			pollStreams = [];
 		}
 	});
 
@@ -77,14 +105,14 @@
 
 <GoogleButton></GoogleButton>
 
-{#if streams.length == 0}
+{#if pollStreams.length == 0}
 	<p style="margin-top: 100px">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>
 {/if}
 
 <PollStreamTileContainer>
-	{#each streams as s}
-		<PollStreamTile remove={removeStream}>{s}</PollStreamTile>
+	{#each pollStreams as pollStream}
+		<PollStreamTile remove={() => removeStream(pollStream)} pollStream={pollStream}></PollStreamTile>
 	{/each}
 </PollStreamTileContainer>
 
