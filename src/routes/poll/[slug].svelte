@@ -12,23 +12,48 @@
 	}
 </script>
 
-<script>
-	import PollStreamTile from '../../lib/PollStreamTile.svelte';
-	import { Main } from '../../lib/main';
+<script lang="ts">
 	import { onMount } from 'svelte';
+	import { main } from '$lib/main';
+	import PollCard from '$lib/PollCard.svelte';
+	import { Poll, PollStream } from '$lib/poll';
+	import FloatingButton from '$lib/FloatingButton.svelte';
+	import PollCardContainer from '$lib/PollCardContainer.svelte'
 	
-	const main = new Main();
-	let pollStream;
+	let pollStream: PollStream;
 
 	onMount(async () => {
 		pollStream = await main.readPollStream(pollStreamId);
 	})
+
+	function addPoll() {
+		pollStream.addPoll(new Poll());
+		pollStream = pollStream;
+	}
+
+	function removePoll(poll: Poll) {
+		pollStream.removePoll(poll)
+		pollStream = pollStream;
+	}
+
+	function save() {
+		main.writePollStream(pollStream);
+	}
 	
 </script>
 
-<h1>This is the poll page of {pollStreamId}</h1>
-<p>Page Info: {JSON.stringify(pageInfo)}</p>
-
 {#if pollStream != undefined}
-	<PollStreamTile pollStream={pollStream}></PollStreamTile>
+	<p>Title:</p>
+	<input type="text" bind:value={pollStream.title}>
+	<p>Description:</p>
+	<input type="text" bind:value={pollStream.description}>
+	<br>
+	<button on:click={save}>Save</button>
+	
+	<PollCardContainer></PollCardContainer>
+	{#each pollStream.getPolls() as poll}
+		<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
+	{/each}
+
+	<FloatingButton onclick={addPoll}>+ New Poll</FloatingButton>
 {/if}

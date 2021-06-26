@@ -1,9 +1,9 @@
-import { PollStream, Poll, UserData } from './poll';
+import { PollStream, Poll, Choice } from './poll';
 import { initializeApp, getApps, getApp } from "@firebase/app";
 import type { FirebaseApp } from "@firebase/app";
 import { getFirestore, collection, setDoc, doc, getDoc, deleteDoc } from "@firebase/firestore";
 import type { FirebaseFirestore } from "@firebase/firestore";
-import { getAuth } from '@firebase/auth';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import type { Auth } from '@firebase/auth';
 
 export class Main {
@@ -19,19 +19,23 @@ export class Main {
 	public readonly firebaseApp: FirebaseApp;
 	public readonly db: FirebaseFirestore;
 	public readonly auth: Auth;
-	private userData: UserData;
-
+	public userData: UserData;
+	
 	constructor() {
 		this.firebaseApp = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
 		this.db = getFirestore(this.firebaseApp);
 		this.auth = getAuth(this.firebaseApp);
-	}
 
-	public getUserData() {
-		return this.userData;
+		
+		onAuthStateChanged(this.auth, async (user) => {
+			if (user) {
+				await main.readUserData();
+			}
+		});
+
 	}
 	
-	public async writeUserData() {
+	public async writeUserData(): Promise<void> {
 		var user = this.auth.currentUser;
 		if (user != null) {
 			var data = {
@@ -39,45 +43,73 @@ export class Main {
 			}
 			await setDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid), data)
 		}
+		console.log("UserData written to database.");
 	}
 
-	public async readUserData() {
+	public async readUserData(): Promise<void> {
 		var document = await getDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid));
 		var data = document.data();
 		if (data && Object.keys(data).includes("userData")) {
 			this.userData = JSON.parse(data.userData, jsonProvider);
 		}
 		else {
-			this.userData = null;
+			this.userData = new UserData(this.auth.currentUser.uid);
 		}
 	}
 
-	public async writePollStream(pollStream) {
-		var data = { data: JSON.stringify(pollStream) };
-		await setDoc(doc(collection(this.db, "polls"), pollStream.getId()), data);
+	public async writePollStream(pollStream: PollStream): Promise<void> {
+		var map = new Map();
+		for (let poll of pollStream.getPolls()) {
+			for (let choice of poll.getChoices()) {
+				map.set(choice, choice.listeners)
+				choice.listeners = [];
+			}
+			map.set(poll, poll.listeners)
+			poll.listeners = [];
+		}
+		var json = JSON.stringify(pollStream);
+		for (let poll of pollStream.getPolls()) {
+			for (let choice of poll.getChoices()) {
+				choice.listeners = map.get(choice);
+			}
+			poll.listeners = map.get(poll);
+		}
+
+		var data = { data: json };
+		await setDoc(doc(collection(this.db, "polls"), pollStream.id), data);
+		console.log("PollStream written to database.");
 	}
 
-	public async readPollStream(id): Promise<PollStream> {
+	public async readPollStream(id: string): Promise<PollStream> {
 		var document = await getDoc(doc(collection(this.db, "polls"), id));
 		var data = document.data();
+		
 		if (data && Object.keys(data).includes("data")) {
 			return JSON.parse(data.data, jsonProvider);
 		}
+		this.userData.removePollStreamId(id);
 		return null;
 	}
 
-	public async deletePollStream(id) {
+	public async deletePollStream(id: string): Promise<void> {
 		await deleteDoc(doc(this.db, "polls", id));
 	}
 }
 
-function jsonProvider(key, value) {
+function jsonProvider(_key: string, value: any): any {
 	if (typeof value === 'object') {
 		switch(value.__type) {
 			case 'PollStream':
-				return assign(new PollStream(), value);
+				var pollStream: PollStream = assign(new PollStream(), value);
+				pollStream.listenToPolls()
+				pollStream.onUpdate(() => main.writePollStream(pollStream))
+				return pollStream;
 			case 'Poll':
-				return assign(new Poll(""), value);
+				var poll: Poll = assign(new Poll(), value);
+				poll.listenToChoices()
+				return poll;
+			case 'Choice':
+				return assign(new Choice(), value);
 			case 'UserData':
 				return assign(new UserData(""), value);
 			default:
@@ -89,7 +121,33 @@ function jsonProvider(key, value) {
 	}
 }
 
-function assign(obj, value) {
+function assign(obj: any, value: any): any {
 	Object.assign(obj, value);
 	return obj;
+}
+
+export const main = new Main();
+
+export class UserData {
+	public readonly id: string;
+	private pollStreamIds: Array<string> = [];
+	__type = 'UserData'; // For deserialization
+
+	constructor(id: string) {
+		this.id = id;
+	}
+
+	public getPollStreamIds(): Array<string> {
+		return [...this.pollStreamIds];
+	}
+
+	public async addPollStreamId(pollStreamId: string): Promise<void> {
+		this.pollStreamIds.push(pollStreamId);
+		await main.writeUserData();
+	}
+
+	public async removePollStreamId(pollStreamId: string): Promise<void> {
+		this.pollStreamIds.splice(this.pollStreamIds.indexOf(pollStreamId), 1);
+		await main.writeUserData();
+	}
 }

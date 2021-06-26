@@ -1,9 +1,11 @@
-<script lang="ts">
-	import { goto } from '$app/navigation';
-	import type { PollStream } from './poll';
 
+<script lang="ts">
+	import { main } from './main';
+	import type { Choice } from '$lib/poll';
+	
+	export let choice: Choice;
+	export let vote = () => undefined;
 	export let remove = () => undefined;
-	export let pollStream: PollStream;
 	
 	let appeardelay = false;
 	setTimeout(function() {
@@ -12,21 +14,19 @@
 
 </script>
 
-{#if pollStream != undefined}
-	<div class="container" class:appeardelay on:click={() => goto("/poll/" + pollStream.id)}>
-		<h2>{pollStream.title}</h2>
-		<p>ID: {pollStream.id}</p>
-		<button on:click={remove}>Delete</button>
+{#if choice && main.userData}
+	<div class="container" class:appeardelay>
+		<input type="text" bind:value={choice.text}>
+		<span>{choice.getUsers().length} {choice.getUsers().length == 1 ? "vote." : "votes."}</span>
+		<button on:click={vote}>{choice.getUsers().includes(main.userData.id) ? "Unvote" : "Vote"}</button>
+		<button on:click={remove}> X </button>
 	</div>
 {/if}
-
-
 
 <style>
 	.container {
 		position: relative;
-		padding: 20pt;
-		padding-top: 5pt;
+		padding: 10pt;
 		margin-top: 15pt;
         margin-bottom: 0pt;
 		margin-left: 0pt;

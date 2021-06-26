@@ -1,36 +1,33 @@
-<script>
-	import PollStreamTile from '../lib/PollStreamTile.svelte';
-	import PollStreamTileContainer from '../lib/PollStreamTileContainer.svelte';
-	import FloatingButton from '../lib/FloatingButton.svelte';
-	import FloatingButtonContainer from '../lib/FloatingButtonContainer.svelte';
-	import GoogleButton from '../lib/GoogleButton.svelte';
+<script lang="ts">
+	import { main } from '$lib/main';
+	import { onAuthStateChanged } from '@firebase/auth';
+	import { PollStream } from '$lib/poll';
 
-	import { PollStream } from '../lib/poll';
-	import { Main } from '../lib/main';
-	import { getAuth } from '@firebase/auth';
-	
-	const main = new Main();
-	let pollStreams = [];
-	let update = 0;
+	import PollStreamTile from '$lib/PollStreamTile.svelte';
+	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
+	import FloatingButton from '$lib/FloatingButton.svelte';
+	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
+	import GoogleButton from '$lib/GoogleButton.svelte';
 
+	let pollStreams: Array<PollStream> = [];
+	let update: number = 0;
+		
 	async function appendStreams() {
 		var pollStream = new PollStream();
+		pollStream.onUpdate(() => main.writePollStream(pollStream));
 		await main.writePollStream(pollStream)
-		main.getUserData().addPoll(pollStream);
-		await main.writeUserData()
+		main.userData.addPollStreamId(pollStream.id);
 		await buildFromUserData()
 	}
 
-	async function removeStream(stream) {
-		main.getUserData().removePoll(stream);
-		await main.writeUserData();
-		await main.deletePollStream(stream.getId());
+	async function removeStream(pollStream: PollStream) {
+		main.userData.removePollStreamId(pollStream.id);
 		await buildFromUserData()
 	}
 
 	async function buildFromUserData() {
 		pollStreams = [];
-		var polls = main.getUserData().getPollIDs();
+		var polls = main.userData.getPollStreamIds();
 		for (let poll of polls) {
 			var p = await main.readPollStream(poll);
 			if (p != null) {
@@ -39,7 +36,7 @@
 		}
 	}
 	
-	getAuth(main.firebaseApp).onAuthStateChanged(async (user) => {
+	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
 			await main.readUserData();
 			buildFromUserData();
@@ -52,12 +49,6 @@
 </script>
 
 <GoogleButton></GoogleButton>
-
-<!-- 
-{#if auth.currentUser != null && update > 0}
-	<button><a href={"/user/" + auth.currentUser.uid}>User Page</a></button>
-{/if}
- -->
 
 {#if pollStreams.length == 0}
 	<p style="margin-top: 100px">No Poll Streams!</p>
@@ -72,7 +63,7 @@
 
 <FloatingButtonContainer>
 	{#if main.auth.currentUser != null && update > 0}
-		<FloatingButton onclick={appendStreams}>+ Add</FloatingButton>
+		<FloatingButton onclick={appendStreams}>+ Create Poll Stream</FloatingButton>
 	{:else}
 		<FloatingButton>Sign in to add.</FloatingButton>
 	{/if}

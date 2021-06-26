@@ -1,15 +1,12 @@
 
 <script>
-	import { getApp } from "@firebase/app";
+	import { main } from "$lib/main";
 	import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 	let loggedIn = false;
 	let name;
 
-	const firebaseApp = getApp()
-	const auth = getAuth(firebaseApp);
-
 	// Source: https://firebase.google.com/docs/auth/web/manage-users
-	onAuthStateChanged(auth, (user) => {
+	onAuthStateChanged(main.auth, (user) => {
 		if (user) {
 			// User is signed in, see docs for a list of available properties
 			// https://firebase.google.com/docs/reference/js/firebase.User
@@ -27,7 +24,7 @@
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
 	function signIn() {
 		var provider = new GoogleAuthProvider();
-		signInWithPopup(auth, provider)
+		signInWithPopup(main.auth, provider)
 			.then((result) => {
 				// This gives you a Google Access Token. You can use it to access the Google API.
 				// The signed-in user info.
@@ -48,7 +45,7 @@
 	}
 
 	function signOut() {
-		auth.signOut();
+		main.auth.signOut();
 	}
 </script>
 <div class = "dumb-container">
