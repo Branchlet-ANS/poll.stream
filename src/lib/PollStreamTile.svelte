@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Poll, PollStream } from './poll';
-	export let remove;
+	export let remove = () => undefined;
 	export let pollStream: PollStream;
 
 	function addPoll() {

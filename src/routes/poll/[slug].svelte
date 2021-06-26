@@ -1,23 +1,34 @@
 <script context="module">
-	let p;
-	
+	let pageInfo;
+	let pollStreamId;
+
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
 	export async function load({ page, fetch, session, context }) {
-		p = page;
+		pageInfo = page;
+		pollStreamId = pageInfo.params.slug;
 		return { props: { } };
 	}
 </script>
 
 <script>
-	import { getApp } from "@firebase/app";
-	import { getAuth } from "@firebase/auth";
-	const firebaseApp = getApp();
-	const auth = getAuth(firebaseApp);
+	import PollStreamTile from '../../lib/PollStreamTile.svelte';
+	import { Main } from '../../lib/main';
+	import { onMount } from 'svelte';
+	
+	const main = new Main();
+	let pollStream;
 
+	onMount(async () => {
+		pollStream = await main.readPollStream(pollStreamId);
+	})
+	
 </script>
 
-<h1>This is the poll page of {p.params.slug}</h1>
-<p>Page Info: {JSON.stringify(p)}</p>
+<h1>This is the poll page of {pollStreamId}</h1>
+<p>Page Info: {JSON.stringify(pageInfo)}</p>
 
+{#if pollStream != undefined}
+	<PollStreamTile pollStream={pollStream}></PollStreamTile>
+{/if}

@@ -57,7 +57,7 @@ export class Main {
 		await setDoc(doc(collection(this.db, "polls"), pollStream.getId()), data);
 	}
 
-	public async readPollStream(id) {
+	public async readPollStream(id): Promise<PollStream> {
 		var document = await getDoc(doc(collection(this.db, "polls"), id));
 		var data = document.data();
 		if (data && Object.keys(data).includes("data")) {

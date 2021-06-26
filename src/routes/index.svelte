@@ -9,7 +9,7 @@
 	import { Main } from '../lib/main';
 	import { getAuth } from '@firebase/auth';
 	
-	let main = new Main();
+	const main = new Main();
 	let pollStreams = [];
 	let update = 0;
 
