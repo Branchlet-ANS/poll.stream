@@ -86,7 +86,7 @@ export class Poll {
 
 export class UserData {
 	private id: String;
-	private polls: Array<PollStream> = [];
+	private polls: Array<String> = [];
 	__type = 'UserData'; // For deserialization
 
 	constructor(id: String) {
@@ -102,10 +102,10 @@ export class UserData {
 	}
 
 	public addPoll(poll: PollStream) {
-		this.polls.push(poll);
+		this.polls.push(poll.getId());
 	}
 
 	public removePoll(poll: PollStream) {
-		this.polls.slice(this.polls.indexOf(poll), 1);
+		this.polls.slice(this.polls.indexOf(poll.getId()), 1);
 	}
 }
