@@ -1,6 +1,6 @@
 
 <body>
-	<h1 class="logo">Poll.stream</h1>
+	<h1 class="logo"><a href="/">Poll.stream</a></h1>
 
     <slot></slot>
 </body>
@@ -17,10 +17,11 @@
 		--c_light: #B4C5D3;
 	}
 
-	.logo {
+	.logo a {
 		text-align: center;
 		font-family: 'Fredoka One', cursive;
 		color: #0086E5;
+		text-decoration: none;
 	}
 
     body {

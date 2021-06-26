@@ -1,18 +1,30 @@
-<script>
+<script lang="ts">
+	import { Poll, PollStream } from './poll';
 	export let remove;
+	export let pollStream: PollStream;
+
+	function addPoll() {
+		pollStream.addPoll(new Poll("Hello world?"))
+		pollStream = pollStream; // For Svelte
+	}
+
+	$: polls = pollStream.getPolls();
 	let appeardelay = false;
 	setTimeout(function() {
 	  appeardelay = true
   }, 1);
 </script>
 
-<div class="container" class:appeardelay>
-	<h3>Poll Stream Name</h3>
-	<span><slot></slot></span>
-	<p>Poll Stream Details</p>
+<div class="container">
+	<h2>PollStream: {pollStream.getId()}</h2>
 	<button on:click={remove}>Delete</button>
+	<button on:click={addPoll}>Add Poll</button>
+	<a href={"/poll/" + pollStream.getId()}>Poll Page</a>
+	<h3>Polls:</h3>
+	{#each polls as poll}
+		<p>{poll.getQuestion()}</p>
+	{/each}
 </div>
-
 
 <style>
 	.container {

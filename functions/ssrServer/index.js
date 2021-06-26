@@ -59,6 +59,497 @@ var __privateSet = (obj, member, value, setter) => {
   return value;
 };
 
+// node_modules/uuid/dist/rng.js
+var require_rng = __commonJS({
+  "node_modules/uuid/dist/rng.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = rng;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var rnds8Pool = new Uint8Array(256);
+    var poolPtr = rnds8Pool.length;
+    function rng() {
+      if (poolPtr > rnds8Pool.length - 16) {
+        _crypto.default.randomFillSync(rnds8Pool);
+        poolPtr = 0;
+      }
+      return rnds8Pool.slice(poolPtr, poolPtr += 16);
+    }
+  }
+});
+
+// node_modules/uuid/dist/regex.js
+var require_regex = __commonJS({
+  "node_modules/uuid/dist/regex.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/validate.js
+var require_validate = __commonJS({
+  "node_modules/uuid/dist/validate.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _regex = _interopRequireDefault(require_regex());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function validate2(uuid2) {
+      return typeof uuid2 === "string" && _regex.default.test(uuid2);
+    }
+    var _default = validate2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/stringify.js
+var require_stringify = __commonJS({
+  "node_modules/uuid/dist/stringify.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var byteToHex = [];
+    for (let i = 0; i < 256; ++i) {
+      byteToHex.push((i + 256).toString(16).substr(1));
+    }
+    function stringify2(arr, offset = 0) {
+      const uuid2 = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Stringified UUID is invalid");
+      }
+      return uuid2;
+    }
+    var _default = stringify2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v1.js
+var require_v1 = __commonJS({
+  "node_modules/uuid/dist/v1.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _rng = _interopRequireDefault(require_rng());
+    var _stringify = _interopRequireDefault(require_stringify());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var _nodeId;
+    var _clockseq;
+    var _lastMSecs = 0;
+    var _lastNSecs = 0;
+    function v12(options2, buf, offset) {
+      let i = buf && offset || 0;
+      const b = buf || new Array(16);
+      options2 = options2 || {};
+      let node = options2.node || _nodeId;
+      let clockseq = options2.clockseq !== void 0 ? options2.clockseq : _clockseq;
+      if (node == null || clockseq == null) {
+        const seedBytes = options2.random || (options2.rng || _rng.default)();
+        if (node == null) {
+          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+        }
+        if (clockseq == null) {
+          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+        }
+      }
+      let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
+      let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
+      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+      if (dt < 0 && options2.clockseq === void 0) {
+        clockseq = clockseq + 1 & 16383;
+      }
+      if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
+        nsecs = 0;
+      }
+      if (nsecs >= 1e4) {
+        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+      }
+      _lastMSecs = msecs;
+      _lastNSecs = nsecs;
+      _clockseq = clockseq;
+      msecs += 122192928e5;
+      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+      b[i++] = tl >>> 24 & 255;
+      b[i++] = tl >>> 16 & 255;
+      b[i++] = tl >>> 8 & 255;
+      b[i++] = tl & 255;
+      const tmh = msecs / 4294967296 * 1e4 & 268435455;
+      b[i++] = tmh >>> 8 & 255;
+      b[i++] = tmh & 255;
+      b[i++] = tmh >>> 24 & 15 | 16;
+      b[i++] = tmh >>> 16 & 255;
+      b[i++] = clockseq >>> 8 | 128;
+      b[i++] = clockseq & 255;
+      for (let n = 0; n < 6; ++n) {
+        b[i + n] = node[n];
+      }
+      return buf || (0, _stringify.default)(b);
+    }
+    var _default = v12;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/parse.js
+var require_parse = __commonJS({
+  "node_modules/uuid/dist/parse.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function parse2(uuid2) {
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Invalid UUID");
+      }
+      let v;
+      const arr = new Uint8Array(16);
+      arr[0] = (v = parseInt(uuid2.slice(0, 8), 16)) >>> 24;
+      arr[1] = v >>> 16 & 255;
+      arr[2] = v >>> 8 & 255;
+      arr[3] = v & 255;
+      arr[4] = (v = parseInt(uuid2.slice(9, 13), 16)) >>> 8;
+      arr[5] = v & 255;
+      arr[6] = (v = parseInt(uuid2.slice(14, 18), 16)) >>> 8;
+      arr[7] = v & 255;
+      arr[8] = (v = parseInt(uuid2.slice(19, 23), 16)) >>> 8;
+      arr[9] = v & 255;
+      arr[10] = (v = parseInt(uuid2.slice(24, 36), 16)) / 1099511627776 & 255;
+      arr[11] = v / 4294967296 & 255;
+      arr[12] = v >>> 24 & 255;
+      arr[13] = v >>> 16 & 255;
+      arr[14] = v >>> 8 & 255;
+      arr[15] = v & 255;
+      return arr;
+    }
+    var _default = parse2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v35.js
+var require_v35 = __commonJS({
+  "node_modules/uuid/dist/v35.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = _default;
+    exports2.URL = exports2.DNS = void 0;
+    var _stringify = _interopRequireDefault(require_stringify());
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function stringToBytes(str) {
+      str = unescape(encodeURIComponent(str));
+      const bytes = [];
+      for (let i = 0; i < str.length; ++i) {
+        bytes.push(str.charCodeAt(i));
+      }
+      return bytes;
+    }
+    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    exports2.DNS = DNS;
+    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+    exports2.URL = URL2;
+    function _default(name, version2, hashfunc) {
+      function generateUUID(value, namespace, buf, offset) {
+        if (typeof value === "string") {
+          value = stringToBytes(value);
+        }
+        if (typeof namespace === "string") {
+          namespace = (0, _parse.default)(namespace);
+        }
+        if (namespace.length !== 16) {
+          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+        }
+        let bytes = new Uint8Array(16 + value.length);
+        bytes.set(namespace);
+        bytes.set(value, namespace.length);
+        bytes = hashfunc(bytes);
+        bytes[6] = bytes[6] & 15 | version2;
+        bytes[8] = bytes[8] & 63 | 128;
+        if (buf) {
+          offset = offset || 0;
+          for (let i = 0; i < 16; ++i) {
+            buf[offset + i] = bytes[i];
+          }
+          return buf;
+        }
+        return (0, _stringify.default)(bytes);
+      }
+      try {
+        generateUUID.name = name;
+      } catch (err) {
+      }
+      generateUUID.DNS = DNS;
+      generateUUID.URL = URL2;
+      return generateUUID;
+    }
+  }
+});
+
+// node_modules/uuid/dist/md5.js
+var require_md5 = __commonJS({
+  "node_modules/uuid/dist/md5.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function md5(bytes) {
+      if (Array.isArray(bytes)) {
+        bytes = Buffer.from(bytes);
+      } else if (typeof bytes === "string") {
+        bytes = Buffer.from(bytes, "utf8");
+      }
+      return _crypto.default.createHash("md5").update(bytes).digest();
+    }
+    var _default = md5;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v3.js
+var require_v3 = __commonJS({
+  "node_modules/uuid/dist/v3.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _md = _interopRequireDefault(require_md5());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v32 = (0, _v.default)("v3", 48, _md.default);
+    var _default = v32;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v4.js
+var require_v4 = __commonJS({
+  "node_modules/uuid/dist/v4.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _rng = _interopRequireDefault(require_rng());
+    var _stringify = _interopRequireDefault(require_stringify());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function v42(options2, buf, offset) {
+      options2 = options2 || {};
+      const rnds = options2.random || (options2.rng || _rng.default)();
+      rnds[6] = rnds[6] & 15 | 64;
+      rnds[8] = rnds[8] & 63 | 128;
+      if (buf) {
+        offset = offset || 0;
+        for (let i = 0; i < 16; ++i) {
+          buf[offset + i] = rnds[i];
+        }
+        return buf;
+      }
+      return (0, _stringify.default)(rnds);
+    }
+    var _default = v42;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/sha1.js
+var require_sha1 = __commonJS({
+  "node_modules/uuid/dist/sha1.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function sha1(bytes) {
+      if (Array.isArray(bytes)) {
+        bytes = Buffer.from(bytes);
+      } else if (typeof bytes === "string") {
+        bytes = Buffer.from(bytes, "utf8");
+      }
+      return _crypto.default.createHash("sha1").update(bytes).digest();
+    }
+    var _default = sha1;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v5.js
+var require_v5 = __commonJS({
+  "node_modules/uuid/dist/v5.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _sha = _interopRequireDefault(require_sha1());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v52 = (0, _v.default)("v5", 80, _sha.default);
+    var _default = v52;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/nil.js
+var require_nil = __commonJS({
+  "node_modules/uuid/dist/nil.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _default = "00000000-0000-0000-0000-000000000000";
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/version.js
+var require_version = __commonJS({
+  "node_modules/uuid/dist/version.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function version2(uuid2) {
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Invalid UUID");
+      }
+      return parseInt(uuid2.substr(14, 1), 16);
+    }
+    var _default = version2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/index.js
+var require_dist = __commonJS({
+  "node_modules/uuid/dist/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    Object.defineProperty(exports2, "v1", {
+      enumerable: true,
+      get: function() {
+        return _v.default;
+      }
+    });
+    Object.defineProperty(exports2, "v3", {
+      enumerable: true,
+      get: function() {
+        return _v2.default;
+      }
+    });
+    Object.defineProperty(exports2, "v4", {
+      enumerable: true,
+      get: function() {
+        return _v3.default;
+      }
+    });
+    Object.defineProperty(exports2, "v5", {
+      enumerable: true,
+      get: function() {
+        return _v4.default;
+      }
+    });
+    Object.defineProperty(exports2, "NIL", {
+      enumerable: true,
+      get: function() {
+        return _nil.default;
+      }
+    });
+    Object.defineProperty(exports2, "version", {
+      enumerable: true,
+      get: function() {
+        return _version.default;
+      }
+    });
+    Object.defineProperty(exports2, "validate", {
+      enumerable: true,
+      get: function() {
+        return _validate.default;
+      }
+    });
+    Object.defineProperty(exports2, "stringify", {
+      enumerable: true,
+      get: function() {
+        return _stringify.default;
+      }
+    });
+    Object.defineProperty(exports2, "parse", {
+      enumerable: true,
+      get: function() {
+        return _parse.default;
+      }
+    });
+    var _v = _interopRequireDefault(require_v1());
+    var _v2 = _interopRequireDefault(require_v3());
+    var _v3 = _interopRequireDefault(require_v4());
+    var _v4 = _interopRequireDefault(require_v5());
+    var _nil = _interopRequireDefault(require_nil());
+    var _version = _interopRequireDefault(require_version());
+    var _validate = _interopRequireDefault(require_validate());
+    var _stringify = _interopRequireDefault(require_stringify());
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+  }
+});
+
 // node_modules/tslib/tslib.js
 var require_tslib = __commonJS({
   "node_modules/tslib/tslib.js"(exports2, module2) {
@@ -110,51 +601,51 @@ var require_tslib = __commonJS({
         };
       }
     })(function(exporter) {
-      var extendStatics = Object.setPrototypeOf || {__proto__: []} instanceof Array && function(d, b) {
-        d.__proto__ = b;
-      } || function(d, b) {
-        for (var p in b)
-          if (Object.prototype.hasOwnProperty.call(b, p))
-            d[p] = b[p];
+      var extendStatics = Object.setPrototypeOf || {__proto__: []} instanceof Array && function(d2, b) {
+        d2.__proto__ = b;
+      } || function(d2, b) {
+        for (var p2 in b)
+          if (Object.prototype.hasOwnProperty.call(b, p2))
+            d2[p2] = b[p2];
       };
-      __extends = function(d, b) {
+      __extends = function(d2, b) {
         if (typeof b !== "function" && b !== null)
           throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
+        extendStatics(d2, b);
         function __() {
-          this.constructor = d;
+          this.constructor = d2;
         }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
       };
       __assign = Object.assign || function(t) {
         for (var s2, i = 1, n = arguments.length; i < n; i++) {
           s2 = arguments[i];
-          for (var p in s2)
-            if (Object.prototype.hasOwnProperty.call(s2, p))
-              t[p] = s2[p];
+          for (var p2 in s2)
+            if (Object.prototype.hasOwnProperty.call(s2, p2))
+              t[p2] = s2[p2];
         }
         return t;
       };
       __rest = function(s2, e) {
         var t = {};
-        for (var p in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p) && e.indexOf(p) < 0)
-            t[p] = s2[p];
+        for (var p2 in s2)
+          if (Object.prototype.hasOwnProperty.call(s2, p2) && e.indexOf(p2) < 0)
+            t[p2] = s2[p2];
         if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
-          for (var i = 0, p = Object.getOwnPropertySymbols(s2); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p[i]))
-              t[p[i]] = s2[p[i]];
+          for (var i = 0, p2 = Object.getOwnPropertySymbols(s2); i < p2.length; i++) {
+            if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i]))
+              t[p2[i]] = s2[p2[i]];
           }
         return t;
       };
       __decorate = function(decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
           r = Reflect.decorate(decorators, target, key, desc);
         else
           for (var i = decorators.length - 1; i >= 0; i--)
-            if (d = decorators[i])
-              r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+            if (d2 = decorators[i])
+              r = (c < 3 ? d2(r) : c > 3 ? d2(target, key, r) : d2(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
       };
       __param = function(paramIndex, decorator) {
@@ -270,9 +761,9 @@ var require_tslib = __commonJS({
         }
       };
       __exportStar = function(m, o) {
-        for (var p in m)
-          if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            __createBinding(o, m, p);
+        for (var p2 in m)
+          if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(o, p2))
+            __createBinding(o, m, p2);
       };
       __createBinding = Object.create ? function(o, m, k, k2) {
         if (k2 === void 0)
@@ -384,7 +875,7 @@ var require_tslib = __commonJS({
         }
       };
       __asyncDelegator = function(o) {
-        var i, p;
+        var i, p2;
         return i = {}, verb("next"), verb("throw", function(e) {
           throw e;
         }), verb("return"), i[Symbol.iterator] = function() {
@@ -392,7 +883,7 @@ var require_tslib = __commonJS({
         }, i;
         function verb(n, f) {
           i[n] = o[n] ? function(v) {
-            return (p = !p) ? {value: __await(o[n](v)), done: n === "return"} : f ? f(v) : v;
+            return (p2 = !p2) ? {value: __await(o[n](v)), done: n === "return"} : f ? f(v) : v;
           } : f;
         }
       };
@@ -410,9 +901,9 @@ var require_tslib = __commonJS({
             });
           };
         }
-        function settle(resolve2, reject, d, v) {
+        function settle(resolve2, reject, d2, v) {
           Promise.resolve(v).then(function(v2) {
-            resolve2({value: v2, done: d});
+            resolve2({value: v2, done: d2});
           }, reject);
         }
       };
@@ -509,24 +1000,24 @@ var require_index_node_cjs = __commonJS({
     };
     var stringToByteArray = function(str) {
       var out = [];
-      var p = 0;
+      var p2 = 0;
       for (var i = 0; i < str.length; i++) {
         var c = str.charCodeAt(i);
         if (c < 128) {
-          out[p++] = c;
+          out[p2++] = c;
         } else if (c < 2048) {
-          out[p++] = c >> 6 | 192;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
         } else if ((c & 64512) === 55296 && i + 1 < str.length && (str.charCodeAt(i + 1) & 64512) === 56320) {
           c = 65536 + ((c & 1023) << 10) + (str.charCodeAt(++i) & 1023);
-          out[p++] = c >> 18 | 240;
-          out[p++] = c >> 12 & 63 | 128;
-          out[p++] = c >> 6 & 63 | 128;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
         } else {
-          out[p++] = c >> 12 | 224;
-          out[p++] = c >> 6 & 63 | 128;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
         }
       }
       return out;
@@ -906,7 +1397,7 @@ var require_index_node_cjs = __commonJS({
     function jsonEval(str) {
       return JSON.parse(str);
     }
-    function stringify(data) {
+    function stringify2(data) {
       return JSON.stringify(data);
     }
     var decode = function(token) {
@@ -1070,30 +1561,30 @@ var require_index_node_cjs = __commonJS({
         var a = this.chain_[0];
         var b = this.chain_[1];
         var c = this.chain_[2];
-        var d = this.chain_[3];
+        var d2 = this.chain_[3];
         var e = this.chain_[4];
         var f, k;
         for (var i = 0; i < 80; i++) {
           if (i < 40) {
             if (i < 20) {
-              f = d ^ b & (c ^ d);
+              f = d2 ^ b & (c ^ d2);
               k = 1518500249;
             } else {
-              f = b ^ c ^ d;
+              f = b ^ c ^ d2;
               k = 1859775393;
             }
           } else {
             if (i < 60) {
-              f = b & c | d & (b | c);
+              f = b & c | d2 & (b | c);
               k = 2400959708;
             } else {
-              f = b ^ c ^ d;
+              f = b ^ c ^ d2;
               k = 3395469782;
             }
           }
           var t = (a << 5 | a >>> 27) + f + e + k + W[i] & 4294967295;
-          e = d;
-          d = c;
+          e = d2;
+          d2 = c;
           c = (b << 30 | b >>> 2) & 4294967295;
           b = a;
           a = t;
@@ -1101,7 +1592,7 @@ var require_index_node_cjs = __commonJS({
         this.chain_[0] = this.chain_[0] + a & 4294967295;
         this.chain_[1] = this.chain_[1] + b & 4294967295;
         this.chain_[2] = this.chain_[2] + c & 4294967295;
-        this.chain_[3] = this.chain_[3] + d & 4294967295;
+        this.chain_[3] = this.chain_[3] + d2 & 4294967295;
         this.chain_[4] = this.chain_[4] + e & 4294967295;
       };
       Sha12.prototype.update = function(bytes, length) {
@@ -1372,7 +1863,7 @@ var require_index_node_cjs = __commonJS({
     }
     var stringToByteArray$1 = function(str) {
       var out = [];
-      var p = 0;
+      var p2 = 0;
       for (var i = 0; i < str.length; i++) {
         var c = str.charCodeAt(i);
         if (c >= 55296 && c <= 56319) {
@@ -1383,39 +1874,39 @@ var require_index_node_cjs = __commonJS({
           c = 65536 + (high << 10) + low;
         }
         if (c < 128) {
-          out[p++] = c;
+          out[p2++] = c;
         } else if (c < 2048) {
-          out[p++] = c >> 6 | 192;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
         } else if (c < 65536) {
-          out[p++] = c >> 12 | 224;
-          out[p++] = c >> 6 & 63 | 128;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
         } else {
-          out[p++] = c >> 18 | 240;
-          out[p++] = c >> 12 & 63 | 128;
-          out[p++] = c >> 6 & 63 | 128;
-          out[p++] = c & 63 | 128;
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
         }
       }
       return out;
     };
     var stringLength = function(str) {
-      var p = 0;
+      var p2 = 0;
       for (var i = 0; i < str.length; i++) {
         var c = str.charCodeAt(i);
         if (c < 128) {
-          p++;
+          p2++;
         } else if (c < 2048) {
-          p += 2;
+          p2 += 2;
         } else if (c >= 55296 && c <= 56319) {
-          p += 4;
+          p2 += 4;
           i++;
         } else {
-          p += 3;
+          p2 += 3;
         }
       }
-      return p;
+      return p2;
     };
     var DEFAULT_INTERVAL_MILLIS = 1e3;
     var DEFAULT_BACKOFF_FACTOR = 2;
@@ -1514,7 +2005,7 @@ var require_index_node_cjs = __commonJS({
     exports2.safeGet = safeGet;
     exports2.stringLength = stringLength;
     exports2.stringToByteArray = stringToByteArray$1;
-    exports2.stringify = stringify;
+    exports2.stringify = stringify2;
     exports2.validateArgCount = validateArgCount;
     exports2.validateCallback = validateCallback;
     exports2.validateContextObject = validateContextObject;
@@ -2070,7 +2561,7 @@ var require_index_cjs3 = __commonJS({
       return (component2 === null || component2 === void 0 ? void 0 : component2.type) === "VERSION";
     }
     var name = "@firebase/app-exp";
-    var version = "0.0.900-exp.d92a36260";
+    var version2 = "0.0.900-exp.d92a36260";
     var logger = new logger$1.Logger("@firebase/app");
     var name$1 = "@firebase/app-compat";
     var name$2 = "@firebase/analytics-compat";
@@ -2292,17 +2783,17 @@ var require_index_cjs3 = __commonJS({
         });
       });
     }
-    function registerVersion(libraryKeyOrName, version2, variant) {
+    function registerVersion(libraryKeyOrName, version3, variant) {
       var _a2;
       var library = (_a2 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a2 !== void 0 ? _a2 : libraryKeyOrName;
       if (variant) {
         library += "-" + variant;
       }
       var libraryMismatch = library.match(/\s|\//);
-      var versionMismatch = version2.match(/\s|\//);
+      var versionMismatch = version3.match(/\s|\//);
       if (libraryMismatch || versionMismatch) {
         var warning = [
-          'Unable to register library "' + library + '" with version "' + version2 + '":'
+          'Unable to register library "' + library + '" with version "' + version3 + '":'
         ];
         if (libraryMismatch) {
           warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
@@ -2311,13 +2802,13 @@ var require_index_cjs3 = __commonJS({
           warning.push("and");
         }
         if (versionMismatch) {
-          warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
+          warning.push('version name "' + version3 + '" contains illegal characters (whitespace or "/")');
         }
         logger.warn(warning.join(" "));
         return;
       }
       _registerComponent(new component.Component(library + "-version", function() {
-        return {library, version: version2};
+        return {library, version: version3};
       }, "VERSION"));
     }
     function onLog(logCallback, options2) {
@@ -2333,7 +2824,7 @@ var require_index_cjs3 = __commonJS({
       _registerComponent(new component.Component("platform-logger", function(container) {
         return new PlatformLoggerServiceImpl(container);
       }, "PRIVATE"));
-      registerVersion(name, version, variant);
+      registerVersion(name, version2, variant);
       registerVersion("fire-js", "");
     }
     registerCoreComponents();
@@ -7259,7 +7750,7 @@ var require_register_2a5ac87a = __commonJS({
       return multiFactorUserCache.get(userModular);
     }
     var name = "@firebase/auth-exp";
-    var version = "0.0.900-exp.d92a36260";
+    var version2 = "0.0.900-exp.d92a36260";
     var AuthInterop = function() {
       function AuthInterop2(auth) {
         this.auth = auth;
@@ -7372,7 +7863,7 @@ var require_register_2a5ac87a = __commonJS({
           return new AuthInterop(auth2);
         }(auth);
       }, "PRIVATE").setInstantiationMode("EXPLICIT"));
-      app.registerVersion(name, version, getVersionForPlatform(clientPlatform));
+      app.registerVersion(name, version2, getVersionForPlatform(clientPlatform));
     }
     exports2.ActionCodeURL = ActionCodeURL;
     exports2.AuthCredential = AuthCredential;
@@ -7685,7 +8176,7 @@ var require_metadata = __commonJS({
     function normalizeKey(key) {
       return key.toLowerCase();
     }
-    function validate(key, value) {
+    function validate2(key, value) {
       if (!isLegalKey(key)) {
         throw new Error('Metadata key "' + key + '" contains illegal characters');
       }
@@ -7715,12 +8206,12 @@ var require_metadata = __commonJS({
       }
       set(key, value) {
         key = normalizeKey(key);
-        validate(key, value);
+        validate2(key, value);
         this.internalRepr.set(key, [value]);
       }
       add(key, value) {
         key = normalizeKey(key);
-        validate(key, value);
+        validate2(key, value);
         const existingValue = this.internalRepr.get(key);
         if (existingValue === void 0) {
           this.internalRepr.set(key, [value]);
@@ -7730,12 +8221,12 @@ var require_metadata = __commonJS({
       }
       remove(key) {
         key = normalizeKey(key);
-        validate(key);
+        validate2(key);
         this.internalRepr.delete(key);
       }
       get(key) {
         key = normalizeKey(key);
-        validate(key);
+        validate2(key);
         return this.internalRepr.get(key) || [];
       }
       getMap() {
@@ -9692,35 +10183,39 @@ var require_http_proxy = __commonJS({
 var require_package = __commonJS({
   "node_modules/@grpc/grpc-js/package.json"(exports2, module2) {
     module2.exports = {
-      _from: "@grpc/grpc-js@^1.0.0",
+      _args: [
+        [
+          "@grpc/grpc-js@1.3.3",
+          "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream"
+        ]
+      ],
+      _from: "@grpc/grpc-js@1.3.3",
       _id: "@grpc/grpc-js@1.3.3",
       _inBundle: false,
       _integrity: "sha512-KkKZrX3fVTBYCtUk8I+Y4xWaauEEOIR1mIGoPFUK8C+a9TTub5dmjowJpFGz0dqYj//wJcgVR9fqpoNhSYFfHQ==",
       _location: "/@grpc/grpc-js",
       _phantomChildren: {},
       _requested: {
-        type: "range",
+        type: "version",
         registry: true,
-        raw: "@grpc/grpc-js@^1.0.0",
+        raw: "@grpc/grpc-js@1.3.3",
         name: "@grpc/grpc-js",
         escapedName: "@grpc%2fgrpc-js",
         scope: "@grpc",
-        rawSpec: "^1.0.0",
+        rawSpec: "1.3.3",
         saveSpec: null,
-        fetchSpec: "^1.0.0"
+        fetchSpec: "1.3.3"
       },
       _requiredBy: [
         "/@firebase/firestore",
         "/@firebase/firestore-compat"
       ],
       _resolved: "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.3.tgz",
-      _shasum: "479764be3044f44c9fe38702643f59ea1a5374cb",
-      _spec: "@grpc/grpc-js@^1.0.0",
-      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream\\node_modules\\@firebase\\firestore",
+      _spec: "1.3.3",
+      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream",
       author: {
         name: "Google Inc."
       },
-      bundleDependencies: false,
       contributors: [
         {
           name: "Google Inc."
@@ -9729,7 +10224,6 @@ var require_package = __commonJS({
       dependencies: {
         "@types/node": ">=12.12.47"
       },
-      deprecated: false,
       description: "gRPC Library for Node - pure JS implementation",
       devDependencies: {
         "@grpc/proto-loader": "^0.5.5",
@@ -13924,11 +14418,11 @@ var require_base64 = __commonJS({
     "use strict";
     var base64 = exports2;
     base64.length = function length(string) {
-      var p = string.length;
-      if (!p)
+      var p2 = string.length;
+      if (!p2)
         return 0;
       var n = 0;
-      while (--p % 4 > 1 && string.charAt(p) === "=")
+      while (--p2 % 4 > 1 && string.charAt(p2) === "=")
         ++n;
       return Math.ceil(string.length * 3) / 4 - n;
     };
@@ -16842,7 +17336,7 @@ var require_root = __commonJS({
     var OneOf = require_oneof();
     var util = require_util();
     var Type;
-    var parse;
+    var parse2;
     var common;
     function Root2(options2) {
       Namespace.call(this, "", options2);
@@ -16894,8 +17388,8 @@ var require_root = __commonJS({
           if (!util.isString(source))
             self2.setOptions(source.options).addJSON(source.nested);
           else {
-            parse.filename = filename2;
-            var parsed = parse(source, self2, options2), resolved2, i2 = 0;
+            parse2.filename = filename2;
+            var parsed = parse2(source, self2, options2), resolved2, i2 = 0;
             if (parsed.imports) {
               for (; i2 < parsed.imports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.imports[i2]) || self2.resolvePath(filename2, parsed.imports[i2]))
@@ -17038,7 +17532,7 @@ var require_root = __commonJS({
     };
     Root2._configure = function(Type_, parse_, common_) {
       Type = Type_;
-      parse = parse_;
+      parse2 = parse_;
       common = common_;
     };
   }
@@ -17687,12 +18181,12 @@ var require_tokenize = __commonJS({
 });
 
 // node_modules/protobufjs/src/parse.js
-var require_parse = __commonJS({
+var require_parse2 = __commonJS({
   "node_modules/protobufjs/src/parse.js"(exports2, module2) {
     "use strict";
-    module2.exports = parse;
-    parse.filename = null;
-    parse.defaults = {keepCase: false};
+    module2.exports = parse2;
+    parse2.filename = null;
+    parse2.defaults = {keepCase: false};
     var tokenize = require_tokenize();
     var Root2 = require_root();
     var Type = require_type();
@@ -17714,13 +18208,13 @@ var require_parse = __commonJS({
     var nameRe = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
     var typeRefRe = /^(?:\.?[a-zA-Z_][a-zA-Z_0-9]*)(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*$/;
     var fqTypeRefRe = /^(?:\.[a-zA-Z_][a-zA-Z_0-9]*)+$/;
-    function parse(source, root, options2) {
+    function parse2(source, root, options2) {
       if (!(root instanceof Root2)) {
         options2 = root;
         root = new Root2();
       }
       if (!options2)
-        options2 = parse.defaults;
+        options2 = parse2.defaults;
       var preferTrailingComment = options2.preferTrailingComment || false;
       var tn = tokenize(source, options2.alternateCommentMode || false), next = tn.next, push = tn.push, peek = tn.peek, skip = tn.skip, cmnt = tn.cmnt;
       var head = true, pkg, imports, weakImports, syntax, isProto3 = false;
@@ -17729,9 +18223,9 @@ var require_parse = __commonJS({
         return name;
       } : util.camelCase;
       function illegal(token2, name, insideTryCatch) {
-        var filename = parse.filename;
+        var filename = parse2.filename;
         if (!insideTryCatch)
-          parse.filename = null;
+          parse2.filename = null;
         return Error("illegal " + (name || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
       }
       function readString() {
@@ -17887,7 +18381,7 @@ var require_parse = __commonJS({
           if (typeof obj.comment !== "string") {
             obj.comment = cmnt();
           }
-          obj.filename = parse.filename;
+          obj.filename = parse2.filename;
         }
         if (skip("{", true)) {
           var token2;
@@ -17989,7 +18483,7 @@ var require_parse = __commonJS({
         var type = new Type(name);
         type.group = true;
         var field = new Field(fieldName, id, name, rule);
-        field.filename = parse.filename;
+        field.filename = parse2.filename;
         ifBlock(type, function parseGroup_block(token2) {
           switch (token2) {
             case "option":
@@ -18261,7 +18755,7 @@ var require_parse = __commonJS({
             throw illegal(token);
         }
       }
-      parse.filename = null;
+      parse2.filename = null;
       return {
         "package": pkg,
         "imports": imports,
@@ -18486,7 +18980,7 @@ var require_src2 = __commonJS({
     var protobuf = module2.exports = require_index_light();
     protobuf.build = "full";
     protobuf.tokenize = require_tokenize();
-    protobuf.parse = require_parse();
+    protobuf.parse = require_parse2();
     protobuf.common = require_common();
     protobuf.Root._configure(protobuf.Type, protobuf.parse, protobuf.common);
   }
@@ -20657,11 +21151,11 @@ var require_index_node_cjs2 = __commonJS({
     var path = require("path");
     var protoLoader = require_src3();
     var name = "@firebase/firestore";
-    var version = "0.0.900-exp.d92a36260";
+    var version2 = "0.0.900-exp.d92a36260";
     var version$1 = "8.6.1";
     var SDK_VERSION = version$1;
-    function setSDKVersion(version2) {
-      SDK_VERSION = version2;
+    function setSDKVersion(version3) {
+      SDK_VERSION = version3;
     }
     var ListenSequence = function() {
       function ListenSequence2(previousValue, sequenceNumberSyncer) {
@@ -21158,9 +21652,9 @@ var require_index_node_cjs2 = __commonJS({
       return DbNoDocument2;
     }();
     var DbUnknownDocument = function() {
-      function DbUnknownDocument2(path2, version2) {
+      function DbUnknownDocument2(path2, version3) {
         this.path = path2;
-        this.version = version2;
+        this.version = version3;
       }
       return DbUnknownDocument2;
     }();
@@ -21248,10 +21742,10 @@ var require_index_node_cjs2 = __commonJS({
     DbClientMetadata.store = "clientMetadata";
     DbClientMetadata.keyPath = "clientId";
     var DbBundle = function() {
-      function DbBundle2(bundleId, createTime, version2) {
+      function DbBundle2(bundleId, createTime, version3) {
         this.bundleId = bundleId;
         this.createTime = createTime;
-        this.version = version2;
+        this.version = version3;
       }
       return DbBundle2;
     }();
@@ -21426,9 +21920,9 @@ var require_index_node_cjs2 = __commonJS({
         });
       };
       PersistencePromise2.or = function(predicates) {
-        var p = PersistencePromise2.resolve(false);
+        var p2 = PersistencePromise2.resolve(false);
         var _loop_1 = function(predicate2) {
-          p = p.next(function(isTrue) {
+          p2 = p2.next(function(isTrue) {
             if (isTrue) {
               return PersistencePromise2.resolve(isTrue);
             } else {
@@ -21440,7 +21934,7 @@ var require_index_node_cjs2 = __commonJS({
           var predicate = predicates_1[_i];
           _loop_1(predicate);
         }
-        return p;
+        return p2;
       };
       PersistencePromise2.forEach = function(collection3, f) {
         var _this = this;
@@ -21507,9 +22001,9 @@ var require_index_node_cjs2 = __commonJS({
       return SimpleDbTransaction2;
     }();
     var SimpleDb = function() {
-      function SimpleDb2(name2, version2, schemaConverter) {
+      function SimpleDb2(name2, version3, schemaConverter) {
         this.name = name2;
-        this.version = version2;
+        this.version = version3;
         this.schemaConverter = schemaConverter;
         var iOSVersion = SimpleDb2.getIOSVersion(util.getUA());
         if (iOSVersion === 12.2) {
@@ -21547,13 +22041,13 @@ var require_index_node_cjs2 = __commonJS({
       };
       SimpleDb2.getIOSVersion = function(ua) {
         var iOSVersionRegex = ua.match(/i(?:phone|pad|pod) os ([\d_]+)/i);
-        var version2 = iOSVersionRegex ? iOSVersionRegex[1].split("_").slice(0, 2).join(".") : "-1";
-        return Number(version2);
+        var version3 = iOSVersionRegex ? iOSVersionRegex[1].split("_").slice(0, 2).join(".") : "-1";
+        return Number(version3);
       };
       SimpleDb2.getAndroidVersion = function(ua) {
         var androidVersionRegex = ua.match(/Android ([\d.]+)/i);
-        var version2 = androidVersionRegex ? androidVersionRegex[1].split(".").slice(0, 2).join(".") : "-1";
-        return Number(version2);
+        var version3 = androidVersionRegex ? androidVersionRegex[1].split(".").slice(0, 2).join(".") : "-1";
+        return Number(version3);
       };
       SimpleDb2.prototype.ensureDb = function(action) {
         return tslib.__awaiter(this, void 0, void 0, function() {
@@ -22720,41 +23214,41 @@ var require_index_node_cjs2 = __commonJS({
       return new FieldMask(fields);
     }
     var MutableDocument = function() {
-      function MutableDocument2(key, documentType, version2, data, documentState) {
+      function MutableDocument2(key, documentType, version3, data, documentState) {
         this.key = key;
         this.documentType = documentType;
-        this.version = version2;
+        this.version = version3;
         this.data = data;
         this.documentState = documentState;
       }
       MutableDocument2.newInvalidDocument = function(documentKey) {
         return new MutableDocument2(documentKey, 0, SnapshotVersion.min(), ObjectValue.empty(), 0);
       };
-      MutableDocument2.newFoundDocument = function(documentKey, version2, value) {
-        return new MutableDocument2(documentKey, 1, version2, value, 0);
+      MutableDocument2.newFoundDocument = function(documentKey, version3, value) {
+        return new MutableDocument2(documentKey, 1, version3, value, 0);
       };
-      MutableDocument2.newNoDocument = function(documentKey, version2) {
-        return new MutableDocument2(documentKey, 2, version2, ObjectValue.empty(), 0);
+      MutableDocument2.newNoDocument = function(documentKey, version3) {
+        return new MutableDocument2(documentKey, 2, version3, ObjectValue.empty(), 0);
       };
-      MutableDocument2.newUnknownDocument = function(documentKey, version2) {
-        return new MutableDocument2(documentKey, 3, version2, ObjectValue.empty(), 2);
+      MutableDocument2.newUnknownDocument = function(documentKey, version3) {
+        return new MutableDocument2(documentKey, 3, version3, ObjectValue.empty(), 2);
       };
-      MutableDocument2.prototype.convertToFoundDocument = function(version2, value) {
-        this.version = version2;
+      MutableDocument2.prototype.convertToFoundDocument = function(version3, value) {
+        this.version = version3;
         this.documentType = 1;
         this.data = value;
         this.documentState = 0;
         return this;
       };
-      MutableDocument2.prototype.convertToNoDocument = function(version2) {
-        this.version = version2;
+      MutableDocument2.prototype.convertToNoDocument = function(version3) {
+        this.version = version3;
         this.documentType = 2;
         this.data = ObjectValue.empty();
         this.documentState = 0;
         return this;
       };
-      MutableDocument2.prototype.convertToUnknownDocument = function(version2) {
-        this.version = version2;
+      MutableDocument2.prototype.convertToUnknownDocument = function(version3) {
+        this.version = version3;
         this.documentType = 3;
         this.data = ObjectValue.empty();
         this.documentState = 2;
@@ -22813,10 +23307,10 @@ var require_index_node_cjs2 = __commonJS({
       return MutableDocument2;
     }();
     function compareDocumentsByField(field, d1, d2) {
-      var v1 = d1.data.field(field);
+      var v12 = d1.data.field(field);
       var v2 = d2.data.field(field);
-      if (v1 !== null && v2 !== null) {
-        return valueCompare(v1, v2);
+      if (v12 !== null && v2 !== null) {
+        return valueCompare(v12, v2);
       } else {
         return fail();
       }
@@ -23154,8 +23648,8 @@ var require_index_node_cjs2 = __commonJS({
       return Bound2;
     }();
     function canonifyBound(bound) {
-      return (bound.before ? "b" : "a") + ":" + bound.position.map(function(p) {
-        return canonicalId(p);
+      return (bound.before ? "b" : "a") + ":" + bound.position.map(function(p2) {
+        return canonicalId(p2);
       }).join(",");
     }
     var OrderBy = function() {
@@ -24154,8 +24648,8 @@ var require_index_node_cjs2 = __commonJS({
       return false;
     }
     var MutationResult = function() {
-      function MutationResult2(version2, transformResults) {
-        this.version = version2;
+      function MutationResult2(version3, transformResults) {
+        this.version = version3;
         this.transformResults = transformResults;
       }
       return MutationResult2;
@@ -24171,8 +24665,8 @@ var require_index_node_cjs2 = __commonJS({
       Precondition2.exists = function(exists) {
         return new Precondition2(void 0, exists);
       };
-      Precondition2.updateTime = function(version2) {
-        return new Precondition2(version2);
+      Precondition2.updateTime = function(version3) {
+        return new Precondition2(version3);
       };
       Object.defineProperty(Precondition2.prototype, "isNone", {
         get: function() {
@@ -25010,12 +25504,12 @@ var require_index_node_cjs2 = __commonJS({
         return ByteString.fromUint8Array(value ? value : new Uint8Array());
       }
     }
-    function toVersion(serializer, version2) {
-      return toTimestamp(serializer, version2.toTimestamp());
+    function toVersion(serializer, version3) {
+      return toTimestamp(serializer, version3.toTimestamp());
     }
-    function fromVersion(version2) {
-      hardAssert(!!version2);
-      return SnapshotVersion.fromTimestamp(fromTimestamp(version2));
+    function fromVersion(version3) {
+      hardAssert(!!version3);
+      return SnapshotVersion.fromTimestamp(fromTimestamp(version3));
     }
     function toResourceName(databaseId, path2) {
       return fullyQualifiedPrefixPath(databaseId).child("documents").child(path2).canonicalString();
@@ -25084,9 +25578,9 @@ var require_index_node_cjs2 = __commonJS({
     }
     function fromDocument(serializer, document2, hasCommittedMutations) {
       var key = fromName(serializer, document2.name);
-      var version2 = fromVersion(document2.updateTime);
+      var version3 = fromVersion(document2.updateTime);
       var data = new ObjectValue({mapValue: {fields: document2.fields}});
-      var result = MutableDocument.newFoundDocument(key, version2, data);
+      var result = MutableDocument.newFoundDocument(key, version3, data);
       if (hasCommittedMutations) {
         result.setHasCommittedMutations();
       }
@@ -25097,16 +25591,16 @@ var require_index_node_cjs2 = __commonJS({
       assertPresent(doc3.found.name);
       assertPresent(doc3.found.updateTime);
       var key = fromName(serializer, doc3.found.name);
-      var version2 = fromVersion(doc3.found.updateTime);
+      var version3 = fromVersion(doc3.found.updateTime);
       var data = new ObjectValue({mapValue: {fields: doc3.found.fields}});
-      return MutableDocument.newFoundDocument(key, version2, data);
+      return MutableDocument.newFoundDocument(key, version3, data);
     }
     function fromMissing(serializer, result) {
       hardAssert(!!result.missing);
       hardAssert(!!result.readTime);
       var key = fromName(serializer, result.missing);
-      var version2 = fromVersion(result.readTime);
-      return MutableDocument.newNoDocument(key, version2);
+      var version3 = fromVersion(result.readTime);
+      return MutableDocument.newNoDocument(key, version3);
     }
     function fromBatchGetDocumentsResponse(serializer, result) {
       if ("found" in result) {
@@ -25276,11 +25770,11 @@ var require_index_node_cjs2 = __commonJS({
       }
     }
     function fromWriteResult(proto, commitTime) {
-      var version2 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
-      if (version2.isEqual(SnapshotVersion.min())) {
-        version2 = fromVersion(commitTime);
+      var version3 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
+      if (version3.isEqual(SnapshotVersion.min())) {
+        version3 = fromVersion(commitTime);
       }
-      return new MutationResult(version2, proto.transformResults || []);
+      return new MutationResult(version3, proto.transformResults || []);
     }
     function fromWriteResults(protos, commitTime) {
       if (protos && protos.length > 0) {
@@ -25783,7 +26277,7 @@ var require_index_node_cjs2 = __commonJS({
       return new MutationBatch(dbBatch.batchId, timestamp, baseMutations, mutations);
     }
     function fromDbTarget(dbTarget) {
-      var version2 = fromDbTimestamp(dbTarget.readTime);
+      var version3 = fromDbTimestamp(dbTarget.readTime);
       var lastLimboFreeSnapshotVersion = dbTarget.lastLimboFreeSnapshotVersion !== void 0 ? fromDbTimestamp(dbTarget.lastLimboFreeSnapshotVersion) : SnapshotVersion.min();
       var target;
       if (isDocumentQuery$1(dbTarget.query)) {
@@ -25791,7 +26285,7 @@ var require_index_node_cjs2 = __commonJS({
       } else {
         target = fromQueryTarget(dbTarget.query);
       }
-      return new TargetData(target, dbTarget.targetId, 0, dbTarget.lastListenSequenceNumber, version2, lastLimboFreeSnapshotVersion, ByteString.fromBase64String(dbTarget.resumeToken));
+      return new TargetData(target, dbTarget.targetId, 0, dbTarget.lastListenSequenceNumber, version3, lastLimboFreeSnapshotVersion, ByteString.fromBase64String(dbTarget.resumeToken));
     }
     function toDbTarget(localSerializer, targetData) {
       var dbTimestamp = toDbTimestamp(targetData.snapshotVersion);
@@ -26807,7 +27301,7 @@ var require_index_node_cjs2 = __commonJS({
         var documentCount = 0;
         var iteration = this.forEachOrphanedDocument(txn, function(docKey, sequenceNumber) {
           if (sequenceNumber <= upperBound) {
-            var p = _this.isPinned(txn, docKey).next(function(isPinned) {
+            var p2 = _this.isPinned(txn, docKey).next(function(isPinned) {
               if (!isPinned) {
                 documentCount++;
                 return changeBuffer.getEntry(txn, docKey).next(function() {
@@ -26816,7 +27310,7 @@ var require_index_node_cjs2 = __commonJS({
                 });
               }
             });
-            promises.push(p);
+            promises.push(p2);
           }
         });
         return iteration.next(function() {
@@ -27255,65 +27749,65 @@ var require_index_node_cjs2 = __commonJS({
           createQueryCache(db);
           createRemoteDocumentCache(db);
         }
-        var p = PersistencePromise.resolve();
+        var p2 = PersistencePromise.resolve();
         if (fromVersion2 < 3 && toVersion2 >= 3) {
           if (fromVersion2 !== 0) {
             dropQueryCache(db);
             createQueryCache(db);
           }
-          p = p.next(function() {
+          p2 = p2.next(function() {
             return writeEmptyTargetGlobalEntry(simpleDbTransaction);
           });
         }
         if (fromVersion2 < 4 && toVersion2 >= 4) {
           if (fromVersion2 !== 0) {
-            p = p.next(function() {
+            p2 = p2.next(function() {
               return upgradeMutationBatchSchemaAndMigrateData(db, simpleDbTransaction);
             });
           }
-          p = p.next(function() {
+          p2 = p2.next(function() {
             createClientMetadataStore(db);
           });
         }
         if (fromVersion2 < 5 && toVersion2 >= 5) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             return _this.removeAcknowledgedMutations(simpleDbTransaction);
           });
         }
         if (fromVersion2 < 6 && toVersion2 >= 6) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             createDocumentGlobalStore(db);
             return _this.addDocumentGlobal(simpleDbTransaction);
           });
         }
         if (fromVersion2 < 7 && toVersion2 >= 7) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             return _this.ensureSequenceNumbers(simpleDbTransaction);
           });
         }
         if (fromVersion2 < 8 && toVersion2 >= 8) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             return _this.createCollectionParentIndex(db, simpleDbTransaction);
           });
         }
         if (fromVersion2 < 9 && toVersion2 >= 9) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             dropRemoteDocumentChangesStore(db);
             createRemoteDocumentReadTimeIndex(txn);
           });
         }
         if (fromVersion2 < 10 && toVersion2 >= 10) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             return _this.rewriteCanonicalIds(simpleDbTransaction);
           });
         }
         if (fromVersion2 < 11 && toVersion2 >= 11) {
-          p = p.next(function() {
+          p2 = p2.next(function() {
             createBundlesStore(db);
             createNamedQueriesStore(db);
           });
         }
-        return p;
+        return p2;
       };
       SchemaConverter2.prototype.addDocumentGlobal = function(txn) {
         var byteCount = 0;
@@ -33968,20 +34462,20 @@ var require_index_node_cjs2 = __commonJS({
         }
       };
       Transaction2.prototype.precondition = function(key) {
-        var version2 = this.readVersions.get(key.toString());
-        if (!this.writtenDocs.has(key.toString()) && version2) {
-          return Precondition.updateTime(version2);
+        var version3 = this.readVersions.get(key.toString());
+        if (!this.writtenDocs.has(key.toString()) && version3) {
+          return Precondition.updateTime(version3);
         } else {
           return Precondition.none();
         }
       };
       Transaction2.prototype.preconditionForUpdate = function(key) {
-        var version2 = this.readVersions.get(key.toString());
-        if (!this.writtenDocs.has(key.toString()) && version2) {
-          if (version2.isEqual(SnapshotVersion.min())) {
+        var version3 = this.readVersions.get(key.toString());
+        if (!this.writtenDocs.has(key.toString()) && version3) {
+          if (version3.isEqual(SnapshotVersion.min())) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Can't update a document that doesn't exist.");
           }
-          return Precondition.updateTime(version2);
+          return Precondition.updateTime(version3);
         } else {
           return Precondition.exists(true);
         }
@@ -35708,7 +36202,7 @@ var require_index_node_cjs2 = __commonJS({
         }
         return firestoreInstance;
       }, "PUBLIC"));
-      app.registerVersion(name, version, variant);
+      app.registerVersion(name, version2, variant);
     }
     var FieldPath$1 = function() {
       function FieldPath$12() {
@@ -37225,7 +37719,7 @@ var require_index_node_cjs2 = __commonJS({
       var mutation = parsed.toMutation(reference._key, Precondition.exists(true));
       return executeWrite(firestore, [mutation]);
     }
-    function deleteDoc(reference) {
+    function deleteDoc2(reference) {
       var firestore = cast(reference.firestore, FirebaseFirestore$1);
       var mutations = [new DeleteMutation(reference._key, Precondition.none())];
       return executeWrite(firestore, mutations);
@@ -37396,7 +37890,7 @@ var require_index_node_cjs2 = __commonJS({
     exports2.clearIndexedDbPersistence = clearIndexedDbPersistence;
     exports2.collection = collection2;
     exports2.collectionGroup = collectionGroup;
-    exports2.deleteDoc = deleteDoc;
+    exports2.deleteDoc = deleteDoc2;
     exports2.deleteField = deleteField;
     exports2.disableNetwork = disableNetwork;
     exports2.doc = doc2;
@@ -37927,21 +38421,21 @@ var Headers = class extends URLSearchParams {
     }) : void 0;
     super(result);
     return new Proxy(this, {
-      get(target, p, receiver) {
-        switch (p) {
+      get(target, p2, receiver) {
+        switch (p2) {
           case "append":
           case "set":
             return (name, value) => {
               validateHeaderName(name);
               validateHeaderValue(name, String(value));
-              return URLSearchParams.prototype[p].call(receiver, String(name).toLowerCase(), String(value));
+              return URLSearchParams.prototype[p2].call(receiver, String(name).toLowerCase(), String(value));
             };
           case "delete":
           case "has":
           case "getAll":
             return (name) => {
               validateHeaderName(name);
-              return URLSearchParams.prototype[p].call(receiver, String(name).toLowerCase());
+              return URLSearchParams.prototype[p2].call(receiver, String(name).toLowerCase());
             };
           case "keys":
             return () => {
@@ -37949,7 +38443,7 @@ var Headers = class extends URLSearchParams {
               return new Set(URLSearchParams.prototype.keys.call(target)).keys();
             };
           default:
-            return Reflect.get(target, p, receiver);
+            return Reflect.get(target, p2, receiver);
         }
       }
     });
@@ -38502,7 +38996,7 @@ function devalue(value) {
   }).forEach(function(entry, i) {
     names.set(entry[0], getName(i));
   });
-  function stringify(thing) {
+  function stringify2(thing) {
     if (names.has(thing)) {
       return names.get(thing);
     }
@@ -38514,23 +39008,23 @@ function devalue(value) {
       case "Number":
       case "String":
       case "Boolean":
-        return "Object(" + stringify(thing.valueOf()) + ")";
+        return "Object(" + stringify2(thing.valueOf()) + ")";
       case "RegExp":
         return "new RegExp(" + stringifyString(thing.source) + ', "' + thing.flags + '")';
       case "Date":
         return "new Date(" + thing.getTime() + ")";
       case "Array":
         var members = thing.map(function(v, i) {
-          return i in thing ? stringify(v) : "";
+          return i in thing ? stringify2(v) : "";
         });
         var tail = thing.length === 0 || thing.length - 1 in thing ? "" : ",";
         return "[" + members.join(",") + tail + "]";
       case "Set":
       case "Map":
-        return "new " + type + "([" + Array.from(thing).map(stringify).join(",") + "])";
+        return "new " + type + "([" + Array.from(thing).map(stringify2).join(",") + "])";
       default:
         var obj = "{" + Object.keys(thing).map(function(key) {
-          return safeKey(key) + ":" + stringify(thing[key]);
+          return safeKey(key) + ":" + stringify2(thing[key]);
         }).join(",") + "}";
         var proto = Object.getPrototypeOf(thing);
         if (proto === null) {
@@ -38539,7 +39033,7 @@ function devalue(value) {
         return obj;
     }
   }
-  var str = stringify(value);
+  var str = stringify2(value);
   if (names.size) {
     var params_1 = [];
     var statements_1 = [];
@@ -38555,7 +39049,7 @@ function devalue(value) {
         case "Number":
         case "String":
         case "Boolean":
-          values_1.push("Object(" + stringify(thing.valueOf()) + ")");
+          values_1.push("Object(" + stringify2(thing.valueOf()) + ")");
           break;
         case "RegExp":
           values_1.push(thing.toString());
@@ -38566,26 +39060,26 @@ function devalue(value) {
         case "Array":
           values_1.push("Array(" + thing.length + ")");
           thing.forEach(function(v, i) {
-            statements_1.push(name + "[" + i + "]=" + stringify(v));
+            statements_1.push(name + "[" + i + "]=" + stringify2(v));
           });
           break;
         case "Set":
           values_1.push("new Set");
           statements_1.push(name + "." + Array.from(thing).map(function(v) {
-            return "add(" + stringify(v) + ")";
+            return "add(" + stringify2(v) + ")";
           }).join("."));
           break;
         case "Map":
           values_1.push("new Map");
           statements_1.push(name + "." + Array.from(thing).map(function(_a) {
             var k = _a[0], v = _a[1];
-            return "set(" + stringify(k) + ", " + stringify(v) + ")";
+            return "set(" + stringify2(k) + ", " + stringify2(v) + ")";
           }).join("."));
           break;
         default:
           values_1.push(Object.getPrototypeOf(thing) === null ? "Object.create(null)" : "{}");
           Object.keys(thing).forEach(function(key) {
-            statements_1.push("" + name + safeProp(key) + "=" + stringify(thing[key]));
+            statements_1.push("" + name + safeProp(key) + "=" + stringify2(thing[key]));
           });
       }
     });
@@ -38976,7 +39470,7 @@ async function load_node({
           const resolved = resolve(request.path, path);
           const filename = resolved.slice(1);
           const filename_html = `${filename}/index.html`;
-          const asset = options2.manifest.assets.find((d) => d.file === filename || d.file === filename_html);
+          const asset = options2.manifest.assets.find((d2) => d2.file === filename || d2.file === filename_html);
           if (asset) {
             if (options2.read) {
               response = new Response(options2.read(asset.file), {
@@ -39742,6 +40236,11 @@ function create_ssr_component(fn) {
     $$render
   };
 }
+function add_attribute(name, value, boolean) {
+  if (value == null || boolean && !value)
+    return "";
+  return ` ${name}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape2(value)) : `"${value}"`}`}`;
+}
 function destroy_component(component, detaching) {
   const $$ = component.$$;
   if ($$.fragment !== null) {
@@ -39793,6 +40292,18 @@ if (typeof HTMLElement === "function") {
     }
   };
 }
+
+// node_modules/uuid/wrapper.mjs
+var import_dist = __toModule(require_dist());
+var v1 = import_dist.default.v1;
+var v3 = import_dist.default.v3;
+var v4 = import_dist.default.v4;
+var v5 = import_dist.default.v5;
+var NIL = import_dist.default.NIL;
+var version = import_dist.default.version;
+var validate = import_dist.default.validate;
+var stringify = import_dist.default.stringify;
+var parse = import_dist.default.parse;
 
 // .svelte-kit/output/server/app.js
 var import_app = __toModule(require_index_cjs3());
@@ -39868,9 +40379,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-447a08e5.js",
+      file: "/./_app/start-2facda80.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-447a08e5.js", "/./_app/chunks/vendor-c5b255ff.js"]
+      js: ["/./_app/start-2facda80.js", "/./_app/chunks/vendor-878a4d06.js"]
     },
     fetched: void 0,
     floc: false,
@@ -39895,6 +40406,7 @@ function init(settings) {
     trailing_slash: "never"
   };
 }
+var d = decodeURIComponent;
 var empty = () => ({});
 var manifest = {
   assets: [{"file": "favicon.png", "size": 1571, "type": "image/png"}, {"file": "images/calendar.png", "size": 1113, "type": "image/png"}, {"file": "images/poll.png", "size": 784, "type": "image/png"}],
@@ -39906,6 +40418,20 @@ var manifest = {
       pattern: /^\/$/,
       params: empty,
       a: ["src/routes/__layout.svelte", "src/routes/index.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/poll\/([^/]+?)\/?$/,
+      params: (m) => ({slug: d(m[1])}),
+      a: ["src/routes/__layout.svelte", "src/routes/poll/[slug].svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/user\/([^/]+?)\/?$/,
+      params: (m) => ({slug: d(m[1])}),
+      a: ["src/routes/__layout.svelte", "src/routes/user/[slug].svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
     }
   ]
@@ -39923,9 +40449,15 @@ var module_lookup = {
   }),
   "src/routes/index.svelte": () => Promise.resolve().then(function() {
     return index;
+  }),
+  "src/routes/poll/[slug].svelte": () => Promise.resolve().then(function() {
+    return _slug_$1;
+  }),
+  "src/routes/user/[slug].svelte": () => Promise.resolve().then(function() {
+    return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-5efd397a.js", "css": ["/./_app/assets/pages/__layout.svelte-f59864f1.css"], "js": ["/./_app/pages/__layout.svelte-5efd397a.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f484e334.js", "css": [], "js": ["/./_app/error.svelte-f484e334.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-332406a6.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-332406a6.js", "/./_app/chunks/vendor-c5b255ff.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-f1664db8.js", "css": ["/./_app/assets/pages/__layout.svelte-0e35fe6e.css"], "js": ["/./_app/pages/__layout.svelte-f1664db8.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-d5c581b6.js", "css": [], "js": ["/./_app/error.svelte-d5c581b6.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-6560f19a.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-6560f19a.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-d42d2b13.js", "css": [], "js": ["/./_app/pages/poll/[slug].svelte-d42d2b13.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-957fd367.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-957fd367.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -39939,12 +40471,12 @@ function render(request, {
   return respond(__spreadProps(__spreadValues({}, request), {host}), options, {prerender});
 }
 var css$5 = {
-  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-1qh1bb4{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5}body.svelte-1qh1bb4{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
-  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\">Poll.stream</h1>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAQC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,KAAK,eAAC,CAAC,AACN,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,AACf,CAAC,AAEE,IAAI,eAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
+  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-g50f3k a.svelte-g50f3k{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-g50f3k.svelte-g50f3k{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
+  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAQC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
 };
 var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$5);
-  return `<body class="${"svelte-1qh1bb4"}"><h1 class="${"logo svelte-1qh1bb4"}">Poll.stream</h1>
+  return `<body class="${"svelte-g50f3k"}"><h1 class="${"logo svelte-g50f3k"}"><a href="${"/"}" class="${"svelte-g50f3k"}">Poll.stream</a></h1>
 
     ${slots.default ? slots.default({}) : ``}
 </body>`;
@@ -39954,7 +40486,7 @@ var __layout = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": _layout
 });
-function load({error: error22, status}) {
+function load$2({error: error22, status}) {
   return {props: {error: error22, status}};
 }
 var Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -39975,21 +40507,112 @@ var error2 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Error2,
-  load
+  load: load$2
 });
+var PollStream = class {
+  constructor() {
+    this.polls = [];
+    this.__type = "PollStream";
+    this.id = v4();
+  }
+  getId() {
+    return this.id;
+  }
+  getPolls() {
+    return [...this.polls];
+  }
+  addPoll(poll) {
+    this.polls = [...this.polls, poll];
+  }
+  removePoll(poll) {
+    this.polls.slice(this.polls.indexOf(poll), 1);
+    this.polls = this.polls;
+  }
+};
+var Poll = class {
+  constructor(question) {
+    this.singleAnswer = true;
+    this.__type = "Poll";
+    this.question = question;
+  }
+  setQuestion(question) {
+    this.question = question;
+  }
+  getQuestion() {
+    return this.question;
+  }
+  getAnswers() {
+    return new Map(this.answers);
+  }
+  addOption(answer) {
+    this.answers.set(answer, []);
+  }
+  removeOption(answer) {
+    this.answers.delete(answer);
+  }
+  addAnswer(user, answer) {
+    var previousAnswers = this.getAnswersOfUser(user);
+    if (previousAnswers.includes(answer)) {
+      return;
+    }
+    if (this.singleAnswer && previousAnswers.length != 0) {
+      this.removeAnswer(user, previousAnswers[0]);
+    }
+    this.answers.get(answer).push(user);
+  }
+  removeAnswer(user, answer) {
+    var users = this.answers.get(answer);
+    users.splice(users.indexOf(user), 1);
+  }
+  getAnswersOfUser(user) {
+    var answers = [];
+    for (const [answer, users] of this.answers.entries()) {
+      if (users.includes(user)) {
+        answers.push(answer);
+      }
+    }
+    return answers;
+  }
+};
+var UserData = class {
+  constructor(id) {
+    this.polls = [];
+    this.__type = "UserData";
+    this.id = id;
+  }
+  getId() {
+    return this.id;
+  }
+  getPollIDs() {
+    return [...this.polls];
+  }
+  addPoll(poll) {
+    this.polls.push(poll);
+  }
+  removePoll(poll) {
+    this.polls.slice(this.polls.indexOf(poll), 1);
+  }
+};
 var css$4 = {
   code: ".container.svelte-caltpl{padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer}.container.svelte-caltpl:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: '{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script>\\r\\n\\texport let remove;\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\">\\r\\n\\t<h3>Poll Stream Name</h3>\\r\\n\\t<span><slot></slot></span>\\r\\n\\t<p>Poll Stream Details</p>\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n</div>\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAaC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}'
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { Poll, PollStream } from './poll';\\r\\nexport let remove;\\r\\nexport let pollStream;\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll(\\"Hello world?\\"));\\r\\n    pollStream = pollStream; // For Svelte\\r\\n}\\r\\n$: polls = pollStream.getPolls();\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\">\\r\\n\\t<h2>PollStream: {pollStream.getId()}</h2>\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n\\t<button on:click={addPoll}>Add Poll</button>\\r\\n\\t<a href={\\"/poll/\\" + pollStream.getId()}>Poll Page</a>\\r\\n\\t<h3>Polls:</h3>\\r\\n\\t{#each polls as poll}\\r\\n\\t\\t<p>{poll.getQuestion()}</p>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAsBC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let polls;
   let {remove} = $$props;
+  let {pollStream} = $$props;
   if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
     $$bindings.remove(remove);
+  if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
+    $$bindings.pollStream(pollStream);
   $$result.css.add(css$4);
-  return `<div class="${"container svelte-caltpl"}"><h3>Poll Stream Name</h3>
-	<span>${slots.default ? slots.default({}) : ``}</span>
-	<p>Poll Stream Details</p>
+  polls = pollStream.getPolls();
+  return `<div class="${"container svelte-caltpl"}"><h2>PollStream: ${escape2(pollStream.getId())}</h2>
 	<button>Delete</button>
+	<button>Add Poll</button>
+	<a${add_attribute("href", "/poll/" + pollStream.getId(), 0)}>Poll Page</a>
+	<h3>Polls:</h3>
+	${each(polls, (poll) => `<p>${escape2(poll.getQuestion())}</p>`)}
 </div>`;
 });
 var css$3 = {
@@ -40003,14 +40626,14 @@ var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$binding
 });
 var css$2 = {
   code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
-  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t+ Add\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
+  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
 };
 var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {onclick = () => void 0} = $$props;
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
   $$result.css.add(css$2);
-  return `<button class="${"float svelte-1uexowl"}">+ Add
+  return `<button class="${"float svelte-1uexowl"}">${slots.default ? slots.default({}) : ``}
 </button>`;
 });
 var css$1 = {
@@ -40045,6 +40668,10 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
 	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
 </div>`;
 });
+function assign(obj, value) {
+  Object.assign(obj, value);
+  return obj;
+}
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const firebaseConfig = {
     apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
@@ -40062,55 +40689,147 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     firebaseApp = (0, import_app.getApp)();
   }
   const db = (0, import_firestore.getFirestore)(firebaseApp);
-  let streams = [];
-  function appendStreams() {
-    streams = [...streams, streams.length.toString()];
-    setUserData();
+  const auth = (0, import_auth.getAuth)(firebaseApp);
+  let userData;
+  let pollStreams = [];
+  let update = 0;
+  async function appendStreams() {
+    var pollStream = new PollStream();
+    await writePollStream(pollStream);
+    userData.addPoll(pollStream.getId());
+    await writeUserData();
+    await buildFromUserData();
   }
-  function removeStream(stream) {
-    streams.splice(streams.indexOf(stream), 1);
-    streams = streams;
-    setUserData();
+  async function removeStream(stream) {
+    userData.removePoll(stream.getId());
+    await writeUserData();
+    await deletePollStream(stream.getId());
+    await buildFromUserData();
   }
-  function setUserData() {
-    var data = {streams};
-    (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid), data);
+  async function writeUserData() {
+    var user = auth.currentUser;
+    if (user != null) {
+      var data = {userData: JSON.stringify(userData)};
+      await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), auth.currentUser.uid), data);
+    }
   }
-  async function getUserData() {
-    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), (0, import_auth.getAuth)(firebaseApp).currentUser.uid));
-    return document2.data();
+  async function readUserData() {
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), auth.currentUser.uid));
+    var data = document2.data();
+    if (data && Object.keys(data).includes("userData")) {
+      return JSON.parse(data.userData, jsonProvider);
+    }
+    return null;
   }
-  function buildFromUserData() {
-    getUserData().then((data) => {
-      if (Object.keys(data).includes("streams")) {
-        streams = data.streams;
+  async function writePollStream(pollStream) {
+    var data = {data: JSON.stringify(pollStream)};
+    await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "polls"), pollStream.getId()), data);
+  }
+  async function readPollStream(id) {
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "polls"), id));
+    var data = document2.data();
+    if (data && Object.keys(data).includes("data")) {
+      return JSON.parse(data.data, jsonProvider);
+    }
+    return null;
+  }
+  async function deletePollStream(id) {
+    await (0, import_firestore.deleteDoc)((0, import_firestore.doc)(db, "polls", id));
+  }
+  async function buildFromUserData() {
+    pollStreams = [];
+    var polls = userData.getPollIDs();
+    for (let poll of polls) {
+      var p2 = await readPollStream(poll);
+      if (p2 != null) {
+        pollStreams = [...pollStreams, p2];
       }
-    });
+    }
   }
-  (0, import_auth.getAuth)(firebaseApp).onAuthStateChanged((user) => {
+  function jsonProvider(key, value) {
+    if (typeof value === "object") {
+      switch (value.__type) {
+        case "PollStream":
+          return assign(new PollStream(), value);
+        case "Poll":
+          return assign(new Poll(""), value);
+        case "UserData":
+          return assign(new UserData(""), value);
+        default:
+          return value;
+      }
+    } else {
+      return value;
+    }
+  }
+  (0, import_auth.getAuth)(firebaseApp).onAuthStateChanged(async (user) => {
     if (user) {
+      userData = await readUserData();
+      if (userData == null) {
+        userData = new UserData(user.uid);
+      }
       buildFromUserData();
     } else {
-      streams = [];
+      pollStreams = [];
     }
+    update++;
   });
   return `${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
 
-${streams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
+
+
+${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>` : ``}
 
 ${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
-    default: () => `${each(streams, (s2) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {remove: removeStream}, {}, {default: () => `${escape2(s2)}`})}`)}`
+    default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
+      remove: () => removeStream(pollStream),
+      pollStream
+    }, {}, {})}`)}`
   })}
 
 ${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
-    default: () => `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {})}`
+    default: () => `${auth.currentUser != null && update > 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Add`})}` : `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {}, {}, {default: () => `Sign in to add.`})}`}`
   })}`;
 });
 var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Routes
+});
+var p$1;
+async function load$1({page, fetch: fetch3, session, context}) {
+  p$1 = page;
+  return {props: {}};
+}
+var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  const firebaseApp = (0, import_app.getApp)();
+  (0, import_auth.getAuth)(firebaseApp);
+  return `<h1>This is the poll page of ${escape2(p$1.params.slug)}</h1>
+<p>Page Info: ${escape2(JSON.stringify(p$1))}</p>`;
+});
+var _slug_$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": U5Bslugu5D$1,
+  load: load$1
+});
+var p;
+async function load({page, fetch: fetch3, session, context}) {
+  p = page;
+  return {props: {}};
+}
+var U5Bslugu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  const firebaseApp = (0, import_app.getApp)();
+  const auth = (0, import_auth.getAuth)(firebaseApp);
+  return `${auth.currentUser != null && auth.currentUser.uid === p.params.slug ? `<h1>This is your user page, ${escape2(auth.currentUser.displayName)}</h1>` : `<h1>This is not your user page.</h1>`}
+<p>Page Info: ${escape2(JSON.stringify(p))}</p>`;
+});
+var _slug_ = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": U5Bslugu5D,
+  load
 });
 
 // .svelte-kit/firebase/handler.js
