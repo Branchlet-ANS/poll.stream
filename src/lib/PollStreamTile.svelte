@@ -15,7 +15,7 @@
   }, 1);
 </script>
 
-<div class="container">
+<div class="container" class:appeardelay>
 	<h2>PollStream: {pollStream.getId()}</h2>
 	<button on:click={remove}>Delete</button>
 	<button on:click={addPoll}>Add Poll</button>
