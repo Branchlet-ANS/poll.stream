@@ -21,6 +21,7 @@
 	}
 
 	async function removeStream(pollStream: PollStream) {
+		main.deletePollStream(pollStream.id);
 		main.userData.removePollStreamId(pollStream.id);
 		await buildFromUserData()
 	}

@@ -62,10 +62,10 @@ export class Main {
 		for (let poll of pollStream.getPolls()) {
 			for (let choice of poll.getChoices()) {
 				map.set(choice, choice.listeners)
-				choice.listeners = [];
+				delete choice.listeners;
 			}
 			map.set(poll, poll.listeners)
-			poll.listeners = [];
+			delete poll.listeners;
 		}
 		var json = JSON.stringify(pollStream);
 		for (let poll of pollStream.getPolls()) {

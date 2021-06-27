@@ -59,494 +59,1048 @@ var __privateSet = (obj, member, value, setter) => {
   return value;
 };
 
-// node_modules/uuid/dist/rng.js
-var require_rng = __commonJS({
-  "node_modules/uuid/dist/rng.js"(exports2) {
+// node_modules/node-fetch/lib/index.js
+var require_lib = __commonJS({
+  "node_modules/node-fetch/lib/index.js"(exports2, module2) {
     "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = rng;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    function _interopDefault(ex) {
+      return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
     }
-    var rnds8Pool = new Uint8Array(256);
-    var poolPtr = rnds8Pool.length;
-    function rng() {
-      if (poolPtr > rnds8Pool.length - 16) {
-        _crypto.default.randomFillSync(rnds8Pool);
-        poolPtr = 0;
-      }
-      return rnds8Pool.slice(poolPtr, poolPtr += 16);
-    }
-  }
-});
-
-// node_modules/uuid/dist/regex.js
-var require_regex = __commonJS({
-  "node_modules/uuid/dist/regex.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/validate.js
-var require_validate = __commonJS({
-  "node_modules/uuid/dist/validate.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _regex = _interopRequireDefault(require_regex());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function validate2(uuid2) {
-      return typeof uuid2 === "string" && _regex.default.test(uuid2);
-    }
-    var _default = validate2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/stringify.js
-var require_stringify = __commonJS({
-  "node_modules/uuid/dist/stringify.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var byteToHex = [];
-    for (let i = 0; i < 256; ++i) {
-      byteToHex.push((i + 256).toString(16).substr(1));
-    }
-    function stringify2(arr, offset = 0) {
-      const uuid2 = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Stringified UUID is invalid");
-      }
-      return uuid2;
-    }
-    var _default = stringify2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v1.js
-var require_v1 = __commonJS({
-  "node_modules/uuid/dist/v1.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var _nodeId;
-    var _clockseq;
-    var _lastMSecs = 0;
-    var _lastNSecs = 0;
-    function v12(options2, buf, offset) {
-      let i = buf && offset || 0;
-      const b = buf || new Array(16);
-      options2 = options2 || {};
-      let node = options2.node || _nodeId;
-      let clockseq = options2.clockseq !== void 0 ? options2.clockseq : _clockseq;
-      if (node == null || clockseq == null) {
-        const seedBytes = options2.random || (options2.rng || _rng.default)();
-        if (node == null) {
-          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
-        }
-        if (clockseq == null) {
-          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
-        }
-      }
-      let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
-      let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
-      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-      if (dt < 0 && options2.clockseq === void 0) {
-        clockseq = clockseq + 1 & 16383;
-      }
-      if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
-        nsecs = 0;
-      }
-      if (nsecs >= 1e4) {
-        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
-      }
-      _lastMSecs = msecs;
-      _lastNSecs = nsecs;
-      _clockseq = clockseq;
-      msecs += 122192928e5;
-      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
-      b[i++] = tl >>> 24 & 255;
-      b[i++] = tl >>> 16 & 255;
-      b[i++] = tl >>> 8 & 255;
-      b[i++] = tl & 255;
-      const tmh = msecs / 4294967296 * 1e4 & 268435455;
-      b[i++] = tmh >>> 8 & 255;
-      b[i++] = tmh & 255;
-      b[i++] = tmh >>> 24 & 15 | 16;
-      b[i++] = tmh >>> 16 & 255;
-      b[i++] = clockseq >>> 8 | 128;
-      b[i++] = clockseq & 255;
-      for (let n = 0; n < 6; ++n) {
-        b[i + n] = node[n];
-      }
-      return buf || (0, _stringify.default)(b);
-    }
-    var _default = v12;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/parse.js
-var require_parse = __commonJS({
-  "node_modules/uuid/dist/parse.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function parse2(uuid2) {
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Invalid UUID");
-      }
-      let v;
-      const arr = new Uint8Array(16);
-      arr[0] = (v = parseInt(uuid2.slice(0, 8), 16)) >>> 24;
-      arr[1] = v >>> 16 & 255;
-      arr[2] = v >>> 8 & 255;
-      arr[3] = v & 255;
-      arr[4] = (v = parseInt(uuid2.slice(9, 13), 16)) >>> 8;
-      arr[5] = v & 255;
-      arr[6] = (v = parseInt(uuid2.slice(14, 18), 16)) >>> 8;
-      arr[7] = v & 255;
-      arr[8] = (v = parseInt(uuid2.slice(19, 23), 16)) >>> 8;
-      arr[9] = v & 255;
-      arr[10] = (v = parseInt(uuid2.slice(24, 36), 16)) / 1099511627776 & 255;
-      arr[11] = v / 4294967296 & 255;
-      arr[12] = v >>> 24 & 255;
-      arr[13] = v >>> 16 & 255;
-      arr[14] = v >>> 8 & 255;
-      arr[15] = v & 255;
-      return arr;
-    }
-    var _default = parse2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v35.js
-var require_v35 = __commonJS({
-  "node_modules/uuid/dist/v35.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = _default;
-    exports2.URL = exports2.DNS = void 0;
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function stringToBytes(str) {
-      str = unescape(encodeURIComponent(str));
-      const bytes = [];
-      for (let i = 0; i < str.length; ++i) {
-        bytes.push(str.charCodeAt(i));
-      }
-      return bytes;
-    }
-    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-    exports2.DNS = DNS;
-    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-    exports2.URL = URL2;
-    function _default(name, version2, hashfunc) {
-      function generateUUID(value, namespace, buf, offset) {
-        if (typeof value === "string") {
-          value = stringToBytes(value);
-        }
-        if (typeof namespace === "string") {
-          namespace = (0, _parse.default)(namespace);
-        }
-        if (namespace.length !== 16) {
-          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
-        }
-        let bytes = new Uint8Array(16 + value.length);
-        bytes.set(namespace);
-        bytes.set(value, namespace.length);
-        bytes = hashfunc(bytes);
-        bytes[6] = bytes[6] & 15 | version2;
-        bytes[8] = bytes[8] & 63 | 128;
-        if (buf) {
-          offset = offset || 0;
-          for (let i = 0; i < 16; ++i) {
-            buf[offset + i] = bytes[i];
+    var Stream2 = _interopDefault(require("stream"));
+    var http2 = _interopDefault(require("http"));
+    var Url = _interopDefault(require("url"));
+    var https2 = _interopDefault(require("https"));
+    var zlib2 = _interopDefault(require("zlib"));
+    var Readable2 = Stream2.Readable;
+    var BUFFER = Symbol("buffer");
+    var TYPE = Symbol("type");
+    var Blob2 = class {
+      constructor() {
+        this[TYPE] = "";
+        const blobParts = arguments[0];
+        const options2 = arguments[1];
+        const buffers = [];
+        let size = 0;
+        if (blobParts) {
+          const a = blobParts;
+          const length = Number(a.length);
+          for (let i = 0; i < length; i++) {
+            const element = a[i];
+            let buffer;
+            if (element instanceof Buffer) {
+              buffer = element;
+            } else if (ArrayBuffer.isView(element)) {
+              buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
+            } else if (element instanceof ArrayBuffer) {
+              buffer = Buffer.from(element);
+            } else if (element instanceof Blob2) {
+              buffer = element[BUFFER];
+            } else {
+              buffer = Buffer.from(typeof element === "string" ? element : String(element));
+            }
+            size += buffer.length;
+            buffers.push(buffer);
           }
-          return buf;
         }
-        return (0, _stringify.default)(bytes);
-      }
-      try {
-        generateUUID.name = name;
-      } catch (err) {
-      }
-      generateUUID.DNS = DNS;
-      generateUUID.URL = URL2;
-      return generateUUID;
-    }
-  }
-});
-
-// node_modules/uuid/dist/md5.js
-var require_md5 = __commonJS({
-  "node_modules/uuid/dist/md5.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function md5(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
-      }
-      return _crypto.default.createHash("md5").update(bytes).digest();
-    }
-    var _default = md5;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v3.js
-var require_v3 = __commonJS({
-  "node_modules/uuid/dist/v3.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _md = _interopRequireDefault(require_md5());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var v32 = (0, _v.default)("v3", 48, _md.default);
-    var _default = v32;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v4.js
-var require_v4 = __commonJS({
-  "node_modules/uuid/dist/v4.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function v42(options2, buf, offset) {
-      options2 = options2 || {};
-      const rnds = options2.random || (options2.rng || _rng.default)();
-      rnds[6] = rnds[6] & 15 | 64;
-      rnds[8] = rnds[8] & 63 | 128;
-      if (buf) {
-        offset = offset || 0;
-        for (let i = 0; i < 16; ++i) {
-          buf[offset + i] = rnds[i];
+        this[BUFFER] = Buffer.concat(buffers);
+        let type = options2 && options2.type !== void 0 && String(options2.type).toLowerCase();
+        if (type && !/[^\u0020-\u007E]/.test(type)) {
+          this[TYPE] = type;
         }
-        return buf;
       }
-      return (0, _stringify.default)(rnds);
+      get size() {
+        return this[BUFFER].length;
+      }
+      get type() {
+        return this[TYPE];
+      }
+      text() {
+        return Promise.resolve(this[BUFFER].toString());
+      }
+      arrayBuffer() {
+        const buf = this[BUFFER];
+        const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        return Promise.resolve(ab);
+      }
+      stream() {
+        const readable = new Readable2();
+        readable._read = function() {
+        };
+        readable.push(this[BUFFER]);
+        readable.push(null);
+        return readable;
+      }
+      toString() {
+        return "[object Blob]";
+      }
+      slice() {
+        const size = this.size;
+        const start = arguments[0];
+        const end = arguments[1];
+        let relativeStart, relativeEnd;
+        if (start === void 0) {
+          relativeStart = 0;
+        } else if (start < 0) {
+          relativeStart = Math.max(size + start, 0);
+        } else {
+          relativeStart = Math.min(start, size);
+        }
+        if (end === void 0) {
+          relativeEnd = size;
+        } else if (end < 0) {
+          relativeEnd = Math.max(size + end, 0);
+        } else {
+          relativeEnd = Math.min(end, size);
+        }
+        const span = Math.max(relativeEnd - relativeStart, 0);
+        const buffer = this[BUFFER];
+        const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
+        const blob = new Blob2([], {type: arguments[2]});
+        blob[BUFFER] = slicedBuffer;
+        return blob;
+      }
+    };
+    Object.defineProperties(Blob2.prototype, {
+      size: {enumerable: true},
+      type: {enumerable: true},
+      slice: {enumerable: true}
+    });
+    Object.defineProperty(Blob2.prototype, Symbol.toStringTag, {
+      value: "Blob",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    function FetchError2(message, type, systemError) {
+      Error.call(this, message);
+      this.message = message;
+      this.type = type;
+      if (systemError) {
+        this.code = this.errno = systemError.code;
+      }
+      Error.captureStackTrace(this, this.constructor);
     }
-    var _default = v42;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/sha1.js
-var require_sha1 = __commonJS({
-  "node_modules/uuid/dist/sha1.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
+    FetchError2.prototype = Object.create(Error.prototype);
+    FetchError2.prototype.constructor = FetchError2;
+    FetchError2.prototype.name = "FetchError";
+    var convert;
+    try {
+      convert = require("encoding").convert;
+    } catch (e) {
     }
-    function sha1(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
+    var INTERNALS2 = Symbol("Body internals");
+    var PassThrough2 = Stream2.PassThrough;
+    function Body2(body) {
+      var _this = this;
+      var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
+      let size = _ref$size === void 0 ? 0 : _ref$size;
+      var _ref$timeout = _ref.timeout;
+      let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
+      if (body == null) {
+        body = null;
+      } else if (isURLSearchParams(body)) {
+        body = Buffer.from(body.toString());
+      } else if (isBlob2(body))
+        ;
+      else if (Buffer.isBuffer(body))
+        ;
+      else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+        body = Buffer.from(body);
+      } else if (ArrayBuffer.isView(body)) {
+        body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
+      } else if (body instanceof Stream2)
+        ;
+      else {
+        body = Buffer.from(String(body));
       }
-      return _crypto.default.createHash("sha1").update(bytes).digest();
+      this[INTERNALS2] = {
+        body,
+        disturbed: false,
+        error: null
+      };
+      this.size = size;
+      this.timeout = timeout;
+      if (body instanceof Stream2) {
+        body.on("error", function(err) {
+          const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+          _this[INTERNALS2].error = error3;
+        });
+      }
     }
-    var _default = sha1;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v5.js
-var require_v5 = __commonJS({
-  "node_modules/uuid/dist/v5.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
+    Body2.prototype = {
+      get body() {
+        return this[INTERNALS2].body;
+      },
+      get bodyUsed() {
+        return this[INTERNALS2].disturbed;
+      },
+      arrayBuffer() {
+        return consumeBody2.call(this).then(function(buf) {
+          return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        });
+      },
+      blob() {
+        let ct = this.headers && this.headers.get("content-type") || "";
+        return consumeBody2.call(this).then(function(buf) {
+          return Object.assign(new Blob2([], {
+            type: ct.toLowerCase()
+          }), {
+            [BUFFER]: buf
+          });
+        });
+      },
+      json() {
+        var _this2 = this;
+        return consumeBody2.call(this).then(function(buffer) {
+          try {
+            return JSON.parse(buffer.toString());
+          } catch (err) {
+            return Body2.Promise.reject(new FetchError2(`invalid json response body at ${_this2.url} reason: ${err.message}`, "invalid-json"));
+          }
+        });
+      },
+      text() {
+        return consumeBody2.call(this).then(function(buffer) {
+          return buffer.toString();
+        });
+      },
+      buffer() {
+        return consumeBody2.call(this);
+      },
+      textConverted() {
+        var _this3 = this;
+        return consumeBody2.call(this).then(function(buffer) {
+          return convertBody(buffer, _this3.headers);
+        });
+      }
+    };
+    Object.defineProperties(Body2.prototype, {
+      body: {enumerable: true},
+      bodyUsed: {enumerable: true},
+      arrayBuffer: {enumerable: true},
+      blob: {enumerable: true},
+      json: {enumerable: true},
+      text: {enumerable: true}
     });
-    exports2.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _sha = _interopRequireDefault(require_sha1());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
+    Body2.mixIn = function(proto) {
+      for (const name of Object.getOwnPropertyNames(Body2.prototype)) {
+        if (!(name in proto)) {
+          const desc = Object.getOwnPropertyDescriptor(Body2.prototype, name);
+          Object.defineProperty(proto, name, desc);
+        }
+      }
+    };
+    function consumeBody2() {
+      var _this4 = this;
+      if (this[INTERNALS2].disturbed) {
+        return Body2.Promise.reject(new TypeError(`body used already for: ${this.url}`));
+      }
+      this[INTERNALS2].disturbed = true;
+      if (this[INTERNALS2].error) {
+        return Body2.Promise.reject(this[INTERNALS2].error);
+      }
+      let body = this.body;
+      if (body === null) {
+        return Body2.Promise.resolve(Buffer.alloc(0));
+      }
+      if (isBlob2(body)) {
+        body = body.stream();
+      }
+      if (Buffer.isBuffer(body)) {
+        return Body2.Promise.resolve(body);
+      }
+      if (!(body instanceof Stream2)) {
+        return Body2.Promise.resolve(Buffer.alloc(0));
+      }
+      let accum = [];
+      let accumBytes = 0;
+      let abort = false;
+      return new Body2.Promise(function(resolve2, reject) {
+        let resTimeout;
+        if (_this4.timeout) {
+          resTimeout = setTimeout(function() {
+            abort = true;
+            reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+          }, _this4.timeout);
+        }
+        body.on("error", function(err) {
+          if (err.name === "AbortError") {
+            abort = true;
+            reject(err);
+          } else {
+            reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+          }
+        });
+        body.on("data", function(chunk) {
+          if (abort || chunk === null) {
+            return;
+          }
+          if (_this4.size && accumBytes + chunk.length > _this4.size) {
+            abort = true;
+            reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+            return;
+          }
+          accumBytes += chunk.length;
+          accum.push(chunk);
+        });
+        body.on("end", function() {
+          if (abort) {
+            return;
+          }
+          clearTimeout(resTimeout);
+          try {
+            resolve2(Buffer.concat(accum, accumBytes));
+          } catch (err) {
+            reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+          }
+        });
+      });
     }
-    var v52 = (0, _v.default)("v5", 80, _sha.default);
-    var _default = v52;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/nil.js
-var require_nil = __commonJS({
-  "node_modules/uuid/dist/nil.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _default = "00000000-0000-0000-0000-000000000000";
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/version.js
-var require_version = __commonJS({
-  "node_modules/uuid/dist/version.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
+    function convertBody(buffer, headers) {
+      if (typeof convert !== "function") {
+        throw new Error("The package `encoding` must be installed to use the textConverted() function");
+      }
+      const ct = headers.get("content-type");
+      let charset = "utf-8";
+      let res, str;
+      if (ct) {
+        res = /charset=([^;]*)/i.exec(ct);
+      }
+      str = buffer.slice(0, 1024).toString();
+      if (!res && str) {
+        res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
+      }
+      if (!res && str) {
+        res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+        if (!res) {
+          res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+          if (res) {
+            res.pop();
+          }
+        }
+        if (res) {
+          res = /charset=(.*)/i.exec(res.pop());
+        }
+      }
+      if (!res && str) {
+        res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
+      }
+      if (res) {
+        charset = res.pop();
+        if (charset === "gb2312" || charset === "gbk") {
+          charset = "gb18030";
+        }
+      }
+      return convert(buffer, "UTF-8", charset).toString();
     }
-    function version2(uuid2) {
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Invalid UUID");
+    function isURLSearchParams(obj) {
+      if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
+        return false;
       }
-      return parseInt(uuid2.substr(14, 1), 16);
+      return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
     }
-    var _default = version2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/index.js
-var require_dist = __commonJS({
-  "node_modules/uuid/dist/index.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    Object.defineProperty(exports2, "v1", {
-      enumerable: true,
-      get: function() {
-        return _v.default;
-      }
-    });
-    Object.defineProperty(exports2, "v3", {
-      enumerable: true,
-      get: function() {
-        return _v2.default;
-      }
-    });
-    Object.defineProperty(exports2, "v4", {
-      enumerable: true,
-      get: function() {
-        return _v3.default;
-      }
-    });
-    Object.defineProperty(exports2, "v5", {
-      enumerable: true,
-      get: function() {
-        return _v4.default;
-      }
-    });
-    Object.defineProperty(exports2, "NIL", {
-      enumerable: true,
-      get: function() {
-        return _nil.default;
-      }
-    });
-    Object.defineProperty(exports2, "version", {
-      enumerable: true,
-      get: function() {
-        return _version.default;
-      }
-    });
-    Object.defineProperty(exports2, "validate", {
-      enumerable: true,
-      get: function() {
-        return _validate.default;
-      }
-    });
-    Object.defineProperty(exports2, "stringify", {
-      enumerable: true,
-      get: function() {
-        return _stringify.default;
-      }
-    });
-    Object.defineProperty(exports2, "parse", {
-      enumerable: true,
-      get: function() {
-        return _parse.default;
-      }
-    });
-    var _v = _interopRequireDefault(require_v1());
-    var _v2 = _interopRequireDefault(require_v3());
-    var _v3 = _interopRequireDefault(require_v4());
-    var _v4 = _interopRequireDefault(require_v5());
-    var _nil = _interopRequireDefault(require_nil());
-    var _version = _interopRequireDefault(require_version());
-    var _validate = _interopRequireDefault(require_validate());
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
+    function isBlob2(obj) {
+      return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
     }
+    function clone2(instance) {
+      let p1, p2;
+      let body = instance.body;
+      if (instance.bodyUsed) {
+        throw new Error("cannot clone body after it is used");
+      }
+      if (body instanceof Stream2 && typeof body.getBoundary !== "function") {
+        p1 = new PassThrough2();
+        p2 = new PassThrough2();
+        body.pipe(p1);
+        body.pipe(p2);
+        instance[INTERNALS2].body = p1;
+        body = p2;
+      }
+      return body;
+    }
+    function extractContentType2(body) {
+      if (body === null) {
+        return null;
+      } else if (typeof body === "string") {
+        return "text/plain;charset=UTF-8";
+      } else if (isURLSearchParams(body)) {
+        return "application/x-www-form-urlencoded;charset=UTF-8";
+      } else if (isBlob2(body)) {
+        return body.type || null;
+      } else if (Buffer.isBuffer(body)) {
+        return null;
+      } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+        return null;
+      } else if (ArrayBuffer.isView(body)) {
+        return null;
+      } else if (typeof body.getBoundary === "function") {
+        return `multipart/form-data;boundary=${body.getBoundary()}`;
+      } else if (body instanceof Stream2) {
+        return null;
+      } else {
+        return "text/plain;charset=UTF-8";
+      }
+    }
+    function getTotalBytes2(instance) {
+      const body = instance.body;
+      if (body === null) {
+        return 0;
+      } else if (isBlob2(body)) {
+        return body.size;
+      } else if (Buffer.isBuffer(body)) {
+        return body.length;
+      } else if (body && typeof body.getLengthSync === "function") {
+        if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
+          return body.getLengthSync();
+        }
+        return null;
+      } else {
+        return null;
+      }
+    }
+    function writeToStream2(dest, instance) {
+      const body = instance.body;
+      if (body === null) {
+        dest.end();
+      } else if (isBlob2(body)) {
+        body.stream().pipe(dest);
+      } else if (Buffer.isBuffer(body)) {
+        dest.write(body);
+        dest.end();
+      } else {
+        body.pipe(dest);
+      }
+    }
+    Body2.Promise = global.Promise;
+    var invalidTokenRegex = /[^\^_`a-zA-Z\-0-9!#$%&'*+.|~]/;
+    var invalidHeaderCharRegex = /[^\t\x20-\x7e\x80-\xff]/;
+    function validateName(name) {
+      name = `${name}`;
+      if (invalidTokenRegex.test(name) || name === "") {
+        throw new TypeError(`${name} is not a legal HTTP header name`);
+      }
+    }
+    function validateValue(value) {
+      value = `${value}`;
+      if (invalidHeaderCharRegex.test(value)) {
+        throw new TypeError(`${value} is not a legal HTTP header value`);
+      }
+    }
+    function find(map, name) {
+      name = name.toLowerCase();
+      for (const key in map) {
+        if (key.toLowerCase() === name) {
+          return key;
+        }
+      }
+      return void 0;
+    }
+    var MAP = Symbol("map");
+    var Headers2 = class {
+      constructor() {
+        let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
+        this[MAP] = Object.create(null);
+        if (init2 instanceof Headers2) {
+          const rawHeaders = init2.raw();
+          const headerNames = Object.keys(rawHeaders);
+          for (const headerName of headerNames) {
+            for (const value of rawHeaders[headerName]) {
+              this.append(headerName, value);
+            }
+          }
+          return;
+        }
+        if (init2 == null)
+          ;
+        else if (typeof init2 === "object") {
+          const method = init2[Symbol.iterator];
+          if (method != null) {
+            if (typeof method !== "function") {
+              throw new TypeError("Header pairs must be iterable");
+            }
+            const pairs = [];
+            for (const pair of init2) {
+              if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") {
+                throw new TypeError("Each header pair must be iterable");
+              }
+              pairs.push(Array.from(pair));
+            }
+            for (const pair of pairs) {
+              if (pair.length !== 2) {
+                throw new TypeError("Each header pair must be a name/value tuple");
+              }
+              this.append(pair[0], pair[1]);
+            }
+          } else {
+            for (const key of Object.keys(init2)) {
+              const value = init2[key];
+              this.append(key, value);
+            }
+          }
+        } else {
+          throw new TypeError("Provided initializer must be an object");
+        }
+      }
+      get(name) {
+        name = `${name}`;
+        validateName(name);
+        const key = find(this[MAP], name);
+        if (key === void 0) {
+          return null;
+        }
+        return this[MAP][key].join(", ");
+      }
+      forEach(callback) {
+        let thisArg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
+        let pairs = getHeaders(this);
+        let i = 0;
+        while (i < pairs.length) {
+          var _pairs$i = pairs[i];
+          const name = _pairs$i[0], value = _pairs$i[1];
+          callback.call(thisArg, value, name, this);
+          pairs = getHeaders(this);
+          i++;
+        }
+      }
+      set(name, value) {
+        name = `${name}`;
+        value = `${value}`;
+        validateName(name);
+        validateValue(value);
+        const key = find(this[MAP], name);
+        this[MAP][key !== void 0 ? key : name] = [value];
+      }
+      append(name, value) {
+        name = `${name}`;
+        value = `${value}`;
+        validateName(name);
+        validateValue(value);
+        const key = find(this[MAP], name);
+        if (key !== void 0) {
+          this[MAP][key].push(value);
+        } else {
+          this[MAP][name] = [value];
+        }
+      }
+      has(name) {
+        name = `${name}`;
+        validateName(name);
+        return find(this[MAP], name) !== void 0;
+      }
+      delete(name) {
+        name = `${name}`;
+        validateName(name);
+        const key = find(this[MAP], name);
+        if (key !== void 0) {
+          delete this[MAP][key];
+        }
+      }
+      raw() {
+        return this[MAP];
+      }
+      keys() {
+        return createHeadersIterator(this, "key");
+      }
+      values() {
+        return createHeadersIterator(this, "value");
+      }
+      [Symbol.iterator]() {
+        return createHeadersIterator(this, "key+value");
+      }
+    };
+    Headers2.prototype.entries = Headers2.prototype[Symbol.iterator];
+    Object.defineProperty(Headers2.prototype, Symbol.toStringTag, {
+      value: "Headers",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Headers2.prototype, {
+      get: {enumerable: true},
+      forEach: {enumerable: true},
+      set: {enumerable: true},
+      append: {enumerable: true},
+      has: {enumerable: true},
+      delete: {enumerable: true},
+      keys: {enumerable: true},
+      values: {enumerable: true},
+      entries: {enumerable: true}
+    });
+    function getHeaders(headers) {
+      let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
+      const keys = Object.keys(headers[MAP]).sort();
+      return keys.map(kind === "key" ? function(k) {
+        return k.toLowerCase();
+      } : kind === "value" ? function(k) {
+        return headers[MAP][k].join(", ");
+      } : function(k) {
+        return [k.toLowerCase(), headers[MAP][k].join(", ")];
+      });
+    }
+    var INTERNAL = Symbol("internal");
+    function createHeadersIterator(target, kind) {
+      const iterator = Object.create(HeadersIteratorPrototype);
+      iterator[INTERNAL] = {
+        target,
+        kind,
+        index: 0
+      };
+      return iterator;
+    }
+    var HeadersIteratorPrototype = Object.setPrototypeOf({
+      next() {
+        if (!this || Object.getPrototypeOf(this) !== HeadersIteratorPrototype) {
+          throw new TypeError("Value of `this` is not a HeadersIterator");
+        }
+        var _INTERNAL = this[INTERNAL];
+        const target = _INTERNAL.target, kind = _INTERNAL.kind, index2 = _INTERNAL.index;
+        const values = getHeaders(target, kind);
+        const len = values.length;
+        if (index2 >= len) {
+          return {
+            value: void 0,
+            done: true
+          };
+        }
+        this[INTERNAL].index = index2 + 1;
+        return {
+          value: values[index2],
+          done: false
+        };
+      }
+    }, Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]())));
+    Object.defineProperty(HeadersIteratorPrototype, Symbol.toStringTag, {
+      value: "HeadersIterator",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    function exportNodeCompatibleHeaders(headers) {
+      const obj = Object.assign({__proto__: null}, headers[MAP]);
+      const hostHeaderKey = find(headers[MAP], "Host");
+      if (hostHeaderKey !== void 0) {
+        obj[hostHeaderKey] = obj[hostHeaderKey][0];
+      }
+      return obj;
+    }
+    function createHeadersLenient(obj) {
+      const headers = new Headers2();
+      for (const name of Object.keys(obj)) {
+        if (invalidTokenRegex.test(name)) {
+          continue;
+        }
+        if (Array.isArray(obj[name])) {
+          for (const val of obj[name]) {
+            if (invalidHeaderCharRegex.test(val)) {
+              continue;
+            }
+            if (headers[MAP][name] === void 0) {
+              headers[MAP][name] = [val];
+            } else {
+              headers[MAP][name].push(val);
+            }
+          }
+        } else if (!invalidHeaderCharRegex.test(obj[name])) {
+          headers[MAP][name] = [obj[name]];
+        }
+      }
+      return headers;
+    }
+    var INTERNALS$12 = Symbol("Response internals");
+    var STATUS_CODES = http2.STATUS_CODES;
+    var Response3 = class {
+      constructor() {
+        let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+        let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        Body2.call(this, body, opts);
+        const status = opts.status || 200;
+        const headers = new Headers2(opts.headers);
+        if (body != null && !headers.has("Content-Type")) {
+          const contentType = extractContentType2(body);
+          if (contentType) {
+            headers.append("Content-Type", contentType);
+          }
+        }
+        this[INTERNALS$12] = {
+          url: opts.url,
+          status,
+          statusText: opts.statusText || STATUS_CODES[status],
+          headers,
+          counter: opts.counter
+        };
+      }
+      get url() {
+        return this[INTERNALS$12].url || "";
+      }
+      get status() {
+        return this[INTERNALS$12].status;
+      }
+      get ok() {
+        return this[INTERNALS$12].status >= 200 && this[INTERNALS$12].status < 300;
+      }
+      get redirected() {
+        return this[INTERNALS$12].counter > 0;
+      }
+      get statusText() {
+        return this[INTERNALS$12].statusText;
+      }
+      get headers() {
+        return this[INTERNALS$12].headers;
+      }
+      clone() {
+        return new Response3(clone2(this), {
+          url: this.url,
+          status: this.status,
+          statusText: this.statusText,
+          headers: this.headers,
+          ok: this.ok,
+          redirected: this.redirected
+        });
+      }
+    };
+    Body2.mixIn(Response3.prototype);
+    Object.defineProperties(Response3.prototype, {
+      url: {enumerable: true},
+      status: {enumerable: true},
+      ok: {enumerable: true},
+      redirected: {enumerable: true},
+      statusText: {enumerable: true},
+      headers: {enumerable: true},
+      clone: {enumerable: true}
+    });
+    Object.defineProperty(Response3.prototype, Symbol.toStringTag, {
+      value: "Response",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    var INTERNALS$22 = Symbol("Request internals");
+    var parse_url = Url.parse;
+    var format_url = Url.format;
+    var streamDestructionSupported = "destroy" in Stream2.Readable.prototype;
+    function isRequest2(input) {
+      return typeof input === "object" && typeof input[INTERNALS$22] === "object";
+    }
+    function isAbortSignal2(signal) {
+      const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
+      return !!(proto && proto.constructor.name === "AbortSignal");
+    }
+    var Request2 = class {
+      constructor(input) {
+        let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        let parsedURL;
+        if (!isRequest2(input)) {
+          if (input && input.href) {
+            parsedURL = parse_url(input.href);
+          } else {
+            parsedURL = parse_url(`${input}`);
+          }
+          input = {};
+        } else {
+          parsedURL = parse_url(input.url);
+        }
+        let method = init2.method || input.method || "GET";
+        method = method.toUpperCase();
+        if ((init2.body != null || isRequest2(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
+          throw new TypeError("Request with GET/HEAD method cannot have body");
+        }
+        let inputBody = init2.body != null ? init2.body : isRequest2(input) && input.body !== null ? clone2(input) : null;
+        Body2.call(this, inputBody, {
+          timeout: init2.timeout || input.timeout || 0,
+          size: init2.size || input.size || 0
+        });
+        const headers = new Headers2(init2.headers || input.headers || {});
+        if (inputBody != null && !headers.has("Content-Type")) {
+          const contentType = extractContentType2(inputBody);
+          if (contentType) {
+            headers.append("Content-Type", contentType);
+          }
+        }
+        let signal = isRequest2(input) ? input.signal : null;
+        if ("signal" in init2)
+          signal = init2.signal;
+        if (signal != null && !isAbortSignal2(signal)) {
+          throw new TypeError("Expected signal to be an instanceof AbortSignal");
+        }
+        this[INTERNALS$22] = {
+          method,
+          redirect: init2.redirect || input.redirect || "follow",
+          headers,
+          parsedURL,
+          signal
+        };
+        this.follow = init2.follow !== void 0 ? init2.follow : input.follow !== void 0 ? input.follow : 20;
+        this.compress = init2.compress !== void 0 ? init2.compress : input.compress !== void 0 ? input.compress : true;
+        this.counter = init2.counter || input.counter || 0;
+        this.agent = init2.agent || input.agent;
+      }
+      get method() {
+        return this[INTERNALS$22].method;
+      }
+      get url() {
+        return format_url(this[INTERNALS$22].parsedURL);
+      }
+      get headers() {
+        return this[INTERNALS$22].headers;
+      }
+      get redirect() {
+        return this[INTERNALS$22].redirect;
+      }
+      get signal() {
+        return this[INTERNALS$22].signal;
+      }
+      clone() {
+        return new Request2(this);
+      }
+    };
+    Body2.mixIn(Request2.prototype);
+    Object.defineProperty(Request2.prototype, Symbol.toStringTag, {
+      value: "Request",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Request2.prototype, {
+      method: {enumerable: true},
+      url: {enumerable: true},
+      headers: {enumerable: true},
+      redirect: {enumerable: true},
+      clone: {enumerable: true},
+      signal: {enumerable: true}
+    });
+    function getNodeRequestOptions2(request) {
+      const parsedURL = request[INTERNALS$22].parsedURL;
+      const headers = new Headers2(request[INTERNALS$22].headers);
+      if (!headers.has("Accept")) {
+        headers.set("Accept", "*/*");
+      }
+      if (!parsedURL.protocol || !parsedURL.hostname) {
+        throw new TypeError("Only absolute URLs are supported");
+      }
+      if (!/^https?:$/.test(parsedURL.protocol)) {
+        throw new TypeError("Only HTTP(S) protocols are supported");
+      }
+      if (request.signal && request.body instanceof Stream2.Readable && !streamDestructionSupported) {
+        throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
+      }
+      let contentLengthValue = null;
+      if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
+        contentLengthValue = "0";
+      }
+      if (request.body != null) {
+        const totalBytes = getTotalBytes2(request);
+        if (typeof totalBytes === "number") {
+          contentLengthValue = String(totalBytes);
+        }
+      }
+      if (contentLengthValue) {
+        headers.set("Content-Length", contentLengthValue);
+      }
+      if (!headers.has("User-Agent")) {
+        headers.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
+      }
+      if (request.compress && !headers.has("Accept-Encoding")) {
+        headers.set("Accept-Encoding", "gzip,deflate");
+      }
+      let agent = request.agent;
+      if (typeof agent === "function") {
+        agent = agent(parsedURL);
+      }
+      if (!headers.has("Connection") && !agent) {
+        headers.set("Connection", "close");
+      }
+      return Object.assign({}, parsedURL, {
+        method: request.method,
+        headers: exportNodeCompatibleHeaders(headers),
+        agent
+      });
+    }
+    function AbortError2(message) {
+      Error.call(this, message);
+      this.type = "aborted";
+      this.message = message;
+      Error.captureStackTrace(this, this.constructor);
+    }
+    AbortError2.prototype = Object.create(Error.prototype);
+    AbortError2.prototype.constructor = AbortError2;
+    AbortError2.prototype.name = "AbortError";
+    var PassThrough$1 = Stream2.PassThrough;
+    var resolve_url = Url.resolve;
+    function fetch3(url, opts) {
+      if (!fetch3.Promise) {
+        throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
+      }
+      Body2.Promise = fetch3.Promise;
+      return new fetch3.Promise(function(resolve2, reject) {
+        const request = new Request2(url, opts);
+        const options2 = getNodeRequestOptions2(request);
+        const send = (options2.protocol === "https:" ? https2 : http2).request;
+        const signal = request.signal;
+        let response = null;
+        const abort = function abort2() {
+          let error3 = new AbortError2("The user aborted a request.");
+          reject(error3);
+          if (request.body && request.body instanceof Stream2.Readable) {
+            request.body.destroy(error3);
+          }
+          if (!response || !response.body)
+            return;
+          response.body.emit("error", error3);
+        };
+        if (signal && signal.aborted) {
+          abort();
+          return;
+        }
+        const abortAndFinalize = function abortAndFinalize2() {
+          abort();
+          finalize();
+        };
+        const req = send(options2);
+        let reqTimeout;
+        if (signal) {
+          signal.addEventListener("abort", abortAndFinalize);
+        }
+        function finalize() {
+          req.abort();
+          if (signal)
+            signal.removeEventListener("abort", abortAndFinalize);
+          clearTimeout(reqTimeout);
+        }
+        if (request.timeout) {
+          req.once("socket", function(socket) {
+            reqTimeout = setTimeout(function() {
+              reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
+              finalize();
+            }, request.timeout);
+          });
+        }
+        req.on("error", function(err) {
+          reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
+          finalize();
+        });
+        req.on("response", function(res) {
+          clearTimeout(reqTimeout);
+          const headers = createHeadersLenient(res.headers);
+          if (fetch3.isRedirect(res.statusCode)) {
+            const location = headers.get("Location");
+            const locationURL = location === null ? null : resolve_url(request.url, location);
+            switch (request.redirect) {
+              case "error":
+                reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+                finalize();
+                return;
+              case "manual":
+                if (locationURL !== null) {
+                  try {
+                    headers.set("Location", locationURL);
+                  } catch (err) {
+                    reject(err);
+                  }
+                }
+                break;
+              case "follow":
+                if (locationURL === null) {
+                  break;
+                }
+                if (request.counter >= request.follow) {
+                  reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+                  finalize();
+                  return;
+                }
+                const requestOpts = {
+                  headers: new Headers2(request.headers),
+                  follow: request.follow,
+                  counter: request.counter + 1,
+                  agent: request.agent,
+                  compress: request.compress,
+                  method: request.method,
+                  body: request.body,
+                  signal: request.signal,
+                  timeout: request.timeout,
+                  size: request.size
+                };
+                if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
+                  reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+                  finalize();
+                  return;
+                }
+                if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
+                  requestOpts.method = "GET";
+                  requestOpts.body = void 0;
+                  requestOpts.headers.delete("content-length");
+                }
+                resolve2(fetch3(new Request2(locationURL, requestOpts)));
+                finalize();
+                return;
+            }
+          }
+          res.once("end", function() {
+            if (signal)
+              signal.removeEventListener("abort", abortAndFinalize);
+          });
+          let body = res.pipe(new PassThrough$1());
+          const response_options = {
+            url: request.url,
+            status: res.statusCode,
+            statusText: res.statusMessage,
+            headers,
+            size: request.size,
+            timeout: request.timeout,
+            counter: request.counter
+          };
+          const codings = headers.get("Content-Encoding");
+          if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          const zlibOptions = {
+            flush: zlib2.Z_SYNC_FLUSH,
+            finishFlush: zlib2.Z_SYNC_FLUSH
+          };
+          if (codings == "gzip" || codings == "x-gzip") {
+            body = body.pipe(zlib2.createGunzip(zlibOptions));
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          if (codings == "deflate" || codings == "x-deflate") {
+            const raw = res.pipe(new PassThrough$1());
+            raw.once("data", function(chunk) {
+              if ((chunk[0] & 15) === 8) {
+                body = body.pipe(zlib2.createInflate());
+              } else {
+                body = body.pipe(zlib2.createInflateRaw());
+              }
+              response = new Response3(body, response_options);
+              resolve2(response);
+            });
+            return;
+          }
+          if (codings == "br" && typeof zlib2.createBrotliDecompress === "function") {
+            body = body.pipe(zlib2.createBrotliDecompress());
+            response = new Response3(body, response_options);
+            resolve2(response);
+            return;
+          }
+          response = new Response3(body, response_options);
+          resolve2(response);
+        });
+        writeToStream2(req, request);
+      });
+    }
+    fetch3.isRedirect = function(code) {
+      return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
+    };
+    fetch3.Promise = global.Promise;
+    module2.exports = exports2 = fetch3;
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    exports2.default = exports2;
+    exports2.Headers = Headers2;
+    exports2.Request = Request2;
+    exports2.Response = Response3;
+    exports2.FetchError = FetchError2;
   }
 });
 
@@ -2845,1051 +3399,6 @@ var require_index_cjs3 = __commonJS({
     exports2.onLog = onLog;
     exports2.registerVersion = registerVersion;
     exports2.setLogLevel = setLogLevel;
-  }
-});
-
-// node_modules/node-fetch/lib/index.js
-var require_lib = __commonJS({
-  "node_modules/node-fetch/lib/index.js"(exports2, module2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    function _interopDefault(ex) {
-      return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
-    }
-    var Stream2 = _interopDefault(require("stream"));
-    var http2 = _interopDefault(require("http"));
-    var Url = _interopDefault(require("url"));
-    var https2 = _interopDefault(require("https"));
-    var zlib2 = _interopDefault(require("zlib"));
-    var Readable2 = Stream2.Readable;
-    var BUFFER = Symbol("buffer");
-    var TYPE = Symbol("type");
-    var Blob2 = class {
-      constructor() {
-        this[TYPE] = "";
-        const blobParts = arguments[0];
-        const options2 = arguments[1];
-        const buffers = [];
-        let size = 0;
-        if (blobParts) {
-          const a = blobParts;
-          const length = Number(a.length);
-          for (let i = 0; i < length; i++) {
-            const element = a[i];
-            let buffer;
-            if (element instanceof Buffer) {
-              buffer = element;
-            } else if (ArrayBuffer.isView(element)) {
-              buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
-            } else if (element instanceof ArrayBuffer) {
-              buffer = Buffer.from(element);
-            } else if (element instanceof Blob2) {
-              buffer = element[BUFFER];
-            } else {
-              buffer = Buffer.from(typeof element === "string" ? element : String(element));
-            }
-            size += buffer.length;
-            buffers.push(buffer);
-          }
-        }
-        this[BUFFER] = Buffer.concat(buffers);
-        let type = options2 && options2.type !== void 0 && String(options2.type).toLowerCase();
-        if (type && !/[^\u0020-\u007E]/.test(type)) {
-          this[TYPE] = type;
-        }
-      }
-      get size() {
-        return this[BUFFER].length;
-      }
-      get type() {
-        return this[TYPE];
-      }
-      text() {
-        return Promise.resolve(this[BUFFER].toString());
-      }
-      arrayBuffer() {
-        const buf = this[BUFFER];
-        const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
-        return Promise.resolve(ab);
-      }
-      stream() {
-        const readable = new Readable2();
-        readable._read = function() {
-        };
-        readable.push(this[BUFFER]);
-        readable.push(null);
-        return readable;
-      }
-      toString() {
-        return "[object Blob]";
-      }
-      slice() {
-        const size = this.size;
-        const start = arguments[0];
-        const end = arguments[1];
-        let relativeStart, relativeEnd;
-        if (start === void 0) {
-          relativeStart = 0;
-        } else if (start < 0) {
-          relativeStart = Math.max(size + start, 0);
-        } else {
-          relativeStart = Math.min(start, size);
-        }
-        if (end === void 0) {
-          relativeEnd = size;
-        } else if (end < 0) {
-          relativeEnd = Math.max(size + end, 0);
-        } else {
-          relativeEnd = Math.min(end, size);
-        }
-        const span = Math.max(relativeEnd - relativeStart, 0);
-        const buffer = this[BUFFER];
-        const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
-        const blob = new Blob2([], {type: arguments[2]});
-        blob[BUFFER] = slicedBuffer;
-        return blob;
-      }
-    };
-    Object.defineProperties(Blob2.prototype, {
-      size: {enumerable: true},
-      type: {enumerable: true},
-      slice: {enumerable: true}
-    });
-    Object.defineProperty(Blob2.prototype, Symbol.toStringTag, {
-      value: "Blob",
-      writable: false,
-      enumerable: false,
-      configurable: true
-    });
-    function FetchError2(message, type, systemError) {
-      Error.call(this, message);
-      this.message = message;
-      this.type = type;
-      if (systemError) {
-        this.code = this.errno = systemError.code;
-      }
-      Error.captureStackTrace(this, this.constructor);
-    }
-    FetchError2.prototype = Object.create(Error.prototype);
-    FetchError2.prototype.constructor = FetchError2;
-    FetchError2.prototype.name = "FetchError";
-    var convert;
-    try {
-      convert = require("encoding").convert;
-    } catch (e) {
-    }
-    var INTERNALS2 = Symbol("Body internals");
-    var PassThrough2 = Stream2.PassThrough;
-    function Body2(body) {
-      var _this = this;
-      var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
-      let size = _ref$size === void 0 ? 0 : _ref$size;
-      var _ref$timeout = _ref.timeout;
-      let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
-      if (body == null) {
-        body = null;
-      } else if (isURLSearchParams(body)) {
-        body = Buffer.from(body.toString());
-      } else if (isBlob2(body))
-        ;
-      else if (Buffer.isBuffer(body))
-        ;
-      else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
-        body = Buffer.from(body);
-      } else if (ArrayBuffer.isView(body)) {
-        body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
-      } else if (body instanceof Stream2)
-        ;
-      else {
-        body = Buffer.from(String(body));
-      }
-      this[INTERNALS2] = {
-        body,
-        disturbed: false,
-        error: null
-      };
-      this.size = size;
-      this.timeout = timeout;
-      if (body instanceof Stream2) {
-        body.on("error", function(err) {
-          const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-          _this[INTERNALS2].error = error3;
-        });
-      }
-    }
-    Body2.prototype = {
-      get body() {
-        return this[INTERNALS2].body;
-      },
-      get bodyUsed() {
-        return this[INTERNALS2].disturbed;
-      },
-      arrayBuffer() {
-        return consumeBody2.call(this).then(function(buf) {
-          return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
-        });
-      },
-      blob() {
-        let ct = this.headers && this.headers.get("content-type") || "";
-        return consumeBody2.call(this).then(function(buf) {
-          return Object.assign(new Blob2([], {
-            type: ct.toLowerCase()
-          }), {
-            [BUFFER]: buf
-          });
-        });
-      },
-      json() {
-        var _this2 = this;
-        return consumeBody2.call(this).then(function(buffer) {
-          try {
-            return JSON.parse(buffer.toString());
-          } catch (err) {
-            return Body2.Promise.reject(new FetchError2(`invalid json response body at ${_this2.url} reason: ${err.message}`, "invalid-json"));
-          }
-        });
-      },
-      text() {
-        return consumeBody2.call(this).then(function(buffer) {
-          return buffer.toString();
-        });
-      },
-      buffer() {
-        return consumeBody2.call(this);
-      },
-      textConverted() {
-        var _this3 = this;
-        return consumeBody2.call(this).then(function(buffer) {
-          return convertBody(buffer, _this3.headers);
-        });
-      }
-    };
-    Object.defineProperties(Body2.prototype, {
-      body: {enumerable: true},
-      bodyUsed: {enumerable: true},
-      arrayBuffer: {enumerable: true},
-      blob: {enumerable: true},
-      json: {enumerable: true},
-      text: {enumerable: true}
-    });
-    Body2.mixIn = function(proto) {
-      for (const name of Object.getOwnPropertyNames(Body2.prototype)) {
-        if (!(name in proto)) {
-          const desc = Object.getOwnPropertyDescriptor(Body2.prototype, name);
-          Object.defineProperty(proto, name, desc);
-        }
-      }
-    };
-    function consumeBody2() {
-      var _this4 = this;
-      if (this[INTERNALS2].disturbed) {
-        return Body2.Promise.reject(new TypeError(`body used already for: ${this.url}`));
-      }
-      this[INTERNALS2].disturbed = true;
-      if (this[INTERNALS2].error) {
-        return Body2.Promise.reject(this[INTERNALS2].error);
-      }
-      let body = this.body;
-      if (body === null) {
-        return Body2.Promise.resolve(Buffer.alloc(0));
-      }
-      if (isBlob2(body)) {
-        body = body.stream();
-      }
-      if (Buffer.isBuffer(body)) {
-        return Body2.Promise.resolve(body);
-      }
-      if (!(body instanceof Stream2)) {
-        return Body2.Promise.resolve(Buffer.alloc(0));
-      }
-      let accum = [];
-      let accumBytes = 0;
-      let abort = false;
-      return new Body2.Promise(function(resolve2, reject) {
-        let resTimeout;
-        if (_this4.timeout) {
-          resTimeout = setTimeout(function() {
-            abort = true;
-            reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
-          }, _this4.timeout);
-        }
-        body.on("error", function(err) {
-          if (err.name === "AbortError") {
-            abort = true;
-            reject(err);
-          } else {
-            reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
-          }
-        });
-        body.on("data", function(chunk) {
-          if (abort || chunk === null) {
-            return;
-          }
-          if (_this4.size && accumBytes + chunk.length > _this4.size) {
-            abort = true;
-            reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
-            return;
-          }
-          accumBytes += chunk.length;
-          accum.push(chunk);
-        });
-        body.on("end", function() {
-          if (abort) {
-            return;
-          }
-          clearTimeout(resTimeout);
-          try {
-            resolve2(Buffer.concat(accum, accumBytes));
-          } catch (err) {
-            reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
-          }
-        });
-      });
-    }
-    function convertBody(buffer, headers) {
-      if (typeof convert !== "function") {
-        throw new Error("The package `encoding` must be installed to use the textConverted() function");
-      }
-      const ct = headers.get("content-type");
-      let charset = "utf-8";
-      let res, str;
-      if (ct) {
-        res = /charset=([^;]*)/i.exec(ct);
-      }
-      str = buffer.slice(0, 1024).toString();
-      if (!res && str) {
-        res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
-      }
-      if (!res && str) {
-        res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
-        if (!res) {
-          res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
-          if (res) {
-            res.pop();
-          }
-        }
-        if (res) {
-          res = /charset=(.*)/i.exec(res.pop());
-        }
-      }
-      if (!res && str) {
-        res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
-      }
-      if (res) {
-        charset = res.pop();
-        if (charset === "gb2312" || charset === "gbk") {
-          charset = "gb18030";
-        }
-      }
-      return convert(buffer, "UTF-8", charset).toString();
-    }
-    function isURLSearchParams(obj) {
-      if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
-        return false;
-      }
-      return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
-    }
-    function isBlob2(obj) {
-      return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
-    }
-    function clone2(instance) {
-      let p1, p2;
-      let body = instance.body;
-      if (instance.bodyUsed) {
-        throw new Error("cannot clone body after it is used");
-      }
-      if (body instanceof Stream2 && typeof body.getBoundary !== "function") {
-        p1 = new PassThrough2();
-        p2 = new PassThrough2();
-        body.pipe(p1);
-        body.pipe(p2);
-        instance[INTERNALS2].body = p1;
-        body = p2;
-      }
-      return body;
-    }
-    function extractContentType2(body) {
-      if (body === null) {
-        return null;
-      } else if (typeof body === "string") {
-        return "text/plain;charset=UTF-8";
-      } else if (isURLSearchParams(body)) {
-        return "application/x-www-form-urlencoded;charset=UTF-8";
-      } else if (isBlob2(body)) {
-        return body.type || null;
-      } else if (Buffer.isBuffer(body)) {
-        return null;
-      } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
-        return null;
-      } else if (ArrayBuffer.isView(body)) {
-        return null;
-      } else if (typeof body.getBoundary === "function") {
-        return `multipart/form-data;boundary=${body.getBoundary()}`;
-      } else if (body instanceof Stream2) {
-        return null;
-      } else {
-        return "text/plain;charset=UTF-8";
-      }
-    }
-    function getTotalBytes2(instance) {
-      const body = instance.body;
-      if (body === null) {
-        return 0;
-      } else if (isBlob2(body)) {
-        return body.size;
-      } else if (Buffer.isBuffer(body)) {
-        return body.length;
-      } else if (body && typeof body.getLengthSync === "function") {
-        if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
-          return body.getLengthSync();
-        }
-        return null;
-      } else {
-        return null;
-      }
-    }
-    function writeToStream2(dest, instance) {
-      const body = instance.body;
-      if (body === null) {
-        dest.end();
-      } else if (isBlob2(body)) {
-        body.stream().pipe(dest);
-      } else if (Buffer.isBuffer(body)) {
-        dest.write(body);
-        dest.end();
-      } else {
-        body.pipe(dest);
-      }
-    }
-    Body2.Promise = global.Promise;
-    var invalidTokenRegex = /[^\^_`a-zA-Z\-0-9!#$%&'*+.|~]/;
-    var invalidHeaderCharRegex = /[^\t\x20-\x7e\x80-\xff]/;
-    function validateName(name) {
-      name = `${name}`;
-      if (invalidTokenRegex.test(name) || name === "") {
-        throw new TypeError(`${name} is not a legal HTTP header name`);
-      }
-    }
-    function validateValue(value) {
-      value = `${value}`;
-      if (invalidHeaderCharRegex.test(value)) {
-        throw new TypeError(`${value} is not a legal HTTP header value`);
-      }
-    }
-    function find(map, name) {
-      name = name.toLowerCase();
-      for (const key in map) {
-        if (key.toLowerCase() === name) {
-          return key;
-        }
-      }
-      return void 0;
-    }
-    var MAP = Symbol("map");
-    var Headers2 = class {
-      constructor() {
-        let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
-        this[MAP] = Object.create(null);
-        if (init2 instanceof Headers2) {
-          const rawHeaders = init2.raw();
-          const headerNames = Object.keys(rawHeaders);
-          for (const headerName of headerNames) {
-            for (const value of rawHeaders[headerName]) {
-              this.append(headerName, value);
-            }
-          }
-          return;
-        }
-        if (init2 == null)
-          ;
-        else if (typeof init2 === "object") {
-          const method = init2[Symbol.iterator];
-          if (method != null) {
-            if (typeof method !== "function") {
-              throw new TypeError("Header pairs must be iterable");
-            }
-            const pairs = [];
-            for (const pair of init2) {
-              if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") {
-                throw new TypeError("Each header pair must be iterable");
-              }
-              pairs.push(Array.from(pair));
-            }
-            for (const pair of pairs) {
-              if (pair.length !== 2) {
-                throw new TypeError("Each header pair must be a name/value tuple");
-              }
-              this.append(pair[0], pair[1]);
-            }
-          } else {
-            for (const key of Object.keys(init2)) {
-              const value = init2[key];
-              this.append(key, value);
-            }
-          }
-        } else {
-          throw new TypeError("Provided initializer must be an object");
-        }
-      }
-      get(name) {
-        name = `${name}`;
-        validateName(name);
-        const key = find(this[MAP], name);
-        if (key === void 0) {
-          return null;
-        }
-        return this[MAP][key].join(", ");
-      }
-      forEach(callback) {
-        let thisArg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
-        let pairs = getHeaders(this);
-        let i = 0;
-        while (i < pairs.length) {
-          var _pairs$i = pairs[i];
-          const name = _pairs$i[0], value = _pairs$i[1];
-          callback.call(thisArg, value, name, this);
-          pairs = getHeaders(this);
-          i++;
-        }
-      }
-      set(name, value) {
-        name = `${name}`;
-        value = `${value}`;
-        validateName(name);
-        validateValue(value);
-        const key = find(this[MAP], name);
-        this[MAP][key !== void 0 ? key : name] = [value];
-      }
-      append(name, value) {
-        name = `${name}`;
-        value = `${value}`;
-        validateName(name);
-        validateValue(value);
-        const key = find(this[MAP], name);
-        if (key !== void 0) {
-          this[MAP][key].push(value);
-        } else {
-          this[MAP][name] = [value];
-        }
-      }
-      has(name) {
-        name = `${name}`;
-        validateName(name);
-        return find(this[MAP], name) !== void 0;
-      }
-      delete(name) {
-        name = `${name}`;
-        validateName(name);
-        const key = find(this[MAP], name);
-        if (key !== void 0) {
-          delete this[MAP][key];
-        }
-      }
-      raw() {
-        return this[MAP];
-      }
-      keys() {
-        return createHeadersIterator(this, "key");
-      }
-      values() {
-        return createHeadersIterator(this, "value");
-      }
-      [Symbol.iterator]() {
-        return createHeadersIterator(this, "key+value");
-      }
-    };
-    Headers2.prototype.entries = Headers2.prototype[Symbol.iterator];
-    Object.defineProperty(Headers2.prototype, Symbol.toStringTag, {
-      value: "Headers",
-      writable: false,
-      enumerable: false,
-      configurable: true
-    });
-    Object.defineProperties(Headers2.prototype, {
-      get: {enumerable: true},
-      forEach: {enumerable: true},
-      set: {enumerable: true},
-      append: {enumerable: true},
-      has: {enumerable: true},
-      delete: {enumerable: true},
-      keys: {enumerable: true},
-      values: {enumerable: true},
-      entries: {enumerable: true}
-    });
-    function getHeaders(headers) {
-      let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
-      const keys = Object.keys(headers[MAP]).sort();
-      return keys.map(kind === "key" ? function(k) {
-        return k.toLowerCase();
-      } : kind === "value" ? function(k) {
-        return headers[MAP][k].join(", ");
-      } : function(k) {
-        return [k.toLowerCase(), headers[MAP][k].join(", ")];
-      });
-    }
-    var INTERNAL = Symbol("internal");
-    function createHeadersIterator(target, kind) {
-      const iterator = Object.create(HeadersIteratorPrototype);
-      iterator[INTERNAL] = {
-        target,
-        kind,
-        index: 0
-      };
-      return iterator;
-    }
-    var HeadersIteratorPrototype = Object.setPrototypeOf({
-      next() {
-        if (!this || Object.getPrototypeOf(this) !== HeadersIteratorPrototype) {
-          throw new TypeError("Value of `this` is not a HeadersIterator");
-        }
-        var _INTERNAL = this[INTERNAL];
-        const target = _INTERNAL.target, kind = _INTERNAL.kind, index2 = _INTERNAL.index;
-        const values = getHeaders(target, kind);
-        const len = values.length;
-        if (index2 >= len) {
-          return {
-            value: void 0,
-            done: true
-          };
-        }
-        this[INTERNAL].index = index2 + 1;
-        return {
-          value: values[index2],
-          done: false
-        };
-      }
-    }, Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]())));
-    Object.defineProperty(HeadersIteratorPrototype, Symbol.toStringTag, {
-      value: "HeadersIterator",
-      writable: false,
-      enumerable: false,
-      configurable: true
-    });
-    function exportNodeCompatibleHeaders(headers) {
-      const obj = Object.assign({__proto__: null}, headers[MAP]);
-      const hostHeaderKey = find(headers[MAP], "Host");
-      if (hostHeaderKey !== void 0) {
-        obj[hostHeaderKey] = obj[hostHeaderKey][0];
-      }
-      return obj;
-    }
-    function createHeadersLenient(obj) {
-      const headers = new Headers2();
-      for (const name of Object.keys(obj)) {
-        if (invalidTokenRegex.test(name)) {
-          continue;
-        }
-        if (Array.isArray(obj[name])) {
-          for (const val of obj[name]) {
-            if (invalidHeaderCharRegex.test(val)) {
-              continue;
-            }
-            if (headers[MAP][name] === void 0) {
-              headers[MAP][name] = [val];
-            } else {
-              headers[MAP][name].push(val);
-            }
-          }
-        } else if (!invalidHeaderCharRegex.test(obj[name])) {
-          headers[MAP][name] = [obj[name]];
-        }
-      }
-      return headers;
-    }
-    var INTERNALS$12 = Symbol("Response internals");
-    var STATUS_CODES = http2.STATUS_CODES;
-    var Response3 = class {
-      constructor() {
-        let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
-        let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-        Body2.call(this, body, opts);
-        const status = opts.status || 200;
-        const headers = new Headers2(opts.headers);
-        if (body != null && !headers.has("Content-Type")) {
-          const contentType = extractContentType2(body);
-          if (contentType) {
-            headers.append("Content-Type", contentType);
-          }
-        }
-        this[INTERNALS$12] = {
-          url: opts.url,
-          status,
-          statusText: opts.statusText || STATUS_CODES[status],
-          headers,
-          counter: opts.counter
-        };
-      }
-      get url() {
-        return this[INTERNALS$12].url || "";
-      }
-      get status() {
-        return this[INTERNALS$12].status;
-      }
-      get ok() {
-        return this[INTERNALS$12].status >= 200 && this[INTERNALS$12].status < 300;
-      }
-      get redirected() {
-        return this[INTERNALS$12].counter > 0;
-      }
-      get statusText() {
-        return this[INTERNALS$12].statusText;
-      }
-      get headers() {
-        return this[INTERNALS$12].headers;
-      }
-      clone() {
-        return new Response3(clone2(this), {
-          url: this.url,
-          status: this.status,
-          statusText: this.statusText,
-          headers: this.headers,
-          ok: this.ok,
-          redirected: this.redirected
-        });
-      }
-    };
-    Body2.mixIn(Response3.prototype);
-    Object.defineProperties(Response3.prototype, {
-      url: {enumerable: true},
-      status: {enumerable: true},
-      ok: {enumerable: true},
-      redirected: {enumerable: true},
-      statusText: {enumerable: true},
-      headers: {enumerable: true},
-      clone: {enumerable: true}
-    });
-    Object.defineProperty(Response3.prototype, Symbol.toStringTag, {
-      value: "Response",
-      writable: false,
-      enumerable: false,
-      configurable: true
-    });
-    var INTERNALS$22 = Symbol("Request internals");
-    var parse_url = Url.parse;
-    var format_url = Url.format;
-    var streamDestructionSupported = "destroy" in Stream2.Readable.prototype;
-    function isRequest2(input) {
-      return typeof input === "object" && typeof input[INTERNALS$22] === "object";
-    }
-    function isAbortSignal2(signal) {
-      const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
-      return !!(proto && proto.constructor.name === "AbortSignal");
-    }
-    var Request2 = class {
-      constructor(input) {
-        let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-        let parsedURL;
-        if (!isRequest2(input)) {
-          if (input && input.href) {
-            parsedURL = parse_url(input.href);
-          } else {
-            parsedURL = parse_url(`${input}`);
-          }
-          input = {};
-        } else {
-          parsedURL = parse_url(input.url);
-        }
-        let method = init2.method || input.method || "GET";
-        method = method.toUpperCase();
-        if ((init2.body != null || isRequest2(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
-          throw new TypeError("Request with GET/HEAD method cannot have body");
-        }
-        let inputBody = init2.body != null ? init2.body : isRequest2(input) && input.body !== null ? clone2(input) : null;
-        Body2.call(this, inputBody, {
-          timeout: init2.timeout || input.timeout || 0,
-          size: init2.size || input.size || 0
-        });
-        const headers = new Headers2(init2.headers || input.headers || {});
-        if (inputBody != null && !headers.has("Content-Type")) {
-          const contentType = extractContentType2(inputBody);
-          if (contentType) {
-            headers.append("Content-Type", contentType);
-          }
-        }
-        let signal = isRequest2(input) ? input.signal : null;
-        if ("signal" in init2)
-          signal = init2.signal;
-        if (signal != null && !isAbortSignal2(signal)) {
-          throw new TypeError("Expected signal to be an instanceof AbortSignal");
-        }
-        this[INTERNALS$22] = {
-          method,
-          redirect: init2.redirect || input.redirect || "follow",
-          headers,
-          parsedURL,
-          signal
-        };
-        this.follow = init2.follow !== void 0 ? init2.follow : input.follow !== void 0 ? input.follow : 20;
-        this.compress = init2.compress !== void 0 ? init2.compress : input.compress !== void 0 ? input.compress : true;
-        this.counter = init2.counter || input.counter || 0;
-        this.agent = init2.agent || input.agent;
-      }
-      get method() {
-        return this[INTERNALS$22].method;
-      }
-      get url() {
-        return format_url(this[INTERNALS$22].parsedURL);
-      }
-      get headers() {
-        return this[INTERNALS$22].headers;
-      }
-      get redirect() {
-        return this[INTERNALS$22].redirect;
-      }
-      get signal() {
-        return this[INTERNALS$22].signal;
-      }
-      clone() {
-        return new Request2(this);
-      }
-    };
-    Body2.mixIn(Request2.prototype);
-    Object.defineProperty(Request2.prototype, Symbol.toStringTag, {
-      value: "Request",
-      writable: false,
-      enumerable: false,
-      configurable: true
-    });
-    Object.defineProperties(Request2.prototype, {
-      method: {enumerable: true},
-      url: {enumerable: true},
-      headers: {enumerable: true},
-      redirect: {enumerable: true},
-      clone: {enumerable: true},
-      signal: {enumerable: true}
-    });
-    function getNodeRequestOptions2(request) {
-      const parsedURL = request[INTERNALS$22].parsedURL;
-      const headers = new Headers2(request[INTERNALS$22].headers);
-      if (!headers.has("Accept")) {
-        headers.set("Accept", "*/*");
-      }
-      if (!parsedURL.protocol || !parsedURL.hostname) {
-        throw new TypeError("Only absolute URLs are supported");
-      }
-      if (!/^https?:$/.test(parsedURL.protocol)) {
-        throw new TypeError("Only HTTP(S) protocols are supported");
-      }
-      if (request.signal && request.body instanceof Stream2.Readable && !streamDestructionSupported) {
-        throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
-      }
-      let contentLengthValue = null;
-      if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
-        contentLengthValue = "0";
-      }
-      if (request.body != null) {
-        const totalBytes = getTotalBytes2(request);
-        if (typeof totalBytes === "number") {
-          contentLengthValue = String(totalBytes);
-        }
-      }
-      if (contentLengthValue) {
-        headers.set("Content-Length", contentLengthValue);
-      }
-      if (!headers.has("User-Agent")) {
-        headers.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
-      }
-      if (request.compress && !headers.has("Accept-Encoding")) {
-        headers.set("Accept-Encoding", "gzip,deflate");
-      }
-      let agent = request.agent;
-      if (typeof agent === "function") {
-        agent = agent(parsedURL);
-      }
-      if (!headers.has("Connection") && !agent) {
-        headers.set("Connection", "close");
-      }
-      return Object.assign({}, parsedURL, {
-        method: request.method,
-        headers: exportNodeCompatibleHeaders(headers),
-        agent
-      });
-    }
-    function AbortError2(message) {
-      Error.call(this, message);
-      this.type = "aborted";
-      this.message = message;
-      Error.captureStackTrace(this, this.constructor);
-    }
-    AbortError2.prototype = Object.create(Error.prototype);
-    AbortError2.prototype.constructor = AbortError2;
-    AbortError2.prototype.name = "AbortError";
-    var PassThrough$1 = Stream2.PassThrough;
-    var resolve_url = Url.resolve;
-    function fetch3(url, opts) {
-      if (!fetch3.Promise) {
-        throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
-      }
-      Body2.Promise = fetch3.Promise;
-      return new fetch3.Promise(function(resolve2, reject) {
-        const request = new Request2(url, opts);
-        const options2 = getNodeRequestOptions2(request);
-        const send = (options2.protocol === "https:" ? https2 : http2).request;
-        const signal = request.signal;
-        let response = null;
-        const abort = function abort2() {
-          let error3 = new AbortError2("The user aborted a request.");
-          reject(error3);
-          if (request.body && request.body instanceof Stream2.Readable) {
-            request.body.destroy(error3);
-          }
-          if (!response || !response.body)
-            return;
-          response.body.emit("error", error3);
-        };
-        if (signal && signal.aborted) {
-          abort();
-          return;
-        }
-        const abortAndFinalize = function abortAndFinalize2() {
-          abort();
-          finalize();
-        };
-        const req = send(options2);
-        let reqTimeout;
-        if (signal) {
-          signal.addEventListener("abort", abortAndFinalize);
-        }
-        function finalize() {
-          req.abort();
-          if (signal)
-            signal.removeEventListener("abort", abortAndFinalize);
-          clearTimeout(reqTimeout);
-        }
-        if (request.timeout) {
-          req.once("socket", function(socket) {
-            reqTimeout = setTimeout(function() {
-              reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
-              finalize();
-            }, request.timeout);
-          });
-        }
-        req.on("error", function(err) {
-          reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
-          finalize();
-        });
-        req.on("response", function(res) {
-          clearTimeout(reqTimeout);
-          const headers = createHeadersLenient(res.headers);
-          if (fetch3.isRedirect(res.statusCode)) {
-            const location = headers.get("Location");
-            const locationURL = location === null ? null : resolve_url(request.url, location);
-            switch (request.redirect) {
-              case "error":
-                reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
-                finalize();
-                return;
-              case "manual":
-                if (locationURL !== null) {
-                  try {
-                    headers.set("Location", locationURL);
-                  } catch (err) {
-                    reject(err);
-                  }
-                }
-                break;
-              case "follow":
-                if (locationURL === null) {
-                  break;
-                }
-                if (request.counter >= request.follow) {
-                  reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
-                  finalize();
-                  return;
-                }
-                const requestOpts = {
-                  headers: new Headers2(request.headers),
-                  follow: request.follow,
-                  counter: request.counter + 1,
-                  agent: request.agent,
-                  compress: request.compress,
-                  method: request.method,
-                  body: request.body,
-                  signal: request.signal,
-                  timeout: request.timeout,
-                  size: request.size
-                };
-                if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
-                  reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
-                  finalize();
-                  return;
-                }
-                if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
-                  requestOpts.method = "GET";
-                  requestOpts.body = void 0;
-                  requestOpts.headers.delete("content-length");
-                }
-                resolve2(fetch3(new Request2(locationURL, requestOpts)));
-                finalize();
-                return;
-            }
-          }
-          res.once("end", function() {
-            if (signal)
-              signal.removeEventListener("abort", abortAndFinalize);
-          });
-          let body = res.pipe(new PassThrough$1());
-          const response_options = {
-            url: request.url,
-            status: res.statusCode,
-            statusText: res.statusMessage,
-            headers,
-            size: request.size,
-            timeout: request.timeout,
-            counter: request.counter
-          };
-          const codings = headers.get("Content-Encoding");
-          if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
-            response = new Response3(body, response_options);
-            resolve2(response);
-            return;
-          }
-          const zlibOptions = {
-            flush: zlib2.Z_SYNC_FLUSH,
-            finishFlush: zlib2.Z_SYNC_FLUSH
-          };
-          if (codings == "gzip" || codings == "x-gzip") {
-            body = body.pipe(zlib2.createGunzip(zlibOptions));
-            response = new Response3(body, response_options);
-            resolve2(response);
-            return;
-          }
-          if (codings == "deflate" || codings == "x-deflate") {
-            const raw = res.pipe(new PassThrough$1());
-            raw.once("data", function(chunk) {
-              if ((chunk[0] & 15) === 8) {
-                body = body.pipe(zlib2.createInflate());
-              } else {
-                body = body.pipe(zlib2.createInflateRaw());
-              }
-              response = new Response3(body, response_options);
-              resolve2(response);
-            });
-            return;
-          }
-          if (codings == "br" && typeof zlib2.createBrotliDecompress === "function") {
-            body = body.pipe(zlib2.createBrotliDecompress());
-            response = new Response3(body, response_options);
-            resolve2(response);
-            return;
-          }
-          response = new Response3(body, response_options);
-          resolve2(response);
-        });
-        writeToStream2(req, request);
-      });
-    }
-    fetch3.isRedirect = function(code) {
-      return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
-    };
-    fetch3.Promise = global.Promise;
-    module2.exports = exports2 = fetch3;
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    exports2.default = exports2;
-    exports2.Headers = Headers2;
-    exports2.Request = Request2;
-    exports2.Response = Response3;
-    exports2.FetchError = FetchError2;
   }
 });
 
@@ -8039,6 +7548,497 @@ var require_node = __commonJS({
     exports2.verifyBeforeUpdateEmail = register.verifyBeforeUpdateEmail;
     exports2.verifyPasswordResetCode = register.verifyPasswordResetCode;
     exports2.getAuth = getAuth2;
+  }
+});
+
+// node_modules/uuid/dist/rng.js
+var require_rng = __commonJS({
+  "node_modules/uuid/dist/rng.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = rng;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var rnds8Pool = new Uint8Array(256);
+    var poolPtr = rnds8Pool.length;
+    function rng() {
+      if (poolPtr > rnds8Pool.length - 16) {
+        _crypto.default.randomFillSync(rnds8Pool);
+        poolPtr = 0;
+      }
+      return rnds8Pool.slice(poolPtr, poolPtr += 16);
+    }
+  }
+});
+
+// node_modules/uuid/dist/regex.js
+var require_regex = __commonJS({
+  "node_modules/uuid/dist/regex.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/validate.js
+var require_validate = __commonJS({
+  "node_modules/uuid/dist/validate.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _regex = _interopRequireDefault(require_regex());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function validate2(uuid2) {
+      return typeof uuid2 === "string" && _regex.default.test(uuid2);
+    }
+    var _default = validate2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/stringify.js
+var require_stringify = __commonJS({
+  "node_modules/uuid/dist/stringify.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var byteToHex = [];
+    for (let i = 0; i < 256; ++i) {
+      byteToHex.push((i + 256).toString(16).substr(1));
+    }
+    function stringify2(arr, offset = 0) {
+      const uuid2 = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Stringified UUID is invalid");
+      }
+      return uuid2;
+    }
+    var _default = stringify2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v1.js
+var require_v1 = __commonJS({
+  "node_modules/uuid/dist/v1.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _rng = _interopRequireDefault(require_rng());
+    var _stringify = _interopRequireDefault(require_stringify());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var _nodeId;
+    var _clockseq;
+    var _lastMSecs = 0;
+    var _lastNSecs = 0;
+    function v12(options2, buf, offset) {
+      let i = buf && offset || 0;
+      const b = buf || new Array(16);
+      options2 = options2 || {};
+      let node = options2.node || _nodeId;
+      let clockseq = options2.clockseq !== void 0 ? options2.clockseq : _clockseq;
+      if (node == null || clockseq == null) {
+        const seedBytes = options2.random || (options2.rng || _rng.default)();
+        if (node == null) {
+          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+        }
+        if (clockseq == null) {
+          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+        }
+      }
+      let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
+      let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
+      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+      if (dt < 0 && options2.clockseq === void 0) {
+        clockseq = clockseq + 1 & 16383;
+      }
+      if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
+        nsecs = 0;
+      }
+      if (nsecs >= 1e4) {
+        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+      }
+      _lastMSecs = msecs;
+      _lastNSecs = nsecs;
+      _clockseq = clockseq;
+      msecs += 122192928e5;
+      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+      b[i++] = tl >>> 24 & 255;
+      b[i++] = tl >>> 16 & 255;
+      b[i++] = tl >>> 8 & 255;
+      b[i++] = tl & 255;
+      const tmh = msecs / 4294967296 * 1e4 & 268435455;
+      b[i++] = tmh >>> 8 & 255;
+      b[i++] = tmh & 255;
+      b[i++] = tmh >>> 24 & 15 | 16;
+      b[i++] = tmh >>> 16 & 255;
+      b[i++] = clockseq >>> 8 | 128;
+      b[i++] = clockseq & 255;
+      for (let n = 0; n < 6; ++n) {
+        b[i + n] = node[n];
+      }
+      return buf || (0, _stringify.default)(b);
+    }
+    var _default = v12;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/parse.js
+var require_parse = __commonJS({
+  "node_modules/uuid/dist/parse.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function parse2(uuid2) {
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Invalid UUID");
+      }
+      let v;
+      const arr = new Uint8Array(16);
+      arr[0] = (v = parseInt(uuid2.slice(0, 8), 16)) >>> 24;
+      arr[1] = v >>> 16 & 255;
+      arr[2] = v >>> 8 & 255;
+      arr[3] = v & 255;
+      arr[4] = (v = parseInt(uuid2.slice(9, 13), 16)) >>> 8;
+      arr[5] = v & 255;
+      arr[6] = (v = parseInt(uuid2.slice(14, 18), 16)) >>> 8;
+      arr[7] = v & 255;
+      arr[8] = (v = parseInt(uuid2.slice(19, 23), 16)) >>> 8;
+      arr[9] = v & 255;
+      arr[10] = (v = parseInt(uuid2.slice(24, 36), 16)) / 1099511627776 & 255;
+      arr[11] = v / 4294967296 & 255;
+      arr[12] = v >>> 24 & 255;
+      arr[13] = v >>> 16 & 255;
+      arr[14] = v >>> 8 & 255;
+      arr[15] = v & 255;
+      return arr;
+    }
+    var _default = parse2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v35.js
+var require_v35 = __commonJS({
+  "node_modules/uuid/dist/v35.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = _default;
+    exports2.URL = exports2.DNS = void 0;
+    var _stringify = _interopRequireDefault(require_stringify());
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function stringToBytes(str) {
+      str = unescape(encodeURIComponent(str));
+      const bytes = [];
+      for (let i = 0; i < str.length; ++i) {
+        bytes.push(str.charCodeAt(i));
+      }
+      return bytes;
+    }
+    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    exports2.DNS = DNS;
+    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+    exports2.URL = URL2;
+    function _default(name, version2, hashfunc) {
+      function generateUUID(value, namespace, buf, offset) {
+        if (typeof value === "string") {
+          value = stringToBytes(value);
+        }
+        if (typeof namespace === "string") {
+          namespace = (0, _parse.default)(namespace);
+        }
+        if (namespace.length !== 16) {
+          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+        }
+        let bytes = new Uint8Array(16 + value.length);
+        bytes.set(namespace);
+        bytes.set(value, namespace.length);
+        bytes = hashfunc(bytes);
+        bytes[6] = bytes[6] & 15 | version2;
+        bytes[8] = bytes[8] & 63 | 128;
+        if (buf) {
+          offset = offset || 0;
+          for (let i = 0; i < 16; ++i) {
+            buf[offset + i] = bytes[i];
+          }
+          return buf;
+        }
+        return (0, _stringify.default)(bytes);
+      }
+      try {
+        generateUUID.name = name;
+      } catch (err) {
+      }
+      generateUUID.DNS = DNS;
+      generateUUID.URL = URL2;
+      return generateUUID;
+    }
+  }
+});
+
+// node_modules/uuid/dist/md5.js
+var require_md5 = __commonJS({
+  "node_modules/uuid/dist/md5.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function md5(bytes) {
+      if (Array.isArray(bytes)) {
+        bytes = Buffer.from(bytes);
+      } else if (typeof bytes === "string") {
+        bytes = Buffer.from(bytes, "utf8");
+      }
+      return _crypto.default.createHash("md5").update(bytes).digest();
+    }
+    var _default = md5;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v3.js
+var require_v3 = __commonJS({
+  "node_modules/uuid/dist/v3.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _md = _interopRequireDefault(require_md5());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v32 = (0, _v.default)("v3", 48, _md.default);
+    var _default = v32;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v4.js
+var require_v4 = __commonJS({
+  "node_modules/uuid/dist/v4.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _rng = _interopRequireDefault(require_rng());
+    var _stringify = _interopRequireDefault(require_stringify());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function v42(options2, buf, offset) {
+      options2 = options2 || {};
+      const rnds = options2.random || (options2.rng || _rng.default)();
+      rnds[6] = rnds[6] & 15 | 64;
+      rnds[8] = rnds[8] & 63 | 128;
+      if (buf) {
+        offset = offset || 0;
+        for (let i = 0; i < 16; ++i) {
+          buf[offset + i] = rnds[i];
+        }
+        return buf;
+      }
+      return (0, _stringify.default)(rnds);
+    }
+    var _default = v42;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/sha1.js
+var require_sha1 = __commonJS({
+  "node_modules/uuid/dist/sha1.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _crypto = _interopRequireDefault(require("crypto"));
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function sha1(bytes) {
+      if (Array.isArray(bytes)) {
+        bytes = Buffer.from(bytes);
+      } else if (typeof bytes === "string") {
+        bytes = Buffer.from(bytes, "utf8");
+      }
+      return _crypto.default.createHash("sha1").update(bytes).digest();
+    }
+    var _default = sha1;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/v5.js
+var require_v5 = __commonJS({
+  "node_modules/uuid/dist/v5.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _sha = _interopRequireDefault(require_sha1());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v52 = (0, _v.default)("v5", 80, _sha.default);
+    var _default = v52;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/nil.js
+var require_nil = __commonJS({
+  "node_modules/uuid/dist/nil.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _default = "00000000-0000-0000-0000-000000000000";
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/version.js
+var require_version = __commonJS({
+  "node_modules/uuid/dist/version.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    exports2.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function version2(uuid2) {
+      if (!(0, _validate.default)(uuid2)) {
+        throw TypeError("Invalid UUID");
+      }
+      return parseInt(uuid2.substr(14, 1), 16);
+    }
+    var _default = version2;
+    exports2.default = _default;
+  }
+});
+
+// node_modules/uuid/dist/index.js
+var require_dist = __commonJS({
+  "node_modules/uuid/dist/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {
+      value: true
+    });
+    Object.defineProperty(exports2, "v1", {
+      enumerable: true,
+      get: function() {
+        return _v.default;
+      }
+    });
+    Object.defineProperty(exports2, "v3", {
+      enumerable: true,
+      get: function() {
+        return _v2.default;
+      }
+    });
+    Object.defineProperty(exports2, "v4", {
+      enumerable: true,
+      get: function() {
+        return _v3.default;
+      }
+    });
+    Object.defineProperty(exports2, "v5", {
+      enumerable: true,
+      get: function() {
+        return _v4.default;
+      }
+    });
+    Object.defineProperty(exports2, "NIL", {
+      enumerable: true,
+      get: function() {
+        return _nil.default;
+      }
+    });
+    Object.defineProperty(exports2, "version", {
+      enumerable: true,
+      get: function() {
+        return _version.default;
+      }
+    });
+    Object.defineProperty(exports2, "validate", {
+      enumerable: true,
+      get: function() {
+        return _validate.default;
+      }
+    });
+    Object.defineProperty(exports2, "stringify", {
+      enumerable: true,
+      get: function() {
+        return _stringify.default;
+      }
+    });
+    Object.defineProperty(exports2, "parse", {
+      enumerable: true,
+      get: function() {
+        return _parse.default;
+      }
+    });
+    var _v = _interopRequireDefault(require_v1());
+    var _v2 = _interopRequireDefault(require_v3());
+    var _v3 = _interopRequireDefault(require_v4());
+    var _v4 = _interopRequireDefault(require_v5());
+    var _nil = _interopRequireDefault(require_nil());
+    var _version = _interopRequireDefault(require_version());
+    var _validate = _interopRequireDefault(require_validate());
+    var _stringify = _interopRequireDefault(require_stringify());
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
   }
 });
 
@@ -40293,6 +40293,9 @@ if (typeof HTMLElement === "function") {
   };
 }
 
+// .svelte-kit/output/server/app.js
+var import_auth = __toModule(require_node());
+
 // node_modules/uuid/wrapper.mjs
 var import_dist = __toModule(require_dist());
 var v1 = import_dist.default.v1;
@@ -40307,9 +40310,8 @@ var parse = import_dist.default.parse;
 
 // .svelte-kit/output/server/app.js
 var import_app = __toModule(require_index_cjs3());
-var import_auth = __toModule(require_node());
 var import_firestore = __toModule(require_index_node_cjs2());
-var css$6 = {
+var css$9 = {
   code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
   map: `{"version":3,"file":"root.svelte","sources":["root.svelte"],"sourcesContent":["<!-- This file is generated by @sveltejs/kit \u2014 do not edit it! -->\\n<script>\\n\\timport { setContext, afterUpdate, onMount } from 'svelte';\\n\\n\\t// stores\\n\\texport let stores;\\n\\texport let page;\\n\\n\\texport let components;\\n\\texport let props_0 = null;\\n\\texport let props_1 = null;\\n\\texport let props_2 = null;\\n\\n\\tsetContext('__svelte__', stores);\\n\\n\\t$: stores.page.set(page);\\n\\tafterUpdate(stores.page.notify);\\n\\n\\tlet mounted = false;\\n\\tlet navigated = false;\\n\\tlet title = null;\\n\\n\\tonMount(() => {\\n\\t\\tconst unsubscribe = stores.page.subscribe(() => {\\n\\t\\t\\tif (mounted) {\\n\\t\\t\\t\\tnavigated = true;\\n\\t\\t\\t\\ttitle = document.title || 'untitled page';\\n\\t\\t\\t}\\n\\t\\t});\\n\\n\\t\\tmounted = true;\\n\\t\\treturn unsubscribe;\\n\\t});\\n</script>\\n\\n<svelte:component this={components[0]} {...(props_0 || {})}>\\n\\t{#if components[1]}\\n\\t\\t<svelte:component this={components[1]} {...(props_1 || {})}>\\n\\t\\t\\t{#if components[2]}\\n\\t\\t\\t\\t<svelte:component this={components[2]} {...(props_2 || {})}/>\\n\\t\\t\\t{/if}\\n\\t\\t</svelte:component>\\n\\t{/if}\\n</svelte:component>\\n\\n{#if mounted}\\n\\t<div id=\\"svelte-announcer\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\">\\n\\t\\t{#if navigated}\\n\\t\\t\\t{title}\\n\\t\\t{/if}\\n\\t</div>\\n{/if}\\n\\n<style>\\n\\t#svelte-announcer {\\n\\t\\tposition: absolute;\\n\\t\\tleft: 0;\\n\\t\\ttop: 0;\\n\\t\\tclip: rect(0 0 0 0);\\n\\t\\tclip-path: inset(50%);\\n\\t\\toverflow: hidden;\\n\\t\\twhite-space: nowrap;\\n\\t\\twidth: 1px;\\n\\t\\theight: 1px;\\n\\t}\\n</style>"],"names":[],"mappings":"AAsDC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACnB,SAAS,CAAE,MAAM,GAAG,CAAC,CACrB,QAAQ,CAAE,MAAM,CAChB,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,AACZ,CAAC"}`
 };
@@ -40347,7 +40349,7 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.props_1(props_1);
   if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
     $$bindings.props_2(props_2);
-  $$result.css.add(css$6);
+  $$result.css.add(css$9);
   {
     stores.page.set(page);
   }
@@ -40379,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-2facda80.js",
+      file: "/./_app/start-18be41bf.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-2facda80.js", "/./_app/chunks/vendor-878a4d06.js"]
+      js: ["/./_app/start-18be41bf.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40457,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-f1664db8.js", "css": ["/./_app/assets/pages/__layout.svelte-0e35fe6e.css"], "js": ["/./_app/pages/__layout.svelte-f1664db8.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-d5c581b6.js", "css": [], "js": ["/./_app/error.svelte-d5c581b6.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-6560f19a.js", "css": ["/./_app/assets/pages/index.svelte-42fc89f8.css"], "js": ["/./_app/pages/index.svelte-6560f19a.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-d42d2b13.js", "css": [], "js": ["/./_app/pages/poll/[slug].svelte-d42d2b13.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-957fd367.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-957fd367.js", "/./_app/chunks/vendor-878a4d06.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-35ebe9b5.js", "css": ["/./_app/assets/pages/__layout.svelte-0e35fe6e.css"], "js": ["/./_app/pages/__layout.svelte-35ebe9b5.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f59e7396.js", "css": [], "js": ["/./_app/error.svelte-f59e7396.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-273e76cf.js", "css": ["/./_app/assets/pages/index.svelte-1a9822d5.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/index.svelte-273e76cf.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/FloatingButton-3efedd87.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-34029776.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-715b00f8.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/poll/[slug].svelte-34029776.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/FloatingButton-3efedd87.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-f3fc632b.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-f3fc632b.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40470,12 +40472,12 @@ function render(request, {
   const host = request.headers["host"];
   return respond(__spreadProps(__spreadValues({}, request), {host}), options, {prerender});
 }
-var css$5 = {
+var css$8 = {
   code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-g50f3k a.svelte-g50f3k{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-g50f3k.svelte-g50f3k{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
   map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAQC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
 };
 var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$5);
+  $$result.css.add(css$8);
   return `<body class="${"svelte-g50f3k"}"><h1 class="${"logo svelte-g50f3k"}"><a href="${"/"}" class="${"svelte-g50f3k"}">Poll.stream</a></h1>
 
     ${slots.default ? slots.default({}) : ``}
@@ -40513,118 +40515,284 @@ var PollStream = class {
   constructor() {
     this.polls = [];
     this.__type = "PollStream";
+    this.title = "Untitled PollStream";
+    this.description = "...";
     this.id = v4();
-  }
-  getId() {
-    return this.id;
   }
   getPolls() {
     return [...this.polls];
   }
   addPoll(poll) {
+    poll.addListener(this);
     this.polls = [...this.polls, poll];
+    this.update();
   }
   removePoll(poll) {
-    this.polls.slice(this.polls.indexOf(poll), 1);
-    this.polls = this.polls;
+    poll.removeListener(this);
+    this.polls.splice(this.polls.indexOf(poll), 1);
+    this.update();
+  }
+  async update() {
+    await this.onUpdateFunction();
+  }
+  onUpdate(onUpdateFunction) {
+    this.onUpdateFunction = onUpdateFunction;
+  }
+  listenToPolls() {
+    for (let poll of this.polls) {
+      poll.addListener(this);
+    }
   }
 };
 var Poll = class {
-  constructor(question) {
-    this.singleAnswer = true;
+  constructor() {
+    this.choices = [];
+    this.singleChoice = true;
+    this.listeners = [];
     this.__type = "Poll";
-    this.question = question;
   }
-  setQuestion(question) {
-    this.question = question;
+  getChoices() {
+    return [...this.choices];
   }
-  getQuestion() {
-    return this.question;
+  addChoice(choice) {
+    choice.addListener(this);
+    this.choices.push(choice);
+    this.notifyListeners();
   }
-  getAnswers() {
-    return new Map(this.answers);
+  removeChoice(choice) {
+    choice.removeListener(this);
+    this.choices.splice(this.choices.indexOf(choice), 1);
+    this.notifyListeners();
   }
-  addOption(answer) {
-    this.answers.set(answer, []);
-  }
-  removeOption(answer) {
-    this.answers.delete(answer);
-  }
-  addAnswer(user, answer) {
-    var previousAnswers = this.getAnswersOfUser(user);
-    if (previousAnswers.includes(answer)) {
-      return;
+  vote(user, choice) {
+    var userChoices = this.getUserChoices(user);
+    if (this.singleChoice && userChoices.length != 0) {
+      this.unvote(user, userChoices[0]);
     }
-    if (this.singleAnswer && previousAnswers.length != 0) {
-      this.removeAnswer(user, previousAnswers[0]);
-    }
-    this.answers.get(answer).push(user);
+    choice.vote(user);
   }
-  removeAnswer(user, answer) {
-    var users = this.answers.get(answer);
-    users.splice(users.indexOf(user), 1);
+  unvote(user, choice) {
+    choice.unvote(user);
   }
-  getAnswersOfUser(user) {
-    var answers = [];
-    for (const [answer, users] of this.answers.entries()) {
-      if (users.includes(user)) {
-        answers.push(answer);
+  getUserChoices(user) {
+    var userChoices = [];
+    for (let choice of this.choices) {
+      if (choice.isVotedOnBy(user)) {
+        userChoices.push(choice);
       }
     }
-    return answers;
+    return userChoices;
+  }
+  update() {
+    this.notifyListeners();
+  }
+  listenToChoices() {
+    for (let choice of this.choices) {
+      choice.addListener(this);
+    }
+  }
+  addListener(listener) {
+    if (this.listeners.includes(listener)) {
+      return;
+    }
+    this.listeners.push(listener);
+  }
+  removeListener(listener) {
+    this.listeners.splice(this.listeners.indexOf(listener), 1);
+  }
+  notifyListeners() {
+    for (const listener of this.listeners) {
+      listener.update(this);
+    }
   }
 };
+var Choice = class {
+  constructor() {
+    this.users = [];
+    this.listeners = [];
+    this.__type = "Choice";
+  }
+  vote(user) {
+    if (this.users.includes(user)) {
+      return;
+    }
+    this.users.push(user);
+    this.notifyListeners();
+  }
+  unvote(user) {
+    this.users.splice(this.users.indexOf(user), 1);
+    this.notifyListeners();
+  }
+  isVotedOnBy(user) {
+    return this.users.includes(user);
+  }
+  getUsers() {
+    return [...this.users];
+  }
+  addListener(listener) {
+    if (this.listeners.includes(listener)) {
+      return;
+    }
+    this.listeners.push(listener);
+  }
+  removeListener(listener) {
+    this.listeners.splice(this.listeners.indexOf(listener), 1);
+  }
+  notifyListeners() {
+    for (const listener of this.listeners) {
+      listener.update(this);
+    }
+  }
+};
+var Main = class {
+  constructor() {
+    this.firebaseConfig = {
+      apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
+      authDomain: "poll-stream.firebaseapp.com",
+      projectId: "poll-stream",
+      storageBucket: "poll-stream.appspot.com",
+      messagingSenderId: "70389726858",
+      appId: "1:70389726858:web:ce6df871a0d048ffc13773",
+      measurementId: "G-M76SYZGGMZ"
+    };
+    this.firebaseApp = (0, import_app.getApps)().length ? (0, import_app.getApp)() : (0, import_app.initializeApp)(this.firebaseConfig);
+    this.db = (0, import_firestore.getFirestore)(this.firebaseApp);
+    this.auth = (0, import_auth.getAuth)(this.firebaseApp);
+    (0, import_auth.onAuthStateChanged)(this.auth, async (user) => {
+      if (user) {
+        await main.readUserData();
+      }
+    });
+  }
+  async writeUserData() {
+    var user = this.auth.currentUser;
+    if (user != null) {
+      var data = {
+        userData: JSON.stringify(this.userData)
+      };
+      await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid), data);
+    }
+    console.log("UserData written to database.");
+  }
+  async readUserData() {
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid));
+    var data = document2.data();
+    if (data && Object.keys(data).includes("userData")) {
+      this.userData = JSON.parse(data.userData, jsonProvider);
+    } else {
+      this.userData = new UserData(this.auth.currentUser.uid);
+    }
+  }
+  async writePollStream(pollStream) {
+    var map = new Map();
+    for (let poll of pollStream.getPolls()) {
+      for (let choice of poll.getChoices()) {
+        map.set(choice, choice.listeners);
+        delete choice.listeners;
+      }
+      map.set(poll, poll.listeners);
+      delete poll.listeners;
+    }
+    var json = JSON.stringify(pollStream);
+    for (let poll of pollStream.getPolls()) {
+      for (let choice of poll.getChoices()) {
+        choice.listeners = map.get(choice);
+      }
+      poll.listeners = map.get(poll);
+    }
+    var data = {data: json};
+    await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "polls"), pollStream.id), data);
+    console.log("PollStream written to database.");
+  }
+  async readPollStream(id) {
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "polls"), id));
+    var data = document2.data();
+    if (data && Object.keys(data).includes("data")) {
+      return JSON.parse(data.data, jsonProvider);
+    }
+    this.userData.removePollStreamId(id);
+    return null;
+  }
+  async deletePollStream(id) {
+    await (0, import_firestore.deleteDoc)((0, import_firestore.doc)(this.db, "polls", id));
+  }
+};
+function jsonProvider(_key, value) {
+  if (typeof value === "object") {
+    switch (value.__type) {
+      case "PollStream":
+        var pollStream = assign(new PollStream(), value);
+        pollStream.listenToPolls();
+        pollStream.onUpdate(() => main.writePollStream(pollStream));
+        return pollStream;
+      case "Poll":
+        var poll = assign(new Poll(), value);
+        poll.listenToChoices();
+        return poll;
+      case "Choice":
+        return assign(new Choice(), value);
+      case "UserData":
+        return assign(new UserData(""), value);
+      default:
+        return value;
+    }
+  } else {
+    return value;
+  }
+}
+function assign(obj, value) {
+  Object.assign(obj, value);
+  return obj;
+}
+var main = new Main();
 var UserData = class {
   constructor(id) {
-    this.polls = [];
+    this.pollStreamIds = [];
     this.__type = "UserData";
     this.id = id;
   }
-  getId() {
-    return this.id;
+  getPollStreamIds() {
+    return [...this.pollStreamIds];
   }
-  getPollIDs() {
-    return [...this.polls];
+  async addPollStreamId(pollStreamId2) {
+    this.pollStreamIds.push(pollStreamId2);
+    await main.writeUserData();
   }
-  addPoll(poll) {
-    this.polls.push(poll);
-  }
-  removePoll(poll) {
-    this.polls.slice(this.polls.indexOf(poll), 1);
+  async removePollStreamId(pollStreamId2) {
+    this.pollStreamIds.splice(this.pollStreamIds.indexOf(pollStreamId2), 1);
+    await main.writeUserData();
   }
 };
-var css$4 = {
-  code: ".container.svelte-caltpl{padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer}.container.svelte-caltpl:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { Poll, PollStream } from './poll';\\r\\nexport let remove;\\r\\nexport let pollStream;\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll(\\"Hello world?\\"));\\r\\n    pollStream = pollStream; // For Svelte\\r\\n}\\r\\n$: polls = pollStream.getPolls();\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\">\\r\\n\\t<h2>PollStream: {pollStream.getId()}</h2>\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n\\t<button on:click={addPoll}>Add Poll</button>\\r\\n\\t<a href={\\"/poll/\\" + pollStream.getId()}>Poll Page</a>\\r\\n\\t<h3>Polls:</h3>\\r\\n\\t{#each polls as poll}\\r\\n\\t\\t<p>{poll.getQuestion()}</p>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAsBC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+var css$7 = {
+  code: ".container.svelte-bg9d8m{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-bg9d8m{filter:blur(0px)}.container.svelte-bg9d8m:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay on:click={() => goto(\\"/poll/\\" + pollStream.id)}>\\r\\n\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let polls;
-  let {remove} = $$props;
+  let {remove = () => void 0} = $$props;
   let {pollStream} = $$props;
+  let appeardelay = false;
+  setTimeout(function() {
+    appeardelay = true;
+  }, 1);
   if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
     $$bindings.remove(remove);
   if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
     $$bindings.pollStream(pollStream);
-  $$result.css.add(css$4);
-  polls = pollStream.getPolls();
-  return `<div class="${"container svelte-caltpl"}"><h2>PollStream: ${escape2(pollStream.getId())}</h2>
-	<button>Delete</button>
-	<button>Add Poll</button>
-	<a${add_attribute("href", "/poll/" + pollStream.getId(), 0)}>Poll Page</a>
-	<h3>Polls:</h3>
-	${each(polls, (poll) => `<p>${escape2(poll.getQuestion())}</p>`)}
-</div>`;
+  $$result.css.add(css$7);
+  return `${pollStream != void 0 ? `<div class="${["container svelte-bg9d8m", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h2>${escape2(pollStream.title)}</h2>
+		<p>ID: ${escape2(pollStream.id)}</p>
+		<button>Delete</button></div>` : ``}`;
 });
-var css$3 = {
+var css$6 = {
   code: ".container.svelte-yu4mmn{width:400px;display:flex;flex-direction:column}",
   map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
 };
 var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$3);
+  $$result.css.add(css$6);
   return `<div class="${"container svelte-yu4mmn"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
-var css$2 = {
+var css$5 = {
   code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
   map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
 };
@@ -40632,29 +40800,27 @@ var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots)
   let {onclick = () => void 0} = $$props;
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
-  $$result.css.add(css$2);
+  $$result.css.add(css$5);
   return `<button class="${"float svelte-1uexowl"}">${slots.default ? slots.default({}) : ``}
 </button>`;
 });
-var css$1 = {
+var css$4 = {
   code: ".container.svelte-6sqx7t{width:400px;flex-grow:1;display:flex;flex-flow:column;justify-content:center;align-items:center}",
   map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,AACpB,CAAC"}'
 };
 var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$1);
+  $$result.css.add(css$4);
   return `<div class="${"container svelte-6sqx7t"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
-var css = {
+var css$3 = {
   code: ".dumb-container.svelte-rn3ix2{position:relative;z-index:10}.b-google.svelte-rn3ix2{position:relative;display:block;margin:10px 0 0 0;font-size:large;font-weight:500;width:270px;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-rn3ix2{width:400px}.b-google.loggedIn.svelte-rn3ix2:hover{opacity:0.4}.b-google-text.svelte-rn3ix2{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-rn3ix2{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.9;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
-  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { getApp } from \\"@firebase/app\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\tconst firebaseApp = getApp()\\r\\n\\tconst auth = getAuth(firebaseApp);\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithPopup(auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tauth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA6DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
+  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { main } from \\"$lib/main\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(main.auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithPopup(main.auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tmain.auth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
 };
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let loggedIn = false;
   let name;
-  const firebaseApp = (0, import_app.getApp)();
-  const auth = (0, import_auth.getAuth)(firebaseApp);
-  (0, import_auth.onAuthStateChanged)(auth, (user) => {
+  (0, import_auth.onAuthStateChanged)(main.auth, (user) => {
     if (user) {
       user.uid;
       name = user.displayName;
@@ -40663,120 +40829,79 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
       loggedIn = false;
     }
   });
-  $$result.css.add(css);
+  $$result.css.add(css$3);
   return `<div class="${"dumb-container svelte-rn3ix2"}"><button class="${["b-google svelte-rn3ix2", loggedIn ? "loggedIn" : ""].join(" ").trim()}"><span class="${"b-google-text svelte-rn3ix2"}">${escape2(loggedIn ? "Signed in as " + name : "Sign in with Google")}</span></button>
 	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
 </div>`;
 });
-function assign(obj, value) {
-  Object.assign(obj, value);
-  return obj;
-}
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  const firebaseConfig = {
-    apiKey: "AIzaSyCWhCF-poJ_kAFRk0pfFEKtOdW3aJNMuBQ",
-    authDomain: "poll-stream.firebaseapp.com",
-    projectId: "poll-stream",
-    storageBucket: "poll-stream.appspot.com",
-    messagingSenderId: "70389726858",
-    appId: "1:70389726858:web:ce6df871a0d048ffc13773",
-    measurementId: "G-M76SYZGGMZ"
+  var __awaiter = function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
   };
-  let firebaseApp;
-  if (!(0, import_app.getApps)().length) {
-    firebaseApp = (0, import_app.initializeApp)(firebaseConfig);
-  } else {
-    firebaseApp = (0, import_app.getApp)();
-  }
-  const db = (0, import_firestore.getFirestore)(firebaseApp);
-  const auth = (0, import_auth.getAuth)(firebaseApp);
-  let userData;
   let pollStreams = [];
   let update = 0;
-  async function appendStreams() {
-    var pollStream = new PollStream();
-    await writePollStream(pollStream);
-    userData.addPoll(pollStream.getId());
-    await writeUserData();
-    await buildFromUserData();
+  function appendStreams() {
+    return __awaiter(this, void 0, void 0, function* () {
+      var pollStream = new PollStream();
+      pollStream.onUpdate(() => main.writePollStream(pollStream));
+      yield main.writePollStream(pollStream);
+      main.userData.addPollStreamId(pollStream.id);
+      yield buildFromUserData();
+    });
   }
-  async function removeStream(stream) {
-    userData.removePoll(stream.getId());
-    await writeUserData();
-    await deletePollStream(stream.getId());
-    await buildFromUserData();
+  function removeStream(pollStream) {
+    return __awaiter(this, void 0, void 0, function* () {
+      main.deletePollStream(pollStream.id);
+      main.userData.removePollStreamId(pollStream.id);
+      yield buildFromUserData();
+    });
   }
-  async function writeUserData() {
-    var user = auth.currentUser;
-    if (user != null) {
-      var data = {userData: JSON.stringify(userData)};
-      await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), auth.currentUser.uid), data);
-    }
-  }
-  async function readUserData() {
-    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "users"), auth.currentUser.uid));
-    var data = document2.data();
-    if (data && Object.keys(data).includes("userData")) {
-      return JSON.parse(data.userData, jsonProvider);
-    }
-    return null;
-  }
-  async function writePollStream(pollStream) {
-    var data = {data: JSON.stringify(pollStream)};
-    await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "polls"), pollStream.getId()), data);
-  }
-  async function readPollStream(id) {
-    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(db, "polls"), id));
-    var data = document2.data();
-    if (data && Object.keys(data).includes("data")) {
-      return JSON.parse(data.data, jsonProvider);
-    }
-    return null;
-  }
-  async function deletePollStream(id) {
-    await (0, import_firestore.deleteDoc)((0, import_firestore.doc)(db, "polls", id));
-  }
-  async function buildFromUserData() {
-    pollStreams = [];
-    var polls = userData.getPollIDs();
-    for (let poll of polls) {
-      var p2 = await readPollStream(poll);
-      if (p2 != null) {
-        pollStreams = [...pollStreams, p2];
+  function buildFromUserData() {
+    return __awaiter(this, void 0, void 0, function* () {
+      pollStreams = [];
+      var polls = main.userData.getPollStreamIds();
+      for (let poll of polls) {
+        var p2 = yield main.readPollStream(poll);
+        if (p2 != null) {
+          pollStreams = [...pollStreams, p2];
+        }
       }
-    }
+    });
   }
-  function jsonProvider(key, value) {
-    if (typeof value === "object") {
-      switch (value.__type) {
-        case "PollStream":
-          return assign(new PollStream(), value);
-        case "Poll":
-          return assign(new Poll(""), value);
-        case "UserData":
-          return assign(new UserData(""), value);
-        default:
-          return value;
-      }
-    } else {
-      return value;
-    }
-  }
-  (0, import_auth.getAuth)(firebaseApp).onAuthStateChanged(async (user) => {
+  (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user) {
-      userData = await readUserData();
-      if (userData == null) {
-        userData = new UserData(user.uid);
-      }
+      yield main.readUserData();
       buildFromUserData();
     } else {
       pollStreams = [];
     }
     update++;
-  });
+  }));
   return `${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
-
-
 
 ${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>` : ``}
@@ -40789,7 +40914,7 @@ ${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$rende
   })}
 
 ${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
-    default: () => `${auth.currentUser != null && update > 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Add`})}` : `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {}, {}, {default: () => `Sign in to add.`})}`}`
+    default: () => `${main.auth.currentUser != null && update > 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Create Poll Stream`})}` : `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {}, {}, {default: () => `Sign in to add.`})}`}`
   })}`;
 });
 var index = /* @__PURE__ */ Object.freeze({
@@ -40797,16 +40922,176 @@ var index = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": Routes
 });
-var p$1;
+var css$2 = {
+  code: ".container.svelte-1w1jpd2{position:relative;padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-1w1jpd2{filter:blur(0px)}.container.svelte-1w1jpd2:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"ChoiceItem.svelte","sources":["ChoiceItem.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">import { main } from './main';\\r\\n;\\r\\nexport let choice;\\r\\nexport let vote = () => undefined;\\r\\nexport let remove = () => undefined;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if choice && main.userData}\\r\\n\\t<div class=\\"container\\" class:appeardelay>\\r\\n\\t\\t<input type=\\"text\\" bind:value={choice.text}>\\r\\n\\t\\t<span>{choice.getUsers().length} {choice.getUsers().length == 1 ? \\"vote.\\" : \\"votes.\\"}</span>\\r\\n\\t\\t<button on:click={vote}>{choice.getUsers().includes(main.userData.id) ? \\"Unvote\\" : \\"Vote\\"}</button>\\r\\n\\t\\t<button on:click={remove}> X </button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAsBC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,eACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+};
+var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {choice} = $$props;
+  let {vote = () => void 0} = $$props;
+  let {remove = () => void 0} = $$props;
+  let appeardelay = false;
+  setTimeout(function() {
+    appeardelay = true;
+  }, 1);
+  if ($$props.choice === void 0 && $$bindings.choice && choice !== void 0)
+    $$bindings.choice(choice);
+  if ($$props.vote === void 0 && $$bindings.vote && vote !== void 0)
+    $$bindings.vote(vote);
+  if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
+    $$bindings.remove(remove);
+  $$result.css.add(css$2);
+  return `${choice && main.userData ? `<div class="${["container svelte-1w1jpd2", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><input type="${"text"}"${add_attribute("value", choice.text, 1)}>
+		<span>${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>
+		<button>${escape2(choice.getUsers().includes(main.userData.id) ? "Unvote" : "Vote")}</button>
+		<button>X </button></div>` : ``}`;
+});
+var css$1 = {
+  code: ".container.svelte-1w1jpd2{position:relative;padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-1w1jpd2{filter:blur(0px)}.container.svelte-1w1jpd2:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from './main';\\r\\nimport { Choice, Poll } from './poll';\\r\\nimport ChoiceItem from './ChoiceItem.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let save = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n        console.log(poll.getChoices());\\r\\n    });\\r\\n}\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\" class:appeardelay>\\r\\n\\t<h3>Poll\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t\\t<button on:click={save}>Save</button>\\r\\n\\t</h3>\\r\\n\\t<p>Question: <input type=\\"text\\" bind:value={poll.question}> ?</p>\\r\\n\\t<h4>Choices <button on:click={addChoice}> + </button></h4>\\r\\n\\t\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)}></ChoiceItem>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAyDC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,eACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+};
+var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  let {poll} = $$props;
+  let {remove = () => void 0} = $$props;
+  let {save = () => void 0} = $$props;
+  let appeardelay = false;
+  setTimeout(function() {
+    appeardelay = true;
+  }, 1);
+  function vote(choice) {
+    var user = main.auth.currentUser.uid;
+    if (poll.getUserChoices(user).includes(choice)) {
+      poll.unvote(user, choice);
+    } else {
+      poll.vote(user, choice);
+    }
+    poll = poll;
+  }
+  function removeChoice(choice) {
+    poll.removeChoice(choice);
+    poll = poll;
+  }
+  if ($$props.poll === void 0 && $$bindings.poll && poll !== void 0)
+    $$bindings.poll(poll);
+  if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
+    $$bindings.remove(remove);
+  if ($$props.save === void 0 && $$bindings.save && save !== void 0)
+    $$bindings.save(save);
+  $$result.css.add(css$1);
+  return `<div class="${["container svelte-1w1jpd2", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h3>Poll
+		<button>Delete</button>
+		<button>Save</button></h3>
+	<p>Question: <input type="${"text"}"${add_attribute("value", poll.question, 1)}> ?</p>
+	<h4>Choices <button>+ </button></h4>
+	
+	${each(poll.getChoices(), (choice) => `${validate_component(ChoiceItem, "ChoiceItem").$$render($$result, {
+    choice,
+    vote: () => vote(choice),
+    remove: () => removeChoice(choice)
+  }, {}, {})}`)}
+</div>`;
+});
+var css = {
+  code: ".container.svelte-1i2pwtn{width:100%;display:flex;flex-direction:row}",
+  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: row;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,GAAG,AACpB,CAAC"}'
+};
+var PollCardContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css);
+  return `<div class="${"container svelte-1i2pwtn"}">${slots.default ? slots.default({}) : ``}
+</div>`;
+});
+var pageInfo;
+var pollStreamId;
 async function load$1({page, fetch: fetch3, session, context}) {
-  p$1 = page;
+  pageInfo = page;
+  pollStreamId = pageInfo.params.slug;
   return {props: {}};
 }
 var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  const firebaseApp = (0, import_app.getApp)();
-  (0, import_auth.getAuth)(firebaseApp);
-  return `<h1>This is the poll page of ${escape2(p$1.params.slug)}</h1>
-<p>Page Info: ${escape2(JSON.stringify(p$1))}</p>`;
+  var __awaiter = function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  };
+  let pollStream;
+  onMount(() => __awaiter(void 0, void 0, void 0, function* () {
+    pollStream = yield main.readPollStream(pollStreamId);
+  }));
+  function addPoll() {
+    pollStream.addPoll(new Poll());
+    pollStream = pollStream;
+  }
+  function removePoll(poll) {
+    pollStream.removePoll(poll);
+    pollStream = pollStream;
+  }
+  function save() {
+    main.writePollStream(pollStream);
+  }
+  return `${pollStream != void 0 ? `<p>Title:</p>
+	<input type="${"text"}"${add_attribute("value", pollStream.title, 1)}>
+	<p>Description:</p>
+	<input type="${"text"}"${add_attribute("value", pollStream.description, 1)}>
+	<br>
+	<button>Save</button>
+	
+	${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {})}
+	${each(pollStream.getPolls(), (poll) => `${validate_component(PollCard, "PollCard").$$render($$result, {
+    poll,
+    remove: () => removePoll(poll),
+    save
+  }, {}, {})}`)}
+
+	${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Poll`})}` : ``}`;
 });
 var _slug_$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
