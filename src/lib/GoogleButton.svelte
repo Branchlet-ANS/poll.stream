@@ -1,7 +1,7 @@
 
 <script>
 	import { main } from "$lib/main";
-	import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+	import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "@firebase/auth";
 	let loggedIn = false;
 	let name;
 
@@ -24,7 +24,7 @@
 	// Source: https://firebase.google.com/docs/auth/web/google-signin
 	function signIn() {
 		var provider = new GoogleAuthProvider();
-		signInWithPopup(main.auth, provider)
+		signInWithRedirect(main.auth, provider)
 			.then((result) => {
 				// This gives you a Google Access Token. You can use it to access the Google API.
 				// The signed-in user info.
