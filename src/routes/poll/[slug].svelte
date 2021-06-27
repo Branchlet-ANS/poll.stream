@@ -13,8 +13,9 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { main } from '$lib/main';
+	import { onAuthStateChanged } from '@firebase/auth';
+	import { onMount } from 'svelte';
 	import PollCard from '$lib/PollCard.svelte';
 	import { Poll, PollStream } from '$lib/poll';
 	import FloatingButton from '$lib/FloatingButton.svelte';
@@ -39,10 +40,18 @@
 	function save() {
 		main.writePollStream(pollStream);
 	}
+
+	onAuthStateChanged(main.auth, async (user) => {
+		if (user) {
+			pollStream = await main.readPollStream(pollStreamId);
+		} else {
+			pollStream = null;
+		}
+	});
 	
 </script>
 
-{#if pollStream != undefined}
+{#if pollStream}
 	<p>Title:</p>
 	<input type="text" bind:value={pollStream.title}>
 	<p>Description:</p>

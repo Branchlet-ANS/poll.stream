@@ -1,6 +1,12 @@
 
+<script>
+	import GoogleButton from '$lib/GoogleButton.svelte';
+</script>
+
 <body>
 	<h1 class="logo"><a href="/">Poll.stream</a></h1>
+
+	<GoogleButton></GoogleButton>
 
     <slot></slot>
 </body>

@@ -7,7 +7,6 @@
 	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
 	import FloatingButton from '$lib/FloatingButton.svelte';
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
-	import GoogleButton from '$lib/GoogleButton.svelte';
 
 	let pollStreams: Array<PollStream> = [];
 	let update: number = 0;
@@ -48,8 +47,6 @@
 	});
 
 </script>
-
-<GoogleButton></GoogleButton>
 
 {#if pollStreams.length == 0}
 	<p style="margin-top: 100px">No Poll Streams!</p>

@@ -40381,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-18be41bf.js",
+      file: "/./_app/start-4080a52b.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-18be41bf.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-4080a52b.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40459,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-35ebe9b5.js", "css": ["/./_app/assets/pages/__layout.svelte-0e35fe6e.css"], "js": ["/./_app/pages/__layout.svelte-35ebe9b5.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f59e7396.js", "css": [], "js": ["/./_app/error.svelte-f59e7396.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-273e76cf.js", "css": ["/./_app/assets/pages/index.svelte-1a9822d5.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/index.svelte-273e76cf.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/FloatingButton-3efedd87.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-34029776.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-715b00f8.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/poll/[slug].svelte-34029776.js", "/./_app/chunks/vendor-89124433.js", "/./_app/chunks/FloatingButton-3efedd87.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-f3fc632b.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-f3fc632b.js", "/./_app/chunks/vendor-89124433.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-044ad4ee.js", "css": ["/./_app/assets/pages/__layout.svelte-f5234513.css"], "js": ["/./_app/pages/__layout.svelte-044ad4ee.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9a77b183.js", "css": [], "js": ["/./_app/error.svelte-9a77b183.js", "/./_app/chunks/vendor-9c969e74.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-32de61c2.js", "css": ["/./_app/assets/pages/index.svelte-204f1316.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/index.svelte-32de61c2.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js", "/./_app/chunks/singletons-bb9012b7.js", "/./_app/chunks/FloatingButton-493d29a2.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-9f167aed.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-715b00f8.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/poll/[slug].svelte-9f167aed.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js", "/./_app/chunks/FloatingButton-493d29a2.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-8bf98133.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-8bf98133.js", "/./_app/chunks/vendor-9c969e74.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40472,45 +40472,6 @@ function render(request, {
   const host = request.headers["host"];
   return respond(__spreadProps(__spreadValues({}, request), {host}), options, {prerender});
 }
-var css$8 = {
-  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-g50f3k a.svelte-g50f3k{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-g50f3k.svelte-g50f3k{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
-  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAQC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
-};
-var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$8);
-  return `<body class="${"svelte-g50f3k"}"><h1 class="${"logo svelte-g50f3k"}"><a href="${"/"}" class="${"svelte-g50f3k"}">Poll.stream</a></h1>
-
-    ${slots.default ? slots.default({}) : ``}
-</body>`;
-});
-var __layout = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": _layout
-});
-function load$2({error: error22, status}) {
-  return {props: {error: error22, status}};
-}
-var Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let {status} = $$props;
-  let {error: error22} = $$props;
-  if ($$props.status === void 0 && $$bindings.status && status !== void 0)
-    $$bindings.status(status);
-  if ($$props.error === void 0 && $$bindings.error && error22 !== void 0)
-    $$bindings.error(error22);
-  return `<h1>${escape2(status)}</h1>
-
-<p>${escape2(error22.message)}</p>
-
-
-${error22.stack ? `<pre>${escape2(error22.stack)}</pre>` : ``}`;
-});
-var error2 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": Error2,
-  load: load$2
-});
 var PollStream = class {
   constructor() {
     this.polls = [];
@@ -40763,57 +40724,7 @@ var UserData = class {
     await main.writeUserData();
   }
 };
-var css$7 = {
-  code: ".container.svelte-bg9d8m{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-bg9d8m{filter:blur(0px)}.container.svelte-bg9d8m:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay on:click={() => goto(\\"/poll/\\" + pollStream.id)}>\\r\\n\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
-};
-var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let {remove = () => void 0} = $$props;
-  let {pollStream} = $$props;
-  let appeardelay = false;
-  setTimeout(function() {
-    appeardelay = true;
-  }, 1);
-  if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
-    $$bindings.remove(remove);
-  if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
-    $$bindings.pollStream(pollStream);
-  $$result.css.add(css$7);
-  return `${pollStream != void 0 ? `<div class="${["container svelte-bg9d8m", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h2>${escape2(pollStream.title)}</h2>
-		<p>ID: ${escape2(pollStream.id)}</p>
-		<button>Delete</button></div>` : ``}`;
-});
-var css$6 = {
-  code: ".container.svelte-yu4mmn{width:400px;display:flex;flex-direction:column}",
-  map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
-};
-var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$6);
-  return `<div class="${"container svelte-yu4mmn"}">${slots.default ? slots.default({}) : ``}
-</div>`;
-});
-var css$5 = {
-  code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
-  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
-};
-var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let {onclick = () => void 0} = $$props;
-  if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
-    $$bindings.onclick(onclick);
-  $$result.css.add(css$5);
-  return `<button class="${"float svelte-1uexowl"}">${slots.default ? slots.default({}) : ``}
-</button>`;
-});
-var css$4 = {
-  code: ".container.svelte-6sqx7t{width:400px;flex-grow:1;display:flex;flex-flow:column;justify-content:center;align-items:center}",
-  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,AACpB,CAAC"}'
-};
-var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$4);
-  return `<div class="${"container svelte-6sqx7t"}">${slots.default ? slots.default({}) : ``}
-</div>`;
-});
-var css$3 = {
+var css$8 = {
   code: ".dumb-container.svelte-rn3ix2{position:relative;z-index:10}.b-google.svelte-rn3ix2{position:relative;display:block;margin:10px 0 0 0;font-size:large;font-weight:500;width:270px;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-rn3ix2{width:400px}.b-google.loggedIn.svelte-rn3ix2:hover{opacity:0.4}.b-google-text.svelte-rn3ix2{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-rn3ix2{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.9;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
   map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { main } from \\"$lib/main\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(main.auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithPopup(main.auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tmain.auth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
 };
@@ -40829,9 +40740,100 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
       loggedIn = false;
     }
   });
-  $$result.css.add(css$3);
+  $$result.css.add(css$8);
   return `<div class="${"dumb-container svelte-rn3ix2"}"><button class="${["b-google svelte-rn3ix2", loggedIn ? "loggedIn" : ""].join(" ").trim()}"><span class="${"b-google-text svelte-rn3ix2"}">${escape2(loggedIn ? "Signed in as " + name : "Sign in with Google")}</span></button>
 	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
+</div>`;
+});
+var css$7 = {
+  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-g50f3k a.svelte-g50f3k{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-g50f3k.svelte-g50f3k{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
+  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport GoogleButton from '$lib/GoogleButton.svelte';\\r\\n</script>\\r\\n\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n\\t<GoogleButton></GoogleButton>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAcC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
+};
+var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$7);
+  return `<body class="${"svelte-g50f3k"}"><h1 class="${"logo svelte-g50f3k"}"><a href="${"/"}" class="${"svelte-g50f3k"}">Poll.stream</a></h1>
+
+	${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
+
+    ${slots.default ? slots.default({}) : ``}
+</body>`;
+});
+var __layout = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": _layout
+});
+function load$2({error: error22, status}) {
+  return {props: {error: error22, status}};
+}
+var Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {status} = $$props;
+  let {error: error22} = $$props;
+  if ($$props.status === void 0 && $$bindings.status && status !== void 0)
+    $$bindings.status(status);
+  if ($$props.error === void 0 && $$bindings.error && error22 !== void 0)
+    $$bindings.error(error22);
+  return `<h1>${escape2(status)}</h1>
+
+<p>${escape2(error22.message)}</p>
+
+
+${error22.stack ? `<pre>${escape2(error22.stack)}</pre>` : ``}`;
+});
+var error2 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Error2,
+  load: load$2
+});
+var css$6 = {
+  code: ".container.svelte-bg9d8m{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-bg9d8m{filter:blur(0px)}.container.svelte-bg9d8m:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay on:click={() => goto(\\"/poll/\\" + pollStream.id)}>\\r\\n\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+};
+var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {remove = () => void 0} = $$props;
+  let {pollStream} = $$props;
+  let appeardelay = false;
+  setTimeout(function() {
+    appeardelay = true;
+  }, 1);
+  if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
+    $$bindings.remove(remove);
+  if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
+    $$bindings.pollStream(pollStream);
+  $$result.css.add(css$6);
+  return `${pollStream != void 0 ? `<div class="${["container svelte-bg9d8m", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h2>${escape2(pollStream.title)}</h2>
+		<p>ID: ${escape2(pollStream.id)}</p>
+		<button>Delete</button></div>` : ``}`;
+});
+var css$5 = {
+  code: ".container.svelte-yu4mmn{width:400px;display:flex;flex-direction:column}",
+  map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
+};
+var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$5);
+  return `<div class="${"container svelte-yu4mmn"}">${slots.default ? slots.default({}) : ``}
+</div>`;
+});
+var css$4 = {
+  code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
+  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
+};
+var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {onclick = () => void 0} = $$props;
+  if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
+    $$bindings.onclick(onclick);
+  $$result.css.add(css$4);
+  return `<button class="${"float svelte-1uexowl"}">${slots.default ? slots.default({}) : ``}
+</button>`;
+});
+var css$3 = {
+  code: ".container.svelte-6sqx7t{width:400px;flex-grow:1;display:flex;flex-flow:column;justify-content:center;align-items:center}",
+  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,AACpB,CAAC"}'
+};
+var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$3);
+  return `<div class="${"container svelte-6sqx7t"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40901,9 +40903,7 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     }
     update++;
   }));
-  return `${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
-
-${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
+  return `${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
 	<p>Click the button below to add a stream.</p>` : ``}
 
 ${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
@@ -41077,19 +41077,27 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
   function save() {
     main.writePollStream(pollStream);
   }
-  return `${pollStream != void 0 ? `<p>Title:</p>
+  (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
+    if (user) {
+      pollStream = yield main.readPollStream(pollStreamId);
+    } else {
+      pollStream = null;
+    }
+  }));
+  return `${pollStream ? `<p>Title:</p>
 	<input type="${"text"}"${add_attribute("value", pollStream.title, 1)}>
 	<p>Description:</p>
 	<input type="${"text"}"${add_attribute("value", pollStream.description, 1)}>
 	<br>
 	<button>Save</button>
 	
-	${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {})}
-	${each(pollStream.getPolls(), (poll) => `${validate_component(PollCard, "PollCard").$$render($$result, {
-    poll,
-    remove: () => removePoll(poll),
-    save
-  }, {}, {})}`)}
+	${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {
+    default: () => `${each(pollStream.getPolls(), (poll) => `${validate_component(PollCard, "PollCard").$$render($$result, {
+      poll,
+      remove: () => removePoll(poll),
+      save
+    }, {}, {})}`)}`
+  })}
 
 	${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Poll`})}` : ``}`;
 });
