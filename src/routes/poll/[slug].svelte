@@ -50,10 +50,11 @@
 	<br>
 	<button on:click={save}>Save</button>
 	
-	<PollCardContainer></PollCardContainer>
-	{#each pollStream.getPolls() as poll}
-		<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
-	{/each}
+	<PollCardContainer>
+		{#each pollStream.getPolls() as poll}
+			<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
+		{/each}
+	</PollCardContainer>
 
 	<FloatingButton onclick={addPoll}>+ New Poll</FloatingButton>
 {/if}
