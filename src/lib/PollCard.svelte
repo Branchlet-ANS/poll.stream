@@ -11,8 +11,6 @@
 	async function addChoice() {
 		poll.addChoice(new Choice());
 		poll = poll; // For Svelte
-		console.log(poll.getChoices());
-
 	}
 
 	let appeardelay = false;
@@ -39,7 +37,7 @@
 </script>
 
 <div class="container" class:appeardelay>
-	<input class="question" type="text" placeholder="Enter question">
+	<input class="question" type="text" placeholder="Enter question" bind:value={poll.question}>
 	<div class="split"></div>
 
 	<button on:click={remove}>Delete</button>
@@ -56,21 +54,21 @@
 	.container {
 		position: relative;
 		padding: 10pt;
-		margin-top: 15pt;
-        margin-bottom: 0pt;
-		margin-left: 0pt;
-		margin-right: 0pt;
+		margin-top: 0pt;
+        margin-bottom: 150pt;
+		margin-left: 15pt;
+		margin-right: 15pt;
 
 		border-style: solid;
 		border-width: 2pt;
 		border-color: var(--c_light);
 		border-radius: 10pt;
 
-		cursor: pointer;
-
 		filter: blur(10px);
 		transition: filter 0.3s;
 		max-width: 100%;
+
+		flex: 0 0 auto;
 	}
 
 	.container.appeardelay

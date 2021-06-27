@@ -5,8 +5,9 @@
 
 <style>
 	.container {
-		width: 100%;
+		width: 600px;
 		display: flex;
-		flex-direction: row;
+		overflow-x: auto;
+		flex-wrap: nowrap;
 	}
 </style>

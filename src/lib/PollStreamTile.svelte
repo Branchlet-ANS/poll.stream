@@ -13,14 +13,14 @@
 </script>
 
 {#if pollStream != undefined}
-	<div class="container" class:appeardelay on:click={() => goto("/poll/" + pollStream.id)}>
-		<h2>{pollStream.title}</h2>
-		<p>ID: {pollStream.id}</p>
+	<div class="container" class:appeardelay>
+		<div on:click={() => goto("/poll/" + pollStream.id)} style="cursor: pointer;">
+			<h2>{pollStream.title}</h2>
+			<p>ID: {pollStream.id}</p>
+		</div>
 		<button on:click={remove}>Delete</button>
 	</div>
 {/if}
-
-
 
 <style>
 	.container {
@@ -36,8 +36,6 @@
 		border-width: 2pt;
 		border-color: var(--c_light);
 		border-radius: 10pt;
-
-		cursor: pointer;
 
 		filter: blur(10px);
 		transition: filter 0.3s;

@@ -11,8 +11,7 @@
 	.float {
 		font-size: large;
 		font-weight: 500;
-		position: fixed;
-		bottom: 100px;
+		position: relative;
 		padding: 20px 40px;
 		transition: bottom 0.3s, padding 0.3s;
 		margin: 0 auto;
@@ -28,7 +27,6 @@
 	}
 
 	.float:hover {
-		bottom: 90px;
 		padding: 30px 50px;
 	}
 

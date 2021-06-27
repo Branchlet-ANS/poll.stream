@@ -47,13 +47,18 @@ export class Main {
 	}
 
 	public async readUserData(): Promise<void> {
-		var document = await getDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid));
-		var data = document.data();
-		if (data && Object.keys(data).includes("userData")) {
-			this.userData = JSON.parse(data.userData, jsonProvider);
+		if (this.auth.currentUser) { 
+			var document = await getDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid));
+			var data = document.data();
+			if (data && Object.keys(data).includes("userData")) {
+				this.userData = JSON.parse(data.userData, jsonProvider);
+			}
+			else {
+				this.userData = new UserData(this.auth.currentUser.uid);
+			}
 		}
 		else {
-			this.userData = new UserData(this.auth.currentUser.uid);
+			this.userData = null;
 		}
 	}
 
@@ -87,7 +92,9 @@ export class Main {
 		if (data && Object.keys(data).includes("data")) {
 			return JSON.parse(data.data, jsonProvider);
 		}
-		this.userData.removePollStreamId(id);
+		if (this.userData) {
+			this.userData.removePollStreamId(id);
+		}
 		return null;
 	}
 

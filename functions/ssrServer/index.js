@@ -40671,7 +40671,9 @@ var Main = class {
     if (data && Object.keys(data).includes("data")) {
       return JSON.parse(data.data, jsonProvider);
     }
-    this.userData.removePollStreamId(id);
+    if (this.userData && this.userData.getPollStreamIds().includes(id)) {
+      this.userData.removePollStreamId(id);
+    }
     return null;
   }
   async deletePollStream(id) {
