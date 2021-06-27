@@ -5,7 +5,9 @@
 
 <style>
 	.container {
-		width: 400px;
+		width: 80vw;
+		max-width: 600px;
+		height: 100%;
 
 		display: flex;
 		flex-direction: column;

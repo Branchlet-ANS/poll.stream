@@ -40381,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-4080a52b.js",
+      file: "/./_app/start-a9ef69f4.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-4080a52b.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-a9ef69f4.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40411,7 +40411,7 @@ function init(settings) {
 var d = decodeURIComponent;
 var empty = () => ({});
 var manifest = {
-  assets: [{"file": "favicon.png", "size": 1571, "type": "image/png"}, {"file": "images/calendar.png", "size": 1113, "type": "image/png"}, {"file": "images/poll.png", "size": 784, "type": "image/png"}],
+  assets: [{"file": "favicon.png", "size": 1571, "type": "image/png"}, {"file": "images/calendar.png", "size": 1113, "type": "image/png"}, {"file": "images/pencil.png", "size": 2562, "type": "image/png"}, {"file": "images/poll.png", "size": 784, "type": "image/png"}],
   layout: "src/routes/__layout.svelte",
   error: ".svelte-kit/build/components/error.svelte",
   routes: [
@@ -40459,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-044ad4ee.js", "css": ["/./_app/assets/pages/__layout.svelte-f5234513.css"], "js": ["/./_app/pages/__layout.svelte-044ad4ee.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9a77b183.js", "css": [], "js": ["/./_app/error.svelte-9a77b183.js", "/./_app/chunks/vendor-9c969e74.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-32de61c2.js", "css": ["/./_app/assets/pages/index.svelte-204f1316.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/index.svelte-32de61c2.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js", "/./_app/chunks/singletons-bb9012b7.js", "/./_app/chunks/FloatingButton-493d29a2.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-9f167aed.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-715b00f8.css", "/./_app/assets/FloatingButton-831cf8e6.css"], "js": ["/./_app/pages/poll/[slug].svelte-9f167aed.js", "/./_app/chunks/vendor-9c969e74.js", "/./_app/chunks/main-88bbcdf2.js", "/./_app/chunks/FloatingButton-493d29a2.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-8bf98133.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-8bf98133.js", "/./_app/chunks/vendor-9c969e74.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-f3c2711d.js", "css": ["/./_app/assets/pages/__layout.svelte-f5234513.css"], "js": ["/./_app/pages/__layout.svelte-f3c2711d.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f37e85fe.js", "css": [], "js": ["/./_app/error.svelte-f37e85fe.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-57c53f9b.js", "css": ["/./_app/assets/pages/index.svelte-42057972.css", "/./_app/assets/FloatingButtonContainer-b9de5b77.css"], "js": ["/./_app/pages/index.svelte-57c53f9b.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js", "/./_app/chunks/singletons-bb9012b7.js", "/./_app/chunks/FloatingButtonContainer-3b29ea11.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-444c685f.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-4195abb8.css", "/./_app/assets/FloatingButtonContainer-b9de5b77.css"], "js": ["/./_app/pages/poll/[slug].svelte-444c685f.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js", "/./_app/chunks/FloatingButtonContainer-3b29ea11.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-48811bb5.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-48811bb5.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40636,12 +40636,16 @@ var Main = class {
     console.log("UserData written to database.");
   }
   async readUserData() {
-    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid));
-    var data = document2.data();
-    if (data && Object.keys(data).includes("userData")) {
-      this.userData = JSON.parse(data.userData, jsonProvider);
+    if (this.auth.currentUser) {
+      var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid));
+      var data = document2.data();
+      if (data && Object.keys(data).includes("userData")) {
+        this.userData = JSON.parse(data.userData, jsonProvider);
+      } else {
+        this.userData = new UserData(this.auth.currentUser.uid);
+      }
     } else {
-      this.userData = new UserData(this.auth.currentUser.uid);
+      this.userData = null;
     }
   }
   async writePollStream(pollStream) {
@@ -40671,7 +40675,7 @@ var Main = class {
     if (data && Object.keys(data).includes("data")) {
       return JSON.parse(data.data, jsonProvider);
     }
-    if (this.userData && this.userData.getPollStreamIds().includes(id)) {
+    if (this.userData) {
       this.userData.removePollStreamId(id);
     }
     return null;
@@ -40728,7 +40732,7 @@ var UserData = class {
 };
 var css$8 = {
   code: ".dumb-container.svelte-rn3ix2{position:relative;z-index:10}.b-google.svelte-rn3ix2{position:relative;display:block;margin:10px 0 0 0;font-size:large;font-weight:500;width:270px;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-rn3ix2{width:400px}.b-google.loggedIn.svelte-rn3ix2:hover{opacity:0.4}.b-google-text.svelte-rn3ix2{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-rn3ix2{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.9;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
-  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { main } from \\"$lib/main\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(main.auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithPopup(main.auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tmain.auth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
+  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { main } from \\"$lib/main\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(main.auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithRedirect(main.auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tmain.auth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
 };
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let loggedIn = false;
@@ -40789,8 +40793,8 @@ var error2 = /* @__PURE__ */ Object.freeze({
   load: load$2
 });
 var css$6 = {
-  code: ".container.svelte-bg9d8m{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-bg9d8m{filter:blur(0px)}.container.svelte-bg9d8m:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay on:click={() => goto(\\"/poll/\\" + pollStream.id)}>\\r\\n\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+  code: ".container.svelte-if8a3a{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-if8a3a{filter:blur(0px)}.container.svelte-if8a3a:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay>\\r\\n\\t\\t<div on:click={() => goto(\\"/poll/\\" + pollStream.id)} style=\\"cursor: pointer;\\">\\r\\n\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t</div>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {remove = () => void 0} = $$props;
@@ -40804,8 +40808,8 @@ var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots)
   if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
     $$bindings.pollStream(pollStream);
   $$result.css.add(css$6);
-  return `${pollStream != void 0 ? `<div class="${["container svelte-bg9d8m", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h2>${escape2(pollStream.title)}</h2>
-		<p>ID: ${escape2(pollStream.id)}</p>
+  return `${pollStream != void 0 ? `<div class="${["container svelte-if8a3a", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title)}</h2>
+			<p>ID: ${escape2(pollStream.id)}</p></div>
 		<button>Delete</button></div>` : ``}`;
 });
 var css$5 = {
@@ -40818,24 +40822,24 @@ var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$binding
 </div>`;
 });
 var css$4 = {
-  code: ".float.svelte-1uexowl{font-size:large;font-weight:500;position:fixed;bottom:100px;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1uexowl:hover{bottom:90px;padding:30px 50px}",
-  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 100px;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tbottom: 90px;\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,KAAK,CACb,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
+  code: ".float.svelte-1ckp0ft{font-size:large;font-weight:500;position:relative;padding:20px 40px;transition:bottom 0.3s, padding 0.3s;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer}.float.svelte-1ckp0ft:hover{padding:30px 50px}",
+  map: '{"version":3,"file":"FloatingButton.svelte","sources":["FloatingButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button class=\\"float\\" on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20px 40px;\\r\\n\\t\\ttransition: bottom 0.3s, padding 0.3s;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.float:hover {\\r\\n\\t\\tpadding: 30px 50px;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,eAAC,CAAC,AACP,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,IAAI,CACrC,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,OAAO,CAAE,IAAI,CAAC,IAAI,AACnB,CAAC"}'
 };
 var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {onclick = () => void 0} = $$props;
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
   $$result.css.add(css$4);
-  return `<button class="${"float svelte-1uexowl"}">${slots.default ? slots.default({}) : ``}
+  return `<button class="${"float svelte-1ckp0ft"}">${slots.default ? slots.default({}) : ``}
 </button>`;
 });
 var css$3 = {
-  code: ".container.svelte-6sqx7t{width:400px;flex-grow:1;display:flex;flex-flow:column;justify-content:center;align-items:center}",
-  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,AACpB,CAAC"}'
+  code: ".container.svelte-16vlwvt{width:400px;flex-grow:1;display:flex;flex-flow:row;justify-content:center;align-items:center;position:fixed;bottom:40px}",
+  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: row;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 40px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,GAAG,CAChB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CACnB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,IAAI,AACb,CAAC"}'
 };
 var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$3);
-  return `<div class="${"container svelte-6sqx7t"}">${slots.default ? slots.default({}) : ``}
+  return `<div class="${"container svelte-16vlwvt"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40866,58 +40870,53 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
   };
-  let pollStreams = [];
-  let update = 0;
+  let pollStreams;
   function appendStreams() {
     return __awaiter(this, void 0, void 0, function* () {
       var pollStream = new PollStream();
       pollStream.onUpdate(() => main.writePollStream(pollStream));
-      yield main.writePollStream(pollStream);
+      main.writePollStream(pollStream);
       main.userData.addPollStreamId(pollStream.id);
-      yield buildFromUserData();
+      pollStreams = [...pollStreams, pollStream];
     });
   }
   function removeStream(pollStream) {
     return __awaiter(this, void 0, void 0, function* () {
       main.deletePollStream(pollStream.id);
       main.userData.removePollStreamId(pollStream.id);
-      yield buildFromUserData();
-    });
-  }
-  function buildFromUserData() {
-    return __awaiter(this, void 0, void 0, function* () {
-      pollStreams = [];
-      var polls = main.userData.getPollStreamIds();
-      for (let poll of polls) {
-        var p2 = yield main.readPollStream(poll);
-        if (p2 != null) {
-          pollStreams = [...pollStreams, p2];
-        }
-      }
+      pollStreams.splice(pollStreams.indexOf(pollStream), 1);
+      pollStreams = pollStreams;
     });
   }
   (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user) {
       yield main.readUserData();
-      buildFromUserData();
+      if (main.userData != null) {
+        var result = [];
+        var polls = main.userData.getPollStreamIds();
+        for (let poll of polls) {
+          var p2 = yield main.readPollStream(poll);
+          if (p2 != null) {
+            result = [...result, p2];
+            pollStreams = result;
+          }
+        }
+        pollStreams = result;
+      }
     } else {
       pollStreams = [];
     }
-    update++;
   }));
-  return `${pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
-	<p>Click the button below to add a stream.</p>` : ``}
-
-${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
+  return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStreams || pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
+			<p>Click the button below to add a stream.</p>` : `${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
     default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
       remove: () => removeStream(pollStream),
       pollStream
     }, {}, {})}`)}`
-  })}
-
-${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
-    default: () => `${main.auth.currentUser != null && update > 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Create Poll Stream`})}` : `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {}, {}, {default: () => `Sign in to add.`})}`}`
-  })}`;
+  })}`}
+		${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
+    default: () => `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Create Poll Stream`})}`
+  })}` : `<p style="${"margin-top: 100px"}">Sign in to access your poll streams!</p>`}`}`;
 });
 var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -40949,8 +40948,8 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
 		<button>X </button></div>` : ``}`;
 });
 var css$1 = {
-  code: ".container.svelte-1w1jpd2{position:relative;padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;cursor:pointer;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-1w1jpd2{filter:blur(0px)}.container.svelte-1w1jpd2:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from './main';\\r\\nimport { Choice, Poll } from './poll';\\r\\nimport ChoiceItem from './ChoiceItem.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let save = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n        console.log(poll.getChoices());\\r\\n    });\\r\\n}\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\" class:appeardelay>\\r\\n\\t<h3>Poll\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t\\t<button on:click={save}>Save</button>\\r\\n\\t</h3>\\r\\n\\t<p>Question: <input type=\\"text\\" bind:value={poll.question}> ?</p>\\r\\n\\t<h4>Choices <button on:click={addChoice}> + </button></h4>\\r\\n\\t\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)}></ChoiceItem>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAyDC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,eACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+  code: ".container.svelte-1lepxkp{position:relative;padding:10pt;margin-top:0pt;margin-bottom:150pt;margin-left:15pt;margin-right:15pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;filter:blur(10px);transition:filter 0.3s;max-width:100%;flex:0 0 auto}.container.appeardelay.svelte-1lepxkp{filter:blur(0px)}.question.svelte-1lepxkp{display:block;font-size:1.5em;width:100%;height:1em}.split.svelte-1lepxkp{width:100px;height:3px;margin:5px 10px 10px -3px;background-color:var(--c_dark)}.container.svelte-1lepxkp:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from './main';\\r\\nimport { Choice, Poll } from './poll';\\r\\nimport ChoiceItem from './ChoiceItem.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let save = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n    });\\r\\n}\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\" class:appeardelay>\\r\\n\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question\\" bind:value={poll.question}>\\r\\n\\t<div class=\\"split\\"></div>\\r\\n\\r\\n\\t<button on:click={remove}>Delete</button>\\r\\n\\t<button on:click={save}>Save</button>\\r\\n\\r\\n\\t<h4>Choices <button on:click={addChoice}> + </button></h4>\\r\\n\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)}></ChoiceItem>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 0pt;\\r\\n        margin-bottom: 150pt;\\r\\n\\t\\tmargin-left: 15pt;\\r\\n\\t\\tmargin-right: 15pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t\\tmax-width: 100%;\\r\\n\\r\\n\\t\\tflex: 0 0 auto;\\r\\n\\t}\\r\\n\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\t.split{\\r\\n\\t\\twidth: 100px;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_dark);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAyDC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,GAAG,CACT,aAAa,CAAE,KAAK,CAC1B,WAAW,CAAE,IAAI,CACjB,YAAY,CAAE,IAAI,CAElB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,CACvB,SAAS,CAAE,IAAI,CAEf,IAAI,CAAE,CAAC,CAAC,CAAC,CAAC,IAAI,AACf,CAAC,AAED,UAAU,YAAY,eACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AACD,qBAAM,CAAC,AACN,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,QAAQ,CAAC,AAChC,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   (function(thisArg, _arguments, P, generator) {
@@ -41007,12 +41006,14 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   if ($$props.save === void 0 && $$bindings.save && save !== void 0)
     $$bindings.save(save);
   $$result.css.add(css$1);
-  return `<div class="${["container svelte-1w1jpd2", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><h3>Poll
-		<button>Delete</button>
-		<button>Save</button></h3>
-	<p>Question: <input type="${"text"}"${add_attribute("value", poll.question, 1)}> ?</p>
+  return `<div class="${["container svelte-1lepxkp", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><input class="${"question svelte-1lepxkp"}" type="${"text"}" placeholder="${"Enter question"}"${add_attribute("value", poll.question, 1)}>
+	<div class="${"split svelte-1lepxkp"}"></div>
+
+	<button>Delete</button>
+	<button>Save</button>
+
 	<h4>Choices <button>+ </button></h4>
-	
+
 	${each(poll.getChoices(), (choice) => `${validate_component(ChoiceItem, "ChoiceItem").$$render($$result, {
     choice,
     vote: () => vote(choice),
@@ -41021,12 +41022,12 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 </div>`;
 });
 var css = {
-  code: ".container.svelte-1i2pwtn{width:100%;display:flex;flex-direction:row}",
-  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: row;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,GAAG,AACpB,CAAC"}'
+  code: ".container.svelte-17chr26{width:600px;display:flex;overflow-x:auto;flex-wrap:nowrap}",
+  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 600px;\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\toverflow-x: auto;\\r\\n\\t\\tflex-wrap: nowrap;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CAChB,SAAS,CAAE,MAAM,AAClB,CAAC"}'
 };
-var PollCardContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css);
-  return `<div class="${"container svelte-1i2pwtn"}">${slots.default ? slots.default({}) : ``}
+  return `<div class="${"container svelte-17chr26"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var pageInfo;
@@ -41037,6 +41038,7 @@ async function load$1({page, fetch: fetch3, session, context}) {
   return {props: {}};
 }
 var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let poll;
   var __awaiter = function(thisArg, _arguments, P, generator) {
     function adopt(value) {
       return value instanceof P ? value : new P(function(resolve2) {
@@ -41065,16 +41067,19 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     });
   };
   let pollStream;
+  let index2 = 0;
   onMount(() => __awaiter(void 0, void 0, void 0, function* () {
     pollStream = yield main.readPollStream(pollStreamId);
   }));
   function addPoll() {
     pollStream.addPoll(new Poll());
     pollStream = pollStream;
+    increment();
   }
-  function removePoll(poll) {
-    pollStream.removePoll(poll);
+  function removePoll(poll2) {
+    pollStream.removePoll(poll2);
     pollStream = pollStream;
+    decrement();
   }
   function save() {
     main.writePollStream(pollStream);
@@ -41085,23 +41090,50 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     } else {
       pollStream = null;
     }
+    index2 = 0;
   }));
-  return `${pollStream ? `<p>Title:</p>
-	<input type="${"text"}"${add_attribute("value", pollStream.title, 1)}>
-	<p>Description:</p>
-	<input type="${"text"}"${add_attribute("value", pollStream.description, 1)}>
-	<br>
-	<button>Save</button>
-	
-	${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {
-    default: () => `${each(pollStream.getPolls(), (poll) => `${validate_component(PollCard, "PollCard").$$render($$result, {
-      poll,
-      remove: () => removePoll(poll),
-      save
-    }, {}, {})}`)}`
-  })}
+  function getCurrentPolls() {
+    var result = [];
+    if (pollStream) {
+      var allPolls = pollStream.getPolls();
+      for (let i = Math.max(index2 - 1, 0); i < Math.min(index2 + 1, allPolls.length); i++) {
+        result.push(allPolls[i]);
+      }
+    }
+    return result;
+  }
+  function increment() {
+    var len = pollStream.getPolls().length;
+    if (len > 1) {
+      index2 = Math.min(index2 + 1, len - 1);
+    }
+    getCurrentPolls();
+  }
+  function decrement() {
+    index2 = Math.max(index2 - 1, 0);
+    getCurrentPolls();
+  }
+  poll = pollStream ? pollStream.getPolls()[index2] : null;
+  return `${pollStream === void 0 ? `<p>Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
+			<p>It has either been deleted, or was never created.</p>` : `<p>Title:</p>
+			<input type="${"text"}"${add_attribute("value", pollStream.title, 1)}>
+			<p>Description:</p>
+			<input type="${"text"}"${add_attribute("value", pollStream.description, 1)}>
+			<br>
+			<button>Save</button>
+			
+			${pollStream.getPolls().length ? `<h3>Question ${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</h3>` : ``}
 
-	${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Poll`})}` : ``}`;
+			${poll ? `${validate_component(PollCard, "PollCard").$$render($$result, {
+    poll,
+    remove: () => removePoll(poll),
+    save
+  }, {}, {})}` : ``}
+			
+			${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
+    default: () => `${index2 != 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : ``}
+				${pollStream.getPolls().length === 0 || index2 === pollStream.getPolls().length - 1 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Question`})}` : `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: increment}, {}, {default: () => `Next `})}`}`
+  })}`}` : `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>`}`}`;
 });
 var _slug_$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,

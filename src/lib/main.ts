@@ -20,6 +20,7 @@ export class Main {
 	public readonly db: FirebaseFirestore;
 	public readonly auth: Auth;
 	public userData: UserData;
+	public editMode: boolean = false;
 	
 	constructor() {
 		this.firebaseApp = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
@@ -100,6 +101,16 @@ export class Main {
 
 	public async deletePollStream(id: string): Promise<void> {
 		await deleteDoc(doc(this.db, "polls", id));
+		console.log("PollStream deleted from database.");
+		await main.userData.removePollStreamId(id);
+	}
+
+	public async newPollStream(): Promise<PollStream> {
+		var pollStream = new PollStream();
+		pollStream.onUpdate(() => main.writePollStream(pollStream));
+		main.writePollStream(pollStream)
+		main.userData.addPollStreamId(pollStream.id);
+		return pollStream;
 	}
 }
 

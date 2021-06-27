@@ -28,9 +28,10 @@
 		padding: 20pt;
 		padding-top: 5pt;
 		margin-top: 15pt;
-        margin-bottom: 0pt;
-		margin-left: 0pt;
-		margin-right: 0pt;
+        margin-bottom: 5pt;
+		margin-left: 5pt;
+		margin-right: 5pt;
+		width: auto;
 
 		border-style: solid;
 		border-width: 2pt;

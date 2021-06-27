@@ -5,11 +5,8 @@
 
 <style>
 	.container {
-		width: 400px;
-		flex-grow: 1;
 		display: flex;
-  		flex-flow: row;
-		justify-content: center;
+		flex-flow: column nowrap;
 		align-items: center;
 		position: fixed;
 		bottom: 40px;

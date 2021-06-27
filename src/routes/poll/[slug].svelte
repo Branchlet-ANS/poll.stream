@@ -19,12 +19,11 @@
 	import PollCard from '$lib/PollCard.svelte';
 	import { Poll, PollStream } from '$lib/poll';
 	import FloatingButton from '$lib/FloatingButton.svelte';
-	import PollCardContainer from '$lib/PollCardContainer.svelte'
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
+	import PollCardContainer from '$lib/PollCardContainer.svelte';
 
 	let pollStream: PollStream;
 	let index: number = 0;
-	let polls: Array<Poll> = [];
 
 	onMount(async () => {
 		pollStream = await main.readPollStream(pollStreamId);
@@ -55,28 +54,15 @@
 		index = 0;
 	});
 
-	function getCurrentPolls() {
-		var result = []
-		if (pollStream) {
-			var allPolls = pollStream.getPolls();
-			for (let i = Math.max(index-1, 0); i < Math.min(index+1, allPolls.length); i++) {
-				result.push(allPolls[i]);
-			}
-		}
-		return result;
-	}
-
 	function increment() {
 		var len = pollStream.getPolls().length;
 		if (len > 1) {
 			index = Math.min(index+1, len-1);
 		}
-		polls = getCurrentPolls();
 	}
 
 	function decrement() {
 		index = Math.max(index-1, 0);
-		polls = getCurrentPolls();
 	}
 
 	$: poll = pollStream ? pollStream.getPolls()[index] : null;
@@ -103,7 +89,9 @@
 			{/if}
 
 			{#if poll}
-				<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
+				<PollCardContainer>
+					<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
+				</PollCardContainer>
 			{/if}
 			
 			<FloatingButtonContainer>

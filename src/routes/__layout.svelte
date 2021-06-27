@@ -4,11 +4,13 @@
 </script>
 
 <body>
-	<h1 class="logo"><a href="/">Poll.stream</a></h1>
+	<div class="container">
+		<h1 class="logo"><a href="/">Poll.stream</a></h1>
 
-	<GoogleButton></GoogleButton>
-
-    <slot></slot>
+		<GoogleButton></GoogleButton>	
+		
+		<slot></slot>
+	</div>
 </body>
 
 <style>
@@ -19,8 +21,14 @@
 		--c_blue: #0086E5;
 		--c_yellow: #FFBB33;
 		--c_white: #FFFFFF;
-		--c_dark: #244B69;
+		--c_dark: #122A3C;
 		--c_light: #B4C5D3;
+	}
+	
+	.container {
+		display: flex;
+  		flex-flow: column nowrap;
+		align-items: center;
 	}
 
 	.logo a {
@@ -31,16 +39,12 @@
 	}
 
     body {
-		display: flex;
-  		flex-flow: column;
-		justify-content: center;
-		align-items: center;
-
 		font-family: 'Roboto', sans-serif;
 
         padding: 0;
         width: 100%;
         height: 100%;
 		background-color: var(--c_white);
+		color: var(--c_dark);
 	}
 </style>

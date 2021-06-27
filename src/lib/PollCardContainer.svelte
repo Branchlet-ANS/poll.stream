@@ -5,9 +5,11 @@
 
 <style>
 	.container {
-		width: 600px;
+		width: 80vw;
+		max-width: 600px;
+		height: 100%;
+
 		display: flex;
-		overflow-x: auto;
-		flex-wrap: nowrap;
+		flex-direction: column;
 	}
 </style>

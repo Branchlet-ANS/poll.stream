@@ -1,32 +1,26 @@
 <script lang="ts">
 	import { main } from '$lib/main';
 	import { onAuthStateChanged } from '@firebase/auth';
-	import { PollStream } from '$lib/poll';
+	import type { PollStream } from '$lib/poll';
 
 	import PollStreamTile from '$lib/PollStreamTile.svelte';
 	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
 	import FloatingButton from '$lib/FloatingButton.svelte';
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
-import { onMount } from 'svelte';
 
 	let pollStreams: Array<PollStream>;
-	let update: number = 0;
-		
+	
 	async function appendStreams() {
-		var pollStream = new PollStream();
-		pollStream.onUpdate(() => main.writePollStream(pollStream));
-		main.writePollStream(pollStream)
-		main.userData.addPollStreamId(pollStream.id);
+		var pollStream = await main.newPollStream();
 		pollStreams = [...pollStreams, pollStream];
 	}
-
+	
 	async function removeStream(pollStream: PollStream) {
 		main.deletePollStream(pollStream.id);
-		main.userData.removePollStreamId(pollStream.id);
 		pollStreams.splice(pollStreams.indexOf(pollStream), 1);
 		pollStreams = pollStreams;
 	}
-
+	
 	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
 			await main.readUserData();
