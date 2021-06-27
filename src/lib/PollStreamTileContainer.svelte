@@ -5,7 +5,7 @@
 
 <style>
 	.container {
-		width: 80vw;
+		width: 90vw;
 		max-width: 600px;
 		height: 100%;
 

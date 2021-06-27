@@ -24,11 +24,12 @@
 		--c_dark: #122A3C;
 		--c_light: #B4C5D3;
 	}
-	
+
 	.container {
 		display: flex;
   		flex-flow: column nowrap;
 		align-items: center;
+		width: 100%;
 	}
 
 	.logo a {
@@ -40,10 +41,7 @@
 
     body {
 		font-family: 'Roboto', sans-serif;
-
         padding: 0;
-        width: 100%;
-        height: 100%;
 		background-color: var(--c_white);
 		color: var(--c_dark);
 	}
