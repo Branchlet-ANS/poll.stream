@@ -37,11 +37,7 @@
 	}
 	.b-google {
 		position: relative;
-		display:block;
-		margin: 10px 0 0 0;
 		font-size: large;
-		font-weight: 500;
-		width: 270px;
 		min-height: 70px;
 		padding: 10px 30px;
 		white-space: nowrap;
@@ -59,7 +55,7 @@
 		z-index: 0;
 	}
 	.b-google.loggedIn{
-		width: 400px;
+		
 	}
 	.b-google.loggedIn:hover{
 		opacity: 0.4;
@@ -77,7 +73,7 @@
 		top: 0;
 		width: 100%;
 		height: 100%;
-  		line-height: 2.9;
+  		line-height: 2.3;
 		font-size: 2em;
 		vertical-align: middle;
 		opacity: 1;

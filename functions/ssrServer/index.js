@@ -40381,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-a9ef69f4.js",
+      file: "/./_app/start-87b983fc.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-a9ef69f4.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-87b983fc.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40459,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-f3c2711d.js", "css": ["/./_app/assets/pages/__layout.svelte-f5234513.css"], "js": ["/./_app/pages/__layout.svelte-f3c2711d.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f37e85fe.js", "css": [], "js": ["/./_app/error.svelte-f37e85fe.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-57c53f9b.js", "css": ["/./_app/assets/pages/index.svelte-42057972.css", "/./_app/assets/FloatingButtonContainer-b9de5b77.css"], "js": ["/./_app/pages/index.svelte-57c53f9b.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js", "/./_app/chunks/singletons-bb9012b7.js", "/./_app/chunks/FloatingButtonContainer-3b29ea11.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-444c685f.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-4195abb8.css", "/./_app/assets/FloatingButtonContainer-b9de5b77.css"], "js": ["/./_app/pages/poll/[slug].svelte-444c685f.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-7bc7e29f.js", "/./_app/chunks/FloatingButtonContainer-3b29ea11.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-48811bb5.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-48811bb5.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-19994807.js", "css": ["/./_app/assets/pages/__layout.svelte-2c4e3a44.css"], "js": ["/./_app/pages/__layout.svelte-19994807.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-71f77fcd.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-f37e85fe.js", "css": [], "js": ["/./_app/error.svelte-f37e85fe.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-f5250abc.js", "css": ["/./_app/assets/pages/index.svelte-07a51a43.css", "/./_app/assets/FloatingButtonContainer-68804011.css"], "js": ["/./_app/pages/index.svelte-f5250abc.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-71f77fcd.js", "/./_app/chunks/singletons-bb9012b7.js", "/./_app/chunks/FloatingButtonContainer-65ed9b6e.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-6c3a051b.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-8fc85da8.css", "/./_app/assets/FloatingButtonContainer-68804011.css"], "js": ["/./_app/pages/poll/[slug].svelte-6c3a051b.js", "/./_app/chunks/vendor-a2f86337.js", "/./_app/chunks/main-71f77fcd.js", "/./_app/chunks/FloatingButtonContainer-65ed9b6e.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-48811bb5.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-48811bb5.js", "/./_app/chunks/vendor-a2f86337.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40616,6 +40616,7 @@ var Main = class {
       appId: "1:70389726858:web:ce6df871a0d048ffc13773",
       measurementId: "G-M76SYZGGMZ"
     };
+    this.editMode = false;
     this.firebaseApp = (0, import_app.getApps)().length ? (0, import_app.getApp)() : (0, import_app.initializeApp)(this.firebaseConfig);
     this.db = (0, import_firestore.getFirestore)(this.firebaseApp);
     this.auth = (0, import_auth.getAuth)(this.firebaseApp);
@@ -40682,6 +40683,15 @@ var Main = class {
   }
   async deletePollStream(id) {
     await (0, import_firestore.deleteDoc)((0, import_firestore.doc)(this.db, "polls", id));
+    console.log("PollStream deleted from database.");
+    await main.userData.removePollStreamId(id);
+  }
+  async newPollStream() {
+    var pollStream = new PollStream();
+    pollStream.onUpdate(() => main.writePollStream(pollStream));
+    main.writePollStream(pollStream);
+    main.userData.addPollStreamId(pollStream.id);
+    return pollStream;
   }
 };
 function jsonProvider(_key, value) {
@@ -40731,15 +40741,14 @@ var UserData = class {
   }
 };
 var css$8 = {
-  code: ".dumb-container.svelte-rn3ix2{position:relative;z-index:10}.b-google.svelte-rn3ix2{position:relative;display:block;margin:10px 0 0 0;font-size:large;font-weight:500;width:270px;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-rn3ix2{width:400px}.b-google.loggedIn.svelte-rn3ix2:hover{opacity:0.4}.b-google-text.svelte-rn3ix2{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-rn3ix2{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.9;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
-  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport { main } from \\"$lib/main\\";\\r\\n\\timport { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from \\"@firebase/auth\\";\\r\\n\\tlet loggedIn = false;\\r\\n\\tlet name;\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/manage-users\\r\\n\\tonAuthStateChanged(main.auth, (user) => {\\r\\n\\t\\tif (user) {\\r\\n\\t\\t\\t// User is signed in, see docs for a list of available properties\\r\\n\\t\\t\\t// https://firebase.google.com/docs/reference/js/firebase.User\\r\\n\\t\\t\\tvar uid = user.uid;\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tname = user.displayName;\\r\\n\\t\\t\\tloggedIn = true;\\r\\n\\t\\t} else {\\r\\n\\t\\t\\t// User is signed out\\r\\n\\t\\t\\t// ...\\r\\n\\t\\t\\tloggedIn = false;\\r\\n\\t\\t}\\r\\n\\t});\\r\\n\\r\\n\\t// Source: https://firebase.google.com/docs/auth/web/google-signin\\r\\n\\tfunction signIn() {\\r\\n\\t\\tvar provider = new GoogleAuthProvider();\\r\\n\\t\\tsignInWithRedirect(main.auth, provider)\\r\\n\\t\\t\\t.then((result) => {\\r\\n\\t\\t\\t\\t// This gives you a Google Access Token. You can use it to access the Google API.\\r\\n\\t\\t\\t\\t// The signed-in user info.\\r\\n\\t\\t\\t\\tvar user = result.user;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\r\\n\\t\\t\\t}).catch((error) => {\\r\\n\\t\\t\\t\\t// Handle Errors here.\\r\\n\\t\\t\\t\\tvar errorCode = error.code;\\r\\n\\t\\t\\t\\tvar errorMessage = error.message;\\r\\n\\t\\t\\t\\t// The email of the user's account used.\\r\\n\\t\\t\\t\\tvar email = error.email;\\r\\n\\t\\t\\t\\t// The firebase.auth.AuthCredential type that was used.\\r\\n\\t\\t\\t\\tvar credential = error.credential;\\r\\n\\t\\t\\t\\t// ...\\r\\n\\t\\t\\t\\tconsole.log(errorCode, errorMessage, email, credential);\\r\\n\\t\\t\\t});\\r\\n\\t}\\r\\n\\r\\n\\tfunction signOut() {\\r\\n\\t\\tmain.auth.signOut();\\r\\n\\t}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tdisplay:block;\\r\\n\\t\\tmargin: 10px 0 0 0;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\twidth: 270px;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\twidth: 400px;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.9;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0DC,6BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,cAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,QAAQ,KAAK,CACb,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AACD,SAAS,uBAAS,CAAC,AAClB,KAAK,CAAE,KAAK,AACb,CAAC,AACD,SAAS,uBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,4BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,oBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}`
+  code: ".dumb-container.svelte-1ac1c2t{position:relative;z-index:10}.b-google.svelte-1ac1c2t{position:relative;font-size:large;min-height:70px;padding:10px 30px;white-space:nowrap;opacity:1;transition:width 0.2s, opacity .5s;background-color:var(--c_blue);color:var(--c_white);border-radius:50px;border:none;text-align:center;box-shadow:0px 4px 10px var(--c_light);cursor:pointer;z-index:0}.b-google.loggedIn.svelte-1ac1c2t:hover{opacity:0.4}.b-google-text.svelte-1ac1c2t{margin-left:-100%;margin-right:-100%;text-align:center}.cross.svelte-1ac1c2t{text-align:center;position:absolute;color:var(--c_blue);left:0;top:0;width:100%;height:100%;line-height:2.3;font-size:2em;vertical-align:middle;opacity:1;z-index:-9}",
+  map: '{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">import { main } from \\"$lib/main\\";\\r\\nimport { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from \\"@firebase/auth\\";\\r\\nlet loggedIn = false;\\r\\nlet name = \\"\\";\\r\\nonAuthStateChanged(main.auth, (user) => {\\r\\n    if (user) {\\r\\n        name = user.displayName;\\r\\n        loggedIn = true;\\r\\n    }\\r\\n    else {\\r\\n        loggedIn = false;\\r\\n    }\\r\\n});\\r\\nfunction signIn() {\\r\\n    var provider = new GoogleAuthProvider();\\r\\n    signInWithRedirect(main.auth, provider);\\r\\n}\\r\\nfunction signOut() {\\r\\n    main.auth.signOut();\\r\\n}\\r\\n</script>\\r\\n<div class = \\"dumb-container\\">\\r\\n\\t<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>\\r\\n\\t\\t<span class=\\"b-google-text\\">{loggedIn ? (\\"Signed in as \\" + name) : \\"Sign in with Google\\" }</span>\\r\\n\\t</button>\\r\\n\\t<span class=\\"cross\\">&#10006</span>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.dumb-container{\\r\\n\\t\\tposition: relative;\\r\\n\\t    z-index: 10;\\r\\n\\t}\\r\\n\\t.b-google {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tfont-size: large;\\r\\n\\t\\tmin-height: 70px;\\r\\n\\t\\tpadding: 10px 30px;\\r\\n\\t\\twhite-space: nowrap;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\ttransition: width 0.2s, opacity .5s;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tborder: none;\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t\\tz-index: 0;\\r\\n\\t}\\r\\n\\t.b-google.loggedIn{\\r\\n\\t\\t\\r\\n\\t}\\r\\n\\t.b-google.loggedIn:hover{\\r\\n\\t\\topacity: 0.4;\\r\\n\\t}\\r\\n\\t.b-google-text{\\r\\n\\t\\tmargin-left: -100%;\\r\\n\\t    margin-right: -100%;\\r\\n\\t    text-align: center;\\r\\n\\t}\\r\\n\\t.cross{\\r\\n\\t    text-align: center;\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\tleft: 0;\\r\\n\\t\\ttop: 0;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n  \\t\\tline-height: 2.3;\\r\\n\\t\\tfont-size: 2em;\\r\\n\\t\\tvertical-align: middle;\\r\\n\\t\\topacity: 1;\\r\\n\\t\\tz-index: -9;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA8BC,8BAAe,CAAC,AACf,QAAQ,CAAE,QAAQ,CACf,OAAO,CAAE,EAAE,AACf,CAAC,AACD,SAAS,eAAC,CAAC,AACV,QAAQ,CAAE,QAAQ,CAClB,SAAS,CAAE,KAAK,CAChB,UAAU,CAAE,IAAI,CAChB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,WAAW,CAAE,MAAM,CACnB,OAAO,CAAE,CAAC,CACV,UAAU,CAAE,KAAK,CAAC,IAAI,CAAC,CAAC,OAAO,CAAC,GAAG,CAEnC,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CACrB,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,CAEvC,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,CAAC,AACX,CAAC,AAID,SAAS,wBAAS,MAAM,CAAC,AACxB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,6BAAc,CAAC,AACd,WAAW,CAAE,KAAK,CACf,YAAY,CAAE,KAAK,CACnB,UAAU,CAAE,MAAM,AACtB,CAAC,AACD,qBAAM,CAAC,AACH,UAAU,CAAE,MAAM,CACrB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACV,WAAW,CAAE,GAAG,CAClB,SAAS,CAAE,GAAG,CACd,cAAc,CAAE,MAAM,CACtB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,EAAE,AACZ,CAAC"}'
 };
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let loggedIn = false;
-  let name;
+  let name = "";
   (0, import_auth.onAuthStateChanged)(main.auth, (user) => {
     if (user) {
-      user.uid;
       name = user.displayName;
       loggedIn = true;
     } else {
@@ -40747,21 +40756,21 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
     }
   });
   $$result.css.add(css$8);
-  return `<div class="${"dumb-container svelte-rn3ix2"}"><button class="${["b-google svelte-rn3ix2", loggedIn ? "loggedIn" : ""].join(" ").trim()}"><span class="${"b-google-text svelte-rn3ix2"}">${escape2(loggedIn ? "Signed in as " + name : "Sign in with Google")}</span></button>
-	<span class="${"cross svelte-rn3ix2"}">\u2716</span>
+  return `<div class="${"dumb-container svelte-1ac1c2t"}"><button class="${["b-google svelte-1ac1c2t", loggedIn ? "loggedIn" : ""].join(" ").trim()}"><span class="${"b-google-text svelte-1ac1c2t"}">${escape2(loggedIn ? "Signed in as " + name : "Sign in with Google")}</span></button>
+	<span class="${"cross svelte-1ac1c2t"}">\u2716</span>
 </div>`;
 });
 var css$7 = {
-  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#244B69;--c_light:#B4C5D3}.logo.svelte-g50f3k a.svelte-g50f3k{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-g50f3k.svelte-g50f3k{display:flex;flex-flow:column;justify-content:center;align-items:center;font-family:'Roboto', sans-serif;padding:0;width:100%;height:100%;background-color:var(--c_white)}",
-  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport GoogleButton from '$lib/GoogleButton.svelte';\\r\\n</script>\\r\\n\\r\\n<body>\\r\\n\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n\\t<GoogleButton></GoogleButton>\\r\\n\\r\\n    <slot></slot>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #244B69;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\r\\n        padding: 0;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAcC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CAEnB,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAE3B,OAAO,CAAE,CAAC,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CAClB,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
+  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#122A3C;--c_light:#B4C5D3}.container.svelte-vculgh.svelte-vculgh{display:flex;flex-flow:column nowrap;align-items:center;width:100%}.logo.svelte-vculgh a.svelte-vculgh{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-vculgh.svelte-vculgh{font-family:'Roboto', sans-serif;padding:0;background-color:var(--c_white);color:var(--c_dark)}",
+  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport GoogleButton from '$lib/GoogleButton.svelte';\\r\\n</script>\\r\\n\\r\\n<body>\\r\\n\\t<div class=\\"container\\">\\r\\n\\t\\t<h1 class=\\"logo\\"><a href=\\"/\\">Poll.stream</a></h1>\\r\\n\\r\\n\\t\\t<GoogleButton></GoogleButton>\\t\\r\\n\\t\\t\\r\\n\\t\\t<slot></slot>\\r\\n\\t</div>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #122A3C;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column nowrap;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n        padding: 0;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t\\tcolor: var(--c_dark);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAgBC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,UAAU,4BAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CAAC,MAAM,CAC1B,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,IAAI,AACZ,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAC3B,OAAO,CAAE,CAAC,CAChB,gBAAgB,CAAE,IAAI,SAAS,CAAC,CAChC,KAAK,CAAE,IAAI,QAAQ,CAAC,AACrB,CAAC"}`
 };
 var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$7);
-  return `<body class="${"svelte-g50f3k"}"><h1 class="${"logo svelte-g50f3k"}"><a href="${"/"}" class="${"svelte-g50f3k"}">Poll.stream</a></h1>
+  return `<body class="${"svelte-vculgh"}"><div class="${"container svelte-vculgh"}"><h1 class="${"logo svelte-vculgh"}"><a href="${"/"}" class="${"svelte-vculgh"}">Poll.stream</a></h1>
 
-	${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}
-
-    ${slots.default ? slots.default({}) : ``}
+		${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}	
+		
+		${slots.default ? slots.default({}) : ``}</div>
 </body>`;
 });
 var __layout = /* @__PURE__ */ Object.freeze({
@@ -40793,8 +40802,8 @@ var error2 = /* @__PURE__ */ Object.freeze({
   load: load$2
 });
 var css$6 = {
-  code: ".container.svelte-if8a3a{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-if8a3a{filter:blur(0px)}.container.svelte-if8a3a:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay>\\r\\n\\t\\t<div on:click={() => goto(\\"/poll/\\" + pollStream.id)} style=\\"cursor: pointer;\\">\\r\\n\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t</div>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+  code: ".container.svelte-cu371j{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:5pt;margin-left:5pt;margin-right:5pt;width:auto;border-style:solid;border-width:2pt;border-color:var(--c_light);border-radius:10pt;filter:blur(10px);transition:filter 0.3s}.container.appeardelay.svelte-cu371j{filter:blur(0px)}.container.svelte-cu371j:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" class:appeardelay>\\r\\n\\t\\t<div on:click={() => goto(\\"/poll/\\" + pollStream.id)} style=\\"cursor: pointer;\\">\\r\\n\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t</div>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 5pt;\\r\\n\\t\\tmargin-left: 5pt;\\r\\n\\t\\tmargin-right: 5pt;\\r\\n\\t\\twidth: auto;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tfilter: blur(10px);\\r\\n\\t\\ttransition: filter 0.3s;\\r\\n\\t}\\r\\n\\t.container.appeardelay\\r\\n\\t{\\r\\n\\t\\tfilter: blur(0px);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,UAAU,cAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CACjB,KAAK,CAAE,IAAI,CAEX,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,KAAK,IAAI,CAAC,CAClB,UAAU,CAAE,MAAM,CAAC,IAAI,AACxB,CAAC,AACD,UAAU,YAAY,cACtB,CAAC,AACA,MAAM,CAAE,KAAK,GAAG,CAAC,AAClB,CAAC,AAED,wBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
 };
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {remove = () => void 0} = $$props;
@@ -40808,17 +40817,17 @@ var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots)
   if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
     $$bindings.pollStream(pollStream);
   $$result.css.add(css$6);
-  return `${pollStream != void 0 ? `<div class="${["container svelte-if8a3a", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title)}</h2>
+  return `${pollStream != void 0 ? `<div class="${["container svelte-cu371j", appeardelay ? "appeardelay" : ""].join(" ").trim()}"><div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title)}</h2>
 			<p>ID: ${escape2(pollStream.id)}</p></div>
 		<button>Delete</button></div>` : ``}`;
 });
 var css$5 = {
-  code: ".container.svelte-yu4mmn{width:400px;display:flex;flex-direction:column}",
-  map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,KAAK,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
+  code: ".container.svelte-p0i353{width:90vw;max-width:600px;height:100%;display:flex;flex-direction:column}",
+  map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 90vw;\\r\\n\\t\\tmax-width: 600px;\\r\\n\\t\\theight: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,IAAI,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
 };
 var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$5);
-  return `<div class="${"container svelte-yu4mmn"}">${slots.default ? slots.default({}) : ``}
+  return `<div class="${"container svelte-p0i353"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var css$4 = {
@@ -40834,12 +40843,12 @@ var FloatingButton = create_ssr_component(($$result, $$props, $$bindings, slots)
 </button>`;
 });
 var css$3 = {
-  code: ".container.svelte-16vlwvt{width:400px;flex-grow:1;display:flex;flex-flow:row;justify-content:center;align-items:center;position:fixed;bottom:40px}",
-  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tflex-grow: 1;\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: row;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 40px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,CAAC,CACZ,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,GAAG,CAChB,eAAe,CAAE,MAAM,CACvB,WAAW,CAAE,MAAM,CACnB,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,IAAI,AACb,CAAC"}'
+  code: ".container.svelte-1we3qth{display:flex;flex-flow:row nowrap;align-items:center;position:fixed;justify-content:space-between;bottom:40px;width:400px;max-width:90vw}",
+  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: row nowrap;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tjustify-content: space-between;\\r\\n\\t\\tbottom: 40px;\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tmax-width: 90vw;\\r\\n\\t}\\r\\n</style>"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CAAC,MAAM,CACrB,WAAW,CAAE,MAAM,CACnB,QAAQ,CAAE,KAAK,CACf,eAAe,CAAE,aAAa,CAC9B,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,IAAI,AAChB,CAAC"}'
 };
 var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$3);
-  return `<div class="${"container svelte-16vlwvt"}">${slots.default ? slots.default({}) : ``}
+  return `<div class="${"container svelte-1we3qth"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40873,17 +40882,13 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let pollStreams;
   function appendStreams() {
     return __awaiter(this, void 0, void 0, function* () {
-      var pollStream = new PollStream();
-      pollStream.onUpdate(() => main.writePollStream(pollStream));
-      main.writePollStream(pollStream);
-      main.userData.addPollStreamId(pollStream.id);
+      var pollStream = yield main.newPollStream();
       pollStreams = [...pollStreams, pollStream];
     });
   }
   function removeStream(pollStream) {
     return __awaiter(this, void 0, void 0, function* () {
       main.deletePollStream(pollStream.id);
-      main.userData.removePollStreamId(pollStream.id);
       pollStreams.splice(pollStreams.indexOf(pollStream), 1);
       pollStreams = pollStreams;
     });
@@ -41022,12 +41027,12 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 </div>`;
 });
 var css = {
-  code: ".container.svelte-17chr26{width:600px;display:flex;overflow-x:auto;flex-wrap:nowrap}",
-  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 600px;\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\toverflow-x: auto;\\r\\n\\t\\tflex-wrap: nowrap;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,KAAK,CAAE,KAAK,CACZ,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CAChB,SAAS,CAAE,MAAM,AAClB,CAAC"}'
+  code: ".container.svelte-p0i353{width:90vw;max-width:600px;height:100%;display:flex;flex-direction:column}",
+  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 90vw;\\r\\n\\t\\tmax-width: 600px;\\r\\n\\t\\theight: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,IAAI,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
 };
-create_ssr_component(($$result, $$props, $$bindings, slots) => {
+var PollCardContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css);
-  return `<div class="${"container svelte-17chr26"}">${slots.default ? slots.default({}) : ``}
+  return `<div class="${"container svelte-p0i353"}">${slots.default ? slots.default({}) : ``}
 </div>`;
 });
 var pageInfo;
@@ -41092,26 +41097,14 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     }
     index2 = 0;
   }));
-  function getCurrentPolls() {
-    var result = [];
-    if (pollStream) {
-      var allPolls = pollStream.getPolls();
-      for (let i = Math.max(index2 - 1, 0); i < Math.min(index2 + 1, allPolls.length); i++) {
-        result.push(allPolls[i]);
-      }
-    }
-    return result;
-  }
   function increment() {
     var len = pollStream.getPolls().length;
     if (len > 1) {
       index2 = Math.min(index2 + 1, len - 1);
     }
-    getCurrentPolls();
   }
   function decrement() {
     index2 = Math.max(index2 - 1, 0);
-    getCurrentPolls();
   }
   poll = pollStream ? pollStream.getPolls()[index2] : null;
   return `${pollStream === void 0 ? `<p>Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
@@ -41124,11 +41117,13 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
 			
 			${pollStream.getPolls().length ? `<h3>Question ${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</h3>` : ``}
 
-			${poll ? `${validate_component(PollCard, "PollCard").$$render($$result, {
-    poll,
-    remove: () => removePoll(poll),
-    save
-  }, {}, {})}` : ``}
+			${poll ? `${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {
+    default: () => `${validate_component(PollCard, "PollCard").$$render($$result, {
+      poll,
+      remove: () => removePoll(poll),
+      save
+    }, {}, {})}`
+  })}` : ``}
 			
 			${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
     default: () => `${index2 != 0 ? `${validate_component(FloatingButton, "FloatingButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : ``}
