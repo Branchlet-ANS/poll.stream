@@ -82,6 +82,7 @@
 		width: 100%;
 		height: 1em;
 	}
+	
 	.split{
 		width: 100px;
 		height: 3px;
