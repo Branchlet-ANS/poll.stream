@@ -7,12 +7,12 @@
 	export let poll: Poll;
 	export let remove = () => undefined;
 	export let save = () => undefined;
-	
+
 	async function addChoice() {
 		poll.addChoice(new Choice());
 		poll = poll; // For Svelte
 		console.log(poll.getChoices());
-		
+
 	}
 
 	let appeardelay = false;
@@ -39,13 +39,14 @@
 </script>
 
 <div class="container" class:appeardelay>
-	<h3>Poll
-		<button on:click={remove}>Delete</button>
-		<button on:click={save}>Save</button>
-	</h3>
-	<p>Question: <input type="text" bind:value={poll.question}> ?</p>
+	<input class="question" type="text" placeholder="Enter question">
+	<div class="split"></div>
+
+	<button on:click={remove}>Delete</button>
+	<button on:click={save}>Save</button>
+
 	<h4>Choices <button on:click={addChoice}> + </button></h4>
-	
+
 	{#each poll.getChoices() as choice}
 		<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)}></ChoiceItem>
 	{/each}
@@ -69,10 +70,25 @@
 
 		filter: blur(10px);
 		transition: filter 0.3s;
+		max-width: 100%;
 	}
+
 	.container.appeardelay
 	{
 		filter: blur(0px);
+	}
+
+	.question{
+		display: block;
+		font-size: 1.5em;
+		width: 100%;
+		height: 1em;
+	}
+	.split{
+		width: 100px;
+		height: 3px;
+		margin: 5px 10px 10px -3px;
+		background-color: var(--c_dark);
 	}
 
 	.container:hover {
