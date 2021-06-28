@@ -15,7 +15,7 @@
 {#if pollStream != undefined}
 	<div class="container" class:appeardelay>
 		<div on:click={() => goto("/poll/" + pollStream.id)} style="cursor: pointer;">
-			<h2>{pollStream.title}</h2>
+			<h2>{pollStream.title ? pollStream.title : "Untitled Poll Stream"}</h2>
 			<p>ID: {pollStream.id}</p>
 		</div>
 		<button on:click={remove}>Delete</button>

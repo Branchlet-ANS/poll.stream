@@ -14,8 +14,8 @@ export class PollStream implements Listener {
 	public readonly id: string; // Unique identifier, used in url
 	private polls: Array<Poll> = [];
 	public __type: string = 'PollStream'; // For deserialization
-	public title: string = "Untitled PollStream";
-	public description: string = "...";
+	public title: string = "";
+	public description: string = "";
 	private onUpdateFunction: CallableFunction;
 
 	constructor() {
