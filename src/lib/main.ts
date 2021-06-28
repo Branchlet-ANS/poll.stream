@@ -168,4 +168,8 @@ export class UserData {
 		this.pollStreamIds.splice(this.pollStreamIds.indexOf(pollStreamId), 1);
 		await main.writeUserData();
 	}
+
+	public isAdminOf(pollStreamId: string): boolean {
+		return this.pollStreamIds.includes(pollStreamId);
+	}
 }

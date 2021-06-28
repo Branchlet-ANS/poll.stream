@@ -24,6 +24,7 @@
 
 	let pollStream: PollStream;
 	let index: number = 0;
+	let edit: boolean = false;
 
 	onMount(async () => {
 		pollStream = await main.readPollStream(pollStreamId);
@@ -43,10 +44,12 @@
 
 	function save() {
 		main.writePollStream(pollStream);
+		edit = false;
 	}
 
 	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
+			await main.readUserData();
 			pollStream = await main.readPollStream(pollStreamId);
 		} else {
 			pollStream = null;
@@ -66,7 +69,7 @@
 	}
 
 	$: poll = pollStream ? pollStream.getPolls()[index] : null;
-
+	$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
 </script>
 
 {#if pollStream === undefined}
@@ -77,11 +80,21 @@
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
 		{:else}
-			<input type="text" class="title" placeholder="Enter title" bind:value={pollStream.title}>
-			<div class="title-split"></div>
-			<textarea type="text" class="description" placeholder="Enter description" bind:value={pollStream.description}></textarea>
-			<br>
-			<button on:click={save}>Save</button>
+			
+			{#if edit}
+				<input type="text" class="title" placeholder="Enter title" bind:value={pollStream.title}>
+				<div class="title-split"></div>
+				<textarea type="text" class="description" placeholder="Enter description" bind:value={pollStream.description}></textarea>
+				<br>
+				<button on:click={save}>Save</button>
+			{:else}
+				<h2>{pollStream.title}</h2>
+				<p>{pollStream.description}</p>
+				{#if isAdmin}
+					<button on:click={() => edit = !edit}>Edit</button>
+				{/if}
+			{/if}
+			
 
 			{#if pollStream.getPolls().length}
 				<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
@@ -89,7 +102,7 @@
 
 			{#if poll}
 				<PollCardContainer>
-					<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
+					<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin}></PollCard>
 				</PollCardContainer>
 			{/if}
 
@@ -97,7 +110,7 @@
 				{#if index != 0}
 					<FloatingButton onclick={decrement}> Back </FloatingButton>
 				{/if}
-				{#if pollStream.getPolls().length === 0 || index === pollStream.getPolls().length-1}
+				{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length-1)}
 					<FloatingButton onclick={addPoll}>+ New Question</FloatingButton>
 				{:else}
 					<FloatingButton onclick={increment}> Next </FloatingButton>

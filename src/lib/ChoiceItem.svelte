@@ -6,7 +6,8 @@
 	export let choice: Choice;
 	export let vote = () => undefined;
 	export let remove = () => undefined;
-	
+	export let edit: boolean;
+
 	let appeardelay = false;
 	setTimeout(function() {
 		appeardelay = true
@@ -16,10 +17,17 @@
 
 {#if choice && main.userData}
 	<div class="container" class:appeardelay>
-		<input type="text" bind:value={choice.text}>
-		<span>{choice.getUsers().length} {choice.getUsers().length == 1 ? "vote." : "votes."}</span>
-		<button on:click={vote}>{choice.getUsers().includes(main.userData.id) ? "Unvote" : "Vote"}</button>
-		<button on:click={remove}> X </button>
+		{#if edit}
+			<input type="text" bind:value={choice.text}>
+			<button on:click={remove}> X </button>
+		{:else}
+			<p>	{choice.text}
+				<span style="right: 0;">
+					<span>{choice.getUsers().length} {choice.getUsers().length == 1 ? "vote." : "votes."}</span>
+					<button on:click={vote}>{choice.getUsers().includes(main.userData.id) ? "Unvote" : "Vote"}</button>
+				</span>
+			</p>
+		{/if}
 	</div>
 {/if}
 

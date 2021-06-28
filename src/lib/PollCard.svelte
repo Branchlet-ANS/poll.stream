@@ -4,6 +4,7 @@
 	import { Choice, Poll } from './poll';
 	import ChoiceItem from './ChoiceItem.svelte';
 
+	export let isAdmin: boolean;
 	export let poll: Poll;
 	export let remove = () => undefined;
 	export let save = () => undefined;
@@ -13,7 +14,14 @@
 		poll = poll; // For Svelte
 	}
 
-	let appeardelay = false;
+	function saveAndQuitEdit() {
+		save();
+		edit = false;
+	}
+
+	let edit: boolean = false;
+	let appeardelay: boolean = false;
+
 	setTimeout(function() {
 		appeardelay = true
 	}, 1);
@@ -37,16 +45,26 @@
 </script>
 
 <div class="container" class:appeardelay>
-	<input class="question" type="text" placeholder="Enter question" bind:value={poll.question}>
-	<div class="split"></div>
-
-	<button on:click={remove}>Delete</button>
-	<button on:click={save}>Save</button>
-
-	<h4>Choices <button on:click={addChoice}> + </button></h4>
+	{#if edit}
+		<input class="question" type="text" placeholder="Enter question" bind:value={poll.question}>
+		<div class="split"></div>
+		<button on:click={remove}>Delete</button>
+		<button on:click={saveAndQuitEdit}>Save</button>
+	{:else}
+		<h2>{poll.question}</h2>
+		<div class="split"></div>
+		{#if isAdmin}
+			<button on:click={() => edit = !edit}>Edit</button>
+		{/if}
+	{/if}
+	{#if edit}
+		<h4>Choices <button on:click={addChoice}> + </button></h4>
+	{:else}
+		<h4>Choices</h4>
+	{/if}
 
 	{#each poll.getChoices() as choice}
-		<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)}></ChoiceItem>
+		<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>
 	{/each}
 </div>
 
