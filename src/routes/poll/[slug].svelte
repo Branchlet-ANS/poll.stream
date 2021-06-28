@@ -77,13 +77,12 @@
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
 		{:else}
-			<p>Title:</p>
-			<input type="text" bind:value={pollStream.title}>
-			<p>Description:</p>
-			<input type="text" bind:value={pollStream.description}>
+			<input type="text" class="title" placeholder="Enter title" bind:value={pollStream.title}>
+			<div class="title-split"></div>
+			<textarea type="text" class="description" placeholder="Enter description" bind:value={pollStream.description}></textarea>
 			<br>
 			<button on:click={save}>Save</button>
-			
+
 			{#if pollStream.getPolls().length}
 				<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
 			{/if}
@@ -93,7 +92,7 @@
 					<PollCard poll={poll} remove={() => removePoll(poll)} save={save}></PollCard>
 				</PollCardContainer>
 			{/if}
-			
+
 			<FloatingButtonContainer>
 				{#if index != 0}
 					<FloatingButton onclick={decrement}> Back </FloatingButton>
@@ -109,3 +108,32 @@
 		<p style="margin-top: 100px">Sign in to access this poll stream!</p>
 	{/if}
 {/if}
+
+<style>
+	.title{
+		margin: 20px 0 0 0;
+		padding: 10px;
+		font-size: 1.5em;
+		height: 1em;
+		width: 300px;
+		border: 0;
+	}
+	.title:focus{
+		outline: none;
+	}
+	.title-split{
+		height: 3px;
+		width: 340px;
+		background-color: var(--c_light);
+	}
+	.description{
+		margin: 20px;
+		padding: 10px;
+		font-size: 1em;
+		height: 3em;
+		width: 500px;
+		border-color: var(--c_light);
+		font-family: 'Roboto', sans-serif;
+		border-width: 2px;
+	}
+</style>

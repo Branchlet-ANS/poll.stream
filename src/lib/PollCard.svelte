@@ -61,7 +61,7 @@
 
 		border-style: solid;
 		border-width: 2pt;
-		border-color: var(--c_light);
+		border-color: var(--c_dark);
 		border-radius: 10pt;
 
 		filter: blur(10px);
@@ -82,11 +82,12 @@
 		width: 100%;
 		height: 1em;
 	}
+
 	.split{
 		width: 100px;
 		height: 3px;
 		margin: 5px 10px 10px -3px;
-		background-color: var(--c_dark);
+		background-color: var(--c_light);
 	}
 
 	.container:hover {
