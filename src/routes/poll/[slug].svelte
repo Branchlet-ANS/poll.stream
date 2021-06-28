@@ -1,6 +1,7 @@
 <script context="module">
 	let pageInfo;
 	let pollStreamId;
+	let query;
 
 	/**
 	 * @type {import('@sveltejs/kit').Load}
@@ -8,6 +9,8 @@
 	export async function load({ page, fetch, session, context }) {
 		pageInfo = page;
 		pollStreamId = pageInfo.params.slug;
+		query = pageInfo.query;
+
 		return { props: { } };
 	}
 </script>
@@ -23,8 +26,8 @@
 
 	let pollStream: PollStream;
 	let index: number = 0;
-	let edit: boolean = false;
-
+	let edit: boolean = (query.get('edit') === 'true');
+	
 	onMount(async () => {
 		pollStream = await main.readPollStream(pollStreamId);
 	})
@@ -79,8 +82,7 @@
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
 		{:else}
-			
-			{#if edit}
+			{#if isAdmin && edit}
 				<input type="text" class="title" placeholder="Enter title" bind:value={pollStream.title}>
 				<div class="title-split"></div>
 				<textarea type="text" class="description" placeholder="Enter description" bind:value={pollStream.description}></textarea>
@@ -96,25 +98,26 @@
 			
 			{#if poll}
 				<PollCardContainer>
-					<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin}></PollCard>
+					<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin} edit={edit}></PollCard>
 				</PollCardContainer>
 			{/if}
 
-			<div class="rowcontainer" style="justify-content: center;">
-				<div style="display:flex; flex-grow: 1; justify-content: center;">
+			<div class="rowcontainer" style="justify-content:center;">
+				<div style="display:flex; flex-grow:1; justify-content:center;">
 					{#if index != 0}
 						<Button onclick={decrement}> Back </Button>
 					{/if}
 				</div>
-				<div style="display:flex; flex-grow: 1; justify-content: center;">
+				<div style="display:flex; flex-grow:1; justify-content:center;">
 					{#if pollStream.getPolls().length}
 						<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
 					{/if}
 				</div>
-				<div style="display:flex; flex-grow: 1; justify-content: center;">
-					{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
+				<div style="display:flex; flex-grow:1; justify-content:center;">
+					{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
 						<Button onclick={addPoll}>+ New Question</Button>
-					{:else if index !== pollStream.getPolls().length - 1}
+					{/if}
+					{#if index !== pollStream.getPolls().length - 1}
 						<Button onclick={increment}> Next </Button>
 					{/if}
 				</div>

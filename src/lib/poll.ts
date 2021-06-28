@@ -16,10 +16,11 @@ export class PollStream implements Listener {
 	public __type: string = 'PollStream'; // For deserialization
 	public title: string = "";
 	public description: string = "";
-	private onUpdateFunction: CallableFunction;
+	private onUpdateFunction: CallableFunction = () => undefined;
 
 	constructor() {
 		this.id = uuidv4();
+		this.addPoll(new Poll());
 	}
 
 	public getPolls() {
@@ -60,6 +61,11 @@ export class Poll implements Listener, Listenable {
 	public listeners: Array<Listener> = [];
 	public __type: string = 'Poll'; // For deserialization
 	
+	constructor() {
+		this.addChoice(new Choice());
+		this.addChoice(new Choice());
+	}
+
 	public getChoices() {
 		return [...this.choices];
 	}

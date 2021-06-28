@@ -3,13 +3,14 @@
 	import { main } from './main';
 	import { Choice, Poll } from './poll';
 	import ChoiceItem from './ChoiceItem.svelte';
-import { fade } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 
 	export let isAdmin: boolean;
 	export let poll: Poll;
 	export let remove = () => undefined;
 	export let save = () => undefined;
-
+	export let edit: boolean = false;
+	
 	async function addChoice() {
 		poll.addChoice(new Choice());
 		poll = poll; // For Svelte
@@ -19,13 +20,6 @@ import { fade } from 'svelte/transition';
 		save();
 		edit = false;
 	}
-
-	let edit: boolean = false;
-	let appeardelay: boolean = false;
-
-	setTimeout(function() {
-		appeardelay = true
-	}, 1);
 
 	function vote(choice: Choice) {
 		var user = main.auth.currentUser.uid;
@@ -54,9 +48,6 @@ import { fade } from 'svelte/transition';
 	{:else}
 		<h2>{poll.question}</h2>
 		<div class="split"></div>
-		{#if isAdmin}
-			<button on:click={() => edit = !edit}>Edit</button>
-		{/if}
 	{/if}
 	{#if edit}
 		<h4>Choices <button on:click={addChoice}> + </button></h4>

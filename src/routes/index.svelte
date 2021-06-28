@@ -6,15 +6,17 @@
 	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
 	import Button from '$lib/BasicButton.svelte';
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
+	import { goto } from '$app/navigation';
 
 	let pollStreams: Array<PollStream>;
 	
-	async function appendStreams() {
+	async function newPollStream() {
 		var pollStream = await main.newPollStream();
-		pollStreams = [...pollStreams, pollStream];
+		let edit = true;
+		goto("/poll/" + pollStream.id + "?edit=true");
 	}
 	
-	async function removeStream(pollStream: PollStream) {
+	async function removePollStream(pollStream: PollStream) {
 		main.deletePollStream(pollStream.id);
 		pollStreams.splice(pollStreams.indexOf(pollStream), 1);
 		pollStreams = pollStreams;
@@ -51,12 +53,12 @@
 		{:else}	
 			<PollStreamTileContainer>
 				{#each pollStreams as pollStream}
-					<PollStreamTile remove={() => removeStream(pollStream)} pollStream={pollStream}></PollStreamTile>
+					<PollStreamTile remove={() => removePollStream(pollStream)} pollStream={pollStream}></PollStreamTile>
 				{/each}
 			</PollStreamTileContainer>
 		{/if}
 		<FloatingButtonContainer>
-			<Button onclick={appendStreams}>+ Create Poll Stream</Button>
+			<Button onclick={newPollStream}>+ Create Poll Stream</Button>
 		</FloatingButtonContainer>		
 	{:else}
 		<p style="margin-top: 100px">Sign in to access your poll streams!</p>

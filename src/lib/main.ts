@@ -108,8 +108,8 @@ export class Main {
 	public async newPollStream(): Promise<PollStream> {
 		var pollStream = new PollStream();
 		pollStream.onUpdate(() => main.writePollStream(pollStream));
-		main.writePollStream(pollStream)
-		main.userData.addPollStreamId(pollStream.id);
+		await main.writePollStream(pollStream)
+		await main.userData.addPollStreamId(pollStream.id);
 		return pollStream;
 	}
 }
