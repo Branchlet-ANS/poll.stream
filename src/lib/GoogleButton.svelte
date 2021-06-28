@@ -2,15 +2,17 @@
 <script lang="ts">
 	import { main } from "$lib/main";
 	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
-	let loggedIn = false;
-	let name = "";
+	import BasicButton from "$lib/BasicButton.svelte";
+	import { fade } from 'svelte/transition';
+	
+	let isExpanded: boolean = false;
+	let imgSrc: string;
 
 	onAuthStateChanged(main.auth, (user) => {
 		if (user) {
-			name = user.displayName;
-			loggedIn = true;
+			imgSrc = user.photoURL;
 		} else {
-			loggedIn = false;
+			imgSrc = null;
 		}
 	});
 
@@ -21,55 +23,41 @@
 
 	function signOut() {
 		main.auth.signOut();
+		isExpanded = false;
 	}
 </script>
-<div class = "dumb-container">
-	<button class = b-google class:loggedIn on:click={loggedIn ? signOut : signIn}>
-		<span class="b-google-text">{loggedIn ? ("Signed in as " + name) : "Sign in with Google" }</span>
-	</button>
-	<span class="cross">&#10006</span>
+
+<div class = "container">
+	{#if isExpanded}
+		<div in:fade on:mouseout={() => isExpanded = false}>
+			<BasicButton onclick={signOut}>
+				Sign out
+			</BasicButton>
+		</div>
+	{:else}
+		{#if imgSrc}
+			<img src={imgSrc}
+				alt="Google Profile"
+				style="border-radius: 50%; width: 36pt;"
+				on:click={() => isExpanded = !isExpanded}
+				in:fade>
+		{:else if imgSrc === null}
+			<div in:fade>
+				<BasicButton onclick={signIn}>
+					Sign in
+				</BasicButton>
+			</div>
+		{/if}
+	{/if}
 </div>
 
 <style>
-	.dumb-container{
-		position: relative;
-	    z-index: 10;
-	}
-	.b-google {
-		position: relative;
-		font-size: medium;
-		font-weight: 500;
-		padding: 20px 40px;
-		white-space: nowrap;
-		opacity: 1;
-		transition: width 0.2s, opacity .5s;
-
-		background-color: var(--c_blue);
-		color: var(--c_white);
-		border-radius: 50px;
-		border: none;
-		text-align: center;
-		box-shadow: 0px 4px 10px var(--c_light);
-
-		cursor: pointer;
-		z-index: 0;
-	}
-	.b-google.loggedIn:hover{
-		opacity: 0.4;
-	}
-	.cross{
-	    text-align: center;
-		position: absolute;
-		color: var(--c_blue);
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-  		line-height: 1.9;
-		font-size: 2em;
-		vertical-align: middle;
-		opacity: 1;
-		z-index: -9;
+	.container {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-end;
+		height: max-content;
+		padding: 12pt;
 	}
 
 </style>

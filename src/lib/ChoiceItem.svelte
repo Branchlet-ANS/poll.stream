@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { main } from './main';
 	import type { Choice } from '$lib/poll';
+	import { fade } from 'svelte/transition';
 	
 	export let choice: Choice;
 	export let vote = () => undefined;
@@ -18,13 +19,13 @@
 
 {#if choice && main.userData}
 	{#if edit}
-		<div class="container" class:appeardelay>
+		<div class="container" in:fade>
 			<input type="text" bind:value={choice.text}>
 			<button on:click={remove}> X </button>
 		</div>
 	{:else}
 		<div class="container"
-		class:appeardelay
+		in:fade
 		style={selected ? "border-color: var(--c_blue); border-width: 3pt;" : "border-color: var(--c_light);"}
 		on:click={vote}>
 			<span style="display: inline;">{choice.text}</span>
@@ -50,13 +51,6 @@
 		border-radius: 10pt;
 
 		cursor: pointer;
-
-		filter: blur(10px);
-		transition: filter 0.3s;
-	}
-	.container.appeardelay
-	{
-		filter: blur(0px);
 	}
 
 	.container:hover {

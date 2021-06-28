@@ -3,6 +3,7 @@
 	import { main } from './main';
 	import { Choice, Poll } from './poll';
 	import ChoiceItem from './ChoiceItem.svelte';
+import { fade } from 'svelte/transition';
 
 	export let isAdmin: boolean;
 	export let poll: Poll;
@@ -44,7 +45,7 @@
 
 </script>
 
-<div class="container" class:appeardelay>
+<div class="container" in:fade>
 	{#if edit}
 		<input class="question" type="text" placeholder="Enter question" bind:value={poll.question}>
 		<div class="split"></div>
@@ -69,28 +70,17 @@
 <style>
 	.container {
 		position: relative;
-		padding: 10pt;
-		padding-bottom: 30pt;
-		margin-top: 0pt;
-        margin-bottom: 150pt;
-		margin-left: 15pt;
-		margin-right: 15pt;
-
+		padding: 20pt;
+		padding-top: 5pt;
+		margin-top: 15pt;
+        margin-bottom: 15pt;
+		margin-left: 5pt;
+		margin-right: 5pt;
+		
 		border-style: solid;
 		border-width: 2pt;
-		border-color: var(--c_light);
 		border-radius: 10pt;
-
-		filter: blur(10px);
-		transition: filter 0.3s;
-		max-width: 100%;
-
-		flex: 0 0 auto;
-	}
-
-	.container.appeardelay
-	{
-		filter: blur(0px);
+		border-color: var(--c_light);
 	}
 
 	.question{

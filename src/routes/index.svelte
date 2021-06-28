@@ -5,7 +5,7 @@
 
 	import PollStreamTile from '$lib/PollStreamTile.svelte';
 	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
-	import FloatingButton from '$lib/FloatingButton.svelte';
+	import Button from '$lib/BasicButton.svelte';
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
 
 	let pollStreams: Array<PollStream>;
@@ -57,7 +57,7 @@
 			</PollStreamTileContainer>
 		{/if}
 		<FloatingButtonContainer>
-			<FloatingButton onclick={appendStreams}>+ Create Poll Stream</FloatingButton>
+			<Button onclick={appendStreams}>+ Create Poll Stream</Button>
 		</FloatingButtonContainer>		
 	{:else}
 		<p style="margin-top: 100px">Sign in to access your poll streams!</p>

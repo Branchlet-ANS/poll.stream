@@ -5,10 +5,15 @@
 
 <body>
 	<div class="container">
-		<h1 class="logo"><a href="/">Poll.stream</a></h1>
-
-		<GoogleButton></GoogleButton>	
-		
+		<div class="rowcontainer">
+			<h1 class="logo">	
+				<a href="/">
+					<img src="/poll-stream.svg" alt="Poll.stream Logo" style="display:inline; width:36pt;">
+					Poll.stream
+				</a>
+			</h1>
+			<GoogleButton></GoogleButton>	
+		</div>
 		<slot></slot>
 	</div>
 </body>
@@ -19,6 +24,7 @@
 
 	:root {
 		--c_blue: #0086E5;
+		--c_blue_dark: #2152C2;
 		--c_yellow: #FFBB33;
 		--c_white: #FFFFFF;
 		--c_dark: #122A3C;
@@ -30,6 +36,15 @@
   		flex-flow: column nowrap;
 		align-items: center;
 		width: 100%;
+	}
+
+	:global(.rowcontainer) {
+		display: flex;
+  		flex-flow: row nowrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		width: 90vw;
+		max-width: 600px;
 	}
 
 	.logo a {

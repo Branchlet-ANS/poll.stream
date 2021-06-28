@@ -18,7 +18,7 @@
 	import { onMount } from 'svelte';
 	import PollCard from '$lib/PollCard.svelte';
 	import { Poll, PollStream } from '$lib/poll';
-	import FloatingButton from '$lib/FloatingButton.svelte';
+	import Button from '$lib/BasicButton.svelte';
 	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
 	import PollCardContainer from '$lib/PollCardContainer.svelte';
 
@@ -95,27 +95,31 @@
 				{/if}
 			{/if}
 			
-
-			{#if pollStream.getPolls().length}
-				<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
-			{/if}
-
 			{#if poll}
 				<PollCardContainer>
 					<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin}></PollCard>
 				</PollCardContainer>
 			{/if}
 
-			<FloatingButtonContainer>
-				{#if index != 0}
-					<FloatingButton onclick={decrement}> Back </FloatingButton>
-				{/if}
-				{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
-					<FloatingButton onclick={addPoll}>+ New Question</FloatingButton>
-				{:else if index !== pollStream.getPolls().length - 1}
-					<FloatingButton onclick={increment}> Next </FloatingButton>
-				{/if}
-			</FloatingButtonContainer>
+			<div class="rowcontainer" style="justify-content: center;">
+				<div style="display:flex; flex-grow: 1; justify-content: center;">
+					{#if index != 0}
+						<Button onclick={decrement}> Back </Button>
+					{/if}
+				</div>
+				<div style="display:flex; flex-grow: 1; justify-content: center;">
+					{#if pollStream.getPolls().length}
+						<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
+					{/if}
+				</div>
+				<div style="display:flex; flex-grow: 1; justify-content: center;">
+					{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
+						<Button onclick={addPoll}>+ New Question</Button>
+					{:else if index !== pollStream.getPolls().length - 1}
+						<Button onclick={increment}> Next </Button>
+					{/if}
+				</div>
+			</div>
 		{/if}
 	{:else}
 		<p style="margin-top: 100px">Sign in to access this poll stream!</p>
