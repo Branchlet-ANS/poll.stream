@@ -38,12 +38,12 @@
 		{#if imgSrc}
 			<img src={imgSrc}
 				alt="Google Profile"
-				style="border-radius: 50%; width: 36pt;"
+				style="border-radius: 50%; width: 36pt; cursor:pointer;"
 				on:click={() => isExpanded = !isExpanded}
 				in:fade>
 		{:else if imgSrc === null}
-			<div in:fade>
-				<BasicButton onclick={signIn}>
+			<div in:fade on:click={signIn}>
+				<BasicButton>
 					Sign in
 				</BasicButton>
 			</div>

@@ -5998,28 +5998,28 @@ var require_register_2a5ac87a = __commonJS({
       FacebookAuthProvider2.PROVIDER_ID = "facebook.com";
       return FacebookAuthProvider2;
     }(BaseOAuthProvider);
-    var GoogleAuthProvider2 = function(_super) {
-      tslib.__extends(GoogleAuthProvider3, _super);
-      function GoogleAuthProvider3() {
+    var GoogleAuthProvider = function(_super) {
+      tslib.__extends(GoogleAuthProvider2, _super);
+      function GoogleAuthProvider2() {
         var _this = _super.call(this, "google.com") || this;
         _this.addScope("profile");
         return _this;
       }
-      GoogleAuthProvider3.credential = function(idToken, accessToken) {
+      GoogleAuthProvider2.credential = function(idToken, accessToken) {
         return OAuthCredential._fromParams({
-          providerId: GoogleAuthProvider3.PROVIDER_ID,
-          signInMethod: GoogleAuthProvider3.GOOGLE_SIGN_IN_METHOD,
+          providerId: GoogleAuthProvider2.PROVIDER_ID,
+          signInMethod: GoogleAuthProvider2.GOOGLE_SIGN_IN_METHOD,
           idToken,
           accessToken
         });
       };
-      GoogleAuthProvider3.credentialFromResult = function(userCredential) {
-        return GoogleAuthProvider3.credentialFromTaggedObject(userCredential);
+      GoogleAuthProvider2.credentialFromResult = function(userCredential) {
+        return GoogleAuthProvider2.credentialFromTaggedObject(userCredential);
       };
-      GoogleAuthProvider3.credentialFromError = function(error3) {
-        return GoogleAuthProvider3.credentialFromTaggedObject(error3.customData || {});
+      GoogleAuthProvider2.credentialFromError = function(error3) {
+        return GoogleAuthProvider2.credentialFromTaggedObject(error3.customData || {});
       };
-      GoogleAuthProvider3.credentialFromTaggedObject = function(_a2) {
+      GoogleAuthProvider2.credentialFromTaggedObject = function(_a2) {
         var tokenResponse = _a2._tokenResponse;
         if (!tokenResponse) {
           return null;
@@ -6029,14 +6029,14 @@ var require_register_2a5ac87a = __commonJS({
           return null;
         }
         try {
-          return GoogleAuthProvider3.credential(oauthIdToken, oauthAccessToken);
+          return GoogleAuthProvider2.credential(oauthIdToken, oauthAccessToken);
         } catch (_c) {
           return null;
         }
       };
-      GoogleAuthProvider3.GOOGLE_SIGN_IN_METHOD = "google.com";
-      GoogleAuthProvider3.PROVIDER_ID = "google.com";
-      return GoogleAuthProvider3;
+      GoogleAuthProvider2.GOOGLE_SIGN_IN_METHOD = "google.com";
+      GoogleAuthProvider2.PROVIDER_ID = "google.com";
+      return GoogleAuthProvider2;
     }(BaseOAuthProvider);
     var GithubAuthProvider = function(_super) {
       tslib.__extends(GithubAuthProvider2, _super);
@@ -7385,7 +7385,7 @@ var require_register_2a5ac87a = __commonJS({
     exports2.FederatedAuthProvider = FederatedAuthProvider;
     exports2.FetchProvider = FetchProvider;
     exports2.GithubAuthProvider = GithubAuthProvider;
-    exports2.GoogleAuthProvider = GoogleAuthProvider2;
+    exports2.GoogleAuthProvider = GoogleAuthProvider;
     exports2.OAuthCredential = OAuthCredential;
     exports2.OAuthProvider = OAuthProvider;
     exports2.PhoneAuthCredential = PhoneAuthCredential;
@@ -40372,7 +40372,7 @@ var user_hooks = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module"
 });
-var template = ({head, body}) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="/poll-stream.svg" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<title>Poll.stream</title>\n		\n		<!-- Adsense -->\n		<script data-ad-client="ca-pub-5110463505057316" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>\n		\n		' + head + '\n	</head>\n	<body>\n		<div id="svelte">' + body + "</div>\n	</body>\n</html>\n";
+var template = ({head, body}) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<link rel="icon" href="/poll-stream.svg" />\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		<title>Poll.stream</title>\r\n		\r\n		<!-- Adsense -->\r\n		<script data-ad-client="ca-pub-5110463505057316" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>\r\n		\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
 var options = null;
 function init(settings) {
   set_paths(settings.paths);
@@ -40381,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-d55d1758.js",
+      file: "/./_app/start-e20f5f9d.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-d55d1758.js", "/./_app/chunks/vendor-bcda2d9e.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-e20f5f9d.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40411,7 +40411,7 @@ function init(settings) {
 var d = decodeURIComponent;
 var empty = () => ({});
 var manifest = {
-  assets: [{"file": "poll-stream.svg", "size": 1263, "type": "image/svg+xml"}],
+  assets: [{"file": "poll-stream.svg", "size": 1278, "type": "image/svg+xml"}],
   layout: "src/routes/__layout.svelte",
   error: ".svelte-kit/build/components/error.svelte",
   routes: [
@@ -40459,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-434fc766.js", "css": ["/./_app/assets/pages/__layout.svelte-db54a448.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/__layout.svelte-434fc766.js", "/./_app/chunks/vendor-bcda2d9e.js", "/./_app/chunks/BasicButton-12ba2fd7.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-d7b40605.js", "css": [], "js": ["/./_app/error.svelte-d7b40605.js", "/./_app/chunks/vendor-bcda2d9e.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-4c0ecd74.js", "css": ["/./_app/assets/pages/index.svelte-d7155129.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/index.svelte-4c0ecd74.js", "/./_app/chunks/vendor-bcda2d9e.js", "/./_app/chunks/BasicButton-12ba2fd7.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-a35239f2.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-ed2f0ee5.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/poll/[slug].svelte-a35239f2.js", "/./_app/chunks/vendor-bcda2d9e.js", "/./_app/chunks/BasicButton-12ba2fd7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-1032d780.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-1032d780.js", "/./_app/chunks/vendor-bcda2d9e.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-cde823ce.js", "css": ["/./_app/assets/pages/__layout.svelte-db54a448.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/__layout.svelte-cde823ce.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-3fe5331e.js", "css": [], "js": ["/./_app/error.svelte-3fe5331e.js", "/./_app/chunks/vendor-4ca4fcab.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-6fe75749.js", "css": ["/./_app/assets/pages/index.svelte-d7155129.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/index.svelte-6fe75749.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-6ea80649.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-ed2f0ee5.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/poll/[slug].svelte-6ea80649.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-374f4619.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-374f4619.js", "/./_app/chunks/vendor-4ca4fcab.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40757,10 +40757,10 @@ var BasicButton = create_ssr_component(($$result, $$props, $$bindings, slots) =>
 });
 var css$8 = {
   code: ".container.svelte-bco1ed{display:flex;flex-flow:column nowrap;align-items:flex-end;height:max-content;padding:12pt}",
-  map: '{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from \\"$lib/main\\";\\r\\nimport BasicButton from \\"$lib/BasicButton.svelte\\";\\r\\nimport { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from \\"@firebase/auth\\";\\r\\nlet isExpanded = false;\\r\\nlet imgSrc;\\r\\nonAuthStateChanged(main.auth, (user) => {\\r\\n    if (user) {\\r\\n        imgSrc = user.photoURL;\\r\\n    }\\r\\n    else {\\r\\n        imgSrc = null;\\r\\n    }\\r\\n});\\r\\nfunction signIn() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var provider = new GoogleAuthProvider();\\r\\n        yield signInWithRedirect(main.auth, provider);\\r\\n    });\\r\\n}\\r\\nfunction signOut() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        yield main.auth.signOut();\\r\\n        isExpanded = false;\\r\\n    });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class = \\"container\\">\\r\\n\\t{#if isExpanded}\\r\\n\\t\\t<div on:mouseout={() => isExpanded = false}>\\r\\n\\t\\t\\t<BasicButton onclick={signOut}>\\r\\n\\t\\t\\t\\tSign out\\r\\n\\t\\t\\t</BasicButton>\\r\\n\\t\\t</div>\\r\\n\\t{:else}\\r\\n\\t\\t{#if imgSrc}\\r\\n\\t\\t\\t<img src={imgSrc}\\r\\n\\t\\t\\t\\talt=\\"Google Profile\\"\\r\\n\\t\\t\\t\\tstyle=\\"border-radius: 50%; width: 36pt;\\"\\r\\n\\t\\t\\t\\ton:click={() => isExpanded = !isExpanded}\\r\\n\\t\\t\\t\\t>\\r\\n\\t\\t{:else if imgSrc === null}\\r\\n\\t\\t\\t<div>\\r\\n\\t\\t\\t\\t<BasicButton onclick={signIn}>\\r\\n\\t\\t\\t\\t\\tSign in\\r\\n\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t</div>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: column nowrap;\\r\\n\\t\\talign-items: flex-end;\\r\\n\\t\\theight: max-content;\\r\\n\\t\\tpadding: 12pt;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA8DC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,MAAM,CAAC,MAAM,CACxB,WAAW,CAAE,QAAQ,CACrB,MAAM,CAAE,WAAW,CACnB,OAAO,CAAE,IAAI,AACd,CAAC"}'
+  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from \\"$lib/main\\";\\r\\nimport { fade } from 'svelte/transition';\\r\\nimport BasicButton from \\"$lib/BasicButton.svelte\\";\\r\\nimport { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from \\"@firebase/auth\\";\\r\\nlet isExpanded = false;\\r\\nlet imgSrc;\\r\\nonAuthStateChanged(main.auth, (user) => {\\r\\n    if (user) {\\r\\n        imgSrc = user.photoURL;\\r\\n    }\\r\\n    else {\\r\\n        imgSrc = null;\\r\\n    }\\r\\n});\\r\\nfunction signIn() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var provider = new GoogleAuthProvider();\\r\\n        yield signInWithRedirect(main.auth, provider);\\r\\n    });\\r\\n}\\r\\nfunction signOut() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        yield main.auth.signOut();\\r\\n        isExpanded = false;\\r\\n    });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class = \\"container\\">\\r\\n\\t{#if isExpanded}\\r\\n\\t\\t<div in:fade on:mouseout={() => isExpanded = false}>\\r\\n\\t\\t\\t<BasicButton onclick={signOut}>\\r\\n\\t\\t\\t\\tSign out\\r\\n\\t\\t\\t</BasicButton>\\r\\n\\t\\t</div>\\r\\n\\t{:else}\\r\\n\\t\\t{#if imgSrc}\\r\\n\\t\\t\\t<img src={imgSrc}\\r\\n\\t\\t\\t\\talt=\\"Google Profile\\"\\r\\n\\t\\t\\t\\tstyle=\\"border-radius: 50%; width: 36pt; cursor:pointer;\\"\\r\\n\\t\\t\\t\\ton:click={() => isExpanded = !isExpanded}\\r\\n\\t\\t\\t\\tin:fade>\\r\\n\\t\\t{:else if imgSrc === null}\\r\\n\\t\\t\\t<div in:fade on:click={signIn}>\\r\\n\\t\\t\\t\\t<BasicButton>\\r\\n\\t\\t\\t\\t\\tSign in\\r\\n\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t</div>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: column nowrap;\\r\\n\\t\\talign-items: flex-end;\\r\\n\\t\\theight: max-content;\\r\\n\\t\\tpadding: 12pt;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA+DC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,MAAM,CAAC,MAAM,CACxB,WAAW,CAAE,QAAQ,CACrB,MAAM,CAAE,WAAW,CACnB,OAAO,CAAE,IAAI,AACd,CAAC"}`
 };
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  var __awaiter = function(thisArg, _arguments, P, generator) {
+  (function(thisArg, _arguments, P, generator) {
     function adopt(value) {
       return value instanceof P ? value : new P(function(resolve2) {
         resolve2(value);
@@ -40786,7 +40786,7 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
       }
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-  };
+  });
   let imgSrc;
   (0, import_auth.onAuthStateChanged)(main.auth, (user) => {
     if (user) {
@@ -40795,14 +40795,8 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
       imgSrc = null;
     }
   });
-  function signIn() {
-    return __awaiter(this, void 0, void 0, function* () {
-      var provider = new import_auth.GoogleAuthProvider();
-      yield (0, import_auth.signInWithRedirect)(main.auth, provider);
-    });
-  }
   $$result.css.add(css$8);
-  return `<div class="${"container svelte-bco1ed"}">${`${imgSrc ? `<img${add_attribute("src", imgSrc, 0)} alt="${"Google Profile"}" style="${"border-radius: 50%; width: 36pt;"}">` : `${imgSrc === null ? `<div>${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: signIn}, {}, {
+  return `<div class="${"container svelte-bco1ed"}">${`${imgSrc ? `<img${add_attribute("src", imgSrc, 0)} alt="${"Google Profile"}" style="${"border-radius: 50%; width: 36pt; cursor:pointer;"}">` : `${imgSrc === null ? `<div>${validate_component(BasicButton, "BasicButton").$$render($$result, {}, {}, {
     default: () => `Sign in
 				`
   })}</div>` : ``}`}`}
