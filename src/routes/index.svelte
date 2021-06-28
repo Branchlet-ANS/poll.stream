@@ -2,7 +2,6 @@
 	import { main } from '$lib/main';
 	import { onAuthStateChanged } from '@firebase/auth';
 	import type { PollStream } from '$lib/poll';
-
 	import PollStreamTile from '$lib/PollStreamTile.svelte';
 	import PollStreamTileContainer from '$lib/PollStreamTileContainer.svelte';
 	import Button from '$lib/BasicButton.svelte';

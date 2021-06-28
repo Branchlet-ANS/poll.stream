@@ -12,7 +12,7 @@
 					Poll.stream
 				</a>
 			</h1>
-			<GoogleButton></GoogleButton>	
+			<GoogleButton></GoogleButton>
 		</div>
 		<slot></slot>
 	</div>

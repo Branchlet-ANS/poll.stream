@@ -1,9 +1,9 @@
 
 <script lang="ts">
 	import { main } from "$lib/main";
-	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
-	import BasicButton from "$lib/BasicButton.svelte";
 	import { fade } from 'svelte/transition';
+	import BasicButton from "$lib/BasicButton.svelte";
+	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
 	
 	let isExpanded: boolean = false;
 	let imgSrc: string;
@@ -16,13 +16,13 @@
 		}
 	});
 
-	function signIn() {
+	async function signIn() {
 		var provider = new GoogleAuthProvider();
-		signInWithRedirect(main.auth, provider);
+		await signInWithRedirect(main.auth, provider);
 	}
 
-	function signOut() {
-		main.auth.signOut();
+	async function signOut() {
+		await main.auth.signOut();
 		isExpanded = false;
 	}
 </script>

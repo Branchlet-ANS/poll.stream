@@ -19,7 +19,6 @@
 	import PollCard from '$lib/PollCard.svelte';
 	import { Poll, PollStream } from '$lib/poll';
 	import Button from '$lib/BasicButton.svelte';
-	import FloatingButtonContainer from '$lib/FloatingButtonContainer.svelte';
 	import PollCardContainer from '$lib/PollCardContainer.svelte';
 
 	let pollStream: PollStream;
