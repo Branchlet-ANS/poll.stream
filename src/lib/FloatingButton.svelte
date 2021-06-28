@@ -9,7 +9,7 @@
 
 <style>
 	.float {
-		font-size: large;
+		font-size: medium;
 		font-weight: 500;
 		position: relative;
 		padding: 20px 40px;

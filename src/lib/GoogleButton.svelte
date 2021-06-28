@@ -37,9 +37,9 @@
 	}
 	.b-google {
 		position: relative;
-		font-size: large;
-		min-height: 70px;
-		padding: 10px 30px;
+		font-size: medium;
+		font-weight: 500;
+		padding: 20px 40px;
 		white-space: nowrap;
 		opacity: 1;
 		transition: width 0.2s, opacity .5s;
@@ -54,16 +54,8 @@
 		cursor: pointer;
 		z-index: 0;
 	}
-	.b-google.loggedIn{
-		
-	}
 	.b-google.loggedIn:hover{
 		opacity: 0.4;
-	}
-	.b-google-text{
-		margin-left: -100%;
-	    margin-right: -100%;
-	    text-align: center;
 	}
 	.cross{
 	    text-align: center;
@@ -73,7 +65,7 @@
 		top: 0;
 		width: 100%;
 		height: 100%;
-  		line-height: 2.3;
+  		line-height: 1.9;
 		font-size: 2em;
 		vertical-align: middle;
 		opacity: 1;

@@ -110,9 +110,9 @@
 				{#if index != 0}
 					<FloatingButton onclick={decrement}> Back </FloatingButton>
 				{/if}
-				{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length-1)}
+				{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
 					<FloatingButton onclick={addPoll}>+ New Question</FloatingButton>
-				{:else}
+				{:else if index !== pollStream.getPolls().length - 1}
 					<FloatingButton onclick={increment}> Next </FloatingButton>
 				{/if}
 			</FloatingButtonContainer>

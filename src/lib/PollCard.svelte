@@ -59,8 +59,6 @@
 	{/if}
 	{#if edit}
 		<h4>Choices <button on:click={addChoice}> + </button></h4>
-	{:else}
-		<h4>Choices</h4>
 	{/if}
 
 	{#each poll.getChoices() as choice}
@@ -72,6 +70,7 @@
 	.container {
 		position: relative;
 		padding: 10pt;
+		padding-bottom: 30pt;
 		margin-top: 0pt;
         margin-bottom: 150pt;
 		margin-left: 15pt;
@@ -79,7 +78,7 @@
 
 		border-style: solid;
 		border-width: 2pt;
-		border-color: var(--c_dark);
+		border-color: var(--c_light);
 		border-radius: 10pt;
 
 		filter: blur(10px);
