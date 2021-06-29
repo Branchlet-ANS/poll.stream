@@ -10,10 +10,10 @@
 	import Box from '$lib/Box.svelte';
 
 	let pollStreams: Array<PollStream>;
-	
+	let signInProvider: string = "";
+
 	async function newPollStream() {
 		var pollStream = await main.newPollStream();
-		let edit = true;
 		goto("/poll/" + pollStream.id + "?edit=true");
 	}
 	
@@ -25,6 +25,9 @@
 	
 	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
+			var token = await main.auth.currentUser.getIdTokenResult(false);
+			signInProvider = token.signInProvider;
+			
 			await main.readUserData();
 			if (main.userData != null) {
 				var result = [];
@@ -47,7 +50,7 @@
 {#if pollStreams === undefined}
 	<p style="margin-top: 100px">Loading...</p>
 {:else}
-	{#if main.auth.currentUser != null}
+	{#if main.auth.currentUser && signInProvider != "anonymous"}
 		{#if !pollStreams || pollStreams.length == 0}
 			<p style="margin-top: 100px">No Poll Streams!</p>
 			<p>Click the button below to add a stream.</p>
@@ -64,6 +67,6 @@
 			</Box>
 		</FloatingRow>		
 	{:else}
-		<p style="margin-top: 100px">Sign in to access your poll streams!</p>
+		<p style="margin-top: 100px">Sign in to create your own poll streams!</p>
 	{/if}
 {/if}

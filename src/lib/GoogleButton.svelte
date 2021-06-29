@@ -1,18 +1,26 @@
 
-<script lang="ts">
+<script context="module" lang="ts">
 	import { main } from "$lib/main";
+	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, signInAnonymously } from "@firebase/auth";
+	import { setPersistence, browserLocalPersistence } from '@firebase/auth';
+</script>
+
+<script lang="ts">
 	import { fade } from 'svelte/transition';
 	import BasicButton from "$lib/BasicButton.svelte";
-	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
 	
+
 	let showSignOut: boolean = false;
 	let imgSrc: string;
 
-	onAuthStateChanged(main.auth, (user) => {
+	// setPersistence(main.auth, browserLocalPersistence);
+
+	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
 			imgSrc = user.photoURL;
 		} else {
 			imgSrc = null;
+			await signInAnonymously(main.auth);
 		}
 	});
 

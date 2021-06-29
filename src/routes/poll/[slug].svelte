@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-	import { main, UserData } from '$lib/main';
+	import { main } from '$lib/main';
 	import { onAuthStateChanged } from '@firebase/auth';
 	import { onMount } from 'svelte';
 	import PollCard from '$lib/PollCard.svelte';
@@ -27,7 +27,6 @@
 	import FloatingRow from '$lib/FloatingRow.svelte';
 	import Box from '$lib/Box.svelte';
 	import { goto } from '$app/navigation';
-	import ConfirmationButton from '$lib/ConfirmationButton.svelte';
 	
 	let pollStream: PollStream;
 	let index: number = 0;
@@ -141,9 +140,9 @@
 							Next
 						</BasicButton>
 					{:else}
-						<ConfirmationButton onclick={() => goto("/")}
+						<BasicButton onclick={() => goto("/")}
 							style={"background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"}
-						> Complete </ConfirmationButton>
+						> Complete </BasicButton>
 					{/if}
 				</Box>
 			</FloatingRow>

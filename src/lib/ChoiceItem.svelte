@@ -2,7 +2,6 @@
 <script lang="ts">
 	import { main } from './main';
 	import type { Choice } from '$lib/poll';
-	import { fade } from 'svelte/transition';
 	import ConfirmationButton from './ConfirmationButton.svelte';
 	import Box from '$lib/Box.svelte';
 	import Row from '$lib/Row.svelte';

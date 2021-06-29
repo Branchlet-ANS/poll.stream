@@ -4,7 +4,8 @@ import type { FirebaseApp } from "@firebase/app";
 import { getFirestore, collection, setDoc, doc, getDoc, deleteDoc } from "@firebase/firestore";
 import type { FirebaseFirestore } from "@firebase/firestore";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import type { Auth } from '@firebase/auth';
+
+import type { Auth } from '@firebase/auth';  
 
 export class Main {
 	private readonly firebaseConfig = {
@@ -26,16 +27,18 @@ export class Main {
 		this.firebaseApp = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
 		this.db = getFirestore(this.firebaseApp);
 		this.auth = getAuth(this.firebaseApp);
-
 		
+
 		onAuthStateChanged(this.auth, async (user) => {
 			if (user) {
 				await main.readUserData();
 			}
+			else {
+				
+			}
 		});
-
 	}
-	
+
 	public async writeUserData(): Promise<void> {
 		var user = this.auth.currentUser;
 		if (user != null) {
