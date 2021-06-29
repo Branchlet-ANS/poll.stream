@@ -3625,14 +3625,14 @@ var require_register_2a5ac87a = __commonJS({
                 };
               }
             }
-            var query = util.querystring(tslib.__assign({key: auth.config.apiKey}, params)).slice(1);
+            var query2 = util.querystring(tslib.__assign({key: auth.config.apiKey}, params)).slice(1);
             var headers = new (FetchProvider.headers())();
             headers.set("Content-Type", "application/json");
             headers.set("X-Client-Version", auth._getSdkClientVersion());
             if (auth.languageCode) {
               headers.set("X-Firebase-Locale", auth.languageCode);
             }
-            return FetchProvider.fetch()(_getFinalTarget(auth, auth.config.apiHost, path, query), tslib.__assign({
+            return FetchProvider.fetch()(_getFinalTarget(auth, auth.config.apiHost, path, query2), tslib.__assign({
               method,
               headers,
               referrerPolicy: "no-referrer"
@@ -3715,8 +3715,8 @@ var require_register_2a5ac87a = __commonJS({
         });
       });
     }
-    function _getFinalTarget(auth, host, path, query) {
-      var base = "" + host + path + "?" + query;
+    function _getFinalTarget(auth, host, path, query2) {
+      var base = "" + host + path + "?" + query2;
       if (!auth.config.emulator) {
         return auth.config.apiScheme + "://" + base;
       }
@@ -20574,9 +20574,9 @@ var require_lodash = __commonJS({
       return string && string.replace(reLatin, deburrLetter).replace(reComboMark, "");
     }
     var upperFirst = createCaseFirst("toUpperCase");
-    function words(string, pattern, guard) {
+    function words(string, pattern, guard2) {
       string = toString(string);
-      pattern = guard ? void 0 : pattern;
+      pattern = guard2 ? void 0 : pattern;
       if (pattern === void 0) {
         return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
       }
@@ -21683,14 +21683,14 @@ var require_index_node_cjs2 = __commonJS({
     DbRemoteDocumentGlobal.store = "remoteDocumentGlobal";
     DbRemoteDocumentGlobal.key = "remoteDocumentGlobalKey";
     var DbTarget = function() {
-      function DbTarget2(targetId, canonicalId2, readTime, resumeToken, lastListenSequenceNumber, lastLimboFreeSnapshotVersion, query2) {
+      function DbTarget2(targetId, canonicalId2, readTime, resumeToken, lastListenSequenceNumber, lastLimboFreeSnapshotVersion, query3) {
         this.targetId = targetId;
         this.canonicalId = canonicalId2;
         this.readTime = readTime;
         this.resumeToken = resumeToken;
         this.lastListenSequenceNumber = lastListenSequenceNumber;
         this.lastLimboFreeSnapshotVersion = lastLimboFreeSnapshotVersion;
-        this.query = query2;
+        this.query = query3;
       }
       return DbTarget2;
     }();
@@ -23755,23 +23755,23 @@ var require_index_node_cjs2 = __commonJS({
     function newQueryForPath(path2) {
       return new QueryImpl(path2);
     }
-    function asCollectionQueryAtPath(query2, path2) {
-      return new QueryImpl(path2, null, query2.explicitOrderBy.slice(), query2.filters.slice(), query2.limit, query2.limitType, query2.startAt, query2.endAt);
+    function asCollectionQueryAtPath(query3, path2) {
+      return new QueryImpl(path2, null, query3.explicitOrderBy.slice(), query3.filters.slice(), query3.limit, query3.limitType, query3.startAt, query3.endAt);
     }
-    function matchesAllDocuments(query2) {
-      return query2.filters.length === 0 && query2.limit === null && query2.startAt == null && query2.endAt == null && (query2.explicitOrderBy.length === 0 || query2.explicitOrderBy.length === 1 && query2.explicitOrderBy[0].field.isKeyField());
+    function matchesAllDocuments(query3) {
+      return query3.filters.length === 0 && query3.limit === null && query3.startAt == null && query3.endAt == null && (query3.explicitOrderBy.length === 0 || query3.explicitOrderBy.length === 1 && query3.explicitOrderBy[0].field.isKeyField());
     }
-    function hasLimitToFirst(query2) {
-      return !isNullOrUndefined(query2.limit) && query2.limitType === "F";
+    function hasLimitToFirst(query3) {
+      return !isNullOrUndefined(query3.limit) && query3.limitType === "F";
     }
-    function hasLimitToLast(query2) {
-      return !isNullOrUndefined(query2.limit) && query2.limitType === "L";
+    function hasLimitToLast(query3) {
+      return !isNullOrUndefined(query3.limit) && query3.limitType === "L";
     }
-    function getFirstOrderByField(query2) {
-      return query2.explicitOrderBy.length > 0 ? query2.explicitOrderBy[0].field : null;
+    function getFirstOrderByField(query3) {
+      return query3.explicitOrderBy.length > 0 ? query3.explicitOrderBy[0].field : null;
     }
-    function getInequalityFilterField(query2) {
-      for (var _i = 0, _d = query2.filters; _i < _d.length; _i++) {
+    function getInequalityFilterField(query3) {
+      for (var _i = 0, _d = query3.filters; _i < _d.length; _i++) {
         var filter = _d[_i];
         if (filter.isInequality()) {
           return filter.field;
@@ -23779,8 +23779,8 @@ var require_index_node_cjs2 = __commonJS({
       }
       return null;
     }
-    function findFilterOperator(query2, operators) {
-      for (var _i = 0, _d = query2.filters; _i < _d.length; _i++) {
+    function findFilterOperator(query3, operators) {
+      for (var _i = 0, _d = query3.filters; _i < _d.length; _i++) {
         var filter = _d[_i];
         if (operators.indexOf(filter.op) >= 0) {
           return filter.op;
@@ -23791,14 +23791,14 @@ var require_index_node_cjs2 = __commonJS({
     function newQueryForCollectionGroup(collectionId) {
       return new QueryImpl(ResourcePath.emptyPath(), collectionId);
     }
-    function isDocumentQuery(query2) {
-      return DocumentKey.isDocumentKey(query2.path) && query2.collectionGroup === null && query2.filters.length === 0;
+    function isDocumentQuery(query3) {
+      return DocumentKey.isDocumentKey(query3.path) && query3.collectionGroup === null && query3.filters.length === 0;
     }
-    function isCollectionGroupQuery(query2) {
-      return query2.collectionGroup !== null;
+    function isCollectionGroupQuery(query3) {
+      return query3.collectionGroup !== null;
     }
-    function queryOrderBy(query2) {
-      var queryImpl = debugCast(query2);
+    function queryOrderBy(query3) {
+      var queryImpl = debugCast(query3);
       if (queryImpl.memoizedOrderBy === null) {
         queryImpl.memoizedOrderBy = [];
         var inequalityField = getInequalityFilterField(queryImpl);
@@ -23825,8 +23825,8 @@ var require_index_node_cjs2 = __commonJS({
       }
       return queryImpl.memoizedOrderBy;
     }
-    function queryToTarget(query2) {
-      var queryImpl = debugCast(query2);
+    function queryToTarget(query3) {
+      var queryImpl = debugCast(query3);
       if (!queryImpl.memoizedTarget) {
         if (queryImpl.limitType === "F") {
           queryImpl.memoizedTarget = newTarget(queryImpl.path, queryImpl.collectionGroup, queryOrderBy(queryImpl), queryImpl.filters, queryImpl.limit, queryImpl.startAt, queryImpl.endAt);
@@ -23844,47 +23844,47 @@ var require_index_node_cjs2 = __commonJS({
       }
       return queryImpl.memoizedTarget;
     }
-    function queryWithAddedFilter(query2, filter) {
-      var newFilters = query2.filters.concat([filter]);
-      return new QueryImpl(query2.path, query2.collectionGroup, query2.explicitOrderBy.slice(), newFilters, query2.limit, query2.limitType, query2.startAt, query2.endAt);
+    function queryWithAddedFilter(query3, filter) {
+      var newFilters = query3.filters.concat([filter]);
+      return new QueryImpl(query3.path, query3.collectionGroup, query3.explicitOrderBy.slice(), newFilters, query3.limit, query3.limitType, query3.startAt, query3.endAt);
     }
-    function queryWithAddedOrderBy(query2, orderBy2) {
-      var newOrderBy = query2.explicitOrderBy.concat([orderBy2]);
-      return new QueryImpl(query2.path, query2.collectionGroup, newOrderBy, query2.filters.slice(), query2.limit, query2.limitType, query2.startAt, query2.endAt);
+    function queryWithAddedOrderBy(query3, orderBy2) {
+      var newOrderBy = query3.explicitOrderBy.concat([orderBy2]);
+      return new QueryImpl(query3.path, query3.collectionGroup, newOrderBy, query3.filters.slice(), query3.limit, query3.limitType, query3.startAt, query3.endAt);
     }
-    function queryWithLimit(query2, limit2, limitType) {
-      return new QueryImpl(query2.path, query2.collectionGroup, query2.explicitOrderBy.slice(), query2.filters.slice(), limit2, limitType, query2.startAt, query2.endAt);
+    function queryWithLimit(query3, limit2, limitType) {
+      return new QueryImpl(query3.path, query3.collectionGroup, query3.explicitOrderBy.slice(), query3.filters.slice(), limit2, limitType, query3.startAt, query3.endAt);
     }
-    function queryWithStartAt(query2, bound) {
-      return new QueryImpl(query2.path, query2.collectionGroup, query2.explicitOrderBy.slice(), query2.filters.slice(), query2.limit, query2.limitType, bound, query2.endAt);
+    function queryWithStartAt(query3, bound) {
+      return new QueryImpl(query3.path, query3.collectionGroup, query3.explicitOrderBy.slice(), query3.filters.slice(), query3.limit, query3.limitType, bound, query3.endAt);
     }
-    function queryWithEndAt(query2, bound) {
-      return new QueryImpl(query2.path, query2.collectionGroup, query2.explicitOrderBy.slice(), query2.filters.slice(), query2.limit, query2.limitType, query2.startAt, bound);
+    function queryWithEndAt(query3, bound) {
+      return new QueryImpl(query3.path, query3.collectionGroup, query3.explicitOrderBy.slice(), query3.filters.slice(), query3.limit, query3.limitType, query3.startAt, bound);
     }
     function queryEquals(left, right) {
       return targetEquals(queryToTarget(left), queryToTarget(right)) && left.limitType === right.limitType;
     }
-    function canonifyQuery(query2) {
-      return canonifyTarget(queryToTarget(query2)) + "|lt:" + query2.limitType;
+    function canonifyQuery(query3) {
+      return canonifyTarget(queryToTarget(query3)) + "|lt:" + query3.limitType;
     }
-    function stringifyQuery(query2) {
-      return "Query(target=" + stringifyTarget(queryToTarget(query2)) + "; limitType=" + query2.limitType + ")";
+    function stringifyQuery(query3) {
+      return "Query(target=" + stringifyTarget(queryToTarget(query3)) + "; limitType=" + query3.limitType + ")";
     }
-    function queryMatches(query2, doc3) {
-      return doc3.isFoundDocument() && queryMatchesPathAndCollectionGroup(query2, doc3) && queryMatchesOrderBy(query2, doc3) && queryMatchesFilters(query2, doc3) && queryMatchesBounds(query2, doc3);
+    function queryMatches(query3, doc3) {
+      return doc3.isFoundDocument() && queryMatchesPathAndCollectionGroup(query3, doc3) && queryMatchesOrderBy(query3, doc3) && queryMatchesFilters(query3, doc3) && queryMatchesBounds(query3, doc3);
     }
-    function queryMatchesPathAndCollectionGroup(query2, doc3) {
+    function queryMatchesPathAndCollectionGroup(query3, doc3) {
       var docPath = doc3.key.path;
-      if (query2.collectionGroup !== null) {
-        return doc3.key.hasCollectionId(query2.collectionGroup) && query2.path.isPrefixOf(docPath);
-      } else if (DocumentKey.isDocumentKey(query2.path)) {
-        return query2.path.isEqual(docPath);
+      if (query3.collectionGroup !== null) {
+        return doc3.key.hasCollectionId(query3.collectionGroup) && query3.path.isPrefixOf(docPath);
+      } else if (DocumentKey.isDocumentKey(query3.path)) {
+        return query3.path.isEqual(docPath);
       } else {
-        return query2.path.isImmediateParentOf(docPath);
+        return query3.path.isImmediateParentOf(docPath);
       }
     }
-    function queryMatchesOrderBy(query2, doc3) {
-      for (var _i = 0, _d = query2.explicitOrderBy; _i < _d.length; _i++) {
+    function queryMatchesOrderBy(query3, doc3) {
+      for (var _i = 0, _d = query3.explicitOrderBy; _i < _d.length; _i++) {
         var orderBy_3 = _d[_i];
         if (!orderBy_3.field.isKeyField() && doc3.data.field(orderBy_3.field) === null) {
           return false;
@@ -23892,8 +23892,8 @@ var require_index_node_cjs2 = __commonJS({
       }
       return true;
     }
-    function queryMatchesFilters(query2, doc3) {
-      for (var _i = 0, _d = query2.filters; _i < _d.length; _i++) {
+    function queryMatchesFilters(query3, doc3) {
+      for (var _i = 0, _d = query3.filters; _i < _d.length; _i++) {
         var filter = _d[_i];
         if (!filter.matches(doc3)) {
           return false;
@@ -23901,19 +23901,19 @@ var require_index_node_cjs2 = __commonJS({
       }
       return true;
     }
-    function queryMatchesBounds(query2, doc3) {
-      if (query2.startAt && !sortsBeforeDocument(query2.startAt, queryOrderBy(query2), doc3)) {
+    function queryMatchesBounds(query3, doc3) {
+      if (query3.startAt && !sortsBeforeDocument(query3.startAt, queryOrderBy(query3), doc3)) {
         return false;
       }
-      if (query2.endAt && sortsBeforeDocument(query2.endAt, queryOrderBy(query2), doc3)) {
+      if (query3.endAt && sortsBeforeDocument(query3.endAt, queryOrderBy(query3), doc3)) {
         return false;
       }
       return true;
     }
-    function newQueryComparator(query2) {
+    function newQueryComparator(query3) {
       return function(d1, d2) {
         var comparedOnKeyField = false;
-        for (var _i = 0, _d = queryOrderBy(query2); _i < _d.length; _i++) {
+        for (var _i = 0, _d = queryOrderBy(query3); _i < _d.length; _i++) {
           var orderBy_4 = _d[_i];
           var comp = compareDocs(orderBy_4, d1, d2);
           if (comp !== 0) {
@@ -25881,12 +25881,12 @@ var require_index_node_cjs2 = __commonJS({
     }
     function convertQueryTargetToQuery(target) {
       var path2 = fromQueryPath(target.parent);
-      var query2 = target.structuredQuery;
-      var fromCount = query2.from ? query2.from.length : 0;
+      var query3 = target.structuredQuery;
+      var fromCount = query3.from ? query3.from.length : 0;
       var collectionGroup2 = null;
       if (fromCount > 0) {
         hardAssert(fromCount === 1);
-        var from = query2.from[0];
+        var from = query3.from[0];
         if (from.allDescendants) {
           collectionGroup2 = from.collectionId;
         } else {
@@ -25894,24 +25894,24 @@ var require_index_node_cjs2 = __commonJS({
         }
       }
       var filterBy = [];
-      if (query2.where) {
-        filterBy = fromFilter(query2.where);
+      if (query3.where) {
+        filterBy = fromFilter(query3.where);
       }
       var orderBy2 = [];
-      if (query2.orderBy) {
-        orderBy2 = fromOrder(query2.orderBy);
+      if (query3.orderBy) {
+        orderBy2 = fromOrder(query3.orderBy);
       }
       var limit2 = null;
-      if (query2.limit) {
-        limit2 = fromInt32Proto(query2.limit);
+      if (query3.limit) {
+        limit2 = fromInt32Proto(query3.limit);
       }
       var startAt2 = null;
-      if (query2.startAt) {
-        startAt2 = fromCursor(query2.startAt);
+      if (query3.startAt) {
+        startAt2 = fromCursor(query3.startAt);
       }
       var endAt2 = null;
-      if (query2.endAt) {
-        endAt2 = fromCursor(query2.endAt);
+      if (query3.endAt) {
+        endAt2 = fromCursor(query3.endAt);
       }
       return newQuery(path2, collectionGroup2, orderBy2, filterBy, limit2, "F", startAt2, endAt2);
     }
@@ -26323,22 +26323,22 @@ var require_index_node_cjs2 = __commonJS({
         readTime: fromDbTimestamp(dbNamedQuery.readTime)
       };
     }
-    function toDbNamedQuery(query2) {
+    function toDbNamedQuery(query3) {
       return {
-        name: query2.name,
-        readTime: toDbTimestamp(fromVersion(query2.readTime)),
-        bundledQuery: query2.bundledQuery
+        name: query3.name,
+        readTime: toDbTimestamp(fromVersion(query3.readTime)),
+        bundledQuery: query3.bundledQuery
       };
     }
     function fromBundledQuery(bundledQuery) {
-      var query2 = convertQueryTargetToQuery({
+      var query3 = convertQueryTargetToQuery({
         parent: bundledQuery.parent,
         structuredQuery: bundledQuery.structuredQuery
       });
       if (bundledQuery.limitType === "LAST") {
-        return queryWithLimit(query2, query2.limit, "L");
+        return queryWithLimit(query3, query3.limit, "L");
       }
-      return query2;
+      return query3;
     }
     function fromProtoNamedQuery(namedQuery2) {
       return {
@@ -26369,15 +26369,15 @@ var require_index_node_cjs2 = __commonJS({
         return bundlesStore(transaction).put(toDbBundle(bundleMetadata));
       };
       IndexedDbBundleCache2.prototype.getNamedQuery = function(transaction, queryName) {
-        return namedQueriesStore(transaction).get(queryName).next(function(query2) {
-          if (query2) {
-            return fromDbNamedQuery(query2);
+        return namedQueriesStore(transaction).get(queryName).next(function(query3) {
+          if (query3) {
+            return fromDbNamedQuery(query3);
           }
           return void 0;
         });
       };
-      IndexedDbBundleCache2.prototype.saveNamedQuery = function(transaction, query2) {
-        return namedQueriesStore(transaction).put(toDbNamedQuery(query2));
+      IndexedDbBundleCache2.prototype.saveNamedQuery = function(transaction, query3) {
+        return namedQueriesStore(transaction).put(toDbNamedQuery(query3));
       };
       return IndexedDbBundleCache2;
     }();
@@ -26664,9 +26664,9 @@ var require_index_node_cjs2 = __commonJS({
           return _this.lookupMutationBatches(transaction, uniqueBatchIDs);
         });
       };
-      IndexedDbMutationQueue2.prototype.getAllMutationBatchesAffectingQuery = function(transaction, query2) {
+      IndexedDbMutationQueue2.prototype.getAllMutationBatchesAffectingQuery = function(transaction, query3) {
         var _this = this;
-        var queryPath = query2.path;
+        var queryPath = query3.path;
         var immediateChildrenLength = queryPath.length + 1;
         var indexPrefix = DbDocumentMutation.prefixForPath(this.userId, queryPath);
         var indexStart = IDBKeyRange.lowerBound(indexPrefix);
@@ -27574,16 +27574,16 @@ var require_index_node_cjs2 = __commonJS({
           }
         });
       };
-      IndexedDbRemoteDocumentCacheImpl2.prototype.getDocumentsMatchingQuery = function(transaction, query2, sinceReadTime) {
+      IndexedDbRemoteDocumentCacheImpl2.prototype.getDocumentsMatchingQuery = function(transaction, query3, sinceReadTime) {
         var _this = this;
         var results = mutableDocumentMap();
-        var immediateChildrenPathLength = query2.path.length + 1;
+        var immediateChildrenPathLength = query3.path.length + 1;
         var iterationOptions = {};
         if (sinceReadTime.isEqual(SnapshotVersion.min())) {
-          var startKey = query2.path.toArray();
+          var startKey = query3.path.toArray();
           iterationOptions.range = IDBKeyRange.lowerBound(startKey);
         } else {
-          var collectionKey = query2.path.toArray();
+          var collectionKey = query3.path.toArray();
           var readTimeKey = toDbTimestampKey(sinceReadTime);
           iterationOptions.range = IDBKeyRange.lowerBound([collectionKey, readTimeKey], true);
           iterationOptions.index = DbRemoteDocument.collectionReadTimeIndex;
@@ -27593,9 +27593,9 @@ var require_index_node_cjs2 = __commonJS({
             return;
           }
           var document2 = fromDbRemoteDocument(_this.serializer, dbRemoteDoc);
-          if (!query2.path.isPrefixOf(document2.key.path)) {
+          if (!query3.path.isPrefixOf(document2.key.path)) {
             control.done();
-          } else if (queryMatches(query2, document2)) {
+          } else if (queryMatches(query3, document2)) {
             results = results.insert(document2.key, document2);
           }
         }).next(function() {
@@ -28563,13 +28563,13 @@ var require_index_node_cjs2 = __commonJS({
           return _this.applyLocalMutationsToDocuments(baseDocs, batches);
         });
       };
-      LocalDocumentsView2.prototype.getDocumentsMatchingQuery = function(transaction, query2, sinceReadTime) {
-        if (isDocumentQuery(query2)) {
-          return this.getDocumentsMatchingDocumentQuery(transaction, query2.path);
-        } else if (isCollectionGroupQuery(query2)) {
-          return this.getDocumentsMatchingCollectionGroupQuery(transaction, query2, sinceReadTime);
+      LocalDocumentsView2.prototype.getDocumentsMatchingQuery = function(transaction, query3, sinceReadTime) {
+        if (isDocumentQuery(query3)) {
+          return this.getDocumentsMatchingDocumentQuery(transaction, query3.path);
+        } else if (isCollectionGroupQuery(query3)) {
+          return this.getDocumentsMatchingCollectionGroupQuery(transaction, query3, sinceReadTime);
         } else {
-          return this.getDocumentsMatchingCollectionQuery(transaction, query2, sinceReadTime);
+          return this.getDocumentsMatchingCollectionQuery(transaction, query3, sinceReadTime);
         }
       };
       LocalDocumentsView2.prototype.getDocumentsMatchingDocumentQuery = function(transaction, docPath) {
@@ -28581,13 +28581,13 @@ var require_index_node_cjs2 = __commonJS({
           return result;
         });
       };
-      LocalDocumentsView2.prototype.getDocumentsMatchingCollectionGroupQuery = function(transaction, query2, sinceReadTime) {
+      LocalDocumentsView2.prototype.getDocumentsMatchingCollectionGroupQuery = function(transaction, query3, sinceReadTime) {
         var _this = this;
-        var collectionId = query2.collectionGroup;
+        var collectionId = query3.collectionGroup;
         var results = documentMap();
         return this.indexManager.getCollectionParents(transaction, collectionId).next(function(parents) {
           return PersistencePromise.forEach(parents, function(parent) {
-            var collectionQuery = asCollectionQueryAtPath(query2, parent.child(collectionId));
+            var collectionQuery = asCollectionQueryAtPath(query3, parent.child(collectionId));
             return _this.getDocumentsMatchingCollectionQuery(transaction, collectionQuery, sinceReadTime).next(function(r) {
               r.forEach(function(key, doc3) {
                 results = results.insert(key, doc3);
@@ -28598,13 +28598,13 @@ var require_index_node_cjs2 = __commonJS({
           });
         });
       };
-      LocalDocumentsView2.prototype.getDocumentsMatchingCollectionQuery = function(transaction, query2, sinceReadTime) {
+      LocalDocumentsView2.prototype.getDocumentsMatchingCollectionQuery = function(transaction, query3, sinceReadTime) {
         var _this = this;
         var results;
         var mutationBatches;
-        return this.remoteDocumentCache.getDocumentsMatchingQuery(transaction, query2, sinceReadTime).next(function(queryResults) {
+        return this.remoteDocumentCache.getDocumentsMatchingQuery(transaction, query3, sinceReadTime).next(function(queryResults) {
           results = queryResults;
-          return _this.mutationQueue.getAllMutationBatchesAffectingQuery(transaction, query2);
+          return _this.mutationQueue.getAllMutationBatchesAffectingQuery(transaction, query3);
         }).next(function(matchingMutationBatches) {
           mutationBatches = matchingMutationBatches;
           return _this.addMissingBaseDocuments(transaction, mutationBatches, results).next(function(mergedDocuments) {
@@ -28628,7 +28628,7 @@ var require_index_node_cjs2 = __commonJS({
           });
         }).next(function() {
           results.forEach(function(key, doc3) {
-            if (!queryMatches(query2, doc3)) {
+            if (!queryMatches(query3, doc3)) {
               results = results.remove(key);
             }
           });
@@ -29036,12 +29036,12 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function localStoreExecuteQuery(localStore, query2, usePreviousResults) {
+    function localStoreExecuteQuery(localStore, query3, usePreviousResults) {
       var localStoreImpl = debugCast(localStore);
       var lastLimboFreeSnapshotVersion = SnapshotVersion.min();
       var remoteKeys = documentKeySet();
       return localStoreImpl.persistence.runTransaction("Execute query", "readonly", function(txn) {
-        return localStoreGetTargetData(localStoreImpl, txn, queryToTarget(query2)).next(function(targetData) {
+        return localStoreGetTargetData(localStoreImpl, txn, queryToTarget(query3)).next(function(targetData) {
           if (targetData) {
             lastLimboFreeSnapshotVersion = targetData.lastLimboFreeSnapshotVersion;
             return localStoreImpl.targetCache.getMatchingKeysForTargetId(txn, targetData.targetId).next(function(result) {
@@ -29049,7 +29049,7 @@ var require_index_node_cjs2 = __commonJS({
             });
           }
         }).next(function() {
-          return localStoreImpl.queryEngine.getDocumentsMatchingQuery(txn, query2, usePreviousResults ? lastLimboFreeSnapshotVersion : SnapshotVersion.min(), usePreviousResults ? remoteKeys : documentKeySet());
+          return localStoreImpl.queryEngine.getDocumentsMatchingQuery(txn, query3, usePreviousResults ? lastLimboFreeSnapshotVersion : SnapshotVersion.min(), usePreviousResults ? remoteKeys : documentKeySet());
         }).next(function(documents) {
           return {documents, remoteKeys};
         });
@@ -29202,7 +29202,7 @@ var require_index_node_cjs2 = __commonJS({
         return localStoreImpl.bundleCache.getNamedQuery(transaction, queryName);
       });
     }
-    function localStoreSaveNamedQuery(localStore, query2, documents) {
+    function localStoreSaveNamedQuery(localStore, query3, documents) {
       if (documents === void 0) {
         documents = documentKeySet();
       }
@@ -29211,14 +29211,14 @@ var require_index_node_cjs2 = __commonJS({
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
-              return [4, localStoreAllocateTarget(localStore, queryToTarget(fromBundledQuery(query2.bundledQuery)))];
+              return [4, localStoreAllocateTarget(localStore, queryToTarget(fromBundledQuery(query3.bundledQuery)))];
             case 1:
               allocated = _d.sent();
               localStoreImpl = debugCast(localStore);
               return [2, localStoreImpl.persistence.runTransaction("Save named query", "readwrite", function(transaction) {
-                var readTime = fromVersion(query2.readTime);
+                var readTime = fromVersion(query3.readTime);
                 if (allocated.snapshotVersion.compareTo(readTime) >= 0) {
-                  return localStoreImpl.bundleCache.saveNamedQuery(transaction, query2);
+                  return localStoreImpl.bundleCache.saveNamedQuery(transaction, query3);
                 }
                 var newTargetData = allocated.withResumeToken(ByteString.EMPTY_BYTE_STRING, readTime);
                 localStoreImpl.targetDataByTarget = localStoreImpl.targetDataByTarget.insert(newTargetData.targetId, newTargetData);
@@ -29227,7 +29227,7 @@ var require_index_node_cjs2 = __commonJS({
                 }).next(function() {
                   return localStoreImpl.targetCache.addMatchingKeys(transaction, documents, allocated.targetId);
                 }).next(function() {
-                  return localStoreImpl.bundleCache.saveNamedQuery(transaction, query2);
+                  return localStoreImpl.bundleCache.saveNamedQuery(transaction, query3);
                 });
               })];
           }
@@ -29250,8 +29250,8 @@ var require_index_node_cjs2 = __commonJS({
       MemoryBundleCache2.prototype.getNamedQuery = function(transaction, queryName) {
         return PersistencePromise.resolve(this.namedQueries.get(queryName));
       };
-      MemoryBundleCache2.prototype.saveNamedQuery = function(transaction, query2) {
-        this.namedQueries.set(query2.name, fromProtoNamedQuery(query2));
+      MemoryBundleCache2.prototype.saveNamedQuery = function(transaction, query3) {
+        this.namedQueries.set(query3.name, fromProtoNamedQuery(query3));
         return PersistencePromise.resolve();
       };
       return MemoryBundleCache2;
@@ -29400,8 +29400,8 @@ var require_index_node_cjs2 = __commonJS({
         });
         return PersistencePromise.resolve(this.findMutationBatches(uniqueBatchIDs));
       };
-      MemoryMutationQueue2.prototype.getAllMutationBatchesAffectingQuery = function(transaction, query2) {
-        var prefix = query2.path;
+      MemoryMutationQueue2.prototype.getAllMutationBatchesAffectingQuery = function(transaction, query3) {
+        var prefix = query3.path;
         var immediateChildrenPathLength = prefix.length + 1;
         var startPath = prefix;
         if (!DocumentKey.isDocumentKey(startPath)) {
@@ -29523,19 +29523,19 @@ var require_index_node_cjs2 = __commonJS({
         });
         return PersistencePromise.resolve(results);
       };
-      MemoryRemoteDocumentCacheImpl2.prototype.getDocumentsMatchingQuery = function(transaction, query2, sinceReadTime) {
+      MemoryRemoteDocumentCacheImpl2.prototype.getDocumentsMatchingQuery = function(transaction, query3, sinceReadTime) {
         var results = mutableDocumentMap();
-        var prefix = new DocumentKey(query2.path.child(""));
+        var prefix = new DocumentKey(query3.path.child(""));
         var iterator = this.docs.getIteratorFrom(prefix);
         while (iterator.hasNext()) {
           var _d = iterator.getNext(), key = _d.key, _e = _d.value, document_3 = _e.document, readTime = _e.readTime;
-          if (!query2.path.isPrefixOf(key.path)) {
+          if (!query3.path.isPrefixOf(key.path)) {
             break;
           }
           if (readTime.compareTo(sinceReadTime) <= 0) {
             continue;
           }
-          if (!queryMatches(query2, document_3)) {
+          if (!queryMatches(query3, document_3)) {
             continue;
           }
           results = results.insert(document_3.key, document_3.clone());
@@ -29890,23 +29890,23 @@ var require_index_node_cjs2 = __commonJS({
       QueryEngine2.prototype.setLocalDocumentsView = function(localDocuments) {
         this.localDocumentsView = localDocuments;
       };
-      QueryEngine2.prototype.getDocumentsMatchingQuery = function(transaction, query2, lastLimboFreeSnapshotVersion, remoteKeys) {
+      QueryEngine2.prototype.getDocumentsMatchingQuery = function(transaction, query3, lastLimboFreeSnapshotVersion, remoteKeys) {
         var _this = this;
-        if (matchesAllDocuments(query2)) {
-          return this.executeFullCollectionScan(transaction, query2);
+        if (matchesAllDocuments(query3)) {
+          return this.executeFullCollectionScan(transaction, query3);
         }
         if (lastLimboFreeSnapshotVersion.isEqual(SnapshotVersion.min())) {
-          return this.executeFullCollectionScan(transaction, query2);
+          return this.executeFullCollectionScan(transaction, query3);
         }
         return this.localDocumentsView.getDocuments(transaction, remoteKeys).next(function(documents) {
-          var previousResults = _this.applyQuery(query2, documents);
-          if ((hasLimitToFirst(query2) || hasLimitToLast(query2)) && _this.needsRefill(query2.limitType, previousResults, remoteKeys, lastLimboFreeSnapshotVersion)) {
-            return _this.executeFullCollectionScan(transaction, query2);
+          var previousResults = _this.applyQuery(query3, documents);
+          if ((hasLimitToFirst(query3) || hasLimitToLast(query3)) && _this.needsRefill(query3.limitType, previousResults, remoteKeys, lastLimboFreeSnapshotVersion)) {
+            return _this.executeFullCollectionScan(transaction, query3);
           }
           if (getLogLevel() <= logger.LogLevel.DEBUG) {
-            logDebug("QueryEngine", "Re-using previous result from %s to execute query: %s", lastLimboFreeSnapshotVersion.toString(), stringifyQuery(query2));
+            logDebug("QueryEngine", "Re-using previous result from %s to execute query: %s", lastLimboFreeSnapshotVersion.toString(), stringifyQuery(query3));
           }
-          return _this.localDocumentsView.getDocumentsMatchingQuery(transaction, query2, lastLimboFreeSnapshotVersion).next(function(updatedResults) {
+          return _this.localDocumentsView.getDocumentsMatchingQuery(transaction, query3, lastLimboFreeSnapshotVersion).next(function(updatedResults) {
             previousResults.forEach(function(doc3) {
               updatedResults = updatedResults.insert(doc3.key, doc3);
             });
@@ -29914,10 +29914,10 @@ var require_index_node_cjs2 = __commonJS({
           });
         });
       };
-      QueryEngine2.prototype.applyQuery = function(query2, documents) {
-        var queryResults = new SortedSet(newQueryComparator(query2));
+      QueryEngine2.prototype.applyQuery = function(query3, documents) {
+        var queryResults = new SortedSet(newQueryComparator(query3));
         documents.forEach(function(_, maybeDoc) {
-          if (queryMatches(query2, maybeDoc)) {
+          if (queryMatches(query3, maybeDoc)) {
             queryResults = queryResults.add(maybeDoc);
           }
         });
@@ -29933,11 +29933,11 @@ var require_index_node_cjs2 = __commonJS({
         }
         return docAtLimitEdge.hasPendingWrites || docAtLimitEdge.version.compareTo(limboFreeSnapshotVersion) > 0;
       };
-      QueryEngine2.prototype.executeFullCollectionScan = function(transaction, query2) {
+      QueryEngine2.prototype.executeFullCollectionScan = function(transaction, query3) {
         if (getLogLevel() <= logger.LogLevel.DEBUG) {
-          logDebug("QueryEngine", "Using full collection scan to execute query:", stringifyQuery(query2));
+          logDebug("QueryEngine", "Using full collection scan to execute query:", stringifyQuery(query3));
         }
-        return this.localDocumentsView.getDocumentsMatchingQuery(transaction, query2, SnapshotVersion.min());
+        return this.localDocumentsView.getDocumentsMatchingQuery(transaction, query3, SnapshotVersion.min());
       };
       return QueryEngine2;
     }();
@@ -32169,8 +32169,8 @@ var require_index_node_cjs2 = __commonJS({
       return DocumentChangeSet2;
     }();
     var ViewSnapshot = function() {
-      function ViewSnapshot2(query2, docs, oldDocs, docChanges, mutatedKeys, fromCache, syncStateChanged, excludesMetadataChanges) {
-        this.query = query2;
+      function ViewSnapshot2(query3, docs, oldDocs, docChanges, mutatedKeys, fromCache, syncStateChanged, excludesMetadataChanges) {
+        this.query = query3;
         this.docs = docs;
         this.oldDocs = oldDocs;
         this.docChanges = docChanges;
@@ -32179,12 +32179,12 @@ var require_index_node_cjs2 = __commonJS({
         this.syncStateChanged = syncStateChanged;
         this.excludesMetadataChanges = excludesMetadataChanges;
       }
-      ViewSnapshot2.fromInitialDocuments = function(query2, documents, mutatedKeys, fromCache) {
+      ViewSnapshot2.fromInitialDocuments = function(query3, documents, mutatedKeys, fromCache) {
         var changes = [];
         documents.forEach(function(doc3) {
           changes.push({type: 0, doc: doc3});
         });
-        return new ViewSnapshot2(query2, documents, DocumentSet.emptySet(documents), changes, mutatedKeys, fromCache, true, false);
+        return new ViewSnapshot2(query3, documents, DocumentSet.emptySet(documents), changes, mutatedKeys, fromCache, true, false);
       };
       Object.defineProperty(ViewSnapshot2.prototype, "hasPendingWrites", {
         get: function() {
@@ -32233,14 +32233,14 @@ var require_index_node_cjs2 = __commonJS({
     }();
     function eventManagerListen(eventManager, listener) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var eventManagerImpl, query2, firstListen, queryInfo, _d, e_7, firestoreError, raisedEvent, raisedEvent_1;
+        var eventManagerImpl, query3, firstListen, queryInfo, _d, e_7, firestoreError, raisedEvent, raisedEvent_1;
         return tslib.__generator(this, function(_e) {
           switch (_e.label) {
             case 0:
               eventManagerImpl = debugCast(eventManager);
-              query2 = listener.query;
+              query3 = listener.query;
               firstListen = false;
-              queryInfo = eventManagerImpl.queries.get(query2);
+              queryInfo = eventManagerImpl.queries.get(query3);
               if (!queryInfo) {
                 firstListen = true;
                 queryInfo = new QueryListenersInfo();
@@ -32251,7 +32251,7 @@ var require_index_node_cjs2 = __commonJS({
             case 1:
               _e.trys.push([1, 3, , 4]);
               _d = queryInfo;
-              return [4, eventManagerImpl.onListen(query2)];
+              return [4, eventManagerImpl.onListen(query3)];
             case 2:
               _d.viewSnap = _e.sent();
               return [3, 4];
@@ -32261,7 +32261,7 @@ var require_index_node_cjs2 = __commonJS({
               listener.onError(firestoreError);
               return [2];
             case 4:
-              eventManagerImpl.queries.set(query2, queryInfo);
+              eventManagerImpl.queries.set(query3, queryInfo);
               queryInfo.listeners.push(listener);
               raisedEvent = listener.applyOnlineStateChange(eventManagerImpl.onlineState);
               if (queryInfo.viewSnap) {
@@ -32277,12 +32277,12 @@ var require_index_node_cjs2 = __commonJS({
     }
     function eventManagerUnlisten(eventManager, listener) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var eventManagerImpl, query2, lastListen, queryInfo, i;
+        var eventManagerImpl, query3, lastListen, queryInfo, i;
         return tslib.__generator(this, function(_d) {
           eventManagerImpl = debugCast(eventManager);
-          query2 = listener.query;
+          query3 = listener.query;
           lastListen = false;
-          queryInfo = eventManagerImpl.queries.get(query2);
+          queryInfo = eventManagerImpl.queries.get(query3);
           if (queryInfo) {
             i = queryInfo.listeners.indexOf(listener);
             if (i >= 0) {
@@ -32291,8 +32291,8 @@ var require_index_node_cjs2 = __commonJS({
             }
           }
           if (lastListen) {
-            eventManagerImpl.queries.delete(query2);
-            return [2, eventManagerImpl.onUnlisten(query2)];
+            eventManagerImpl.queries.delete(query3);
+            return [2, eventManagerImpl.onUnlisten(query3)];
           }
           return [2];
         });
@@ -32319,16 +32319,16 @@ var require_index_node_cjs2 = __commonJS({
         raiseSnapshotsInSyncEvent(eventManagerImpl);
       }
     }
-    function eventManagerOnWatchError(eventManager, query2, error3) {
+    function eventManagerOnWatchError(eventManager, query3, error3) {
       var eventManagerImpl = debugCast(eventManager);
-      var queryInfo = eventManagerImpl.queries.get(query2);
+      var queryInfo = eventManagerImpl.queries.get(query3);
       if (queryInfo) {
         for (var _i = 0, _d = queryInfo.listeners; _i < _d.length; _i++) {
           var listener = _d[_i];
           listener.onError(error3);
         }
       }
-      eventManagerImpl.queries.delete(query2);
+      eventManagerImpl.queries.delete(query3);
     }
     function eventManagerOnOnlineStateChange(eventManager, onlineState) {
       var eventManagerImpl = debugCast(eventManager);
@@ -32361,8 +32361,8 @@ var require_index_node_cjs2 = __commonJS({
       });
     }
     var QueryListener = function() {
-      function QueryListener2(query2, queryObserver, options2) {
-        this.query = query2;
+      function QueryListener2(query3, queryObserver, options2) {
+        this.query = query3;
         this.queryObserver = queryObserver;
         this.raisedInitialEvent = false;
         this.snap = null;
@@ -32591,14 +32591,14 @@ var require_index_node_cjs2 = __commonJS({
       return RemovedLimboDocument2;
     }();
     var View = function() {
-      function View2(query2, _syncedDocuments) {
-        this.query = query2;
+      function View2(query3, _syncedDocuments) {
+        this.query = query3;
         this._syncedDocuments = _syncedDocuments;
         this.syncState = null;
         this.current = false;
         this.limboDocuments = documentKeySet();
         this.mutatedKeys = documentKeySet();
-        this.docComparator = newQueryComparator(query2);
+        this.docComparator = newQueryComparator(query3);
         this.documentSet = new DocumentSet(this.docComparator);
       }
       Object.defineProperty(View2.prototype, "syncedDocuments", {
@@ -32801,8 +32801,8 @@ var require_index_node_cjs2 = __commonJS({
     }
     var LOG_TAG$d = "SyncEngine";
     var QueryView = function() {
-      function QueryView2(query2, targetId, view) {
-        this.query = query2;
+      function QueryView2(query3, targetId, view) {
+        this.query = query3;
         this.targetId = targetId;
         this.view = view;
       }
@@ -32854,14 +32854,14 @@ var require_index_node_cjs2 = __commonJS({
       }
       return syncEngine;
     }
-    function syncEngineListen(syncEngine, query2) {
+    function syncEngineListen(syncEngine, query3) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var syncEngineImpl, targetId, viewSnapshot, queryView, targetData, status_1;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
               syncEngineImpl = ensureWatchCallbacks(syncEngine);
-              queryView = syncEngineImpl.queryViewsByQuery.get(query2);
+              queryView = syncEngineImpl.queryViewsByQuery.get(query3);
               if (!queryView)
                 return [3, 1];
               targetId = queryView.targetId;
@@ -32869,12 +32869,12 @@ var require_index_node_cjs2 = __commonJS({
               viewSnapshot = queryView.view.computeInitialSnapshot();
               return [3, 4];
             case 1:
-              return [4, localStoreAllocateTarget(syncEngineImpl.localStore, queryToTarget(query2))];
+              return [4, localStoreAllocateTarget(syncEngineImpl.localStore, queryToTarget(query3))];
             case 2:
               targetData = _d.sent();
               status_1 = syncEngineImpl.sharedClientState.addLocalQueryTarget(targetData.targetId);
               targetId = targetData.targetId;
-              return [4, initializeViewAndComputeSnapshot(syncEngineImpl, query2, targetId, status_1 === "current")];
+              return [4, initializeViewAndComputeSnapshot(syncEngineImpl, query3, targetId, status_1 === "current")];
             case 3:
               viewSnapshot = _d.sent();
               if (syncEngineImpl.isPrimaryClient) {
@@ -32887,7 +32887,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function initializeViewAndComputeSnapshot(syncEngineImpl, query2, targetId, current) {
+    function initializeViewAndComputeSnapshot(syncEngineImpl, query3, targetId, current) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var queryResult, view, viewDocChanges, synthesizedTargetChange, viewChange, data;
         return tslib.__generator(this, function(_d) {
@@ -32896,40 +32896,40 @@ var require_index_node_cjs2 = __commonJS({
               syncEngineImpl.applyDocChanges = function(queryView, changes, remoteEvent) {
                 return applyDocChanges(syncEngineImpl, queryView, changes, remoteEvent);
               };
-              return [4, localStoreExecuteQuery(syncEngineImpl.localStore, query2, true)];
+              return [4, localStoreExecuteQuery(syncEngineImpl.localStore, query3, true)];
             case 1:
               queryResult = _d.sent();
-              view = new View(query2, queryResult.remoteKeys);
+              view = new View(query3, queryResult.remoteKeys);
               viewDocChanges = view.computeDocChanges(queryResult.documents);
               synthesizedTargetChange = TargetChange.createSynthesizedTargetChangeForCurrentChange(targetId, current && syncEngineImpl.onlineState !== "Offline");
               viewChange = view.applyChanges(viewDocChanges, syncEngineImpl.isPrimaryClient, synthesizedTargetChange);
               updateTrackedLimbos(syncEngineImpl, targetId, viewChange.limboChanges);
-              data = new QueryView(query2, targetId, view);
-              syncEngineImpl.queryViewsByQuery.set(query2, data);
+              data = new QueryView(query3, targetId, view);
+              syncEngineImpl.queryViewsByQuery.set(query3, data);
               if (syncEngineImpl.queriesByTarget.has(targetId)) {
-                syncEngineImpl.queriesByTarget.get(targetId).push(query2);
+                syncEngineImpl.queriesByTarget.get(targetId).push(query3);
               } else {
-                syncEngineImpl.queriesByTarget.set(targetId, [query2]);
+                syncEngineImpl.queriesByTarget.set(targetId, [query3]);
               }
               return [2, viewChange.snapshot];
           }
         });
       });
     }
-    function syncEngineUnlisten(syncEngine, query2) {
+    function syncEngineUnlisten(syncEngine, query3) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var syncEngineImpl, queryView, queries, targetRemainsActive;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
               syncEngineImpl = debugCast(syncEngine);
-              queryView = syncEngineImpl.queryViewsByQuery.get(query2);
+              queryView = syncEngineImpl.queryViewsByQuery.get(query3);
               queries = syncEngineImpl.queriesByTarget.get(queryView.targetId);
               if (queries.length > 1) {
                 syncEngineImpl.queriesByTarget.set(queryView.targetId, queries.filter(function(q) {
-                  return !queryEquals(q, query2);
+                  return !queryEquals(q, query3);
                 }));
-                syncEngineImpl.queryViewsByQuery.delete(query2);
+                syncEngineImpl.queryViewsByQuery.delete(query3);
                 return [2];
               }
               if (!syncEngineImpl.isPrimaryClient)
@@ -33041,7 +33041,7 @@ var require_index_node_cjs2 = __commonJS({
       var syncEngineImpl = debugCast(syncEngine);
       if (syncEngineImpl.isPrimaryClient && source === 0 || !syncEngineImpl.isPrimaryClient && source === 1) {
         var newViewSnapshots_1 = [];
-        syncEngineImpl.queryViewsByQuery.forEach(function(query2, queryView) {
+        syncEngineImpl.queryViewsByQuery.forEach(function(query3, queryView) {
           var viewChange = queryView.view.applyOnlineStateChange(onlineState);
           if (viewChange.snapshot) {
             newViewSnapshots_1.push(viewChange.snapshot);
@@ -34864,10 +34864,10 @@ var require_index_node_cjs2 = __commonJS({
       });
       return deferred.promise;
     }
-    function firestoreClientListen(client, query2, options2, observer) {
+    function firestoreClientListen(client, query3, options2, observer) {
       var _this = this;
       var wrappedObserver = new AsyncObserver(observer);
-      var listener = new QueryListener(query2, wrappedObserver, options2);
+      var listener = new QueryListener(query3, wrappedObserver, options2);
       client.asyncQueue.enqueueAndForget(function() {
         return tslib.__awaiter(_this, void 0, void 0, function() {
           var eventManager;
@@ -34941,7 +34941,7 @@ var require_index_node_cjs2 = __commonJS({
       });
       return deferred.promise;
     }
-    function firestoreClientGetDocumentsFromLocalCache(client, query2) {
+    function firestoreClientGetDocumentsFromLocalCache(client, query3) {
       var _this = this;
       var deferred = new Deferred();
       client.asyncQueue.enqueueAndForget(function() {
@@ -34953,14 +34953,14 @@ var require_index_node_cjs2 = __commonJS({
                 return [4, getLocalStore(client)];
               case 1:
                 localStore = _d.sent();
-                return [2, executeQueryFromCache(localStore, query2, deferred)];
+                return [2, executeQueryFromCache(localStore, query3, deferred)];
             }
           });
         });
       });
       return deferred.promise;
     }
-    function firestoreClientGetDocumentsViaSnapshotListener(client, query2, options2) {
+    function firestoreClientGetDocumentsViaSnapshotListener(client, query3, options2) {
       var _this = this;
       if (options2 === void 0) {
         options2 = {};
@@ -34975,7 +34975,7 @@ var require_index_node_cjs2 = __commonJS({
                 return [4, getEventManager(client)];
               case 1:
                 eventManager = _d.sent();
-                return [2, executeQueryViaSnapshotListener(eventManager, client.asyncQueue, query2, options2, deferred)];
+                return [2, executeQueryViaSnapshotListener(eventManager, client.asyncQueue, query3, options2, deferred)];
             }
           });
         });
@@ -35110,24 +35110,24 @@ var require_index_node_cjs2 = __commonJS({
       });
       return eventManagerListen(eventManager, listener);
     }
-    function executeQueryFromCache(localStore, query2, result) {
+    function executeQueryFromCache(localStore, query3, result) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var queryResult, view, viewDocChanges, viewChange, e_13, firestoreError;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
               _d.trys.push([0, 2, , 3]);
-              return [4, localStoreExecuteQuery(localStore, query2, true)];
+              return [4, localStoreExecuteQuery(localStore, query3, true)];
             case 1:
               queryResult = _d.sent();
-              view = new View(query2, queryResult.remoteKeys);
+              view = new View(query3, queryResult.remoteKeys);
               viewDocChanges = view.computeDocChanges(queryResult.documents);
               viewChange = view.applyChanges(viewDocChanges, false);
               result.resolve(viewChange.snapshot);
               return [3, 3];
             case 2:
               e_13 = _d.sent();
-              firestoreError = wrapInUserErrorIfRecoverable(e_13, "Failed to execute query '" + query2 + " against cache");
+              firestoreError = wrapInUserErrorIfRecoverable(e_13, "Failed to execute query '" + query3 + " against cache");
               result.reject(firestoreError);
               return [3, 3];
             case 3:
@@ -35136,7 +35136,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function executeQueryViaSnapshotListener(eventManager, asyncQueue, query2, options2, result) {
+    function executeQueryViaSnapshotListener(eventManager, asyncQueue, query3, options2, result) {
       var wrappedObserver = new AsyncObserver({
         next: function(snapshot) {
           asyncQueue.enqueueAndForget(function() {
@@ -35152,7 +35152,7 @@ var require_index_node_cjs2 = __commonJS({
           return result.reject(e);
         }
       });
-      var listener = new QueryListener(query2, wrappedObserver, {
+      var listener = new QueryListener(query3, wrappedObserver, {
         includeMetadataChanges: true,
         waitForSyncWhenOnline: true
       });
@@ -36927,12 +36927,12 @@ var require_index_node_cjs2 = __commonJS({
       return QueryDocumentSnapshot$12;
     }(DocumentSnapshot$1);
     var QuerySnapshot = function() {
-      function QuerySnapshot2(_firestore, _userDataWriter, query2, _snapshot) {
+      function QuerySnapshot2(_firestore, _userDataWriter, query3, _snapshot) {
         this._firestore = _firestore;
         this._userDataWriter = _userDataWriter;
         this._snapshot = _snapshot;
         this.metadata = new SnapshotMetadata(_snapshot.hasPendingWrites, _snapshot.fromCache);
-        this.query = query2;
+        this.query = query3;
       }
       Object.defineProperty(QuerySnapshot2.prototype, "docs", {
         get: function() {
@@ -37041,8 +37041,8 @@ var require_index_node_cjs2 = __commonJS({
       }
       return false;
     }
-    function validateHasExplicitOrderByForLimitToLast(query2) {
-      if (hasLimitToLast(query2) && query2.explicitOrderBy.length === 0) {
+    function validateHasExplicitOrderByForLimitToLast(query3) {
+      if (hasLimitToLast(query3) && query3.explicitOrderBy.length === 0) {
         throw new FirestoreError(Code.UNIMPLEMENTED, "limitToLast() queries require specifying at least one orderBy() clause");
       }
     }
@@ -37051,16 +37051,16 @@ var require_index_node_cjs2 = __commonJS({
       }
       return QueryConstraint2;
     }();
-    function query(query2) {
+    function query2(query3) {
       var queryConstraints = [];
       for (var _i = 1; _i < arguments.length; _i++) {
         queryConstraints[_i - 1] = arguments[_i];
       }
       for (var _d = 0, queryConstraints_1 = queryConstraints; _d < queryConstraints_1.length; _d++) {
         var constraint = queryConstraints_1[_d];
-        query2 = constraint._apply(query2);
+        query3 = constraint._apply(query3);
       }
-      return query2;
+      return query3;
     }
     var QueryFilterConstraint = function(_super) {
       tslib.__extends(QueryFilterConstraint2, _super);
@@ -37072,10 +37072,10 @@ var require_index_node_cjs2 = __commonJS({
         _this.type = "where";
         return _this;
       }
-      QueryFilterConstraint2.prototype._apply = function(query2) {
-        var reader = newUserDataReader(query2.firestore);
-        var filter = newQueryFilter(query2._query, "where", reader, query2.firestore._databaseId, this._field, this._op, this._value);
-        return new Query(query2.firestore, query2.converter, queryWithAddedFilter(query2._query, filter));
+      QueryFilterConstraint2.prototype._apply = function(query3) {
+        var reader = newUserDataReader(query3.firestore);
+        var filter = newQueryFilter(query3._query, "where", reader, query3.firestore._databaseId, this._field, this._op, this._value);
+        return new Query(query3.firestore, query3.converter, queryWithAddedFilter(query3._query, filter));
       };
       return QueryFilterConstraint2;
     }(QueryConstraint);
@@ -37093,9 +37093,9 @@ var require_index_node_cjs2 = __commonJS({
         _this.type = "orderBy";
         return _this;
       }
-      QueryOrderByConstraint2.prototype._apply = function(query2) {
-        var orderBy2 = newQueryOrderBy(query2._query, this._field, this._direction);
-        return new Query(query2.firestore, query2.converter, queryWithAddedOrderBy(query2._query, orderBy2));
+      QueryOrderByConstraint2.prototype._apply = function(query3) {
+        var orderBy2 = newQueryOrderBy(query3._query, this._field, this._direction);
+        return new Query(query3.firestore, query3.converter, queryWithAddedOrderBy(query3._query, orderBy2));
       };
       return QueryOrderByConstraint2;
     }(QueryConstraint);
@@ -37116,8 +37116,8 @@ var require_index_node_cjs2 = __commonJS({
         _this._limitType = _limitType;
         return _this;
       }
-      QueryLimitConstraint2.prototype._apply = function(query2) {
-        return new Query(query2.firestore, query2.converter, queryWithLimit(query2._query, this._limit, this._limitType));
+      QueryLimitConstraint2.prototype._apply = function(query3) {
+        return new Query(query3.firestore, query3.converter, queryWithLimit(query3._query, this._limit, this._limitType));
       };
       return QueryLimitConstraint2;
     }(QueryConstraint);
@@ -37138,9 +37138,9 @@ var require_index_node_cjs2 = __commonJS({
         _this._before = _before;
         return _this;
       }
-      QueryStartAtConstraint2.prototype._apply = function(query2) {
-        var bound = newQueryBoundFromDocOrFields(query2, this.type, this._docOrFields, this._before);
-        return new Query(query2.firestore, query2.converter, queryWithStartAt(query2._query, bound));
+      QueryStartAtConstraint2.prototype._apply = function(query3) {
+        var bound = newQueryBoundFromDocOrFields(query3, this.type, this._docOrFields, this._before);
+        return new Query(query3.firestore, query3.converter, queryWithStartAt(query3._query, bound));
       };
       return QueryStartAtConstraint2;
     }(QueryConstraint);
@@ -37167,9 +37167,9 @@ var require_index_node_cjs2 = __commonJS({
         _this._before = _before;
         return _this;
       }
-      QueryEndAtConstraint2.prototype._apply = function(query2) {
-        var bound = newQueryBoundFromDocOrFields(query2, this.type, this._docOrFields, this._before);
-        return new Query(query2.firestore, query2.converter, queryWithEndAt(query2._query, bound));
+      QueryEndAtConstraint2.prototype._apply = function(query3) {
+        var bound = newQueryBoundFromDocOrFields(query3, this.type, this._docOrFields, this._before);
+        return new Query(query3.firestore, query3.converter, queryWithEndAt(query3._query, bound));
       };
       return QueryEndAtConstraint2;
     }(QueryConstraint);
@@ -37187,16 +37187,16 @@ var require_index_node_cjs2 = __commonJS({
       }
       return new QueryEndAtConstraint("endAt", docOrFields, false);
     }
-    function newQueryBoundFromDocOrFields(query2, methodName, docOrFields, before) {
+    function newQueryBoundFromDocOrFields(query3, methodName, docOrFields, before) {
       docOrFields[0] = util.getModularInstance(docOrFields[0]);
       if (docOrFields[0] instanceof DocumentSnapshot) {
-        return newQueryBoundFromDocument(query2._query, query2.firestore._databaseId, methodName, docOrFields[0]._document, before);
+        return newQueryBoundFromDocument(query3._query, query3.firestore._databaseId, methodName, docOrFields[0]._document, before);
       } else {
-        var reader = newUserDataReader(query2.firestore);
-        return newQueryBoundFromFields(query2._query, query2.firestore._databaseId, reader, methodName, docOrFields, before);
+        var reader = newUserDataReader(query3.firestore);
+        return newQueryBoundFromFields(query3._query, query3.firestore._databaseId, reader, methodName, docOrFields, before);
       }
     }
-    function newQueryFilter(query2, methodName, dataReader, databaseId, fieldPath, op, value) {
+    function newQueryFilter(query3, methodName, dataReader, databaseId, fieldPath, op, value) {
       var fieldValue;
       if (fieldPath.isKeyField()) {
         if (op === "array-contains" || op === "array-contains-any") {
@@ -37206,11 +37206,11 @@ var require_index_node_cjs2 = __commonJS({
           var referenceList = [];
           for (var _i = 0, value_2 = value; _i < value_2.length; _i++) {
             var arrayValue = value_2[_i];
-            referenceList.push(parseDocumentIdValue(databaseId, query2, arrayValue));
+            referenceList.push(parseDocumentIdValue(databaseId, query3, arrayValue));
           }
           fieldValue = {arrayValue: {values: referenceList}};
         } else {
-          fieldValue = parseDocumentIdValue(databaseId, query2, value);
+          fieldValue = parseDocumentIdValue(databaseId, query3, value);
         }
       } else {
         if (op === "in" || op === "not-in" || op === "array-contains-any") {
@@ -37219,26 +37219,26 @@ var require_index_node_cjs2 = __commonJS({
         fieldValue = parseQueryValue(dataReader, methodName, value, op === "in" || op === "not-in");
       }
       var filter = FieldFilter.create(fieldPath, op, fieldValue);
-      validateNewFilter(query2, filter);
+      validateNewFilter(query3, filter);
       return filter;
     }
-    function newQueryOrderBy(query2, fieldPath, direction) {
-      if (query2.startAt !== null) {
+    function newQueryOrderBy(query3, fieldPath, direction) {
+      if (query3.startAt !== null) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. You must not call startAt() or startAfter() before calling orderBy().");
       }
-      if (query2.endAt !== null) {
+      if (query3.endAt !== null) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. You must not call endAt() or endBefore() before calling orderBy().");
       }
       var orderBy2 = new OrderBy(fieldPath, direction);
-      validateNewOrderBy(query2, orderBy2);
+      validateNewOrderBy(query3, orderBy2);
       return orderBy2;
     }
-    function newQueryBoundFromDocument(query2, databaseId, methodName, doc3, before) {
+    function newQueryBoundFromDocument(query3, databaseId, methodName, doc3, before) {
       if (!doc3) {
         throw new FirestoreError(Code.NOT_FOUND, "Can't use a DocumentSnapshot that doesn't exist for " + (methodName + "()."));
       }
       var components = [];
-      for (var _i = 0, _d = queryOrderBy(query2); _i < _d.length; _i++) {
+      for (var _i = 0, _d = queryOrderBy(query3); _i < _d.length; _i++) {
         var orderBy_5 = _d[_i];
         if (orderBy_5.field.isKeyField()) {
           components.push(refValue(databaseId, doc3.key));
@@ -37256,8 +37256,8 @@ var require_index_node_cjs2 = __commonJS({
       }
       return new Bound(components, before);
     }
-    function newQueryBoundFromFields(query2, databaseId, dataReader, methodName, values, before) {
-      var orderBy2 = query2.explicitOrderBy;
+    function newQueryBoundFromFields(query3, databaseId, dataReader, methodName, values, before) {
+      var orderBy2 = query3.explicitOrderBy;
       if (values.length > orderBy2.length) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Too many arguments provided to " + methodName + "(). The number of arguments must be less than or equal to the number of orderBy() clauses");
       }
@@ -37269,10 +37269,10 @@ var require_index_node_cjs2 = __commonJS({
           if (typeof rawValue !== "string") {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. Expected a string for document ID in " + (methodName + "(), but got a " + typeof rawValue));
           }
-          if (!isCollectionGroupQuery(query2) && rawValue.indexOf("/") !== -1) {
+          if (!isCollectionGroupQuery(query3) && rawValue.indexOf("/") !== -1) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. When querying a collection and ordering by FieldPath.documentId(), " + ("the value passed to " + methodName + "() must be a plain document ID, but ") + ("'" + rawValue + "' contains a slash."));
           }
-          var path2 = query2.path.child(ResourcePath.fromString(rawValue));
+          var path2 = query3.path.child(ResourcePath.fromString(rawValue));
           if (!DocumentKey.isDocumentKey(path2)) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. When querying a collection group and ordering by " + ("FieldPath.documentId(), the value passed to " + methodName + "() must result in a ") + ("valid document path, but '" + path2 + "' is not because it contains an odd number ") + "of segments.");
           }
@@ -37285,16 +37285,16 @@ var require_index_node_cjs2 = __commonJS({
       }
       return new Bound(components, before);
     }
-    function parseDocumentIdValue(databaseId, query2, documentIdValue) {
+    function parseDocumentIdValue(databaseId, query3, documentIdValue) {
       documentIdValue = util.getModularInstance(documentIdValue);
       if (typeof documentIdValue === "string") {
         if (documentIdValue === "") {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. When querying with FieldPath.documentId(), you must provide a valid document ID, but it was an empty string.");
         }
-        if (!isCollectionGroupQuery(query2) && documentIdValue.indexOf("/") !== -1) {
+        if (!isCollectionGroupQuery(query3) && documentIdValue.indexOf("/") !== -1) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. When querying a collection by FieldPath.documentId(), you must provide a plain document ID, but " + ("'" + documentIdValue + "' contains a '/' character."));
         }
-        var path2 = query2.path.child(ResourcePath.fromString(documentIdValue));
+        var path2 = query3.path.child(ResourcePath.fromString(documentIdValue));
         if (!DocumentKey.isDocumentKey(path2)) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. When querying a collection group by FieldPath.documentId(), the value provided must result in a valid document path, " + ("but '" + path2 + "' is not because it has an odd number of segments (" + path2.length + ")."));
         }
@@ -37344,18 +37344,18 @@ var require_index_node_cjs2 = __commonJS({
           return [];
       }
     }
-    function validateNewFilter(query2, filter) {
+    function validateNewFilter(query3, filter) {
       if (filter.isInequality()) {
-        var existingField = getInequalityFilterField(query2);
+        var existingField = getInequalityFilterField(query3);
         if (existingField !== null && !existingField.isEqual(filter.field)) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. All where filters with an inequality (<, <=, !=, not-in, >, or >=) must be on the same field. But you have" + (" inequality filters on '" + existingField.toString() + "'") + (" and '" + filter.field.toString() + "'"));
         }
-        var firstOrderByField = getFirstOrderByField(query2);
+        var firstOrderByField = getFirstOrderByField(query3);
         if (firstOrderByField !== null) {
-          validateOrderByAndInequalityMatch(query2, filter.field, firstOrderByField);
+          validateOrderByAndInequalityMatch(query3, filter.field, firstOrderByField);
         }
       }
-      var conflictingOp = findFilterOperator(query2, conflictingOps(filter.op));
+      var conflictingOp = findFilterOperator(query3, conflictingOps(filter.op));
       if (conflictingOp !== null) {
         if (conflictingOp === filter.op) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid query. You cannot use more than one " + ("'" + filter.op.toString() + "' filter."));
@@ -37364,11 +37364,11 @@ var require_index_node_cjs2 = __commonJS({
         }
       }
     }
-    function validateNewOrderBy(query2, orderBy2) {
-      if (getFirstOrderByField(query2) === null) {
-        var inequalityField = getInequalityFilterField(query2);
+    function validateNewOrderBy(query3, orderBy2) {
+      if (getFirstOrderByField(query3) === null) {
+        var inequalityField = getInequalityFilterField(query3);
         if (inequalityField !== null) {
-          validateOrderByAndInequalityMatch(query2, inequalityField, orderBy2.field);
+          validateOrderByAndInequalityMatch(query3, inequalityField, orderBy2.field);
         }
       }
     }
@@ -37662,34 +37662,34 @@ var require_index_node_cjs2 = __commonJS({
         return convertToDocSnapshot(firestore, reference, snapshot);
       });
     }
-    function getDocs(query2) {
-      query2 = cast(query2, Query);
-      var firestore = cast(query2.firestore, FirebaseFirestore$1);
+    function getDocs(query3) {
+      query3 = cast(query3, Query);
+      var firestore = cast(query3.firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      validateHasExplicitOrderByForLimitToLast(query2._query);
-      return firestoreClientGetDocumentsViaSnapshotListener(client, query2._query).then(function(snapshot) {
-        return new QuerySnapshot(firestore, userDataWriter, query2, snapshot);
+      validateHasExplicitOrderByForLimitToLast(query3._query);
+      return firestoreClientGetDocumentsViaSnapshotListener(client, query3._query).then(function(snapshot) {
+        return new QuerySnapshot(firestore, userDataWriter, query3, snapshot);
       });
     }
-    function getDocsFromCache(query2) {
-      query2 = cast(query2, Query);
-      var firestore = cast(query2.firestore, FirebaseFirestore$1);
+    function getDocsFromCache(query3) {
+      query3 = cast(query3, Query);
+      var firestore = cast(query3.firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      return firestoreClientGetDocumentsFromLocalCache(client, query2._query).then(function(snapshot) {
-        return new QuerySnapshot(firestore, userDataWriter, query2, snapshot);
+      return firestoreClientGetDocumentsFromLocalCache(client, query3._query).then(function(snapshot) {
+        return new QuerySnapshot(firestore, userDataWriter, query3, snapshot);
       });
     }
-    function getDocsFromServer(query2) {
-      query2 = cast(query2, Query);
-      var firestore = cast(query2.firestore, FirebaseFirestore$1);
+    function getDocsFromServer(query3) {
+      query3 = cast(query3, Query);
+      var firestore = cast(query3.firestore, FirebaseFirestore$1);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      return firestoreClientGetDocumentsViaSnapshotListener(client, query2._query, {
+      return firestoreClientGetDocumentsViaSnapshotListener(client, query3._query, {
         source: "server"
       }).then(function(snapshot) {
-        return new QuerySnapshot(firestore, userDataWriter, query2, snapshot);
+        return new QuerySnapshot(firestore, userDataWriter, query3, snapshot);
       });
     }
     function setDoc2(reference, data, options2) {
@@ -37918,7 +37918,7 @@ var require_index_node_cjs2 = __commonJS({
     exports2.onSnapshot = onSnapshot;
     exports2.onSnapshotsInSync = onSnapshotsInSync;
     exports2.orderBy = orderBy;
-    exports2.query = query;
+    exports2.query = query2;
     exports2.queryEqual = queryEqual;
     exports2.refEqual = refEqual;
     exports2.runTransaction = runTransaction;
@@ -40311,7 +40311,7 @@ var parse = import_dist.default.parse;
 // .svelte-kit/output/server/app.js
 var import_app = __toModule(require_index_cjs3());
 var import_firestore = __toModule(require_index_node_cjs2());
-var css$a = {
+var css$8 = {
   code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
   map: `{"version":3,"file":"root.svelte","sources":["root.svelte"],"sourcesContent":["<!-- This file is generated by @sveltejs/kit \u2014 do not edit it! -->\\n<script>\\n\\timport { setContext, afterUpdate, onMount } from 'svelte';\\n\\n\\t// stores\\n\\texport let stores;\\n\\texport let page;\\n\\n\\texport let components;\\n\\texport let props_0 = null;\\n\\texport let props_1 = null;\\n\\texport let props_2 = null;\\n\\n\\tsetContext('__svelte__', stores);\\n\\n\\t$: stores.page.set(page);\\n\\tafterUpdate(stores.page.notify);\\n\\n\\tlet mounted = false;\\n\\tlet navigated = false;\\n\\tlet title = null;\\n\\n\\tonMount(() => {\\n\\t\\tconst unsubscribe = stores.page.subscribe(() => {\\n\\t\\t\\tif (mounted) {\\n\\t\\t\\t\\tnavigated = true;\\n\\t\\t\\t\\ttitle = document.title || 'untitled page';\\n\\t\\t\\t}\\n\\t\\t});\\n\\n\\t\\tmounted = true;\\n\\t\\treturn unsubscribe;\\n\\t});\\n</script>\\n\\n<svelte:component this={components[0]} {...(props_0 || {})}>\\n\\t{#if components[1]}\\n\\t\\t<svelte:component this={components[1]} {...(props_1 || {})}>\\n\\t\\t\\t{#if components[2]}\\n\\t\\t\\t\\t<svelte:component this={components[2]} {...(props_2 || {})}/>\\n\\t\\t\\t{/if}\\n\\t\\t</svelte:component>\\n\\t{/if}\\n</svelte:component>\\n\\n{#if mounted}\\n\\t<div id=\\"svelte-announcer\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\">\\n\\t\\t{#if navigated}\\n\\t\\t\\t{title}\\n\\t\\t{/if}\\n\\t</div>\\n{/if}\\n\\n<style>\\n\\t#svelte-announcer {\\n\\t\\tposition: absolute;\\n\\t\\tleft: 0;\\n\\t\\ttop: 0;\\n\\t\\tclip: rect(0 0 0 0);\\n\\t\\tclip-path: inset(50%);\\n\\t\\toverflow: hidden;\\n\\t\\twhite-space: nowrap;\\n\\t\\twidth: 1px;\\n\\t\\theight: 1px;\\n\\t}\\n</style>"],"names":[],"mappings":"AAsDC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACnB,SAAS,CAAE,MAAM,GAAG,CAAC,CACrB,QAAQ,CAAE,MAAM,CAChB,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,AACZ,CAAC"}`
 };
@@ -40349,7 +40349,7 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.props_1(props_1);
   if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
     $$bindings.props_2(props_2);
-  $$result.css.add(css$a);
+  $$result.css.add(css$8);
   {
     stores.page.set(page);
   }
@@ -40381,9 +40381,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-e20f5f9d.js",
+      file: "/./_app/start-60e48c85.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-e20f5f9d.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-60e48c85.js", "/./_app/chunks/vendor-35e22860.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40459,7 +40459,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-cde823ce.js", "css": ["/./_app/assets/pages/__layout.svelte-db54a448.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/__layout.svelte-cde823ce.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-3fe5331e.js", "css": [], "js": ["/./_app/error.svelte-3fe5331e.js", "/./_app/chunks/vendor-4ca4fcab.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-6fe75749.js", "css": ["/./_app/assets/pages/index.svelte-d7155129.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/index.svelte-6fe75749.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-6ea80649.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-ed2f0ee5.css", "/./_app/assets/BasicButton-dd399967.css"], "js": ["/./_app/pages/poll/[slug].svelte-6ea80649.js", "/./_app/chunks/vendor-4ca4fcab.js", "/./_app/chunks/BasicButton-ae38cb15.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-374f4619.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-374f4619.js", "/./_app/chunks/vendor-4ca4fcab.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-e75b3982.js", "css": ["/./_app/assets/pages/__layout.svelte-15d825eb.css", "/./_app/assets/Box-a9b0b6fe.css"], "js": ["/./_app/pages/__layout.svelte-e75b3982.js", "/./_app/chunks/vendor-35e22860.js", "/./_app/chunks/Box-afd8ae20.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-8099de63.js", "css": [], "js": ["/./_app/error.svelte-8099de63.js", "/./_app/chunks/vendor-35e22860.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-1b929b3c.js", "css": ["/./_app/assets/Box-a9b0b6fe.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-1b929b3c.js", "/./_app/chunks/vendor-35e22860.js", "/./_app/chunks/Box-afd8ae20.js", "/./_app/chunks/FloatingRow-06abe5fe.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-6666b8e8.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-67bf8350.css", "/./_app/assets/Box-a9b0b6fe.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-6666b8e8.js", "/./_app/chunks/vendor-35e22860.js", "/./_app/chunks/Box-afd8ae20.js", "/./_app/chunks/FloatingRow-06abe5fe.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-2425003f.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-2425003f.js", "/./_app/chunks/vendor-35e22860.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40478,7 +40478,9 @@ var PollStream = class {
     this.__type = "PollStream";
     this.title = "";
     this.description = "";
+    this.onUpdateFunction = () => void 0;
     this.id = v4();
+    this.addPoll(new Poll());
   }
   getPolls() {
     return [...this.polls];
@@ -40511,6 +40513,8 @@ var Poll = class {
     this.singleChoice = true;
     this.listeners = [];
     this.__type = "Poll";
+    this.addChoice(new Choice());
+    this.addChoice(new Choice());
   }
   getChoices() {
     return [...this.choices];
@@ -40689,8 +40693,8 @@ var Main = class {
   async newPollStream() {
     var pollStream = new PollStream();
     pollStream.onUpdate(() => main.writePollStream(pollStream));
-    main.writePollStream(pollStream);
-    main.userData.addPollStreamId(pollStream.id);
+    await main.writePollStream(pollStream);
+    await main.userData.addPollStreamId(pollStream.id);
     return pollStream;
   }
 };
@@ -40743,22 +40747,21 @@ var UserData = class {
     return this.pollStreamIds.includes(pollStreamId2);
   }
 };
-var css$9 = {
-  code: "button.svelte-h0soh2{position:relative;cursor:pointer;text-align:center;font-size:medium;font-weight:500;padding:16px 24px;margin:0 auto;background-color:var(--c_blue);color:var(--c_white);border:none;border-radius:50px;box-shadow:0px 4px 10px var(--c_light)}button.svelte-h0soh2:hover{background-color:var(--c_blue_dark)}",
-  map: '{"version":3,"file":"BasicButton.svelte","sources":["BasicButton.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\texport let onclick = () => undefined;\\r\\n</script>\\r\\n\\r\\n<button on:click={onclick}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n<style>\\r\\n\\tbutton {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-size: medium;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\t\\r\\n\\t\\tpadding: 16px 24px;\\r\\n\\t\\tmargin: 0 auto;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\t\\r\\n\\t\\tborder: none;\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n\\tbutton:hover {\\r\\n\\t\\tbackground-color: var(--c_blue_dark);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAUC,MAAM,cAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,MAAM,CAAE,OAAO,CAEf,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,GAAG,CAEhB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,MAAM,CAAE,CAAC,CAAC,IAAI,CAEd,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CAErB,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,CACnB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC,AAED,oBAAM,MAAM,AAAC,CAAC,AACb,gBAAgB,CAAE,IAAI,aAAa,CAAC,AACrC,CAAC"}'
+var css$7 = {
+  code: "button.svelte-1e3f1rj{position:relative;cursor:pointer;text-align:center;font-size:medium;font-weight:500;padding:16px 24px;margin:0;background-color:var(--c_blue);color:var(--c_white);border:none;border-radius:50px;box-shadow:0px 4px 10px var(--c_light)}button.svelte-1e3f1rj:hover{background-color:var(--c_blue_dark)}",
+  map: '{"version":3,"file":"BasicButton.svelte","sources":["BasicButton.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">export let onclick = () => undefined;\\r\\nexport let style = \\"\\";\\r\\n</script>\\r\\n\\r\\n\\r\\n<button on:click={onclick} {style}>\\r\\n\\t<slot></slot>\\r\\n</button>\\r\\n\\r\\n\\r\\n<style>\\r\\n\\tbutton {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-size: medium;\\r\\n\\t\\tfont-weight: 500;\\r\\n\\t\\t\\r\\n\\t\\tpadding: 16px 24px;\\r\\n\\t\\tmargin: 0;\\r\\n\\r\\n\\t\\tbackground-color: var(--c_blue);\\r\\n\\t\\tcolor: var(--c_white);\\r\\n\\t\\t\\r\\n\\t\\tborder: none;\\r\\n\\t\\tborder-radius: 50px;\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n\\tbutton:hover {\\r\\n\\t\\tbackground-color: var(--c_blue_dark);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAYC,MAAM,eAAC,CAAC,AACP,QAAQ,CAAE,QAAQ,CAClB,MAAM,CAAE,OAAO,CAEf,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,GAAG,CAEhB,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,MAAM,CAAE,CAAC,CAET,gBAAgB,CAAE,IAAI,QAAQ,CAAC,CAC/B,KAAK,CAAE,IAAI,SAAS,CAAC,CAErB,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,IAAI,CACnB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACb,gBAAgB,CAAE,IAAI,aAAa,CAAC,AACrC,CAAC"}'
 };
 var BasicButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {onclick = () => void 0} = $$props;
+  let {style = ""} = $$props;
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
-  $$result.css.add(css$9);
-  return `<button class="${"svelte-h0soh2"}">${slots.default ? slots.default({}) : ``}
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  $$result.css.add(css$7);
+  return `<button${add_attribute("style", style, 0)} class="${"svelte-1e3f1rj"}">${slots.default ? slots.default({}) : ``}
 </button>`;
 });
-var css$8 = {
-  code: ".container.svelte-bco1ed{display:flex;flex-flow:column nowrap;align-items:flex-end;height:max-content;padding:12pt}",
-  map: `{"version":3,"file":"GoogleButton.svelte","sources":["GoogleButton.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from \\"$lib/main\\";\\r\\nimport { fade } from 'svelte/transition';\\r\\nimport BasicButton from \\"$lib/BasicButton.svelte\\";\\r\\nimport { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from \\"@firebase/auth\\";\\r\\nlet isExpanded = false;\\r\\nlet imgSrc;\\r\\nonAuthStateChanged(main.auth, (user) => {\\r\\n    if (user) {\\r\\n        imgSrc = user.photoURL;\\r\\n    }\\r\\n    else {\\r\\n        imgSrc = null;\\r\\n    }\\r\\n});\\r\\nfunction signIn() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var provider = new GoogleAuthProvider();\\r\\n        yield signInWithRedirect(main.auth, provider);\\r\\n    });\\r\\n}\\r\\nfunction signOut() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        yield main.auth.signOut();\\r\\n        isExpanded = false;\\r\\n    });\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class = \\"container\\">\\r\\n\\t{#if isExpanded}\\r\\n\\t\\t<div in:fade on:mouseout={() => isExpanded = false}>\\r\\n\\t\\t\\t<BasicButton onclick={signOut}>\\r\\n\\t\\t\\t\\tSign out\\r\\n\\t\\t\\t</BasicButton>\\r\\n\\t\\t</div>\\r\\n\\t{:else}\\r\\n\\t\\t{#if imgSrc}\\r\\n\\t\\t\\t<img src={imgSrc}\\r\\n\\t\\t\\t\\talt=\\"Google Profile\\"\\r\\n\\t\\t\\t\\tstyle=\\"border-radius: 50%; width: 36pt; cursor:pointer;\\"\\r\\n\\t\\t\\t\\ton:click={() => isExpanded = !isExpanded}\\r\\n\\t\\t\\t\\tin:fade>\\r\\n\\t\\t{:else if imgSrc === null}\\r\\n\\t\\t\\t<div in:fade on:click={signIn}>\\r\\n\\t\\t\\t\\t<BasicButton>\\r\\n\\t\\t\\t\\t\\tSign in\\r\\n\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t</div>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: column nowrap;\\r\\n\\t\\talign-items: flex-end;\\r\\n\\t\\theight: max-content;\\r\\n\\t\\tpadding: 12pt;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA+DC,UAAU,cAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,MAAM,CAAC,MAAM,CACxB,WAAW,CAAE,QAAQ,CACrB,MAAM,CAAE,WAAW,CACnB,OAAO,CAAE,IAAI,AACd,CAAC"}`
-};
 var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   (function(thisArg, _arguments, P, generator) {
     function adopt(value) {
@@ -40795,24 +40798,79 @@ var GoogleButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
       imgSrc = null;
     }
   });
-  $$result.css.add(css$8);
-  return `<div class="${"container svelte-bco1ed"}">${`${imgSrc ? `<img${add_attribute("src", imgSrc, 0)} alt="${"Google Profile"}" style="${"border-radius: 50%; width: 36pt; cursor:pointer;"}">` : `${imgSrc === null ? `<div>${validate_component(BasicButton, "BasicButton").$$render($$result, {}, {}, {
+  return `${`${imgSrc ? `<img${add_attribute("src", imgSrc, 0)} alt="${"Google Profile"}" style="${"border-radius: 50%; width: 36pt; cursor:pointer;"}">` : `${imgSrc === null ? `<div>${validate_component(BasicButton, "BasicButton").$$render($$result, {}, {}, {
     default: () => `Sign in
-				`
-  })}</div>` : ``}`}`}
+			`
+  })}</div>` : ``}`}`}`;
+});
+var css$6 = {
+  code: ".row.svelte-16gu20r{display:flex;flex-flow:row;justify-content:space-between;align-items:flex-start;align-content:center;width:100%;height:100%}",
+  map: '{"version":3,"file":"Row.svelte","sources":["Row.svelte"],"sourcesContent":["<script lang=\\"ts\\">export let style = \\"\\";\\r\\n</script>\\r\\n\\r\\n<div class=\\"row\\" style={style}>\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.row {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: row;\\r\\n\\t\\tjustify-content: space-between;\\r\\n\\t\\talign-items: flex-start;\\r\\n\\t\\talign-content: center;\\r\\n\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t}\\r\\n</style>"],"names":[],"mappings":"AAQC,IAAI,eAAC,CAAC,AACL,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,eAAe,CAAE,aAAa,CAC9B,WAAW,CAAE,UAAU,CACvB,aAAa,CAAE,MAAM,CAErB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACb,CAAC"}'
+};
+var Row = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {style = ""} = $$props;
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  $$result.css.add(css$6);
+  return `<div class="${"row svelte-16gu20r"}"${add_attribute("style", style, 0)}>${slots.default ? slots.default({}) : ``}
 </div>`;
 });
-var css$7 = {
-  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_blue_dark:#2152C2;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#122A3C;--c_light:#B4C5D3}.container.svelte-xxipw0.svelte-xxipw0{display:flex;flex-flow:column nowrap;align-items:center;width:100%}.rowcontainer{display:flex;flex-flow:row nowrap;align-items:flex-start;justify-content:space-between;width:90vw;max-width:600px}.logo.svelte-xxipw0 a.svelte-xxipw0{text-align:center;font-family:'Fredoka One', cursive;color:#0086E5;text-decoration:none}body.svelte-xxipw0.svelte-xxipw0{font-family:'Roboto', sans-serif;padding:0;background-color:var(--c_white);color:var(--c_dark)}",
-  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport GoogleButton from '$lib/GoogleButton.svelte';\\r\\n</script>\\r\\n\\r\\n<body>\\r\\n\\t<div class=\\"container\\">\\r\\n\\t\\t<div class=\\"rowcontainer\\">\\r\\n\\t\\t\\t<h1 class=\\"logo\\">\\t\\r\\n\\t\\t\\t\\t<a href=\\"/\\">\\r\\n\\t\\t\\t\\t\\t<img src=\\"/poll-stream.svg\\" alt=\\"Poll.stream Logo\\" style=\\"display:inline; width:36pt;\\">\\r\\n\\t\\t\\t\\t\\tPoll.stream\\r\\n\\t\\t\\t\\t</a>\\r\\n\\t\\t\\t</h1>\\r\\n\\t\\t\\t<GoogleButton></GoogleButton>\\r\\n\\t\\t</div>\\r\\n\\t\\t<slot></slot>\\r\\n\\t</div>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_blue_dark: #2152C2;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #122A3C;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t}\\r\\n\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: column nowrap;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\r\\n\\t:global(.rowcontainer) {\\r\\n\\t\\tdisplay: flex;\\r\\n  \\t\\tflex-flow: row nowrap;\\r\\n\\t\\talign-items: flex-start;\\r\\n\\t\\tjustify-content: space-between;\\r\\n\\t\\twidth: 90vw;\\r\\n\\t\\tmax-width: 600px;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: #0086E5;\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n        padding: 0;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t\\tcolor: var(--c_dark);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAqBC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,aAAa,CAAE,OAAO,CACtB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,UAAU,4BAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,MAAM,CAAC,MAAM,CAC1B,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,IAAI,AACZ,CAAC,AAEO,aAAa,AAAE,CAAC,AACvB,OAAO,CAAE,IAAI,CACX,SAAS,CAAE,GAAG,CAAC,MAAM,CACvB,WAAW,CAAE,UAAU,CACvB,eAAe,CAAE,aAAa,CAC9B,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,KAAK,AACjB,CAAC,AAED,mBAAK,CAAC,CAAC,cAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,IAAI,AACtB,CAAC,AAEE,IAAI,4BAAC,CAAC,AACR,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAC3B,OAAO,CAAE,CAAC,CAChB,gBAAgB,CAAE,IAAI,SAAS,CAAC,CAChC,KAAK,CAAE,IAAI,QAAQ,CAAC,AACrB,CAAC"}`
+var css$5 = {
+  code: ".column.svelte-szarjx{display:flex;flex-flow:column;justify-content:space-around;align-items:stretch;align-content:center;width:100%;height:100%}",
+  map: '{"version":3,"file":"Column.svelte","sources":["Column.svelte"],"sourcesContent":["<script lang=\\"ts\\">export let style = \\"\\";\\r\\n</script>\\r\\n\\r\\n<div class=\\"column\\" style={style}>\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.column {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: column;\\r\\n\\t\\tjustify-content: space-around;\\r\\n\\t\\talign-items: stretch;\\r\\n\\t\\talign-content: center;\\r\\n\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAQC,OAAO,cAAC,CAAC,AACR,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,MAAM,CACjB,eAAe,CAAE,YAAY,CAC7B,WAAW,CAAE,OAAO,CACpB,aAAa,CAAE,MAAM,CAErB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACb,CAAC"}'
+};
+var Column = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {style = ""} = $$props;
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  $$result.css.add(css$5);
+  return `<div class="${"column svelte-szarjx"}"${add_attribute("style", style, 0)}>${slots.default ? slots.default({}) : ``}
+</div>`;
+});
+var css$4 = {
+  code: ".box.svelte-13s2hvk{padding:10pt;margin-top:5pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-color:var(--c_light);border-width:2pt;border-radius:10pt;cursor:pointer;flex:1}.box.svelte-13s2hvk:hover{box-shadow:0px 4px 10px var(--c_light)}",
+  map: `{"version":3,"file":"Box.svelte","sources":["Box.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { fade } from \\"svelte/transition\\";\\r\\nimport Column from '$lib/Column.svelte';\\r\\nexport let style = \\"\\";\\r\\nexport let onclick = () => undefined;\\r\\nexport let visible = true;\\r\\n</script>\\r\\n\\r\\n<div class=\\"box\\" style={visible ? style : \\"border:none; text-align:center; box-shadow:none; cursor:inherit;\\" + style} on:click={onclick} in:fade>\\r\\n\\t<Column>\\r\\n\\t\\t<slot></slot>\\r\\n\\t</Column>\\t\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.box {\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 5pt;\\r\\n\\t\\tmargin-bottom: 5pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\r\\n\\t\\tflex: 1;\\r\\n\\t}\\r\\n\\r\\n\\t.box:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>"],"names":[],"mappings":"AAcC,IAAI,eAAC,CAAC,AACL,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,GAAG,CACf,aAAa,CAAE,GAAG,CAClB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,YAAY,CAAE,GAAG,CACjB,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,CAEf,IAAI,CAAE,CAAC,AACR,CAAC,AAED,mBAAI,MAAM,AAAC,CAAC,AACX,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+};
+var Box = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {style = ""} = $$props;
+  let {onclick = () => void 0} = $$props;
+  let {visible = true} = $$props;
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
+    $$bindings.onclick(onclick);
+  if ($$props.visible === void 0 && $$bindings.visible && visible !== void 0)
+    $$bindings.visible(visible);
+  $$result.css.add(css$4);
+  return `<div class="${"box svelte-13s2hvk"}"${add_attribute("style", visible ? style : "border:none; text-align:center; box-shadow:none; cursor:inherit;" + style, 0)}>${validate_component(Column, "Column").$$render($$result, {}, {}, {
+    default: () => `${slots.default ? slots.default({}) : ``}`
+  })}	
+</div>`;
+});
+var css$3 = {
+  code: "@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');:root{--c_blue:#0086E5;--c_blue_dark:#2152C2;--c_yellow:#FFBB33;--c_white:#FFFFFF;--c_dark:#122A3C;--c_light:#B4C5D3;--c_red:#f64882;--c_green:#19b655}.logo.svelte-1dhqgpe a.svelte-1dhqgpe{text-align:center;font-family:'Fredoka One', cursive;color:var(--c_blue);text-decoration:none}.logo.svelte-1dhqgpe a.svelte-1dhqgpe:hover{color:var(--c_blue_dark)}body.svelte-1dhqgpe.svelte-1dhqgpe{font-family:'Roboto', sans-serif;padding:0;background-color:var(--c_white);color:var(--c_dark)}input{margin:0;padding-top:10pt;font-size:1em;max-width:70%;flex:1;border:none;border-bottom:2px solid var(--c_dark)}input:focus{outline:none}",
+  map: `{"version":3,"file":"__layout.svelte","sources":["__layout.svelte"],"sourcesContent":["\\r\\n<script>\\r\\n\\timport GoogleButton from '$lib/GoogleButton.svelte';\\r\\n\\timport Row from '$lib/Row.svelte';\\r\\n\\timport Column from '$lib/Column.svelte';\\r\\n\\timport Box from '$lib/Box.svelte';\\r\\n</script>\\r\\n\\r\\n<body>\\r\\n\\t<Column style=\\"max-width: 100vw; align-items: center;\\">\\r\\n\\t\\t<Column style=\\"max-width: 800px;\\">\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t<h1 class=\\"logo\\">\\t\\r\\n\\t\\t\\t\\t\\t<a href=\\"/\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\"/poll-stream.svg\\" alt=\\"Poll.stream Logo\\" style=\\"display:inline; width:36pt;\\">\\r\\n\\t\\t\\t\\t\\t\\tPoll.stream\\r\\n\\t\\t\\t\\t\\t</a>\\r\\n\\t\\t\\t\\t</h1>\\r\\n\\t\\t\\t\\t<GoogleButton></GoogleButton>\\r\\n\\t\\t\\t</Row>\\r\\n\\r\\n\\t\\t\\t<slot></slot>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t<Box visible={false}><div style=\\"height:100px;\\"></div></Box>\\r\\n\\t\\t</Column>\\r\\n\\t</Column>\\r\\n</body>\\r\\n\\r\\n<style>\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');\\r\\n\\t@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');\\r\\n\\r\\n\\t:root {\\r\\n\\t\\t--c_blue: #0086E5;\\r\\n\\t\\t--c_blue_dark: #2152C2;\\r\\n\\t\\t--c_yellow: #FFBB33;\\r\\n\\t\\t--c_white: #FFFFFF;\\r\\n\\t\\t--c_dark: #122A3C;\\r\\n\\t\\t--c_light: #B4C5D3;\\r\\n\\t\\t--c_red: #f64882;\\r\\n\\t\\t--c_green: #19b655;\\r\\n\\t}\\r\\n\\t\\r\\n\\t.logo a {\\r\\n\\t\\ttext-align: center;\\r\\n\\t\\tfont-family: 'Fredoka One', cursive;\\r\\n\\t\\tcolor: var(--c_blue);\\r\\n\\t\\ttext-decoration: none;\\r\\n\\t}\\r\\n\\r\\n\\t.logo a:hover {\\r\\n\\t\\tcolor: var(--c_blue_dark);\\r\\n\\t}\\r\\n\\r\\n    body {\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n        padding: 0;\\r\\n\\t\\tbackground-color: var(--c_white);\\r\\n\\t\\tcolor: var(--c_dark);\\r\\n\\t}\\r\\n\\r\\n\\t:global(input) {\\r\\n\\t\\tmargin: 0;\\r\\n\\t\\tpadding-top: 10pt;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\tmax-width: 70%;\\r\\n\\t\\tflex: 1;\\r\\n\\t\\tborder: none;\\r\\n\\t\\tborder-bottom: 2px solid var(--c_dark);\\r\\n\\t}\\r\\n\\r\\n\\t:global(input:focus){\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA6BC,QAAQ,IAAI,mEAAmE,CAAC,CAAC,AACjF,QAAQ,IAAI,gJAAgJ,CAAC,CAAC,AAE9J,KAAK,AAAC,CAAC,AACN,QAAQ,CAAE,OAAO,CACjB,aAAa,CAAE,OAAO,CACtB,UAAU,CAAE,OAAO,CACnB,SAAS,CAAE,OAAO,CAClB,QAAQ,CAAE,OAAO,CACjB,SAAS,CAAE,OAAO,CAClB,OAAO,CAAE,OAAO,CAChB,SAAS,CAAE,OAAO,AACnB,CAAC,AAED,oBAAK,CAAC,CAAC,eAAC,CAAC,AACR,UAAU,CAAE,MAAM,CAClB,WAAW,CAAE,aAAa,CAAC,CAAC,OAAO,CACnC,KAAK,CAAE,IAAI,QAAQ,CAAC,CACpB,eAAe,CAAE,IAAI,AACtB,CAAC,AAED,oBAAK,CAAC,gBAAC,MAAM,AAAC,CAAC,AACd,KAAK,CAAE,IAAI,aAAa,CAAC,AAC1B,CAAC,AAEE,IAAI,8BAAC,CAAC,AACR,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CAC3B,OAAO,CAAE,CAAC,CAChB,gBAAgB,CAAE,IAAI,SAAS,CAAC,CAChC,KAAK,CAAE,IAAI,QAAQ,CAAC,AACrB,CAAC,AAEO,KAAK,AAAE,CAAC,AACf,MAAM,CAAE,CAAC,CACT,WAAW,CAAE,IAAI,CACjB,SAAS,CAAE,GAAG,CACd,SAAS,CAAE,GAAG,CACd,IAAI,CAAE,CAAC,CACP,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,GAAG,CAAC,KAAK,CAAC,IAAI,QAAQ,CAAC,AACvC,CAAC,AAEO,WAAW,AAAC,CAAC,AACpB,OAAO,CAAE,IAAI,AACd,CAAC"}`
 };
 var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$7);
-  return `<body class="${"svelte-xxipw0"}"><div class="${"container svelte-xxipw0"}"><div class="${"rowcontainer svelte-xxipw0"}"><h1 class="${"logo svelte-xxipw0"}"><a href="${"/"}" class="${"svelte-xxipw0"}"><img src="${"/poll-stream.svg"}" alt="${"Poll.stream Logo"}" style="${"display:inline; width:36pt;"}" class="${"svelte-xxipw0"}">
-					Poll.stream
-				</a></h1>
-			${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}</div>
-		${slots.default ? slots.default({}) : ``}</div>
+  $$result.css.add(css$3);
+  return `<body class="${"svelte-1dhqgpe"}">${validate_component(Column, "Column").$$render($$result, {
+    style: "max-width: 100vw; align-items: center;"
+  }, {}, {
+    default: () => `${validate_component(Column, "Column").$$render($$result, {style: "max-width: 800px;"}, {}, {
+      default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+        default: () => `<h1 class="${"logo svelte-1dhqgpe"}"><a href="${"/"}" class="${"svelte-1dhqgpe"}"><img src="${"/poll-stream.svg"}" alt="${"Poll.stream Logo"}" style="${"display:inline; width:36pt;"}" class="${"svelte-1dhqgpe"}">
+						Poll.stream
+					</a></h1>
+				${validate_component(GoogleButton, "GoogleButton").$$render($$result, {}, {}, {})}`
+      })}
+
+			${slots.default ? slots.default({}) : ``}
+			
+			${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
+        default: () => `<div style="${"height:100px;"}" class="${"svelte-1dhqgpe"}"></div>`
+      })}`
+    })}`
+  })}
 </body>`;
 });
 var __layout = /* @__PURE__ */ Object.freeze({
@@ -40823,7 +40881,7 @@ var __layout = /* @__PURE__ */ Object.freeze({
 function load$2({error: error22, status}) {
   return {props: {error: error22, status}};
 }
-var Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+var Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {status} = $$props;
   let {error: error22} = $$props;
   if ($$props.status === void 0 && $$bindings.status && status !== void 0)
@@ -40840,13 +40898,52 @@ ${error22.stack ? `<pre>${escape2(error22.stack)}</pre>` : ``}`;
 var error2 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": Error2,
+  "default": Error$1,
   load: load$2
 });
-var css$6 = {
-  code: ".container.svelte-1ef33l8{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:5pt;margin-left:5pt;margin-right:5pt;border-style:solid;border-width:2pt;border-radius:10pt;border-color:var(--c_light)}.container.svelte-1ef33l8:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollStreamTile.svelte","sources":["PollStreamTile.svelte"],"sourcesContent":["<script lang=\\"ts\\">import { goto } from '$app/navigation';\\r\\nimport { fade } from 'svelte/transition';\\r\\n;\\r\\nexport let remove = () => undefined;\\r\\nexport let pollStream;\\r\\n</script>\\r\\n\\r\\n{#if pollStream != undefined}\\r\\n\\t<div class=\\"container\\" in:fade>\\r\\n\\t\\t<div on:click={() => goto(\\"/poll/\\" + pollStream.id)} style=\\"cursor: pointer;\\">\\r\\n\\t\\t\\t<h2>{pollStream.title ? pollStream.title : \\"Untitled Poll Stream\\"}</h2>\\r\\n\\t\\t\\t<p>ID: {pollStream.id}</p>\\r\\n\\t\\t</div>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t</div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 5pt;\\r\\n\\t\\tmargin-left: 5pt;\\r\\n\\t\\tmargin-right: 5pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAkBC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,aAAa,CAAE,IAAI,CACnB,YAAY,CAAE,IAAI,SAAS,CAAC,AAC7B,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
-};
+function guard(name) {
+  return () => {
+    throw new Error(`Cannot call ${name}(...) on the server`);
+  };
+}
+var goto = guard("goto");
+var ConfirmationButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {onclick = () => void 0} = $$props;
+  let {time = 2e3} = $$props;
+  let {style = ""} = $$props;
+  let showConfirm = false;
+  let timer;
+  function firstClick() {
+    clearTimeout(timer);
+    showConfirm = true;
+    timer = setTimeout(() => showConfirm = false, time);
+  }
+  function mouseOut() {
+    clearTimeout(timer);
+    showConfirm = false;
+  }
+  function onClick() {
+    mouseOut();
+    onclick();
+  }
+  if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
+    $$bindings.onclick(onclick);
+  if ($$props.time === void 0 && $$bindings.time && time !== void 0)
+    $$bindings.time(time);
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  return `${!showConfirm ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: firstClick, style}, {}, {
+    default: () => `${slots.default ? slots.default({}) : ``}`
+  })}` : `
+		${validate_component(BasicButton, "BasicButton").$$render($$result, {
+    onclick: onClick,
+    style: "background-color:var(--c_yellow); color:var(--c_dark);"
+  }, {}, {
+    default: () => `Confirm
+		`
+  })}
+	`}`;
+});
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {remove = () => void 0} = $$props;
   let {pollStream} = $$props;
@@ -40854,27 +40951,31 @@ var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots)
     $$bindings.remove(remove);
   if ($$props.pollStream === void 0 && $$bindings.pollStream && pollStream !== void 0)
     $$bindings.pollStream(pollStream);
-  $$result.css.add(css$6);
-  return `${pollStream != void 0 ? `<div class="${"container svelte-1ef33l8"}"><div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title ? pollStream.title : "Untitled Poll Stream")}</h2>
-			<p>ID: ${escape2(pollStream.id)}</p></div>
-		<button>Delete</button></div>` : ``}`;
+  return `${pollStream != void 0 ? `${validate_component(Box, "Box").$$render($$result, {}, {}, {
+    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+        default: () => `<div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title ? pollStream.title : "Untitled Poll Stream")}</h2>
+					<p>ID: ${escape2(pollStream.id)}</p></div>`
+      })}
+			${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+        onclick: remove,
+        style: "background-color: var(--c_red);"
+      }, {}, {default: () => `Delete `})}`
+    })}`
+  })}` : ``}`;
 });
-var css$5 = {
-  code: ".container.svelte-p0i353{width:90vw;max-width:600px;height:100%;display:flex;flex-direction:column}",
-  map: '{"version":3,"file":"PollStreamTileContainer.svelte","sources":["PollStreamTileContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 90vw;\\r\\n\\t\\tmax-width: 600px;\\r\\n\\t\\theight: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,IAAI,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
+var css$2 = {
+  code: ".float.svelte-trcbk8{position:fixed;bottom:0px;left:0px;width:100vw}",
+  map: `{"version":3,"file":"FloatingRow.svelte","sources":["FloatingRow.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">import Row from '$lib/Row.svelte';\\r\\nexport let style = \\"\\";\\r\\n</script>\\r\\n\\r\\n<div class=\\"float\\" {style}>\\r\\n\\t<Row style={\\"justify-content: center;\\"}>\\r\\n\\t\\t\\t<slot></slot>\\r\\n\\t</Row>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.float {\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tbottom: 0px;\\r\\n\\t\\tleft: 0px;\\r\\n\\t\\twidth: 100vw;\\r\\n\\t}\\r\\n</style>"],"names":[],"mappings":"AAYC,MAAM,cAAC,CAAC,AACP,QAAQ,CAAE,KAAK,CACf,MAAM,CAAE,GAAG,CACX,IAAI,CAAE,GAAG,CACT,KAAK,CAAE,KAAK,AACb,CAAC"}`
 };
-var PollStreamTileContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$5);
-  return `<div class="${"container svelte-p0i353"}">${slots.default ? slots.default({}) : ``}
-</div>`;
-});
-var css$4 = {
-  code: ".container.svelte-1we3qth{display:flex;flex-flow:row nowrap;align-items:center;position:fixed;justify-content:space-between;bottom:40px;width:400px;max-width:90vw}",
-  map: '{"version":3,"file":"FloatingButtonContainer.svelte","sources":["FloatingButtonContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: row nowrap;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tposition: fixed;\\r\\n\\t\\tjustify-content: space-between;\\r\\n\\t\\tbottom: 40px;\\r\\n\\t\\twidth: 400px;\\r\\n\\t\\tmax-width: 90vw;\\r\\n\\t}\\r\\n</style>"],"names":[],"mappings":"AAMC,UAAU,eAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CAAC,MAAM,CACrB,WAAW,CAAE,MAAM,CACnB,QAAQ,CAAE,KAAK,CACf,eAAe,CAAE,aAAa,CAC9B,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,IAAI,AAChB,CAAC"}'
-};
-var FloatingButtonContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$4);
-  return `<div class="${"container svelte-1we3qth"}">${slots.default ? slots.default({}) : ``}
+var FloatingRow = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {style = ""} = $$props;
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  $$result.css.add(css$2);
+  return `<div class="${"float svelte-trcbk8"}"${add_attribute("style", style, 0)}>${validate_component(Row, "Row").$$render($$result, {style: "justify-content: center;"}, {}, {
+    default: () => `${slots.default ? slots.default({}) : ``}`
+  })}
 </div>`;
 });
 var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40906,13 +41007,13 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     });
   };
   let pollStreams;
-  function appendStreams() {
+  function newPollStream() {
     return __awaiter(this, void 0, void 0, function* () {
       var pollStream = yield main.newPollStream();
-      pollStreams = [...pollStreams, pollStream];
+      goto("/poll/" + pollStream.id + "?edit=true");
     });
   }
-  function removeStream(pollStream) {
+  function removePollStream(pollStream) {
     return __awaiter(this, void 0, void 0, function* () {
       main.deletePollStream(pollStream.id);
       pollStreams.splice(pollStreams.indexOf(pollStream), 1);
@@ -40939,14 +41040,19 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     }
   }));
   return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStreams || pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
-			<p>Click the button below to add a stream.</p>` : `${validate_component(PollStreamTileContainer, "PollStreamTileContainer").$$render($$result, {}, {}, {
+			<p>Click the button below to add a stream.</p>` : `${validate_component(Column, "Column").$$render($$result, {}, {}, {
     default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
-      remove: () => removeStream(pollStream),
+      remove: () => removePollStream(pollStream),
       pollStream
     }, {}, {})}`)}`
   })}`}
-		${validate_component(FloatingButtonContainer, "FloatingButtonContainer").$$render($$result, {}, {}, {
-    default: () => `${validate_component(BasicButton, "Button").$$render($$result, {onclick: appendStreams}, {}, {default: () => `+ Create Poll Stream`})}`
+		${validate_component(FloatingRow, "FloatingRow").$$render($$result, {}, {}, {
+    default: () => `${validate_component(Box, "Box").$$render($$result, {
+      visible: false,
+      style: "max-width:200px;"
+    }, {}, {
+      default: () => `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: newPollStream}, {}, {default: () => `+ Create Poll Stream`})}`
+    })}`
   })}` : `<p style="${"margin-top: 100px"}">Sign in to access your poll streams!</p>`}`}`;
 });
 var index = /* @__PURE__ */ Object.freeze({
@@ -40954,18 +41060,12 @@ var index = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": Routes
 });
-var css$3 = {
-  code: ".container.svelte-1axcga5{display:flex;flex-flow:row;justify-content:space-between;position:relative;padding:10pt;margin-top:15pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;border-style:solid;border-width:2pt;border-radius:10pt;cursor:pointer}.container.svelte-1axcga5:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"ChoiceItem.svelte","sources":["ChoiceItem.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">import { main } from './main';\\r\\n;\\r\\nimport { fade } from 'svelte/transition';\\r\\nexport let choice;\\r\\nexport let vote = () => undefined;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\n$: selected = choice && main.userData ? choice.getUsers().includes(main.userData.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if choice && main.userData}\\r\\n\\t{#if edit}\\r\\n\\t\\t<div class=\\"container\\" in:fade>\\r\\n\\t\\t\\t<input type=\\"text\\" bind:value={choice.text}>\\r\\n\\t\\t\\t<button on:click={remove}> X </button>\\r\\n\\t\\t</div>\\r\\n\\t{:else}\\r\\n\\t\\t<div class=\\"container\\"\\r\\n\\t\\tin:fade\\r\\n\\t\\tstyle={selected ? \\"border-color: var(--c_blue); border-width: 3pt;\\" : \\"border-color: var(--c_light);\\"}\\r\\n\\t\\ton:click={vote}>\\r\\n\\t\\t\\t<span style=\\"display: inline;\\">{choice.text}</span>\\r\\n\\t\\t\\t<span style=\\"display: inline; text-align: right;\\">{choice.getUsers().length} {choice.getUsers().length == 1 ? \\"vote.\\" : \\"votes.\\"}</span>\\r\\n\\t\\t</div>\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-flow: row;\\r\\n\\t\\tjustify-content: space-between;\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 10pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 0pt;\\r\\n\\t\\tmargin-left: 0pt;\\r\\n\\t\\tmargin-right: 0pt;\\r\\n\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAiCC,UAAU,eAAC,CAAC,AACX,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,eAAe,CAAE,aAAa,CAC9B,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,GAAG,CACxB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,aAAa,CAAE,IAAI,CAEnB,MAAM,CAAE,OAAO,AAChB,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
-};
 var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let selected;
   let {choice} = $$props;
   let {vote = () => void 0} = $$props;
   let {remove = () => void 0} = $$props;
   let {edit} = $$props;
-  setTimeout(function() {
-  }, 1);
   if ($$props.choice === void 0 && $$bindings.choice && choice !== void 0)
     $$bindings.choice(choice);
   if ($$props.vote === void 0 && $$bindings.vote && vote !== void 0)
@@ -40974,18 +41074,31 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
     $$bindings.remove(remove);
   if ($$props.edit === void 0 && $$bindings.edit && edit !== void 0)
     $$bindings.edit(edit);
-  $$result.css.add(css$3);
   selected = choice && main.userData ? choice.getUsers().includes(main.userData.id) : false;
-  return `${choice && main.userData ? `${edit ? `<div class="${"container svelte-1axcga5"}"><input type="${"text"}"${add_attribute("value", choice.text, 1)}>
-			<button>X </button></div>` : `<div class="${"container svelte-1axcga5"}"${add_attribute("style", selected ? "border-color: var(--c_blue); border-width: 3pt;" : "border-color: var(--c_light);", 0)}><span style="${"display: inline;"}">${escape2(choice.text)}</span>
-			<span style="${"display: inline; text-align: right;"}">${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span></div>`}` : ``}`;
+  return `${choice && main.userData ? `${edit ? `${validate_component(Box, "Box").$$render($$result, {}, {}, {
+    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `<input type="${"text"}" placeholder="${"Enter option.."}"${add_attribute("value", choice.text, 1)}>
+				${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+        onclick: remove,
+        style: "background-color: var(--c_red);"
+      }, {}, {default: () => `X `})}`
+    })}`
+  })}` : `${validate_component(Box, "Box").$$render($$result, {
+    style: selected ? "border-color: var(--c_green); border-width: 3pt;" : "",
+    onclick: vote
+  }, {}, {
+    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `<span style="${"display: inline;"}">${escape2(choice.text)}</span>
+				<span style="${"display: inline; text-align: right;"}">${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>`
+    })}`
+  })}`}` : ``}`;
 });
-var css$2 = {
-  code: ".container.svelte-13l88dx{position:relative;padding:20pt;padding-top:5pt;margin-top:15pt;margin-bottom:15pt;margin-left:5pt;margin-right:5pt;border-style:solid;border-width:2pt;border-radius:10pt;border-color:var(--c_light)}.question.svelte-13l88dx{display:block;font-size:1.5em;width:100%;height:1em}.split.svelte-13l88dx{width:100px;height:3px;margin:5px 10px 10px -3px;background-color:var(--c_light)}.container.svelte-13l88dx:hover{box-shadow:0px 4px 10px var(--c_light)}",
-  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from './main';\\r\\nimport { Choice, Poll } from './poll';\\r\\nimport ChoiceItem from './ChoiceItem.svelte';\\r\\nimport { fade } from 'svelte/transition';\\r\\nexport let isAdmin;\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let save = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n    });\\r\\n}\\r\\nfunction saveAndQuitEdit() {\\r\\n    save();\\r\\n    edit = false;\\r\\n}\\r\\nlet edit = false;\\r\\nlet appeardelay = false;\\r\\nsetTimeout(function () {\\r\\n    appeardelay = true;\\r\\n}, 1);\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n}\\r\\n</script>\\r\\n\\r\\n<div class=\\"container\\" in:fade>\\r\\n\\t{#if edit}\\r\\n\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question\\" bind:value={poll.question}>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t\\t<button on:click={remove}>Delete</button>\\r\\n\\t\\t<button on:click={saveAndQuitEdit}>Save</button>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t<button on:click={() => edit = !edit}>Edit</button>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n\\t{#if edit}\\r\\n\\t\\t<h4>Choices <button on:click={addChoice}> + </button></h4>\\r\\n\\t{/if}\\r\\n\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\tpadding: 20pt;\\r\\n\\t\\tpadding-top: 5pt;\\r\\n\\t\\tmargin-top: 15pt;\\r\\n        margin-bottom: 15pt;\\r\\n\\t\\tmargin-left: 5pt;\\r\\n\\t\\tmargin-right: 5pt;\\r\\n\\t\\t\\r\\n\\t\\tborder-style: solid;\\r\\n\\t\\tborder-width: 2pt;\\r\\n\\t\\tborder-radius: 10pt;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t}\\r\\n\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 100px;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n\\r\\n\\t.container:hover {\\r\\n\\t\\tbox-shadow: 0px 4px 10px var(--c_light);\\r\\n\\t}\\r\\n\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAwEC,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CACV,aAAa,CAAE,IAAI,CACzB,WAAW,CAAE,GAAG,CAChB,YAAY,CAAE,GAAG,CAEjB,YAAY,CAAE,KAAK,CACnB,YAAY,CAAE,GAAG,CACjB,aAAa,CAAE,IAAI,CACnB,YAAY,CAAE,IAAI,SAAS,CAAC,AAC7B,CAAC,AAED,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC,AAED,yBAAU,MAAM,AAAC,CAAC,AACjB,UAAU,CAAE,GAAG,CAAC,GAAG,CAAC,IAAI,CAAC,IAAI,SAAS,CAAC,AACxC,CAAC"}`
+var css$1 = {
+  code: ".question.svelte-158fiwf{display:block;font-size:1.5em;width:100%;height:1em}.split.svelte-158fiwf{width:80%;height:3px;margin:5px 10px 10px -3px;background-color:var(--c_light)}",
+  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { Choice, Poll } from '$lib/poll';\\r\\nimport ChoiceItem from '$lib/ChoiceItem.svelte';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Box from './Box.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit = false;\\r\\nexport let updateParent = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n    updateParent();\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n    updateParent();\\r\\n}\\r\\n</script>\\r\\n\\r\\n<Box>\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question..\\" bind:value={poll.question}>\\r\\n\\t\\t\\t</Column>\\r\\n\\t\\t\\t<ConfirmationButton onclick={remove} style={\\"background-color: var(--c_red);\\"}>Delete Question</ConfirmationButton>\\r\\n\\t\\t</Row>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t{/if}\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<div></div>\\r\\n\\t\\t\\t<BasicButton onclick={addChoice}> + Add Choice</BasicButton>\\r\\n\\t\\t</Row>\\r\\n\\t{/if}\\r\\n</Box>\\r\\n\\r\\n<style>\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 80%;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAuEC,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
 };
 var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  (function(thisArg, _arguments, P, generator) {
+  var __awaiter = function(thisArg, _arguments, P, generator) {
     function adopt(value) {
       return value instanceof P ? value : new P(function(resolve2) {
         resolve2(value);
@@ -41011,14 +41124,18 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       }
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-  });
-  let {isAdmin} = $$props;
+  };
   let {poll} = $$props;
   let {remove = () => void 0} = $$props;
-  let {save = () => void 0} = $$props;
-  let edit = false;
-  setTimeout(function() {
-  }, 1);
+  let {edit = false} = $$props;
+  let {updateParent = () => void 0} = $$props;
+  function addChoice() {
+    return __awaiter(this, void 0, void 0, function* () {
+      poll.addChoice(new Choice());
+      poll = poll;
+      updateParent();
+    });
+  }
   function vote(choice) {
     var user = main.auth.currentUser.uid;
     if (poll.getUserChoices(user).includes(choice)) {
@@ -41027,51 +41144,56 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       poll.vote(user, choice);
     }
     poll = poll;
+    updateParent();
   }
   function removeChoice(choice) {
     poll.removeChoice(choice);
     poll = poll;
+    updateParent();
   }
-  if ($$props.isAdmin === void 0 && $$bindings.isAdmin && isAdmin !== void 0)
-    $$bindings.isAdmin(isAdmin);
   if ($$props.poll === void 0 && $$bindings.poll && poll !== void 0)
     $$bindings.poll(poll);
   if ($$props.remove === void 0 && $$bindings.remove && remove !== void 0)
     $$bindings.remove(remove);
-  if ($$props.save === void 0 && $$bindings.save && save !== void 0)
-    $$bindings.save(save);
-  $$result.css.add(css$2);
-  return `<div class="${"container svelte-13l88dx"}">${`<h2>${escape2(poll.question)}</h2>
-		<div class="${"split svelte-13l88dx"}"></div>
-		${isAdmin ? `<button>Edit</button>` : ``}`}
-	${``}
-
-	${each(poll.getChoices(), (choice) => `${validate_component(ChoiceItem, "ChoiceItem").$$render($$result, {
-    choice,
-    vote: () => vote(choice),
-    remove: () => removeChoice(choice),
-    edit
-  }, {}, {})}`)}
-</div>`;
-});
-var css$1 = {
-  code: ".container.svelte-p0i353{width:90vw;max-width:600px;height:100%;display:flex;flex-direction:column}",
-  map: '{"version":3,"file":"PollCardContainer.svelte","sources":["PollCardContainer.svelte"],"sourcesContent":["\\r\\n<div class=\\"container\\">\\r\\n\\t<slot></slot>\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.container {\\r\\n\\t\\twidth: 90vw;\\r\\n\\t\\tmax-width: 600px;\\r\\n\\t\\theight: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\tflex-direction: column;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAMC,UAAU,cAAC,CAAC,AACX,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,IAAI,CAEZ,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAAM,AACvB,CAAC"}'
-};
-var PollCardContainer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  if ($$props.edit === void 0 && $$bindings.edit && edit !== void 0)
+    $$bindings.edit(edit);
+  if ($$props.updateParent === void 0 && $$bindings.updateParent && updateParent !== void 0)
+    $$bindings.updateParent(updateParent);
   $$result.css.add(css$1);
-  return `<div class="${"container svelte-p0i353"}">${slots.default ? slots.default({}) : ``}
-</div>`;
+  return `${validate_component(Box, "Box").$$render($$result, {}, {}, {
+    default: () => `${edit ? `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+        default: () => `<input class="${"question svelte-158fiwf"}" type="${"text"}" placeholder="${"Enter question.."}"${add_attribute("value", poll.question, 1)}>`
+      })}
+			${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+        onclick: remove,
+        style: "background-color: var(--c_red);"
+      }, {}, {default: () => `Delete Question`})}`
+    })}` : `<h2>${escape2(poll.question)}</h2>
+		<div class="${"split svelte-158fiwf"}"></div>`}
+	${each(poll.getChoices(), (choice) => `${validate_component(ChoiceItem, "ChoiceItem").$$render($$result, {
+      choice,
+      vote: () => vote(choice),
+      remove: () => removeChoice(choice),
+      edit
+    }, {}, {})}`)}
+	${edit ? `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `<div></div>
+			${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: addChoice}, {}, {default: () => `+ Add Choice`})}`
+    })}` : ``}`
+  })}`;
 });
 var css = {
-  code: ".title.svelte-1x8lmh7{margin:20px 0 0 0;padding:10px;font-size:1.5em;height:1em;width:300px;border:0}.title.svelte-1x8lmh7:focus{outline:none}.title-split.svelte-1x8lmh7{height:3px;width:340px;background-color:var(--c_light)}.description.svelte-1x8lmh7{margin:20px;padding:10px;font-size:1em;height:3em;width:500px;border-color:var(--c_light);font-family:'Roboto', sans-serif;border-width:2px}",
-  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport Button from '$lib/BasicButton.svelte';\\r\\nimport PollCardContainer from '$lib/PollCardContainer.svelte';\\r\\nlet pollStream;\\r\\nlet index = 0;\\r\\nlet edit = false;\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    var len = pollStream.getPolls().length;\\r\\n    if (len > 1) {\\r\\n        index = Math.min(index + 1, len - 1);\\r\\n    }\\r\\n}\\r\\nfunction decrement() {\\r\\n    index = Math.max(index - 1, 0);\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if main.auth.currentUser != null}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t<button on:click={save}>Save</button>\\r\\n\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t<button on:click={() => edit = !edit}>Edit</button>\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<PollCardContainer>\\r\\n\\t\\t\\t\\t\\t<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin}></PollCard>\\r\\n\\t\\t\\t\\t</PollCardContainer>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<div class=\\"rowcontainer\\" style=\\"justify-content: center;\\">\\r\\n\\t\\t\\t\\t<div style=\\"display:flex; flex-grow: 1; justify-content: center;\\">\\r\\n\\t\\t\\t\\t\\t{#if index != 0}\\r\\n\\t\\t\\t\\t\\t\\t<Button onclick={decrement}> Back </Button>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t\\t<div style=\\"display:flex; flex-grow: 1; justify-content: center;\\">\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<h3>Question {index+1} of {pollStream.getPolls().length}</h3>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t\\t<div style=\\"display:flex; flex-grow: 1; justify-content: center;\\">\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<Button onclick={addPoll}>+ New Question</Button>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<Button onclick={increment}> Next </Button>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t</div>\\r\\n\\t\\t{/if}\\r\\n\\t{:else}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 300px;\\r\\n\\t\\tborder: 0;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.title-split{\\r\\n\\t\\theight: 3px;\\r\\n\\t\\twidth: 340px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 500px;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAgIC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,CAAC,AACV,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,KAAK,CACZ,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,KAAK,CACZ,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
+  code: ".title.svelte-1kv09w3{margin:20px 0 0 0;padding:10px;font-size:1.5em;height:1em;width:100%;border:0}.title.svelte-1kv09w3:focus{outline:none}.title-split.svelte-1kv09w3{height:3px;width:340px;background-color:var(--c_light)}.description.svelte-1kv09w3{margin:20px;padding:10px;font-size:1em;height:3em;width:100%;border-color:var(--c_light);font-family:'Roboto', sans-serif;border-width:2px}",
+  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main, UserData } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nlet pollStream;\\r\\nlet index = 0;\\r\\nlet edit = (query.get('edit') === 'true');\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    var len = pollStream.getPolls().length;\\r\\n    if (len > 1) {\\r\\n        index = Math.min(index + 1, len - 1);\\r\\n    }\\r\\n}\\r\\nfunction decrement() {\\r\\n    index = Math.max(index - 1, 0);\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if main.auth.currentUser != null}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index != 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<h3>{index+1} of {pollStream.getPolls().length}</h3>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<ConfirmationButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </ConfirmationButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{:else}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tborder: 0;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.title-split{\\r\\n\\t\\theight: 3px;\\r\\n\\t\\twidth: 340px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA2JC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,CAAC,AACV,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,KAAK,CACZ,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,CACX,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
 };
 var pageInfo;
 var pollStreamId;
+var query;
 async function load$1({page, fetch: fetch3, session, context}) {
   pageInfo = page;
   pollStreamId = pageInfo.params.slug;
+  query = pageInfo.query;
   return {props: {}};
 }
 var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -41106,7 +41228,7 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
   };
   let pollStream;
   let index2 = 0;
-  let edit = false;
+  let edit = query.get("edit") === "true";
   onMount(() => __awaiter(void 0, void 0, void 0, function* () {
     pollStream = yield main.readPollStream(pollStreamId);
   }));
@@ -41142,30 +41264,60 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
   function decrement() {
     index2 = Math.max(index2 - 1, 0);
   }
+  function updateParent() {
+    poll = poll;
+  }
   $$result.css.add(css);
   poll = pollStream ? pollStream.getPolls()[index2] : null;
   isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
   return `${pollStream === void 0 ? `<p>Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
-			<p>It has either been deleted, or was never created.</p>` : `${edit ? `<input type="${"text"}" class="${"title svelte-1x8lmh7"}" placeholder="${"Enter title"}"${add_attribute("value", pollStream.title, 1)}>
-				<div class="${"title-split svelte-1x8lmh7"}"></div>
-				<textarea type="${"text"}" class="${"description svelte-1x8lmh7"}" placeholder="${"Enter description"}">${pollStream.description || ""}</textarea>
-				<br>
-				<button>Save</button>` : `<h2>${escape2(pollStream.title)}</h2>
-				<p>${escape2(pollStream.description)}</p>
-				${isAdmin ? `<button>Edit</button>` : ``}`}
+			<p>It has either been deleted, or was never created.</p>` : `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+    default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+      default: () => `${isAdmin && edit ? `<input type="${"text"}" class="${"title svelte-1kv09w3"}" placeholder="${"Enter title.."}"${add_attribute("value", pollStream.title, 1)}>
+						<div class="${"title-split svelte-1kv09w3"}"></div>
+						<textarea type="${"text"}" class="${"description svelte-1kv09w3"}" placeholder="${"Enter description.."}">${pollStream.description || ""}</textarea>
+						<br>` : `<h2>${escape2(pollStream.title)}</h2>
+						<p>${escape2(pollStream.description)}</p>`}`
+    })}
+				${isAdmin ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
+      onclick: save,
+      style: "background-color:var(--c_green);"
+    }, {}, {default: () => `Save`})}` : `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: () => edit = true}, {}, {default: () => `Edit`})}`}` : ``}`
+  })}
 			
-			${poll ? `${validate_component(PollCardContainer, "PollCardContainer").$$render($$result, {}, {}, {
+			${poll ? `${validate_component(Column, "Column").$$render($$result, {}, {}, {
     default: () => `${validate_component(PollCard, "PollCard").$$render($$result, {
       poll,
       remove: () => removePoll(poll),
-      save,
-      isAdmin
+      edit,
+      updateParent
     }, {}, {})}`
   })}` : ``}
 
-			<div class="${"rowcontainer"}" style="${"justify-content: center;"}"><div style="${"display:flex; flex-grow: 1; justify-content: center;"}">${index2 != 0 ? `${validate_component(BasicButton, "Button").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : ``}</div>
-				<div style="${"display:flex; flex-grow: 1; justify-content: center;"}">${pollStream.getPolls().length ? `<h3>Question ${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</h3>` : ``}</div>
-				<div style="${"display:flex; flex-grow: 1; justify-content: center;"}">${isAdmin && (pollStream.getPolls().length === 0 || index2 === pollStream.getPolls().length - 1) ? `${validate_component(BasicButton, "Button").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Question`})}` : `${index2 !== pollStream.getPolls().length - 1 ? `${validate_component(BasicButton, "Button").$$render($$result, {onclick: increment}, {}, {default: () => `Next `})}` : ``}`}</div></div>`}` : `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>`}`}`;
+			${validate_component(FloatingRow, "FloatingRow").$$render($$result, {
+    style: "background-color: white; box-shadow: 0px -4px 10px var(--c_light);"
+  }, {}, {
+    default: () => `${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
+      default: () => `${index2 != 0 ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : ``}`
+    })}
+
+				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
+      default: () => `${pollStream.getPolls().length ? `<h3>${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</h3>` : ``}`
+    })}
+				
+				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
+      default: () => `${isAdmin && edit && (pollStream.getPolls().length === 0 || index2 === pollStream.getPolls().length - 1) ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Question`})}` : `${index2 !== pollStream.getPolls().length - 1 ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
+        onclick: increment,
+        style: "background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"
+      }, {}, {
+        default: () => `Next
+						`
+      })}` : `${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+        onclick: () => goto("/"),
+        style: "background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"
+      }, {}, {default: () => `Complete `})}`}`}`
+    })}`
+  })}`}` : `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>`}`}`;
 });
 var _slug_$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,

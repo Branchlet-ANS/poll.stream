@@ -5,7 +5,7 @@
 	import BasicButton from "$lib/BasicButton.svelte";
 	import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
 	
-	let isExpanded: boolean = false;
+	let showSignOut: boolean = false;
 	let imgSrc: string;
 
 	onAuthStateChanged(main.auth, (user) => {
@@ -23,41 +23,33 @@
 
 	async function signOut() {
 		await main.auth.signOut();
-		isExpanded = false;
+		showSignOut = false;
+	}
+
+	function onProfileClick() {
+		showSignOut = true;
+		setTimeout(() => showSignOut = false, 2000);
 	}
 </script>
 
-<div class = "container">
-	{#if isExpanded}
-		<div in:fade on:mouseout={() => isExpanded = false}>
-			<BasicButton onclick={signOut}>
-				Sign out
+{#if showSignOut}
+	<div in:fade>
+		<BasicButton onclick={signOut} style="background-color:var(--c_yellow); color:var(--c_dark);">
+			Sign out
+		</BasicButton>
+	</div>
+{:else}
+	{#if imgSrc}
+		<img src={imgSrc}
+			alt="Google Profile"
+			style="border-radius: 50%; width: 36pt; cursor:pointer;"
+			on:click={onProfileClick}
+			in:fade>
+	{:else if imgSrc === null}
+		<div in:fade on:click={signIn}>
+			<BasicButton>
+				Sign in
 			</BasicButton>
 		</div>
-	{:else}
-		{#if imgSrc}
-			<img src={imgSrc}
-				alt="Google Profile"
-				style="border-radius: 50%; width: 36pt; cursor:pointer;"
-				on:click={() => isExpanded = !isExpanded}
-				in:fade>
-		{:else if imgSrc === null}
-			<div in:fade on:click={signIn}>
-				<BasicButton>
-					Sign in
-				</BasicButton>
-			</div>
-		{/if}
 	{/if}
-</div>
-
-<style>
-	.container {
-		display: flex;
-		flex-flow: column nowrap;
-		align-items: flex-end;
-		height: max-content;
-		padding: 12pt;
-	}
-
-</style>
+{/if}

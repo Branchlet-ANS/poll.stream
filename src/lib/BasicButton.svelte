@@ -1,11 +1,14 @@
 
-<script>
+<script lang="ts">
 	export let onclick = () => undefined;
+	export let style: string = "";
 </script>
 
-<button on:click={onclick}>
+
+<button on:click={onclick} {style}>
 	<slot></slot>
 </button>
+
 
 <style>
 	button {
@@ -17,7 +20,7 @@
 		font-weight: 500;
 		
 		padding: 16px 24px;
-		margin: 0 auto;
+		margin: 0;
 
 		background-color: var(--c_blue);
 		color: var(--c_white);

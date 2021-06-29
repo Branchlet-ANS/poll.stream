@@ -1,24 +1,23 @@
 
 <script lang="ts">
-	import { main } from './main';
-	import { Choice, Poll } from './poll';
-	import ChoiceItem from './ChoiceItem.svelte';
-	import { fade } from 'svelte/transition';
+	import { main } from '$lib/main';
+	import { Choice, Poll } from '$lib/poll';
+	import ChoiceItem from '$lib/ChoiceItem.svelte';
+	import ConfirmationButton from '$lib/ConfirmationButton.svelte';
+	import BasicButton from '$lib/BasicButton.svelte';
+	import Box from './Box.svelte';
+	import Column from '$lib/Column.svelte';
+	import Row from '$lib/Row.svelte';
 
-	export let isAdmin: boolean;
 	export let poll: Poll;
 	export let remove = () => undefined;
-	export let save = () => undefined;
 	export let edit: boolean = false;
-	
+	export let updateParent = () => undefined;
+
 	async function addChoice() {
 		poll.addChoice(new Choice());
 		poll = poll; // For Svelte
-	}
-
-	function saveAndQuitEdit() {
-		save();
-		edit = false;
+		updateParent();
 	}
 
 	function vote(choice: Choice) {
@@ -30,50 +29,41 @@
 			poll.vote(user, choice);
 		}
 		poll = poll; // For Svelte
+		updateParent();
 	}
 
 	function removeChoice(choice: Choice) {
 		poll.removeChoice(choice);
 		poll = poll;
+		updateParent();
 	}
 
 </script>
 
-<div class="container" in:fade>
+<Box>
 	{#if edit}
-		<input class="question" type="text" placeholder="Enter question" bind:value={poll.question}>
-		<div class="split"></div>
-		<button on:click={remove}>Delete</button>
-		<button on:click={saveAndQuitEdit}>Save</button>
+		<Row>
+			<Column>
+				<input class="question" type="text" placeholder="Enter question.." bind:value={poll.question}>
+			</Column>
+			<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}>Delete Question</ConfirmationButton>
+		</Row>
 	{:else}
 		<h2>{poll.question}</h2>
 		<div class="split"></div>
 	{/if}
-	{#if edit}
-		<h4>Choices <button on:click={addChoice}> + </button></h4>
-	{/if}
-
 	{#each poll.getChoices() as choice}
 		<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>
 	{/each}
-</div>
+	{#if edit}
+		<Row>
+			<div></div>
+			<BasicButton onclick={addChoice}> + Add Choice</BasicButton>
+		</Row>
+	{/if}
+</Box>
 
 <style>
-	.container {
-		position: relative;
-		padding: 20pt;
-		padding-top: 5pt;
-		margin-top: 15pt;
-        margin-bottom: 15pt;
-		margin-left: 5pt;
-		margin-right: 5pt;
-		
-		border-style: solid;
-		border-width: 2pt;
-		border-radius: 10pt;
-		border-color: var(--c_light);
-	}
-
 	.question{
 		display: block;
 		font-size: 1.5em;
@@ -82,14 +72,9 @@
 	}
 
 	.split{
-		width: 100px;
+		width: 80%;
 		height: 3px;
 		margin: 5px 10px 10px -3px;
 		background-color: var(--c_light);
 	}
-
-	.container:hover {
-		box-shadow: 0px 4px 10px var(--c_light);
-	}
-
 </style>

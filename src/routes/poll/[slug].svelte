@@ -16,14 +16,19 @@
 </script>
 
 <script lang="ts">
-	import { main } from '$lib/main';
+	import { main, UserData } from '$lib/main';
 	import { onAuthStateChanged } from '@firebase/auth';
 	import { onMount } from 'svelte';
 	import PollCard from '$lib/PollCard.svelte';
 	import { Poll, PollStream } from '$lib/poll';
-	import Button from '$lib/BasicButton.svelte';
-	import PollCardContainer from '$lib/PollCardContainer.svelte';
-
+	import BasicButton from '$lib/BasicButton.svelte';
+	import Column from '$lib/Column.svelte';
+	import Row from '$lib/Row.svelte';
+	import FloatingRow from '$lib/FloatingRow.svelte';
+	import Box from '$lib/Box.svelte';
+	import { goto } from '$app/navigation';
+	import ConfirmationButton from '$lib/ConfirmationButton.svelte';
+	
 	let pollStream: PollStream;
 	let index: number = 0;
 	let edit: boolean = (query.get('edit') === 'true');
@@ -70,6 +75,10 @@
 		index = Math.max(index-1, 0);
 	}
 
+	function updateParent() {
+		poll = poll;
+	}
+
 	$: poll = pollStream ? pollStream.getPolls()[index] : null;
 	$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
 </script>
@@ -82,46 +91,62 @@
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
 		{:else}
-			{#if isAdmin && edit}
-				<input type="text" class="title" placeholder="Enter title" bind:value={pollStream.title}>
-				<div class="title-split"></div>
-				<textarea type="text" class="description" placeholder="Enter description" bind:value={pollStream.description}></textarea>
-				<br>
-				<button on:click={save}>Save</button>
-			{:else}
-				<h2>{pollStream.title}</h2>
-				<p>{pollStream.description}</p>
+			<Row>
+				<Column>
+					{#if isAdmin && edit}
+						<input type="text" class="title" placeholder="Enter title.." bind:value={pollStream.title}>
+						<div class="title-split"></div>
+						<textarea type="text" class="description" placeholder="Enter description.." bind:value={pollStream.description}></textarea>
+						<br>
+					{:else}
+						<h2>{pollStream.title}</h2>
+						<p>{pollStream.description}</p>
+					{/if}
+				</Column>
 				{#if isAdmin}
-					<button on:click={() => edit = !edit}>Edit</button>
+					{#if edit}
+						<BasicButton onclick={save} style="background-color:var(--c_green);">Save</BasicButton>
+					{:else}
+						<BasicButton onclick={() => edit = true}>Edit</BasicButton>
+					{/if}
 				{/if}
-			{/if}
+			</Row>
 			
 			{#if poll}
-				<PollCardContainer>
-					<PollCard poll={poll} remove={() => removePoll(poll)} save={save} isAdmin={isAdmin} edit={edit}></PollCard>
-				</PollCardContainer>
+				<Column>
+					<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>
+				</Column>
 			{/if}
 
-			<div class="rowcontainer" style="justify-content:center;">
-				<div style="display:flex; flex-grow:1; justify-content:center;">
+			<FloatingRow style={"background-color: white; box-shadow: 0px -4px 10px var(--c_light);"}>
+				<Box visible={false}>
 					{#if index != 0}
-						<Button onclick={decrement}> Back </Button>
+						<BasicButton onclick={decrement}> Back </BasicButton>
 					{/if}
-				</div>
-				<div style="display:flex; flex-grow:1; justify-content:center;">
+				</Box>
+
+				<Box visible={false}>
 					{#if pollStream.getPolls().length}
-						<h3>Question {index+1} of {pollStream.getPolls().length}</h3>
+						<h3>{index+1} of {pollStream.getPolls().length}</h3>
 					{/if}
-				</div>
-				<div style="display:flex; flex-grow:1; justify-content:center;">
+				</Box>
+				
+				<Box visible={false}>
 					{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}
-						<Button onclick={addPoll}>+ New Question</Button>
+						<BasicButton onclick={addPoll}>+ New Question</BasicButton>
+					{:else if index !== pollStream.getPolls().length - 1}
+						<BasicButton onclick={increment}
+						style={"background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"}
+						>
+							Next
+						</BasicButton>
+					{:else}
+						<ConfirmationButton onclick={() => goto("/")}
+							style={"background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"}
+						> Complete </ConfirmationButton>
 					{/if}
-					{#if index !== pollStream.getPolls().length - 1}
-						<Button onclick={increment}> Next </Button>
-					{/if}
-				</div>
-			</div>
+				</Box>
+			</FloatingRow>
 		{/if}
 	{:else}
 		<p style="margin-top: 100px">Sign in to access this poll stream!</p>
@@ -134,7 +159,7 @@
 		padding: 10px;
 		font-size: 1.5em;
 		height: 1em;
-		width: 300px;
+		width: 100%;
 		border: 0;
 	}
 	.title:focus{
@@ -150,7 +175,7 @@
 		padding: 10px;
 		font-size: 1em;
 		height: 3em;
-		width: 500px;
+		width: 100%;
 		border-color: var(--c_light);
 		font-family: 'Roboto', sans-serif;
 		border-width: 2px;
