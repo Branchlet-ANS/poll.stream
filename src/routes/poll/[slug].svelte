@@ -160,22 +160,16 @@
 		font-size: 1.5em;
 		height: 1em;
 		width: 100%;
-		border: 0;
 	}
 	.title:focus{
 		outline: none;
-	}
-	.title-split{
-		height: 3px;
-		width: 340px;
-		background-color: var(--c_light);
 	}
 	.description{
 		margin: 20px;
 		padding: 10px;
 		font-size: 1em;
 		height: 3em;
-		width: 100%;
+		width: 50%;
 		border-color: var(--c_light);
 		font-family: 'Roboto', sans-serif;
 		border-width: 2px;

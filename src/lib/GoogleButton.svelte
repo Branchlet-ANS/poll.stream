@@ -40,11 +40,13 @@
 	</div>
 {:else}
 	{#if imgSrc}
-		<img src={imgSrc}
-			alt="Google Profile"
-			style="border-radius: 50%; width: 36pt; cursor:pointer;"
-			on:click={onProfileClick}
-			in:fade>
+		<div>
+			<img src={imgSrc}
+				alt="Google Profile"
+				style="border-radius: 50%; width: 36pt; cursor:pointer;"
+				on:click={onProfileClick}
+				in:fade>
+		</div>
 	{:else if imgSrc === null}
 		<div in:fade on:click={signIn}>
 			<BasicButton>

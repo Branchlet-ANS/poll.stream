@@ -19,7 +19,7 @@
 		font-size: medium;
 		font-weight: 500;
 		
-		padding: 16px 24px;
+		padding: 12px 20px;
 		margin: 0;
 
 		background-color: var(--c_blue);

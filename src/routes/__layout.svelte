@@ -12,11 +12,13 @@
 			<Row>
 				<h1 class="logo">	
 					<a href="/">
-						<img src="/poll-stream.svg" alt="Poll.stream Logo" style="display:inline; width:36pt;">
+						<img src="/poll-stream.svg" alt="Poll.stream Logo" style="display:inline; width:32pt;">
 						Poll.stream
 					</a>
 				</h1>
-				<GoogleButton></GoogleButton>
+				<Box visible={false} style={"max-width:120px;flex:1;margin-right:0;"}>
+					<GoogleButton></GoogleButton>
+				</Box>
 			</Row>
 
 			<slot></slot>
@@ -46,6 +48,8 @@
 		font-family: 'Fredoka One', cursive;
 		color: var(--c_blue);
 		text-decoration: none;
+		font-size: 0.9em;
+		font-weight: 400;
 	}
 
 	.logo a:hover {
@@ -57,6 +61,7 @@
         padding: 0;
 		background-color: var(--c_white);
 		color: var(--c_dark);
+		font-size: 100%;
 	}
 
 	:global(input) {

@@ -19,7 +19,7 @@
 	{#if edit}
 		<Box>
 			<Row>
-				<input type="text" placeholder="Enter option.." bind:value={choice.text}>
+				<input type="text" placeholder="Enter choice.." bind:value={choice.text}>
 				<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}> X </ConfirmationButton>
 			</Row>
 		</Box>

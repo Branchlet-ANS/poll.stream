@@ -46,7 +46,7 @@
 			<Column>
 				<input class="question" type="text" placeholder="Enter question.." bind:value={poll.question}>
 			</Column>
-			<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}>Delete Question</ConfirmationButton>
+			<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}>Delete</ConfirmationButton>
 		</Row>
 	{:else}
 		<h2>{poll.question}</h2>
