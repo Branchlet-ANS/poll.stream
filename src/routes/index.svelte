@@ -10,7 +10,6 @@
 	import Box from '$lib/Box.svelte';
 
 	let pollStreams: Array<PollStream>;
-	let signInProvider: string = "";
 
 	async function newPollStream() {
 		var pollStream = await main.newPollStream();
@@ -25,22 +24,17 @@
 	
 	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
-			var token = await main.auth.currentUser.getIdTokenResult(false);
-			signInProvider = token.signInProvider;
-			
 			await main.readUserData();
-			if (main.userData != null) {
-				var result = [];
-				var polls = main.userData.getPollStreamIds();
-				for (let poll of polls) {
-					var p = await main.readPollStream(poll);
-					if (p != null) {
-						result = [...result, p];
-						pollStreams = result;
-					}
+			var result = [];
+			var polls = main.userData.getPollStreamIds();
+			for (let poll of polls) {
+				var p = await main.readPollStream(poll);
+				if (p != null) {
+					result = [...result, p];
+					pollStreams = result;
 				}
-				pollStreams = result;
 			}
+			pollStreams = result;
 		} else {
 			pollStreams = [];
 		}
@@ -50,7 +44,9 @@
 {#if pollStreams === undefined}
 	<p style="margin-top: 100px">Loading...</p>
 {:else}
-	{#if main.auth.currentUser && signInProvider != "anonymous"}
+	{#if !main.auth.currentUser || main.auth.currentUser.isAnonymous}
+		<p style="margin-top: 100px">Sign in to create your own poll streams!</p>
+	{:else}
 		{#if !pollStreams || pollStreams.length == 0}
 			<p style="margin-top: 100px">No Poll Streams!</p>
 			<p>Click the button below to add a stream.</p>
@@ -65,8 +61,6 @@
 			<Box visible={false} style={"max-width:200px;"}>
 				<BasicButton onclick={newPollStream}>+ Create Poll Stream</BasicButton>
 			</Box>
-		</FloatingRow>		
-	{:else}
-		<p style="margin-top: 100px">Sign in to create your own poll streams!</p>
+		</FloatingRow>
 	{/if}
 {/if}

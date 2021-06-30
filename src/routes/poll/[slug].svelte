@@ -85,7 +85,9 @@
 {#if pollStream === undefined}
 	<p>Loading...</p>
 {:else}
-	{#if main.auth.currentUser != null}
+	{#if !main.auth.currentUser}
+		<p style="margin-top: 100px">Sign in to access this poll stream!</p>
+	{:else}
 		{#if !pollStream}
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
@@ -135,20 +137,18 @@
 						<BasicButton onclick={addPoll}>+ New Question</BasicButton>
 					{:else if index !== pollStream.getPolls().length - 1}
 						<BasicButton onclick={increment}
-						style={"background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"}
+						style={"background-color:var(--" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? "c_green" : "c_blue") + ");"}
 						>
 							Next
 						</BasicButton>
 					{:else}
 						<BasicButton onclick={() => goto("/")}
-							style={"background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"}
+							style={"background-color:var(--" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? "c_green" : "c_blue") + ");"}
 						> Complete </BasicButton>
 					{/if}
 				</Box>
 			</FloatingRow>
 		{/if}
-	{:else}
-		<p style="margin-top: 100px">Sign in to access this poll stream!</p>
 	{/if}
 {/if}
 

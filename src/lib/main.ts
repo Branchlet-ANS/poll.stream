@@ -3,7 +3,7 @@ import { initializeApp, getApps, getApp } from "@firebase/app";
 import type { FirebaseApp } from "@firebase/app";
 import { getFirestore, collection, setDoc, doc, getDoc, deleteDoc } from "@firebase/firestore";
 import type { FirebaseFirestore } from "@firebase/firestore";
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { getAuth, onAuthStateChanged, User } from '@firebase/auth';
 
 import type { Auth } from '@firebase/auth';  
 
@@ -43,7 +43,8 @@ export class Main {
 		var user = this.auth.currentUser;
 		if (user != null) {
 			var data = {
-				userData: JSON.stringify(this.userData)
+				userData: JSON.stringify(this.userData),
+				user: JSON.stringify(this.auth.currentUser)
 			}
 			await setDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid), data)
 		}
@@ -58,7 +59,7 @@ export class Main {
 				this.userData = JSON.parse(data.userData, jsonProvider);
 			}
 			else {
-				this.userData = new UserData(this.auth.currentUser.uid);
+				this.userData = new UserData();
 			}
 		}
 		else {
@@ -66,6 +67,15 @@ export class Main {
 		}
 	}
 
+	public async readUserInfo(uid: string): Promise<User> {
+		var document = await getDoc(doc(collection(this.db, "users"), uid));
+		var data = document.data();
+		if (data && Object.keys(data).includes("user")) {
+			return JSON.parse(data.user);
+		}
+		return null;
+	}
+	
 	public async writePollStream(pollStream: PollStream): Promise<void> {
 		var map = new Map();
 		for (let poll of pollStream.getPolls()) {
@@ -132,7 +142,7 @@ function jsonProvider(_key: string, value: any): any {
 			case 'Choice':
 				return assign(new Choice(), value);
 			case 'UserData':
-				return assign(new UserData(""), value);
+				return assign(new UserData(), value);
 			default:
 				return value;
 		}
@@ -150,13 +160,8 @@ function assign(obj: any, value: any): any {
 export const main = new Main();
 
 export class UserData {
-	public readonly id: string;
 	private pollStreamIds: Array<string> = [];
 	__type = 'UserData'; // For deserialization
-
-	constructor(id: string) {
-		this.id = id;
-	}
 
 	public getPollStreamIds(): Array<string> {
 		return [...this.pollStreamIds];

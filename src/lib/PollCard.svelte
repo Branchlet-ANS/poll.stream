@@ -8,6 +8,7 @@
 	import Box from './Box.svelte';
 	import Column from '$lib/Column.svelte';
 	import Row from '$lib/Row.svelte';
+import { onMount } from 'svelte';
 
 	export let poll: Poll;
 	export let remove = () => undefined;
@@ -16,28 +17,24 @@
 
 	async function addChoice() {
 		poll.addChoice(new Choice());
-		poll = poll; // For Svelte
 		updateParent();
 	}
 
-	function vote(choice: Choice) {
+	async function vote(choice: Choice) {
 		var user = main.auth.currentUser.uid;
-		if (poll.getUserChoices(user).includes(choice)) {
+		if (choice.isVotedOnBy(user)) {
 			poll.unvote(user, choice);
 		}
 		else {
 			poll.vote(user, choice);
 		}
-		poll = poll; // For Svelte
 		updateParent();
 	}
 
 	function removeChoice(choice: Choice) {
 		poll.removeChoice(choice);
-		poll = poll;
 		updateParent();
 	}
-
 </script>
 
 <Box>
@@ -55,8 +52,8 @@
 		<h2>{poll.question}</h2>
 		<div class="split"></div>
 	{/if}
-	{#each poll.getChoices() as choice}
-		<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>
+	{#each poll.getChoices() as choice (choice)}
+		<ChoiceItem {choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} {edit}></ChoiceItem>
 	{/each}
 	{#if edit}
 		<Row>

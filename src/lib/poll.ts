@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 
-interface Listener {
+export interface Listener {
 	update(listenable: any): void;
 }
 
-interface Listenable {
+export interface Listenable {
 	addListener(listener: Listener): void;
 	removeListener(listener: Listener): void;
 	notifyListeners(): void;
@@ -137,7 +137,7 @@ export class Choice implements Listenable {
 	private users: Array<string> = [];
 	public listeners: Array<Listener> = [];
 	public __type: string = 'Choice';
-
+	
 	public vote(user: string): void {
 		if (this.users.includes(user)) {
 			return;
@@ -158,12 +158,12 @@ export class Choice implements Listenable {
 	public getUsers() {
 		return [...this.users];
 	}
-
+	
 	public addListener(listener: Listener): void {
 		if (this.listeners.includes(listener)) {
 			return;
 		}
-		this.listeners.push(listener);
+		this.listeners = [listener, ...this.listeners];
 	}
 
 	public removeListener(listener: Listener): void {
@@ -171,7 +171,7 @@ export class Choice implements Listenable {
 	}
 	
 	public notifyListeners() {
-		for (const listener of this.listeners) {
+		for (let listener of this.listeners) {
 			listener.update(this);
 		}
 	}
