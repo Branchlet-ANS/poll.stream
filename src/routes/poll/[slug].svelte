@@ -27,10 +27,11 @@
 	import FloatingRow from '$lib/FloatingRow.svelte';
 	import Box from '$lib/Box.svelte';
 	import { goto } from '$app/navigation';
+import ConfirmationButton from '$lib/ConfirmationButton.svelte';
 	
 	let pollStream: PollStream;
-	let index: number = 0;
-	let edit: boolean = (query.get('edit') === 'true');
+	let index: number;
+	let edit: boolean = false;
 	
 	onMount(async () => {
 		pollStream = await main.readPollStream(pollStreamId);
@@ -57,25 +58,27 @@
 		if (user) {
 			await main.readUserData();
 			pollStream = await main.readPollStream(pollStreamId);
+			edit = edit || (main.userData.isAdminOf(pollStream.id) && query.get('edit') === 'true');
 		} else {
 			pollStream = null;
 		}
-		index = 0;
+		index = pollStream.description ? -1 : 0;
 	});
 
 	function increment() {
-		var len = pollStream.getPolls().length;
-		if (len > 1) {
-			index = Math.min(index+1, len-1);
-		}
+		index++;
 	}
 
 	function decrement() {
-		index = Math.max(index-1, 0);
+		index--;
 	}
 
 	function updateParent() {
 		poll = poll;
+	}
+
+	function share() {
+		navigator.clipboard.writeText("https://poll.stream/poll/" + pollStreamId);
 	}
 
 	$: poll = pollStream ? pollStream.getPolls()[index] : null;
@@ -92,27 +95,36 @@
 			<h2 style="padding-top: 100pt;">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>
 		{:else}
+		
 			<Row>
-				<Column>
-					{#if isAdmin && edit}
-						<input type="text" class="title" placeholder="Enter title.." bind:value={pollStream.title}>
-						<div class="title-split"></div>
-						<textarea type="text" class="description" placeholder="Enter description.." bind:value={pollStream.description}></textarea>
-						<br>
-					{:else}
-						<h2>{pollStream.title}</h2>
-						<p>{pollStream.description}</p>
-					{/if}
-				</Column>
-				{#if isAdmin}
-					{#if edit}
-						<BasicButton onclick={save} style="background-color:var(--c_green);">Save</BasicButton>
-					{:else}
-						<BasicButton onclick={() => edit = true}>Edit</BasicButton>
-					{/if}
+				{#if index === -1}
+					<Column>
+						{#if isAdmin && edit}
+							<input type="text" class="title" placeholder="Enter title.." bind:value={pollStream.title}>
+							<div class="title-split"></div>
+							<textarea type="text" class="description" placeholder="Enter description.." bind:value={pollStream.description}></textarea>
+							<br>
+						{:else}
+							<h2>{pollStream.title}</h2>
+							<p>{pollStream.description}</p>
+						{/if}
+					</Column>
+				{:else}
+					<div></div>
 				{/if}
+				<div>
+					<ConfirmationButton onfirstclick={share} secondText={"Copied url to clipboard."}>Share</ConfirmationButton>
+					{#if isAdmin}
+						{#if edit}
+							<BasicButton onclick={save} style="background-color:var(--c_green);">Save</BasicButton>
+						{:else}
+							<BasicButton onclick={() => edit = true}>Edit</BasicButton>
+						{/if}
+					{/if}
+				</div>
 			</Row>
-			
+		
+
 			{#if poll}
 				<Column>
 					<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>
@@ -121,14 +133,20 @@
 
 			<FloatingRow style={"background-color: white; box-shadow: 0px -4px 10px var(--c_light);"}>
 				<Box visible={false}>
-					{#if index != 0}
+					{#if index > 0}
 						<BasicButton onclick={decrement}> Back </BasicButton>
+					{:else if index === 0}
+						{#if edit}
+							<BasicButton onclick={decrement}> Write Description </BasicButton>
+						{:else if pollStream.description}
+							<BasicButton onclick={decrement}> View Description </BasicButton>
+						{/if}
 					{/if}
 				</Box>
 
 				<Box visible={false}>
 					{#if pollStream.getPolls().length}
-						<h3>{index+1} of {pollStream.getPolls().length}</h3>
+						<span style="margin-top:10pt; font-size: large; font-weight: 700;">{index+1} of {pollStream.getPolls().length}</span>
 					{/if}
 				</Box>
 				

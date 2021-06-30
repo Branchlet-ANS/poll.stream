@@ -66,7 +66,7 @@
 		<Row>
 			<span></span>
 			<span style="font-size: small;">
-				{#if main.auth.currentUser && !main.auth.currentUser.isAnonymous}
+				{#if main.auth.currentUser && !main.auth.currentUser.isAnonymous && userNames.length}
 					<span>Voted on by: </span>
 					{#each userNames as name}
 						<span>{name}, </span>

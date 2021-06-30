@@ -39910,9 +39910,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-1885bc51.js",
+      file: "/./_app/start-e71de228.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-1885bc51.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-e71de228.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -39988,7 +39988,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-fe2332bf.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-fe2332bf.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-3f9a6726.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-3f9a6726.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-33a0e0c8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-1bfe3274.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-1bfe3274.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-33a0e0c8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-fe2332bf.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-fe2332bf.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-dc07c20c.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-dc07c20c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-2915b6e8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-feb05d26.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-feb05d26.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-2915b6e8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40451,12 +40451,15 @@ function guard(name) {
 }
 var goto = guard("goto");
 var ConfirmationButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {onfirstclick = () => void 0} = $$props;
   let {onclick = () => void 0} = $$props;
   let {time = 2e3} = $$props;
   let {style = ""} = $$props;
+  let {secondText = "Confirm"} = $$props;
   let showConfirm = false;
   let timer;
   function firstClick() {
+    onfirstclick();
     clearTimeout(timer);
     showConfirm = true;
     timer = setTimeout(() => showConfirm = false, time);
@@ -40469,22 +40472,23 @@ var ConfirmationButton = create_ssr_component(($$result, $$props, $$bindings, sl
     mouseOut();
     onclick();
   }
+  if ($$props.onfirstclick === void 0 && $$bindings.onfirstclick && onfirstclick !== void 0)
+    $$bindings.onfirstclick(onfirstclick);
   if ($$props.onclick === void 0 && $$bindings.onclick && onclick !== void 0)
     $$bindings.onclick(onclick);
   if ($$props.time === void 0 && $$bindings.time && time !== void 0)
     $$bindings.time(time);
   if ($$props.style === void 0 && $$bindings.style && style !== void 0)
     $$bindings.style(style);
+  if ($$props.secondText === void 0 && $$bindings.secondText && secondText !== void 0)
+    $$bindings.secondText(secondText);
   return `${!showConfirm ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: firstClick, style}, {}, {
     default: () => `${slots.default ? slots.default({}) : ``}`
   })}` : `
 		${validate_component(BasicButton, "BasicButton").$$render($$result, {
     onclick: onClick,
     style: "background-color:var(--c_yellow); color:var(--c_dark);"
-  }, {}, {
-    default: () => `Confirm
-		`
-  })}
+  }, {}, {default: () => `${escape2(secondText)}`})}
 	`}`;
 });
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40688,7 +40692,7 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
     })}`}
 		${validate_component(Row, "Row").$$render($$result, {}, {}, {
       default: () => `<span></span>
-			<span style="${"font-size: small;"}">${main.auth.currentUser && !main.auth.currentUser.isAnonymous ? `<span>Voted on by: </span>
+			<span style="${"font-size: small;"}">${main.auth.currentUser && !main.auth.currentUser.isAnonymous && userNames.length ? `<span>Voted on by: </span>
 					${each(userNames, (name) => `<span>${escape2(name)}, </span>`)}` : ``}</span>`
     })}`
   })}` : ``}`;
@@ -40791,7 +40795,7 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 var css = {
   code: ".title.svelte-15c3n33{margin:20px 0 0 0;padding:10px;font-size:1.5em;height:1em;width:100%}.title.svelte-15c3n33:focus{outline:none}.description.svelte-15c3n33{margin:20px;padding:10px;font-size:1em;height:3em;width:50%;border-color:var(--c_light);font-family:'Roboto', sans-serif;border-width:2px}",
-  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nlet pollStream;\\r\\nlet index = 0;\\r\\nlet edit = (query.get('edit') === 'true');\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    var len = pollStream.getPolls().length;\\r\\n    if (len > 1) {\\r\\n        index = Math.min(index + 1, len - 1);\\r\\n    }\\r\\n}\\r\\nfunction decrement() {\\r\\n    index = Math.max(index - 1, 0);\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if !main.auth.currentUser}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{:else}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index != 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<h3>{index+1} of {pollStream.getPolls().length}</h3>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0JC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
+  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nlet pollStream;\\r\\nlet index;\\r\\nlet edit = false;\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n        edit = edit || (main.userData.isAdminOf(pollStream.id) && query.get('edit') === 'true');\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = pollStream.description ? -1 : 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    index++;\\r\\n}\\r\\nfunction decrement() {\\r\\n    index--;\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\nfunction share() {\\r\\n    navigator.clipboard.writeText(\\"https://poll.stream/poll/\\" + pollStreamId);\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if !main.auth.currentUser}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{:else}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t{#if index === -1}\\r\\n\\t\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t<div></div>\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t<div>\\r\\n\\t\\t\\t\\t\\t<ConfirmationButton onfirstclick={share} secondText={\\"Copied url to clipboard.\\"}>Share</ConfirmationButton>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\r\\n\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index > 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index === 0}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Write Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else if pollStream.description}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> View Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<span style=\\"margin-top:10pt; font-size: large; font-weight: 700;\\">{index+1} of {pollStream.getPolls().length}</span>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA2KC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
 };
 var pageInfo;
 var pollStreamId;
@@ -40801,6 +40805,9 @@ async function load$1({page, fetch: fetch3, session, context}) {
   pollStreamId = pageInfo.params.slug;
   query = pageInfo.query;
   return {props: {}};
+}
+function share() {
+  navigator.clipboard.writeText("https://poll.stream/poll/" + pollStreamId);
 }
 var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let poll;
@@ -40833,8 +40840,8 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     });
   };
   let pollStream;
-  let index2 = 0;
-  let edit = query.get("edit") === "true";
+  let index2;
+  let edit = false;
   onMount(() => __awaiter(void 0, void 0, void 0, function* () {
     pollStream = yield main.readPollStream(pollStreamId);
   }));
@@ -40856,19 +40863,17 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     if (user) {
       yield main.readUserData();
       pollStream = yield main.readPollStream(pollStreamId);
+      edit = edit || main.userData.isAdminOf(pollStream.id) && query.get("edit") === "true";
     } else {
       pollStream = null;
     }
-    index2 = 0;
+    index2 = pollStream.description ? -1 : 0;
   }));
   function increment() {
-    var len = pollStream.getPolls().length;
-    if (len > 1) {
-      index2 = Math.min(index2 + 1, len - 1);
-    }
+    index2++;
   }
   function decrement() {
-    index2 = Math.max(index2 - 1, 0);
+    index2--;
   }
   function updateParent() {
     poll = poll;
@@ -40878,19 +40883,24 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
   isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
   return `${pollStream === void 0 ? `<p>Loading...</p>` : `${!main.auth.currentUser ? `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>` : `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>` : `${validate_component(Row, "Row").$$render($$result, {}, {}, {
-    default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+    default: () => `${index2 === -1 ? `${validate_component(Column, "Column").$$render($$result, {}, {}, {
       default: () => `${isAdmin && edit ? `<input type="${"text"}" class="${"title svelte-15c3n33"}" placeholder="${"Enter title.."}"${add_attribute("value", pollStream.title, 1)}>
-						<div class="${"title-split"}"></div>
-						<textarea type="${"text"}" class="${"description svelte-15c3n33"}" placeholder="${"Enter description.."}">${pollStream.description || ""}</textarea>
-						<br>` : `<h2>${escape2(pollStream.title)}</h2>
-						<p>${escape2(pollStream.description)}</p>`}`
-    })}
-				${isAdmin ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
+							<div class="${"title-split"}"></div>
+							<textarea type="${"text"}" class="${"description svelte-15c3n33"}" placeholder="${"Enter description.."}">${pollStream.description || ""}</textarea>
+							<br>` : `<h2>${escape2(pollStream.title)}</h2>
+							<p>${escape2(pollStream.description)}</p>`}`
+    })}` : `<div></div>`}
+				<div>${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+      onfirstclick: share,
+      secondText: "Copied url to clipboard."
+    }, {}, {default: () => `Share`})}
+					${isAdmin ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
       onclick: save,
       style: "background-color:var(--c_green);"
-    }, {}, {default: () => `Save`})}` : `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: () => edit = true}, {}, {default: () => `Edit`})}`}` : ``}`
+    }, {}, {default: () => `Save`})}` : `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: () => edit = true}, {}, {default: () => `Edit`})}`}` : ``}</div>`
   })}
-			
+		
+
 			${poll ? `${validate_component(Column, "Column").$$render($$result, {}, {}, {
     default: () => `${validate_component(PollCard, "PollCard").$$render($$result, {
       poll,
@@ -40904,11 +40914,11 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     style: "background-color: white; box-shadow: 0px -4px 10px var(--c_light);"
   }, {}, {
     default: () => `${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
-      default: () => `${index2 != 0 ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : ``}`
+      default: () => `${index2 > 0 ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Back `})}` : `${index2 === 0 ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: decrement}, {}, {default: () => `Write Description `})}` : `${pollStream.description ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: decrement}, {}, {default: () => `View Description `})}` : ``}`}` : ``}`}`
     })}
 
 				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
-      default: () => `${pollStream.getPolls().length ? `<h3>${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</h3>` : ``}`
+      default: () => `${pollStream.getPolls().length ? `<span style="${"margin-top:10pt; font-size: large; font-weight: 700;"}">${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</span>` : ``}`
     })}
 				
 				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
