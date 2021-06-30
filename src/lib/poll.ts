@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 export interface Listener {
 	update(listenable: any): void;
@@ -19,7 +19,7 @@ export class PollStream implements Listener {
 	private onUpdateFunction: CallableFunction = () => undefined;
 
 	constructor() {
-		this.id = uuidv4();
+		this.id = nanoid(12);
 		this.addPoll(new Poll());
 	}
 

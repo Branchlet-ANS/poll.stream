@@ -1951,7 +1951,7 @@ var require_index_node_cjs = __commonJS({
     function jsonEval(str) {
       return JSON.parse(str);
     }
-    function stringify2(data) {
+    function stringify(data) {
       return JSON.stringify(data);
     }
     var decode = function(token) {
@@ -2559,7 +2559,7 @@ var require_index_node_cjs = __commonJS({
     exports2.safeGet = safeGet;
     exports2.stringLength = stringLength;
     exports2.stringToByteArray = stringToByteArray$1;
-    exports2.stringify = stringify2;
+    exports2.stringify = stringify;
     exports2.validateArgCount = validateArgCount;
     exports2.validateCallback = validateCallback;
     exports2.validateContextObject = validateContextObject;
@@ -3115,7 +3115,7 @@ var require_index_cjs3 = __commonJS({
       return (component2 === null || component2 === void 0 ? void 0 : component2.type) === "VERSION";
     }
     var name = "@firebase/app-exp";
-    var version2 = "0.0.900-exp.d92a36260";
+    var version = "0.0.900-exp.d92a36260";
     var logger = new logger$1.Logger("@firebase/app");
     var name$1 = "@firebase/app-compat";
     var name$2 = "@firebase/analytics-compat";
@@ -3337,17 +3337,17 @@ var require_index_cjs3 = __commonJS({
         });
       });
     }
-    function registerVersion(libraryKeyOrName, version3, variant) {
+    function registerVersion(libraryKeyOrName, version2, variant) {
       var _a2;
       var library = (_a2 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a2 !== void 0 ? _a2 : libraryKeyOrName;
       if (variant) {
         library += "-" + variant;
       }
       var libraryMismatch = library.match(/\s|\//);
-      var versionMismatch = version3.match(/\s|\//);
+      var versionMismatch = version2.match(/\s|\//);
       if (libraryMismatch || versionMismatch) {
         var warning = [
-          'Unable to register library "' + library + '" with version "' + version3 + '":'
+          'Unable to register library "' + library + '" with version "' + version2 + '":'
         ];
         if (libraryMismatch) {
           warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
@@ -3356,13 +3356,13 @@ var require_index_cjs3 = __commonJS({
           warning.push("and");
         }
         if (versionMismatch) {
-          warning.push('version name "' + version3 + '" contains illegal characters (whitespace or "/")');
+          warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
         }
         logger.warn(warning.join(" "));
         return;
       }
       _registerComponent(new component.Component(library + "-version", function() {
-        return {library, version: version3};
+        return {library, version: version2};
       }, "VERSION"));
     }
     function onLog(logCallback, options2) {
@@ -3378,7 +3378,7 @@ var require_index_cjs3 = __commonJS({
       _registerComponent(new component.Component("platform-logger", function(container) {
         return new PlatformLoggerServiceImpl(container);
       }, "PRIVATE"));
-      registerVersion(name, version2, variant);
+      registerVersion(name, version, variant);
       registerVersion("fire-js", "");
     }
     registerCoreComponents();
@@ -7259,7 +7259,7 @@ var require_register_2a5ac87a = __commonJS({
       return multiFactorUserCache.get(userModular);
     }
     var name = "@firebase/auth-exp";
-    var version2 = "0.0.900-exp.d92a36260";
+    var version = "0.0.900-exp.d92a36260";
     var AuthInterop = function() {
       function AuthInterop2(auth) {
         this.auth = auth;
@@ -7372,7 +7372,7 @@ var require_register_2a5ac87a = __commonJS({
           return new AuthInterop(auth2);
         }(auth);
       }, "PRIVATE").setInstantiationMode("EXPLICIT"));
-      app.registerVersion(name, version2, getVersionForPlatform(clientPlatform));
+      app.registerVersion(name, version, getVersionForPlatform(clientPlatform));
     }
     exports2.ActionCodeURL = ActionCodeURL;
     exports2.AuthCredential = AuthCredential;
@@ -7551,497 +7551,6 @@ var require_node = __commonJS({
   }
 });
 
-// node_modules/uuid/dist/rng.js
-var require_rng = __commonJS({
-  "node_modules/uuid/dist/rng.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = rng;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var rnds8Pool = new Uint8Array(256);
-    var poolPtr = rnds8Pool.length;
-    function rng() {
-      if (poolPtr > rnds8Pool.length - 16) {
-        _crypto.default.randomFillSync(rnds8Pool);
-        poolPtr = 0;
-      }
-      return rnds8Pool.slice(poolPtr, poolPtr += 16);
-    }
-  }
-});
-
-// node_modules/uuid/dist/regex.js
-var require_regex = __commonJS({
-  "node_modules/uuid/dist/regex.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/validate.js
-var require_validate = __commonJS({
-  "node_modules/uuid/dist/validate.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _regex = _interopRequireDefault(require_regex());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function validate2(uuid2) {
-      return typeof uuid2 === "string" && _regex.default.test(uuid2);
-    }
-    var _default = validate2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/stringify.js
-var require_stringify = __commonJS({
-  "node_modules/uuid/dist/stringify.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var byteToHex = [];
-    for (let i = 0; i < 256; ++i) {
-      byteToHex.push((i + 256).toString(16).substr(1));
-    }
-    function stringify2(arr, offset = 0) {
-      const uuid2 = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Stringified UUID is invalid");
-      }
-      return uuid2;
-    }
-    var _default = stringify2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v1.js
-var require_v1 = __commonJS({
-  "node_modules/uuid/dist/v1.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var _nodeId;
-    var _clockseq;
-    var _lastMSecs = 0;
-    var _lastNSecs = 0;
-    function v12(options2, buf, offset) {
-      let i = buf && offset || 0;
-      const b = buf || new Array(16);
-      options2 = options2 || {};
-      let node = options2.node || _nodeId;
-      let clockseq = options2.clockseq !== void 0 ? options2.clockseq : _clockseq;
-      if (node == null || clockseq == null) {
-        const seedBytes = options2.random || (options2.rng || _rng.default)();
-        if (node == null) {
-          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
-        }
-        if (clockseq == null) {
-          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
-        }
-      }
-      let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
-      let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
-      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-      if (dt < 0 && options2.clockseq === void 0) {
-        clockseq = clockseq + 1 & 16383;
-      }
-      if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
-        nsecs = 0;
-      }
-      if (nsecs >= 1e4) {
-        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
-      }
-      _lastMSecs = msecs;
-      _lastNSecs = nsecs;
-      _clockseq = clockseq;
-      msecs += 122192928e5;
-      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
-      b[i++] = tl >>> 24 & 255;
-      b[i++] = tl >>> 16 & 255;
-      b[i++] = tl >>> 8 & 255;
-      b[i++] = tl & 255;
-      const tmh = msecs / 4294967296 * 1e4 & 268435455;
-      b[i++] = tmh >>> 8 & 255;
-      b[i++] = tmh & 255;
-      b[i++] = tmh >>> 24 & 15 | 16;
-      b[i++] = tmh >>> 16 & 255;
-      b[i++] = clockseq >>> 8 | 128;
-      b[i++] = clockseq & 255;
-      for (let n = 0; n < 6; ++n) {
-        b[i + n] = node[n];
-      }
-      return buf || (0, _stringify.default)(b);
-    }
-    var _default = v12;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/parse.js
-var require_parse = __commonJS({
-  "node_modules/uuid/dist/parse.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function parse2(uuid2) {
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Invalid UUID");
-      }
-      let v;
-      const arr = new Uint8Array(16);
-      arr[0] = (v = parseInt(uuid2.slice(0, 8), 16)) >>> 24;
-      arr[1] = v >>> 16 & 255;
-      arr[2] = v >>> 8 & 255;
-      arr[3] = v & 255;
-      arr[4] = (v = parseInt(uuid2.slice(9, 13), 16)) >>> 8;
-      arr[5] = v & 255;
-      arr[6] = (v = parseInt(uuid2.slice(14, 18), 16)) >>> 8;
-      arr[7] = v & 255;
-      arr[8] = (v = parseInt(uuid2.slice(19, 23), 16)) >>> 8;
-      arr[9] = v & 255;
-      arr[10] = (v = parseInt(uuid2.slice(24, 36), 16)) / 1099511627776 & 255;
-      arr[11] = v / 4294967296 & 255;
-      arr[12] = v >>> 24 & 255;
-      arr[13] = v >>> 16 & 255;
-      arr[14] = v >>> 8 & 255;
-      arr[15] = v & 255;
-      return arr;
-    }
-    var _default = parse2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v35.js
-var require_v35 = __commonJS({
-  "node_modules/uuid/dist/v35.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = _default;
-    exports2.URL = exports2.DNS = void 0;
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function stringToBytes(str) {
-      str = unescape(encodeURIComponent(str));
-      const bytes = [];
-      for (let i = 0; i < str.length; ++i) {
-        bytes.push(str.charCodeAt(i));
-      }
-      return bytes;
-    }
-    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-    exports2.DNS = DNS;
-    var URL2 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
-    exports2.URL = URL2;
-    function _default(name, version2, hashfunc) {
-      function generateUUID(value, namespace, buf, offset) {
-        if (typeof value === "string") {
-          value = stringToBytes(value);
-        }
-        if (typeof namespace === "string") {
-          namespace = (0, _parse.default)(namespace);
-        }
-        if (namespace.length !== 16) {
-          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
-        }
-        let bytes = new Uint8Array(16 + value.length);
-        bytes.set(namespace);
-        bytes.set(value, namespace.length);
-        bytes = hashfunc(bytes);
-        bytes[6] = bytes[6] & 15 | version2;
-        bytes[8] = bytes[8] & 63 | 128;
-        if (buf) {
-          offset = offset || 0;
-          for (let i = 0; i < 16; ++i) {
-            buf[offset + i] = bytes[i];
-          }
-          return buf;
-        }
-        return (0, _stringify.default)(bytes);
-      }
-      try {
-        generateUUID.name = name;
-      } catch (err) {
-      }
-      generateUUID.DNS = DNS;
-      generateUUID.URL = URL2;
-      return generateUUID;
-    }
-  }
-});
-
-// node_modules/uuid/dist/md5.js
-var require_md5 = __commonJS({
-  "node_modules/uuid/dist/md5.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function md5(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
-      }
-      return _crypto.default.createHash("md5").update(bytes).digest();
-    }
-    var _default = md5;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v3.js
-var require_v3 = __commonJS({
-  "node_modules/uuid/dist/v3.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _md = _interopRequireDefault(require_md5());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var v32 = (0, _v.default)("v3", 48, _md.default);
-    var _default = v32;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v4.js
-var require_v4 = __commonJS({
-  "node_modules/uuid/dist/v4.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _rng = _interopRequireDefault(require_rng());
-    var _stringify = _interopRequireDefault(require_stringify());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function v42(options2, buf, offset) {
-      options2 = options2 || {};
-      const rnds = options2.random || (options2.rng || _rng.default)();
-      rnds[6] = rnds[6] & 15 | 64;
-      rnds[8] = rnds[8] & 63 | 128;
-      if (buf) {
-        offset = offset || 0;
-        for (let i = 0; i < 16; ++i) {
-          buf[offset + i] = rnds[i];
-        }
-        return buf;
-      }
-      return (0, _stringify.default)(rnds);
-    }
-    var _default = v42;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/sha1.js
-var require_sha1 = __commonJS({
-  "node_modules/uuid/dist/sha1.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _crypto = _interopRequireDefault(require("crypto"));
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function sha1(bytes) {
-      if (Array.isArray(bytes)) {
-        bytes = Buffer.from(bytes);
-      } else if (typeof bytes === "string") {
-        bytes = Buffer.from(bytes, "utf8");
-      }
-      return _crypto.default.createHash("sha1").update(bytes).digest();
-    }
-    var _default = sha1;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/v5.js
-var require_v5 = __commonJS({
-  "node_modules/uuid/dist/v5.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _v = _interopRequireDefault(require_v35());
-    var _sha = _interopRequireDefault(require_sha1());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    var v52 = (0, _v.default)("v5", 80, _sha.default);
-    var _default = v52;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/nil.js
-var require_nil = __commonJS({
-  "node_modules/uuid/dist/nil.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _default = "00000000-0000-0000-0000-000000000000";
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/version.js
-var require_version = __commonJS({
-  "node_modules/uuid/dist/version.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    exports2.default = void 0;
-    var _validate = _interopRequireDefault(require_validate());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-    function version2(uuid2) {
-      if (!(0, _validate.default)(uuid2)) {
-        throw TypeError("Invalid UUID");
-      }
-      return parseInt(uuid2.substr(14, 1), 16);
-    }
-    var _default = version2;
-    exports2.default = _default;
-  }
-});
-
-// node_modules/uuid/dist/index.js
-var require_dist = __commonJS({
-  "node_modules/uuid/dist/index.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {
-      value: true
-    });
-    Object.defineProperty(exports2, "v1", {
-      enumerable: true,
-      get: function() {
-        return _v.default;
-      }
-    });
-    Object.defineProperty(exports2, "v3", {
-      enumerable: true,
-      get: function() {
-        return _v2.default;
-      }
-    });
-    Object.defineProperty(exports2, "v4", {
-      enumerable: true,
-      get: function() {
-        return _v3.default;
-      }
-    });
-    Object.defineProperty(exports2, "v5", {
-      enumerable: true,
-      get: function() {
-        return _v4.default;
-      }
-    });
-    Object.defineProperty(exports2, "NIL", {
-      enumerable: true,
-      get: function() {
-        return _nil.default;
-      }
-    });
-    Object.defineProperty(exports2, "version", {
-      enumerable: true,
-      get: function() {
-        return _version.default;
-      }
-    });
-    Object.defineProperty(exports2, "validate", {
-      enumerable: true,
-      get: function() {
-        return _validate.default;
-      }
-    });
-    Object.defineProperty(exports2, "stringify", {
-      enumerable: true,
-      get: function() {
-        return _stringify.default;
-      }
-    });
-    Object.defineProperty(exports2, "parse", {
-      enumerable: true,
-      get: function() {
-        return _parse.default;
-      }
-    });
-    var _v = _interopRequireDefault(require_v1());
-    var _v2 = _interopRequireDefault(require_v3());
-    var _v3 = _interopRequireDefault(require_v4());
-    var _v4 = _interopRequireDefault(require_v5());
-    var _nil = _interopRequireDefault(require_nil());
-    var _version = _interopRequireDefault(require_version());
-    var _validate = _interopRequireDefault(require_validate());
-    var _stringify = _interopRequireDefault(require_stringify());
-    var _parse = _interopRequireDefault(require_parse());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {default: obj};
-    }
-  }
-});
-
 // node_modules/@grpc/grpc-js/build/src/constants.js
 var require_constants = __commonJS({
   "node_modules/@grpc/grpc-js/build/src/constants.js"(exports2) {
@@ -8176,7 +7685,7 @@ var require_metadata = __commonJS({
     function normalizeKey(key) {
       return key.toLowerCase();
     }
-    function validate2(key, value) {
+    function validate(key, value) {
       if (!isLegalKey(key)) {
         throw new Error('Metadata key "' + key + '" contains illegal characters');
       }
@@ -8206,12 +7715,12 @@ var require_metadata = __commonJS({
       }
       set(key, value) {
         key = normalizeKey(key);
-        validate2(key, value);
+        validate(key, value);
         this.internalRepr.set(key, [value]);
       }
       add(key, value) {
         key = normalizeKey(key);
-        validate2(key, value);
+        validate(key, value);
         const existingValue = this.internalRepr.get(key);
         if (existingValue === void 0) {
           this.internalRepr.set(key, [value]);
@@ -8221,12 +7730,12 @@ var require_metadata = __commonJS({
       }
       remove(key) {
         key = normalizeKey(key);
-        validate2(key);
+        validate(key);
         this.internalRepr.delete(key);
       }
       get(key) {
         key = normalizeKey(key);
-        validate2(key);
+        validate(key);
         return this.internalRepr.get(key) || [];
       }
       getMap() {
@@ -14841,8 +14350,8 @@ var require_utf8 = __commonJS({
 var require_pool = __commonJS({
   "node_modules/@protobufjs/pool/index.js"(exports2, module2) {
     "use strict";
-    module2.exports = pool;
-    function pool(alloc, slice, size) {
+    module2.exports = pool2;
+    function pool2(alloc, slice, size) {
       var SIZE = size || 8192;
       var MAX = SIZE >>> 1;
       var slab = null;
@@ -17336,7 +16845,7 @@ var require_root = __commonJS({
     var OneOf = require_oneof();
     var util = require_util();
     var Type;
-    var parse2;
+    var parse;
     var common;
     function Root2(options2) {
       Namespace.call(this, "", options2);
@@ -17388,8 +16897,8 @@ var require_root = __commonJS({
           if (!util.isString(source))
             self2.setOptions(source.options).addJSON(source.nested);
           else {
-            parse2.filename = filename2;
-            var parsed = parse2(source, self2, options2), resolved2, i2 = 0;
+            parse.filename = filename2;
+            var parsed = parse(source, self2, options2), resolved2, i2 = 0;
             if (parsed.imports) {
               for (; i2 < parsed.imports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.imports[i2]) || self2.resolvePath(filename2, parsed.imports[i2]))
@@ -17532,7 +17041,7 @@ var require_root = __commonJS({
     };
     Root2._configure = function(Type_, parse_, common_) {
       Type = Type_;
-      parse2 = parse_;
+      parse = parse_;
       common = common_;
     };
   }
@@ -18181,12 +17690,12 @@ var require_tokenize = __commonJS({
 });
 
 // node_modules/protobufjs/src/parse.js
-var require_parse2 = __commonJS({
+var require_parse = __commonJS({
   "node_modules/protobufjs/src/parse.js"(exports2, module2) {
     "use strict";
-    module2.exports = parse2;
-    parse2.filename = null;
-    parse2.defaults = {keepCase: false};
+    module2.exports = parse;
+    parse.filename = null;
+    parse.defaults = {keepCase: false};
     var tokenize = require_tokenize();
     var Root2 = require_root();
     var Type = require_type();
@@ -18208,13 +17717,13 @@ var require_parse2 = __commonJS({
     var nameRe = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
     var typeRefRe = /^(?:\.?[a-zA-Z_][a-zA-Z_0-9]*)(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*$/;
     var fqTypeRefRe = /^(?:\.[a-zA-Z_][a-zA-Z_0-9]*)+$/;
-    function parse2(source, root, options2) {
+    function parse(source, root, options2) {
       if (!(root instanceof Root2)) {
         options2 = root;
         root = new Root2();
       }
       if (!options2)
-        options2 = parse2.defaults;
+        options2 = parse.defaults;
       var preferTrailingComment = options2.preferTrailingComment || false;
       var tn = tokenize(source, options2.alternateCommentMode || false), next = tn.next, push = tn.push, peek = tn.peek, skip = tn.skip, cmnt = tn.cmnt;
       var head = true, pkg, imports, weakImports, syntax, isProto3 = false;
@@ -18223,9 +17732,9 @@ var require_parse2 = __commonJS({
         return name;
       } : util.camelCase;
       function illegal(token2, name, insideTryCatch) {
-        var filename = parse2.filename;
+        var filename = parse.filename;
         if (!insideTryCatch)
-          parse2.filename = null;
+          parse.filename = null;
         return Error("illegal " + (name || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
       }
       function readString() {
@@ -18381,7 +17890,7 @@ var require_parse2 = __commonJS({
           if (typeof obj.comment !== "string") {
             obj.comment = cmnt();
           }
-          obj.filename = parse2.filename;
+          obj.filename = parse.filename;
         }
         if (skip("{", true)) {
           var token2;
@@ -18483,7 +17992,7 @@ var require_parse2 = __commonJS({
         var type = new Type(name);
         type.group = true;
         var field = new Field(fieldName, id, name, rule);
-        field.filename = parse2.filename;
+        field.filename = parse.filename;
         ifBlock(type, function parseGroup_block(token2) {
           switch (token2) {
             case "option":
@@ -18755,7 +18264,7 @@ var require_parse2 = __commonJS({
             throw illegal(token);
         }
       }
-      parse2.filename = null;
+      parse.filename = null;
       return {
         "package": pkg,
         "imports": imports,
@@ -18980,7 +18489,7 @@ var require_src2 = __commonJS({
     var protobuf = module2.exports = require_index_light();
     protobuf.build = "full";
     protobuf.tokenize = require_tokenize();
-    protobuf.parse = require_parse2();
+    protobuf.parse = require_parse();
     protobuf.common = require_common();
     protobuf.Root._configure(protobuf.Type, protobuf.parse, protobuf.common);
   }
@@ -21145,17 +20654,17 @@ var require_index_node_cjs2 = __commonJS({
     var logger = require_index_cjs2();
     var util$1 = require("util");
     var util = require_index_node_cjs();
-    var crypto = require("crypto");
+    var crypto2 = require("crypto");
     var grpcJs = require_src();
     var package_json = require_package();
     var path = require("path");
     var protoLoader = require_src3();
     var name = "@firebase/firestore";
-    var version2 = "0.0.900-exp.d92a36260";
+    var version = "0.0.900-exp.d92a36260";
     var version$1 = "8.6.1";
     var SDK_VERSION = version$1;
-    function setSDKVersion(version3) {
-      SDK_VERSION = version3;
+    function setSDKVersion(version2) {
+      SDK_VERSION = version2;
     }
     var ListenSequence = function() {
       function ListenSequence2(previousValue, sequenceNumberSyncer) {
@@ -21652,9 +21161,9 @@ var require_index_node_cjs2 = __commonJS({
       return DbNoDocument2;
     }();
     var DbUnknownDocument = function() {
-      function DbUnknownDocument2(path2, version3) {
+      function DbUnknownDocument2(path2, version2) {
         this.path = path2;
-        this.version = version3;
+        this.version = version2;
       }
       return DbUnknownDocument2;
     }();
@@ -21742,10 +21251,10 @@ var require_index_node_cjs2 = __commonJS({
     DbClientMetadata.store = "clientMetadata";
     DbClientMetadata.keyPath = "clientId";
     var DbBundle = function() {
-      function DbBundle2(bundleId, createTime, version3) {
+      function DbBundle2(bundleId, createTime, version2) {
         this.bundleId = bundleId;
         this.createTime = createTime;
-        this.version = version3;
+        this.version = version2;
       }
       return DbBundle2;
     }();
@@ -22001,9 +21510,9 @@ var require_index_node_cjs2 = __commonJS({
       return SimpleDbTransaction2;
     }();
     var SimpleDb = function() {
-      function SimpleDb2(name2, version3, schemaConverter) {
+      function SimpleDb2(name2, version2, schemaConverter) {
         this.name = name2;
-        this.version = version3;
+        this.version = version2;
         this.schemaConverter = schemaConverter;
         var iOSVersion = SimpleDb2.getIOSVersion(util.getUA());
         if (iOSVersion === 12.2) {
@@ -22041,13 +21550,13 @@ var require_index_node_cjs2 = __commonJS({
       };
       SimpleDb2.getIOSVersion = function(ua) {
         var iOSVersionRegex = ua.match(/i(?:phone|pad|pod) os ([\d_]+)/i);
-        var version3 = iOSVersionRegex ? iOSVersionRegex[1].split("_").slice(0, 2).join(".") : "-1";
-        return Number(version3);
+        var version2 = iOSVersionRegex ? iOSVersionRegex[1].split("_").slice(0, 2).join(".") : "-1";
+        return Number(version2);
       };
       SimpleDb2.getAndroidVersion = function(ua) {
         var androidVersionRegex = ua.match(/Android ([\d.]+)/i);
-        var version3 = androidVersionRegex ? androidVersionRegex[1].split(".").slice(0, 2).join(".") : "-1";
-        return Number(version3);
+        var version2 = androidVersionRegex ? androidVersionRegex[1].split(".").slice(0, 2).join(".") : "-1";
+        return Number(version2);
       };
       SimpleDb2.prototype.ensureDb = function(action) {
         return tslib.__awaiter(this, void 0, void 0, function() {
@@ -22425,7 +21934,7 @@ var require_index_node_cjs2 = __commonJS({
       return SimpleDb.getStore(indexedDbTransaction.simpleDbTransaction, store);
     }
     function randomBytes2(nBytes) {
-      return crypto.randomBytes(nBytes);
+      return crypto2.randomBytes(nBytes);
     }
     var AutoId = function() {
       function AutoId2() {
@@ -23214,41 +22723,41 @@ var require_index_node_cjs2 = __commonJS({
       return new FieldMask(fields);
     }
     var MutableDocument = function() {
-      function MutableDocument2(key, documentType, version3, data, documentState) {
+      function MutableDocument2(key, documentType, version2, data, documentState) {
         this.key = key;
         this.documentType = documentType;
-        this.version = version3;
+        this.version = version2;
         this.data = data;
         this.documentState = documentState;
       }
       MutableDocument2.newInvalidDocument = function(documentKey) {
         return new MutableDocument2(documentKey, 0, SnapshotVersion.min(), ObjectValue.empty(), 0);
       };
-      MutableDocument2.newFoundDocument = function(documentKey, version3, value) {
-        return new MutableDocument2(documentKey, 1, version3, value, 0);
+      MutableDocument2.newFoundDocument = function(documentKey, version2, value) {
+        return new MutableDocument2(documentKey, 1, version2, value, 0);
       };
-      MutableDocument2.newNoDocument = function(documentKey, version3) {
-        return new MutableDocument2(documentKey, 2, version3, ObjectValue.empty(), 0);
+      MutableDocument2.newNoDocument = function(documentKey, version2) {
+        return new MutableDocument2(documentKey, 2, version2, ObjectValue.empty(), 0);
       };
-      MutableDocument2.newUnknownDocument = function(documentKey, version3) {
-        return new MutableDocument2(documentKey, 3, version3, ObjectValue.empty(), 2);
+      MutableDocument2.newUnknownDocument = function(documentKey, version2) {
+        return new MutableDocument2(documentKey, 3, version2, ObjectValue.empty(), 2);
       };
-      MutableDocument2.prototype.convertToFoundDocument = function(version3, value) {
-        this.version = version3;
+      MutableDocument2.prototype.convertToFoundDocument = function(version2, value) {
+        this.version = version2;
         this.documentType = 1;
         this.data = value;
         this.documentState = 0;
         return this;
       };
-      MutableDocument2.prototype.convertToNoDocument = function(version3) {
-        this.version = version3;
+      MutableDocument2.prototype.convertToNoDocument = function(version2) {
+        this.version = version2;
         this.documentType = 2;
         this.data = ObjectValue.empty();
         this.documentState = 0;
         return this;
       };
-      MutableDocument2.prototype.convertToUnknownDocument = function(version3) {
-        this.version = version3;
+      MutableDocument2.prototype.convertToUnknownDocument = function(version2) {
+        this.version = version2;
         this.documentType = 3;
         this.data = ObjectValue.empty();
         this.documentState = 2;
@@ -23307,10 +22816,10 @@ var require_index_node_cjs2 = __commonJS({
       return MutableDocument2;
     }();
     function compareDocumentsByField(field, d1, d2) {
-      var v12 = d1.data.field(field);
+      var v1 = d1.data.field(field);
       var v2 = d2.data.field(field);
-      if (v12 !== null && v2 !== null) {
-        return valueCompare(v12, v2);
+      if (v1 !== null && v2 !== null) {
+        return valueCompare(v1, v2);
       } else {
         return fail();
       }
@@ -24648,8 +24157,8 @@ var require_index_node_cjs2 = __commonJS({
       return false;
     }
     var MutationResult = function() {
-      function MutationResult2(version3, transformResults) {
-        this.version = version3;
+      function MutationResult2(version2, transformResults) {
+        this.version = version2;
         this.transformResults = transformResults;
       }
       return MutationResult2;
@@ -24665,8 +24174,8 @@ var require_index_node_cjs2 = __commonJS({
       Precondition2.exists = function(exists) {
         return new Precondition2(void 0, exists);
       };
-      Precondition2.updateTime = function(version3) {
-        return new Precondition2(version3);
+      Precondition2.updateTime = function(version2) {
+        return new Precondition2(version2);
       };
       Object.defineProperty(Precondition2.prototype, "isNone", {
         get: function() {
@@ -25504,12 +25013,12 @@ var require_index_node_cjs2 = __commonJS({
         return ByteString.fromUint8Array(value ? value : new Uint8Array());
       }
     }
-    function toVersion(serializer, version3) {
-      return toTimestamp(serializer, version3.toTimestamp());
+    function toVersion(serializer, version2) {
+      return toTimestamp(serializer, version2.toTimestamp());
     }
-    function fromVersion(version3) {
-      hardAssert(!!version3);
-      return SnapshotVersion.fromTimestamp(fromTimestamp(version3));
+    function fromVersion(version2) {
+      hardAssert(!!version2);
+      return SnapshotVersion.fromTimestamp(fromTimestamp(version2));
     }
     function toResourceName(databaseId, path2) {
       return fullyQualifiedPrefixPath(databaseId).child("documents").child(path2).canonicalString();
@@ -25578,9 +25087,9 @@ var require_index_node_cjs2 = __commonJS({
     }
     function fromDocument(serializer, document2, hasCommittedMutations) {
       var key = fromName(serializer, document2.name);
-      var version3 = fromVersion(document2.updateTime);
+      var version2 = fromVersion(document2.updateTime);
       var data = new ObjectValue({mapValue: {fields: document2.fields}});
-      var result = MutableDocument.newFoundDocument(key, version3, data);
+      var result = MutableDocument.newFoundDocument(key, version2, data);
       if (hasCommittedMutations) {
         result.setHasCommittedMutations();
       }
@@ -25591,16 +25100,16 @@ var require_index_node_cjs2 = __commonJS({
       assertPresent(doc3.found.name);
       assertPresent(doc3.found.updateTime);
       var key = fromName(serializer, doc3.found.name);
-      var version3 = fromVersion(doc3.found.updateTime);
+      var version2 = fromVersion(doc3.found.updateTime);
       var data = new ObjectValue({mapValue: {fields: doc3.found.fields}});
-      return MutableDocument.newFoundDocument(key, version3, data);
+      return MutableDocument.newFoundDocument(key, version2, data);
     }
     function fromMissing(serializer, result) {
       hardAssert(!!result.missing);
       hardAssert(!!result.readTime);
       var key = fromName(serializer, result.missing);
-      var version3 = fromVersion(result.readTime);
-      return MutableDocument.newNoDocument(key, version3);
+      var version2 = fromVersion(result.readTime);
+      return MutableDocument.newNoDocument(key, version2);
     }
     function fromBatchGetDocumentsResponse(serializer, result) {
       if ("found" in result) {
@@ -25770,11 +25279,11 @@ var require_index_node_cjs2 = __commonJS({
       }
     }
     function fromWriteResult(proto, commitTime) {
-      var version3 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
-      if (version3.isEqual(SnapshotVersion.min())) {
-        version3 = fromVersion(commitTime);
+      var version2 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
+      if (version2.isEqual(SnapshotVersion.min())) {
+        version2 = fromVersion(commitTime);
       }
-      return new MutationResult(version3, proto.transformResults || []);
+      return new MutationResult(version2, proto.transformResults || []);
     }
     function fromWriteResults(protos, commitTime) {
       if (protos && protos.length > 0) {
@@ -26277,7 +25786,7 @@ var require_index_node_cjs2 = __commonJS({
       return new MutationBatch(dbBatch.batchId, timestamp, baseMutations, mutations);
     }
     function fromDbTarget(dbTarget) {
-      var version3 = fromDbTimestamp(dbTarget.readTime);
+      var version2 = fromDbTimestamp(dbTarget.readTime);
       var lastLimboFreeSnapshotVersion = dbTarget.lastLimboFreeSnapshotVersion !== void 0 ? fromDbTimestamp(dbTarget.lastLimboFreeSnapshotVersion) : SnapshotVersion.min();
       var target;
       if (isDocumentQuery$1(dbTarget.query)) {
@@ -26285,7 +25794,7 @@ var require_index_node_cjs2 = __commonJS({
       } else {
         target = fromQueryTarget(dbTarget.query);
       }
-      return new TargetData(target, dbTarget.targetId, 0, dbTarget.lastListenSequenceNumber, version3, lastLimboFreeSnapshotVersion, ByteString.fromBase64String(dbTarget.resumeToken));
+      return new TargetData(target, dbTarget.targetId, 0, dbTarget.lastListenSequenceNumber, version2, lastLimboFreeSnapshotVersion, ByteString.fromBase64String(dbTarget.resumeToken));
     }
     function toDbTarget(localSerializer, targetData) {
       var dbTimestamp = toDbTimestamp(targetData.snapshotVersion);
@@ -34462,20 +33971,20 @@ var require_index_node_cjs2 = __commonJS({
         }
       };
       Transaction2.prototype.precondition = function(key) {
-        var version3 = this.readVersions.get(key.toString());
-        if (!this.writtenDocs.has(key.toString()) && version3) {
-          return Precondition.updateTime(version3);
+        var version2 = this.readVersions.get(key.toString());
+        if (!this.writtenDocs.has(key.toString()) && version2) {
+          return Precondition.updateTime(version2);
         } else {
           return Precondition.none();
         }
       };
       Transaction2.prototype.preconditionForUpdate = function(key) {
-        var version3 = this.readVersions.get(key.toString());
-        if (!this.writtenDocs.has(key.toString()) && version3) {
-          if (version3.isEqual(SnapshotVersion.min())) {
+        var version2 = this.readVersions.get(key.toString());
+        if (!this.writtenDocs.has(key.toString()) && version2) {
+          if (version2.isEqual(SnapshotVersion.min())) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Can't update a document that doesn't exist.");
           }
-          return Precondition.updateTime(version3);
+          return Precondition.updateTime(version2);
         } else {
           return Precondition.exists(true);
         }
@@ -36202,7 +35711,7 @@ var require_index_node_cjs2 = __commonJS({
         }
         return firestoreInstance;
       }, "PUBLIC"));
-      app.registerVersion(name, version2, variant);
+      app.registerVersion(name, version, variant);
     }
     var FieldPath$1 = function() {
       function FieldPath$12() {
@@ -38996,7 +38505,7 @@ function devalue(value) {
   }).forEach(function(entry, i) {
     names.set(entry[0], getName(i));
   });
-  function stringify2(thing) {
+  function stringify(thing) {
     if (names.has(thing)) {
       return names.get(thing);
     }
@@ -39008,23 +38517,23 @@ function devalue(value) {
       case "Number":
       case "String":
       case "Boolean":
-        return "Object(" + stringify2(thing.valueOf()) + ")";
+        return "Object(" + stringify(thing.valueOf()) + ")";
       case "RegExp":
         return "new RegExp(" + stringifyString(thing.source) + ', "' + thing.flags + '")';
       case "Date":
         return "new Date(" + thing.getTime() + ")";
       case "Array":
         var members = thing.map(function(v, i) {
-          return i in thing ? stringify2(v) : "";
+          return i in thing ? stringify(v) : "";
         });
         var tail = thing.length === 0 || thing.length - 1 in thing ? "" : ",";
         return "[" + members.join(",") + tail + "]";
       case "Set":
       case "Map":
-        return "new " + type + "([" + Array.from(thing).map(stringify2).join(",") + "])";
+        return "new " + type + "([" + Array.from(thing).map(stringify).join(",") + "])";
       default:
         var obj = "{" + Object.keys(thing).map(function(key) {
-          return safeKey(key) + ":" + stringify2(thing[key]);
+          return safeKey(key) + ":" + stringify(thing[key]);
         }).join(",") + "}";
         var proto = Object.getPrototypeOf(thing);
         if (proto === null) {
@@ -39033,7 +38542,7 @@ function devalue(value) {
         return obj;
     }
   }
-  var str = stringify2(value);
+  var str = stringify(value);
   if (names.size) {
     var params_1 = [];
     var statements_1 = [];
@@ -39049,7 +38558,7 @@ function devalue(value) {
         case "Number":
         case "String":
         case "Boolean":
-          values_1.push("Object(" + stringify2(thing.valueOf()) + ")");
+          values_1.push("Object(" + stringify(thing.valueOf()) + ")");
           break;
         case "RegExp":
           values_1.push(thing.toString());
@@ -39060,26 +38569,26 @@ function devalue(value) {
         case "Array":
           values_1.push("Array(" + thing.length + ")");
           thing.forEach(function(v, i) {
-            statements_1.push(name + "[" + i + "]=" + stringify2(v));
+            statements_1.push(name + "[" + i + "]=" + stringify(v));
           });
           break;
         case "Set":
           values_1.push("new Set");
           statements_1.push(name + "." + Array.from(thing).map(function(v) {
-            return "add(" + stringify2(v) + ")";
+            return "add(" + stringify(v) + ")";
           }).join("."));
           break;
         case "Map":
           values_1.push("new Map");
           statements_1.push(name + "." + Array.from(thing).map(function(_a) {
             var k = _a[0], v = _a[1];
-            return "set(" + stringify2(k) + ", " + stringify2(v) + ")";
+            return "set(" + stringify(k) + ", " + stringify(v) + ")";
           }).join("."));
           break;
         default:
           values_1.push(Object.getPrototypeOf(thing) === null ? "Object.create(null)" : "{}");
           Object.keys(thing).forEach(function(key) {
-            statements_1.push("" + name + safeProp(key) + "=" + stringify2(thing[key]));
+            statements_1.push("" + name + safeProp(key) + "=" + stringify(thing[key]));
           });
       }
     });
@@ -40296,17 +39805,37 @@ if (typeof HTMLElement === "function") {
 // .svelte-kit/output/server/app.js
 var import_auth = __toModule(require_node());
 
-// node_modules/uuid/wrapper.mjs
-var import_dist = __toModule(require_dist());
-var v1 = import_dist.default.v1;
-var v3 = import_dist.default.v3;
-var v4 = import_dist.default.v4;
-var v5 = import_dist.default.v5;
-var NIL = import_dist.default.NIL;
-var version = import_dist.default.version;
-var validate = import_dist.default.validate;
-var stringify = import_dist.default.stringify;
-var parse = import_dist.default.parse;
+// node_modules/nanoid/index.js
+var import_crypto2 = __toModule(require("crypto"));
+
+// node_modules/nanoid/url-alphabet/index.js
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+
+// node_modules/nanoid/index.js
+var POOL_SIZE_MULTIPLIER = 32;
+var pool;
+var poolOffset;
+var random = (bytes) => {
+  if (!pool || pool.length < bytes) {
+    pool = Buffer.allocUnsafe(bytes * POOL_SIZE_MULTIPLIER);
+    import_crypto2.default.randomFillSync(pool);
+    poolOffset = 0;
+  } else if (poolOffset + bytes > pool.length) {
+    import_crypto2.default.randomFillSync(pool);
+    poolOffset = 0;
+  }
+  let res = pool.subarray(poolOffset, poolOffset + bytes);
+  poolOffset += bytes;
+  return res;
+};
+var nanoid = (size = 21) => {
+  let bytes = random(size);
+  let id = "";
+  while (size--) {
+    id += urlAlphabet[bytes[size] & 63];
+  }
+  return id;
+};
 
 // .svelte-kit/output/server/app.js
 var import_app = __toModule(require_index_cjs3());
@@ -40381,9 +39910,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-b1ef3149.js",
+      file: "/./_app/start-1885bc51.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-b1ef3149.js", "/./_app/chunks/vendor-d3a9d218.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-1885bc51.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40459,7 +39988,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-1a2ff001.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-1a2ff001.js", "/./_app/chunks/vendor-d3a9d218.js", "/./_app/chunks/Box-f93a337f.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-4636d1ec.js", "css": [], "js": ["/./_app/error.svelte-4636d1ec.js", "/./_app/chunks/vendor-d3a9d218.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-723bd8c6.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-723bd8c6.js", "/./_app/chunks/vendor-d3a9d218.js", "/./_app/chunks/Box-f93a337f.js", "/./_app/chunks/FloatingRow-fab294bd.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-ed5f014c.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-ed5f014c.js", "/./_app/chunks/vendor-d3a9d218.js", "/./_app/chunks/Box-f93a337f.js", "/./_app/chunks/FloatingRow-fab294bd.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-b4bb2053.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-b4bb2053.js", "/./_app/chunks/vendor-d3a9d218.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-fe2332bf.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-fe2332bf.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-3f9a6726.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-3f9a6726.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-33a0e0c8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-1bfe3274.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-1bfe3274.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-33a0e0c8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40479,7 +40008,7 @@ var PollStream = class {
     this.title = "";
     this.description = "";
     this.onUpdateFunction = () => void 0;
-    this.id = v4();
+    this.id = nanoid(12);
     this.addPoll(new Poll());
   }
   getPolls() {
@@ -40598,13 +40127,13 @@ var Choice = class {
     if (this.listeners.includes(listener)) {
       return;
     }
-    this.listeners.push(listener);
+    this.listeners = [listener, ...this.listeners];
   }
   removeListener(listener) {
     this.listeners.splice(this.listeners.indexOf(listener), 1);
   }
   notifyListeners() {
-    for (const listener of this.listeners) {
+    for (let listener of this.listeners) {
       listener.update(this);
     }
   }
@@ -40634,7 +40163,8 @@ var Main = class {
     var user = this.auth.currentUser;
     if (user != null) {
       var data = {
-        userData: JSON.stringify(this.userData)
+        userData: JSON.stringify(this.userData),
+        user: JSON.stringify(this.auth.currentUser)
       };
       await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid), data);
     }
@@ -40647,11 +40177,19 @@ var Main = class {
       if (data && Object.keys(data).includes("userData")) {
         this.userData = JSON.parse(data.userData, jsonProvider);
       } else {
-        this.userData = new UserData(this.auth.currentUser.uid);
+        this.userData = new UserData();
       }
     } else {
       this.userData = null;
     }
+  }
+  async readUserInfo(uid) {
+    var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), uid));
+    var data = document2.data();
+    if (data && Object.keys(data).includes("user")) {
+      return JSON.parse(data.user);
+    }
+    return null;
   }
   async writePollStream(pollStream) {
     var map = new Map();
@@ -40713,7 +40251,7 @@ function jsonProvider(_key, value) {
       case "Choice":
         return assign2(new Choice(), value);
       case "UserData":
-        return assign2(new UserData(""), value);
+        return assign2(new UserData(), value);
       default:
         return value;
     }
@@ -40727,10 +40265,9 @@ function assign2(obj, value) {
 }
 var main = new Main();
 var UserData = class {
-  constructor(id) {
+  constructor() {
     this.pollStreamIds = [];
     this.__type = "UserData";
-    this.id = id;
   }
   getPollStreamIds() {
     return [...this.pollStreamIds];
@@ -41013,7 +40550,6 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     });
   };
   let pollStreams;
-  let signInProvider = "";
   function newPollStream() {
     return __awaiter(this, void 0, void 0, function* () {
       var pollStream = yield main.newPollStream();
@@ -41029,26 +40565,22 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   }
   (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user) {
-      var token = yield main.auth.currentUser.getIdTokenResult(false);
-      signInProvider = token.signInProvider;
       yield main.readUserData();
-      if (main.userData != null) {
-        var result = [];
-        var polls = main.userData.getPollStreamIds();
-        for (let poll of polls) {
-          var p2 = yield main.readPollStream(poll);
-          if (p2 != null) {
-            result = [...result, p2];
-            pollStreams = result;
-          }
+      var result = [];
+      var polls = main.userData.getPollStreamIds();
+      for (let poll of polls) {
+        var p2 = yield main.readPollStream(poll);
+        if (p2 != null) {
+          result = [...result, p2];
+          pollStreams = result;
         }
-        pollStreams = result;
       }
+      pollStreams = result;
     } else {
       pollStreams = [];
     }
   }));
-  return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${main.auth.currentUser && signInProvider != "anonymous" ? `${!pollStreams || pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
+  return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${!main.auth.currentUser || main.auth.currentUser.isAnonymous ? `<p style="${"margin-top: 100px"}">Sign in to create your own poll streams!</p>` : `${!pollStreams || pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
 			<p>Click the button below to add a stream.</p>` : `${validate_component(Column, "Column").$$render($$result, {}, {}, {
     default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
       remove: () => removePollStream(pollStream),
@@ -41062,7 +40594,7 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     }, {}, {
       default: () => `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: newPollStream}, {}, {default: () => `+ Create Poll Stream`})}`
     })}`
-  })}` : `<p style="${"margin-top: 100px"}">Sign in to create your own poll streams!</p>`}`}`;
+  })}`}`}`;
 });
 var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -41071,10 +40603,62 @@ var index = /* @__PURE__ */ Object.freeze({
 });
 var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let selected;
+  var __awaiter = function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  };
   let {choice} = $$props;
   let {vote = () => void 0} = $$props;
   let {remove = () => void 0} = $$props;
   let {edit} = $$props;
+  let userNames = [];
+  let listener = {
+    update(listenable) {
+      this.getUserNames(choice);
+    },
+    getUserNames(choice2) {
+      return __awaiter(this, void 0, void 0, function* () {
+        var result = [];
+        for (let uid of choice2.getUsers()) {
+          var user = yield main.readUserInfo(uid);
+          if (user) {
+            result = [...result, user.displayName];
+          } else {
+            result = [...result, "Anon"];
+          }
+          userNames = result;
+        }
+        userNames = result;
+      });
+    }
+  };
+  onMount(() => {
+    choice.addListener(listener);
+    listener.getUserNames(choice);
+  });
   if ($$props.choice === void 0 && $$bindings.choice && choice !== void 0)
     $$bindings.choice(choice);
   if ($$props.vote === void 0 && $$bindings.vote && vote !== void 0)
@@ -41083,28 +40667,35 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
     $$bindings.remove(remove);
   if ($$props.edit === void 0 && $$bindings.edit && edit !== void 0)
     $$bindings.edit(edit);
-  selected = choice && main.userData ? choice.getUsers().includes(main.userData.id) : false;
-  return `${choice && main.userData ? `${edit ? `${validate_component(Box, "Box").$$render($$result, {}, {}, {
-    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
-      default: () => `<input type="${"text"}" placeholder="${"Enter choice.."}"${add_attribute("value", choice.text, 1)}>
-				${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
-        onclick: remove,
-        style: "background-color: var(--c_red);"
-      }, {}, {default: () => `X `})}`
+  selected = choice && main.auth.currentUser ? choice.getUsers().includes(main.auth.currentUser.uid) : false;
+  return `${choice ? `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+    default: () => `${edit ? `${validate_component(Box, "Box").$$render($$result, {}, {}, {
+      default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+        default: () => `<input type="${"text"}" placeholder="${"Enter choice.."}"${add_attribute("value", choice.text, 1)}>
+					${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+          onclick: remove,
+          style: "background-color: var(--c_red);"
+        }, {}, {default: () => `X `})}`
+      })}`
+    })}` : `${validate_component(Box, "Box").$$render($$result, {
+      style: selected ? "border-color: var(--c_green); border-width: 3pt;" : "",
+      onclick: vote
+    }, {}, {
+      default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+        default: () => `<span style="${"display: inline;"}">${escape2(choice.text)}</span>
+					<span style="${"display: inline; text-align: right;"}">${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>`
+      })}`
+    })}`}
+		${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `<span></span>
+			<span style="${"font-size: small;"}">${main.auth.currentUser && !main.auth.currentUser.isAnonymous ? `<span>Voted on by: </span>
+					${each(userNames, (name) => `<span>${escape2(name)}, </span>`)}` : ``}</span>`
     })}`
-  })}` : `${validate_component(Box, "Box").$$render($$result, {
-    style: selected ? "border-color: var(--c_green); border-width: 3pt;" : "",
-    onclick: vote
-  }, {}, {
-    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
-      default: () => `<span style="${"display: inline;"}">${escape2(choice.text)}</span>
-				<span style="${"display: inline; text-align: right;"}">${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>`
-    })}`
-  })}`}` : ``}`;
+  })}` : ``}`;
 });
 var css$1 = {
   code: ".question.svelte-158fiwf{display:block;font-size:1.5em;width:100%;height:1em}.split.svelte-158fiwf{width:80%;height:3px;margin:5px 10px 10px -3px;background-color:var(--c_light)}",
-  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { Choice, Poll } from '$lib/poll';\\r\\nimport ChoiceItem from '$lib/ChoiceItem.svelte';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Box from './Box.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit = false;\\r\\nexport let updateParent = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        poll = poll; // For Svelte\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction vote(choice) {\\r\\n    var user = main.auth.currentUser.uid;\\r\\n    if (poll.getUserChoices(user).includes(choice)) {\\r\\n        poll.unvote(user, choice);\\r\\n    }\\r\\n    else {\\r\\n        poll.vote(user, choice);\\r\\n    }\\r\\n    poll = poll; // For Svelte\\r\\n    updateParent();\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    poll = poll;\\r\\n    updateParent();\\r\\n}\\r\\n</script>\\r\\n\\r\\n<Box>\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question..\\" bind:value={poll.question}>\\r\\n\\t\\t\\t</Column>\\r\\n\\t\\t\\t<ConfirmationButton onclick={remove} style={\\"background-color: var(--c_red);\\"}>Delete</ConfirmationButton>\\r\\n\\t\\t</Row>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t{/if}\\r\\n\\t{#each poll.getChoices() as choice}\\r\\n\\t\\t<ChoiceItem choice={choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} edit={edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<div></div>\\r\\n\\t\\t\\t<BasicButton onclick={addChoice}> + Add Choice</BasicButton>\\r\\n\\t\\t</Row>\\r\\n\\t{/if}\\r\\n</Box>\\r\\n\\r\\n<style>\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 80%;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAuEC,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
+  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { Choice, Poll } from '$lib/poll';\\r\\nimport ChoiceItem from '$lib/ChoiceItem.svelte';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Box from './Box.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport { onMount } from 'svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit = false;\\r\\nexport let updateParent = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction vote(choice) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var user = main.auth.currentUser.uid;\\r\\n        if (choice.isVotedOnBy(user)) {\\r\\n            poll.unvote(user, choice);\\r\\n        }\\r\\n        else {\\r\\n            poll.vote(user, choice);\\r\\n        }\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    updateParent();\\r\\n}\\r\\n</script>\\r\\n\\r\\n<Box>\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question..\\" bind:value={poll.question}>\\r\\n\\t\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t\\t<BasicButton onclick={() => poll.singleChoice = !poll.singleChoice}>{poll.singleChoice ? \\"Single Choice\\" : \\"Multiple Choice\\"}</BasicButton>\\r\\n\\t\\t\\t\\t</Row>\\r\\n\\t\\t\\t</Column>\\r\\n\\t\\t\\t<ConfirmationButton onclick={remove} style={\\"background-color: var(--c_red);\\"}>Delete</ConfirmationButton>\\r\\n\\t\\t</Row>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t{/if}\\r\\n\\t{#each poll.getChoices() as choice (choice)}\\r\\n\\t\\t<ChoiceItem {choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} {edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<div></div>\\r\\n\\t\\t\\t<BasicButton onclick={addChoice}> + Add Choice</BasicButton>\\r\\n\\t\\t</Row>\\r\\n\\t{/if}\\r\\n</Box>\\r\\n\\r\\n<style>\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 80%;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0EC,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
 };
 var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   var __awaiter = function(thisArg, _arguments, P, generator) {
@@ -41141,23 +40732,22 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   function addChoice() {
     return __awaiter(this, void 0, void 0, function* () {
       poll.addChoice(new Choice());
-      poll = poll;
       updateParent();
     });
   }
   function vote(choice) {
-    var user = main.auth.currentUser.uid;
-    if (poll.getUserChoices(user).includes(choice)) {
-      poll.unvote(user, choice);
-    } else {
-      poll.vote(user, choice);
-    }
-    poll = poll;
-    updateParent();
+    return __awaiter(this, void 0, void 0, function* () {
+      var user = main.auth.currentUser.uid;
+      if (choice.isVotedOnBy(user)) {
+        poll.unvote(user, choice);
+      } else {
+        poll.vote(user, choice);
+      }
+      updateParent();
+    });
   }
   function removeChoice(choice) {
     poll.removeChoice(choice);
-    poll = poll;
     updateParent();
   }
   if ($$props.poll === void 0 && $$bindings.poll && poll !== void 0)
@@ -41172,7 +40762,14 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `${validate_component(Box, "Box").$$render($$result, {}, {}, {
     default: () => `${edit ? `${validate_component(Row, "Row").$$render($$result, {}, {}, {
       default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
-        default: () => `<input class="${"question svelte-158fiwf"}" type="${"text"}" placeholder="${"Enter question.."}"${add_attribute("value", poll.question, 1)}>`
+        default: () => `<input class="${"question svelte-158fiwf"}" type="${"text"}" placeholder="${"Enter question.."}"${add_attribute("value", poll.question, 1)}>
+				${validate_component(Row, "Row").$$render($$result, {}, {}, {
+          default: () => `${validate_component(BasicButton, "BasicButton").$$render($$result, {
+            onclick: () => poll.singleChoice = !poll.singleChoice
+          }, {}, {
+            default: () => `${escape2(poll.singleChoice ? "Single Choice" : "Multiple Choice")}`
+          })}`
+        })}`
       })}
 			${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
         onclick: remove,
@@ -41194,7 +40791,7 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 var css = {
   code: ".title.svelte-15c3n33{margin:20px 0 0 0;padding:10px;font-size:1.5em;height:1em;width:100%}.title.svelte-15c3n33:focus{outline:none}.description.svelte-15c3n33{margin:20px;padding:10px;font-size:1em;height:3em;width:50%;border-color:var(--c_light);font-family:'Roboto', sans-serif;border-width:2px}",
-  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nlet pollStream;\\r\\nlet index = 0;\\r\\nlet edit = (query.get('edit') === 'true');\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    var len = pollStream.getPolls().length;\\r\\n    if (len > 1) {\\r\\n        index = Math.min(index + 1, len - 1);\\r\\n    }\\r\\n}\\r\\nfunction decrement() {\\r\\n    index = Math.max(index - 1, 0);\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if main.auth.currentUser != null}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index != 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<h3>{index+1} of {pollStream.getPolls().length}</h3>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{:else}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0JC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
+  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nlet pollStream;\\r\\nlet index = 0;\\r\\nlet edit = (query.get('edit') === 'true');\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    var len = pollStream.getPolls().length;\\r\\n    if (len > 1) {\\r\\n        index = Math.min(index + 1, len - 1);\\r\\n    }\\r\\n}\\r\\nfunction decrement() {\\r\\n    index = Math.max(index - 1, 0);\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if !main.auth.currentUser}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{:else}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index != 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<h3>{index+1} of {pollStream.getPolls().length}</h3>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0JC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
 };
 var pageInfo;
 var pollStreamId;
@@ -41279,7 +40876,7 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
   $$result.css.add(css);
   poll = pollStream ? pollStream.getPolls()[index2] : null;
   isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
-  return `${pollStream === void 0 ? `<p>Loading...</p>` : `${main.auth.currentUser != null ? `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
+  return `${pollStream === void 0 ? `<p>Loading...</p>` : `${!main.auth.currentUser ? `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>` : `${!pollStream ? `<h2 style="${"padding-top: 100pt;"}">404: Found no poll with this ID.</h2>
 			<p>It has either been deleted, or was never created.</p>` : `${validate_component(Row, "Row").$$render($$result, {}, {}, {
     default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
       default: () => `${isAdmin && edit ? `<input type="${"text"}" class="${"title svelte-15c3n33"}" placeholder="${"Enter title.."}"${add_attribute("value", pollStream.title, 1)}>
@@ -41317,16 +40914,16 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
 				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
       default: () => `${isAdmin && edit && (pollStream.getPolls().length === 0 || index2 === pollStream.getPolls().length - 1) ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {onclick: addPoll}, {}, {default: () => `+ New Question`})}` : `${index2 !== pollStream.getPolls().length - 1 ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
         onclick: increment,
-        style: "background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"
+        style: "background-color:var(--" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? "c_green" : "c_blue") + ");"
       }, {}, {
         default: () => `Next
 						`
       })}` : `${validate_component(BasicButton, "BasicButton").$$render($$result, {
         onclick: () => goto("/"),
-        style: "background-color:var(--" + (!edit && poll && main.userData && poll.getUserChoices(main.userData.id).length ? "c_green" : "c_blue") + ");"
+        style: "background-color:var(--" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? "c_green" : "c_blue") + ");"
       }, {}, {default: () => `Complete `})}`}`}`
     })}`
-  })}`}` : `<p style="${"margin-top: 100px"}">Sign in to access this poll stream!</p>`}`}`;
+  })}`}`}`}`;
 });
 var _slug_$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
