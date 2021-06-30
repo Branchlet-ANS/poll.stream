@@ -57,7 +57,7 @@ export class PollStream implements Listener {
 export class Poll implements Listener, Listenable {
 	public question: string;
 	private choices: Array<Choice> = [];
-	private singleChoice: boolean = true;
+	public singleChoice: boolean = true;
 	public listeners: Array<Listener> = [];
 	public __type: string = 'Poll'; // For deserialization
 	

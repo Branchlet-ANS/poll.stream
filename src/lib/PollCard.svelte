@@ -45,6 +45,9 @@
 		<Row>
 			<Column>
 				<input class="question" type="text" placeholder="Enter question.." bind:value={poll.question}>
+				<Row>
+					<BasicButton onclick={() => poll.singleChoice = !poll.singleChoice}>{poll.singleChoice ? "Single Choice" : "Multiple Choice"}</BasicButton>
+				</Row>
 			</Column>
 			<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}>Delete</ConfirmationButton>
 		</Row>
