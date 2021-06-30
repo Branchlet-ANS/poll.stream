@@ -41,19 +41,20 @@ export class Main {
 
 	public async writeUserData(): Promise<void> {
 		var user = this.auth.currentUser;
-		if (user != null) {
+		if (user && !user.isAnonymous) {
 			var data = {
 				userData: JSON.stringify(this.userData),
-				user: JSON.stringify(this.auth.currentUser)
+				user: JSON.stringify(user)
 			}
-			await setDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid), data)
+			await setDoc(doc(collection(this.db, "users"), user.uid), data)
+			console.log("UserData written to database.");
 		}
-		console.log("UserData written to database.");
 	}
 
 	public async readUserData(): Promise<void> {
-		if (this.auth.currentUser) { 
-			var document = await getDoc(doc(collection(this.db, "users"), this.auth.currentUser.uid));
+		var user = this.auth.currentUser;
+		if (user && !user.isAnonymous) { 
+			var document = await getDoc(doc(collection(this.db, "users"), user.uid));
 			var data = document.data();
 			if (data && Object.keys(data).includes("userData")) {
 				this.userData = JSON.parse(data.userData, jsonProvider);

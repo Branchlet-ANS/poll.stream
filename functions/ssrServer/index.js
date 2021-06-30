@@ -39910,9 +39910,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-e71de228.js",
+      file: "/./_app/start-95e10a6c.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-e71de228.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-95e10a6c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -39988,7 +39988,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-fe2332bf.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-fe2332bf.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-dc07c20c.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-dc07c20c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-2915b6e8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-feb05d26.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-feb05d26.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-13c301ba.js", "/./_app/chunks/FloatingRow-2915b6e8.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-97bceee0.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-97bceee0.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-dce2d508.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-dce2d508.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js", "/./_app/chunks/FloatingRow-2f9b0145.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-b14dcb48.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-b14dcb48.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js", "/./_app/chunks/FloatingRow-2f9b0145.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40161,17 +40161,17 @@ var Main = class {
   }
   async writeUserData() {
     var user = this.auth.currentUser;
-    if (user != null) {
+    if (user && !user.isAnonymous) {
       var data = {
         userData: JSON.stringify(this.userData),
         user: JSON.stringify(this.auth.currentUser)
       };
       await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid), data);
+      console.log("UserData written to database.");
     }
-    console.log("UserData written to database.");
   }
   async readUserData() {
-    if (this.auth.currentUser) {
+    if (this.auth.currentUser && !this.auth.currentUser.isAnonymous) {
       var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid));
       var data = document2.data();
       if (data && Object.keys(data).includes("userData")) {
