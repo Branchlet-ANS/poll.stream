@@ -8,7 +8,6 @@
 	import Box from './Box.svelte';
 	import Column from '$lib/Column.svelte';
 	import Row from '$lib/Row.svelte';
-import { onMount } from 'svelte';
 
 	export let poll: Poll;
 	export let remove = () => undefined;

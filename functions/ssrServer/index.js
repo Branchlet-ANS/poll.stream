@@ -39910,9 +39910,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-95e10a6c.js",
+      file: "/./_app/start-a3984364.js",
       css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-95e10a6c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
+      js: ["/./_app/start-a3984364.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
     },
     fetched: void 0,
     floc: false,
@@ -39988,7 +39988,7 @@ var module_lookup = {
     return _slug_;
   })
 };
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-97bceee0.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-97bceee0.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-dce2d508.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-dce2d508.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js", "/./_app/chunks/FloatingRow-2f9b0145.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-b14dcb48.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-b14dcb48.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-e2eee909.js", "/./_app/chunks/FloatingRow-2f9b0145.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
+var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-bbba672c.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-bbba672c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-9e3f421b.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-9e3f421b.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js", "/./_app/chunks/FloatingRow-0b759e20.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-f79e2e88.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-f79e2e88.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js", "/./_app/chunks/FloatingRow-0b759e20.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
 async function load_component(file) {
   return __spreadValues({
     module: await module_lookup[file]()
@@ -40015,6 +40015,9 @@ var PollStream = class {
     return [...this.polls];
   }
   addPoll(poll) {
+    if (this.polls.includes(poll)) {
+      return;
+    }
     poll.addListener(this);
     this.polls = [...this.polls, poll];
     this.update();
@@ -40049,6 +40052,9 @@ var Poll = class {
     return [...this.choices];
   }
   addChoice(choice) {
+    if (this.choices.includes(choice)) {
+      return;
+    }
     choice.addListener(this);
     this.choices.push(choice);
     this.notifyListeners();
@@ -40164,15 +40170,16 @@ var Main = class {
     if (user && !user.isAnonymous) {
       var data = {
         userData: JSON.stringify(this.userData),
-        user: JSON.stringify(this.auth.currentUser)
+        user: JSON.stringify(user)
       };
-      await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid), data);
+      await (0, import_firestore.setDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), user.uid), data);
       console.log("UserData written to database.");
     }
   }
   async readUserData() {
-    if (this.auth.currentUser && !this.auth.currentUser.isAnonymous) {
-      var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), this.auth.currentUser.uid));
+    var user = this.auth.currentUser;
+    if (user && !user.isAnonymous) {
+      var document2 = await (0, import_firestore.getDoc)((0, import_firestore.doc)((0, import_firestore.collection)(this.db, "users"), user.uid));
       var data = document2.data();
       if (data && Object.keys(data).includes("userData")) {
         this.userData = JSON.parse(data.userData, jsonProvider);
@@ -40224,6 +40231,9 @@ var Main = class {
     return null;
   }
   async deletePollStream(id) {
+    if (!this.userData.isAdminOf(id)) {
+      throw new Error("User tried to delete someone else's poll stream!");
+    }
     await (0, import_firestore.deleteDoc)((0, import_firestore.doc)(this.db, "polls", id));
     console.log("PollStream deleted from database.");
     await main.userData.removePollStreamId(id);
@@ -40267,17 +40277,35 @@ var main = new Main();
 var UserData = class {
   constructor() {
     this.pollStreamIds = [];
+    this.visitedPollStreamIds = [];
     this.__type = "UserData";
   }
   getPollStreamIds() {
     return [...this.pollStreamIds];
   }
   async addPollStreamId(pollStreamId2) {
+    if (this.pollStreamIds.includes(pollStreamId2)) {
+      return;
+    }
     this.pollStreamIds.push(pollStreamId2);
     await main.writeUserData();
   }
   async removePollStreamId(pollStreamId2) {
     this.pollStreamIds.splice(this.pollStreamIds.indexOf(pollStreamId2), 1);
+    await main.writeUserData();
+  }
+  getVisitedPollStreamIds() {
+    return [...this.visitedPollStreamIds];
+  }
+  async addVisitedPollStreamId(pollStreamId2) {
+    if (this.visitedPollStreamIds.includes(pollStreamId2)) {
+      return;
+    }
+    this.visitedPollStreamIds.push(pollStreamId2);
+    await main.writeUserData();
+  }
+  async removeVisitedPollStreamId(pollStreamId2) {
+    this.visitedPollStreamIds.splice(this.visitedPollStreamIds.indexOf(pollStreamId2), 1);
     await main.writeUserData();
   }
   isAdminOf(pollStreamId2) {
@@ -40491,6 +40519,18 @@ var ConfirmationButton = create_ssr_component(($$result, $$props, $$bindings, sl
   }, {}, {default: () => `${escape2(secondText)}`})}
 	`}`;
 });
+var ShareButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {pollStreamId: pollStreamId2} = $$props;
+  function share() {
+    navigator.clipboard.writeText("https://poll.stream/poll/" + pollStreamId2);
+  }
+  if ($$props.pollStreamId === void 0 && $$bindings.pollStreamId && pollStreamId2 !== void 0)
+    $$bindings.pollStreamId(pollStreamId2);
+  return `${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+    onfirstclick: share,
+    secondText: "Copied url to clipboard."
+  }, {}, {default: () => `Share`})}`;
+});
 var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {remove = () => void 0} = $$props;
   let {pollStream} = $$props;
@@ -40502,12 +40542,16 @@ var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots)
     default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
       default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
         default: () => `<div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title ? pollStream.title : "Untitled Poll Stream")}</h2>
-					<p>ID: ${escape2(pollStream.id)}</p></div>`
+					<p>Description: ${escape2(pollStream.description)}</p></div>`
       })}
-			${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+			${validate_component(ShareButton, "ShareButton").$$render($$result, {pollStreamId: pollStream.id}, {}, {})}
+			${main.userData && main.userData.isAdminOf(pollStream.id) ? `${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
         onclick: remove,
         style: "background-color: var(--c_red);"
-      }, {}, {default: () => `Delete `})}`
+      }, {}, {default: () => `Delete `})}` : `${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
+        onclick: remove,
+        style: "background-color: var(--c_red);"
+      }, {}, {default: () => `Remove `})}`}`
     })}`
   })}` : ``}`;
 });
@@ -40554,6 +40598,7 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     });
   };
   let pollStreams;
+  let view = 0;
   function newPollStream() {
     return __awaiter(this, void 0, void 0, function* () {
       var pollStream = yield main.newPollStream();
@@ -40562,35 +40607,67 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   }
   function removePollStream(pollStream) {
     return __awaiter(this, void 0, void 0, function* () {
-      main.deletePollStream(pollStream.id);
+      if (view === 0) {
+        main.deletePollStream(pollStream.id);
+      } else if (view === 1) {
+        main.userData.removeVisitedPollStreamId(pollStream.id);
+      }
       pollStreams.splice(pollStreams.indexOf(pollStream), 1);
       pollStreams = pollStreams;
     });
   }
-  (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
-    if (user) {
-      yield main.readUserData();
+  function readPollStreams(ids) {
+    return __awaiter(this, void 0, void 0, function* () {
       var result = [];
-      var polls = main.userData.getPollStreamIds();
-      for (let poll of polls) {
-        var p2 = yield main.readPollStream(poll);
+      for (let id of ids) {
+        var p2 = yield main.readPollStream(id);
         if (p2 != null) {
           result = [...result, p2];
           pollStreams = result;
         }
       }
       pollStreams = result;
+    });
+  }
+  function build() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (view === 0) {
+        yield readPollStreams(main.userData.getPollStreamIds());
+      } else if (view === 1) {
+        yield readPollStreams(main.userData.getVisitedPollStreamIds());
+      }
+    });
+  }
+  (0, import_auth.onAuthStateChanged)(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {
+    if (user) {
+      yield main.readUserData();
+      yield build();
     } else {
       pollStreams = [];
     }
   }));
-  return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${!main.auth.currentUser || main.auth.currentUser.isAnonymous ? `<p style="${"margin-top: 100px"}">Sign in to create your own poll streams!</p>` : `${!pollStreams || pollStreams.length == 0 ? `<p style="${"margin-top: 100px"}">No Poll Streams!</p>
-			<p>Click the button below to add a stream.</p>` : `${validate_component(Column, "Column").$$render($$result, {}, {}, {
-    default: () => `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
+  return `${pollStreams === void 0 ? `<p style="${"margin-top: 100px"}">Loading...</p>` : `${!main.auth.currentUser || main.auth.currentUser.isAnonymous ? `<p style="${"margin-top: 100px"}">Sign in to create your own poll streams!</p>` : `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+    default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+      default: () => `<div>${validate_component(BasicButton, "BasicButton").$$render($$result, {
+        onclick: () => {
+          view = 0;
+          build();
+        }
+      }, {}, {default: () => `My Poll Streams`})}
+					${validate_component(BasicButton, "BasicButton").$$render($$result, {
+        onclick: () => {
+          view = 1;
+          build();
+        }
+      }, {}, {default: () => `Visited`})}</div>`
+    })}
+			${!pollStreams || pollStreams.length == 0 ? `${view === 0 ? `<div style="${"margin-top: 100px"}"><p>No Poll Streams!</p>
+						<p>Click the button below to add a stream.</p></div>` : `${view === 1 ? `<div style="${"margin-top: 100px"}"><p>No Poll Streams!</p>
+						<p>Poll Streams you visit will appear here.</p></div>` : ``}`}` : `${each(pollStreams, (pollStream) => `${validate_component(PollStreamTile, "PollStreamTile").$$render($$result, {
       remove: () => removePollStream(pollStream),
       pollStream
-    }, {}, {})}`)}`
-  })}`}
+    }, {}, {})}`)}`}`
+  })}
 		${validate_component(FloatingRow, "FloatingRow").$$render($$result, {}, {}, {
     default: () => `${validate_component(Box, "Box").$$render($$result, {
       visible: false,
@@ -40699,7 +40776,7 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
 });
 var css$1 = {
   code: ".question.svelte-158fiwf{display:block;font-size:1.5em;width:100%;height:1em}.split.svelte-158fiwf{width:80%;height:3px;margin:5px 10px 10px -3px;background-color:var(--c_light)}",
-  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { Choice, Poll } from '$lib/poll';\\r\\nimport ChoiceItem from '$lib/ChoiceItem.svelte';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Box from './Box.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport { onMount } from 'svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit = false;\\r\\nexport let updateParent = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction vote(choice) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var user = main.auth.currentUser.uid;\\r\\n        if (choice.isVotedOnBy(user)) {\\r\\n            poll.unvote(user, choice);\\r\\n        }\\r\\n        else {\\r\\n            poll.vote(user, choice);\\r\\n        }\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    updateParent();\\r\\n}\\r\\n</script>\\r\\n\\r\\n<Box>\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question..\\" bind:value={poll.question}>\\r\\n\\t\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t\\t<BasicButton onclick={() => poll.singleChoice = !poll.singleChoice}>{poll.singleChoice ? \\"Single Choice\\" : \\"Multiple Choice\\"}</BasicButton>\\r\\n\\t\\t\\t\\t</Row>\\r\\n\\t\\t\\t</Column>\\r\\n\\t\\t\\t<ConfirmationButton onclick={remove} style={\\"background-color: var(--c_red);\\"}>Delete</ConfirmationButton>\\r\\n\\t\\t</Row>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t{/if}\\r\\n\\t{#each poll.getChoices() as choice (choice)}\\r\\n\\t\\t<ChoiceItem {choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} {edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<div></div>\\r\\n\\t\\t\\t<BasicButton onclick={addChoice}> + Add Choice</BasicButton>\\r\\n\\t\\t</Row>\\r\\n\\t{/if}\\r\\n</Box>\\r\\n\\r\\n<style>\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 80%;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA0EC,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
+  map: `{"version":3,"file":"PollCard.svelte","sources":["PollCard.svelte"],"sourcesContent":["\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { Choice, Poll } from '$lib/poll';\\r\\nimport ChoiceItem from '$lib/ChoiceItem.svelte';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Box from './Box.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nexport let poll;\\r\\nexport let remove = () => undefined;\\r\\nexport let edit = false;\\r\\nexport let updateParent = () => undefined;\\r\\nfunction addChoice() {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        poll.addChoice(new Choice());\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction vote(choice) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        var user = main.auth.currentUser.uid;\\r\\n        if (choice.isVotedOnBy(user)) {\\r\\n            poll.unvote(user, choice);\\r\\n        }\\r\\n        else {\\r\\n            poll.vote(user, choice);\\r\\n        }\\r\\n        updateParent();\\r\\n    });\\r\\n}\\r\\nfunction removeChoice(choice) {\\r\\n    poll.removeChoice(choice);\\r\\n    updateParent();\\r\\n}\\r\\n</script>\\r\\n\\r\\n<Box>\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t<input class=\\"question\\" type=\\"text\\" placeholder=\\"Enter question..\\" bind:value={poll.question}>\\r\\n\\t\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t\\t<BasicButton onclick={() => poll.singleChoice = !poll.singleChoice}>{poll.singleChoice ? \\"Single Choice\\" : \\"Multiple Choice\\"}</BasicButton>\\r\\n\\t\\t\\t\\t</Row>\\r\\n\\t\\t\\t</Column>\\r\\n\\t\\t\\t<ConfirmationButton onclick={remove} style={\\"background-color: var(--c_red);\\"}>Delete</ConfirmationButton>\\r\\n\\t\\t</Row>\\r\\n\\t{:else}\\r\\n\\t\\t<h2>{poll.question}</h2>\\r\\n\\t\\t<div class=\\"split\\"></div>\\r\\n\\t{/if}\\r\\n\\t{#each poll.getChoices() as choice (choice)}\\r\\n\\t\\t<ChoiceItem {choice} vote={() => vote(choice)} remove={() => removeChoice(choice)} {edit}></ChoiceItem>\\r\\n\\t{/each}\\r\\n\\t{#if edit}\\r\\n\\t\\t<Row>\\r\\n\\t\\t\\t<div></div>\\r\\n\\t\\t\\t<BasicButton onclick={addChoice}> + Add Choice</BasicButton>\\r\\n\\t\\t</Row>\\r\\n\\t{/if}\\r\\n</Box>\\r\\n\\r\\n<style>\\r\\n\\t.question{\\r\\n\\t\\tdisplay: block;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 1em;\\r\\n\\t}\\r\\n\\r\\n\\t.split{\\r\\n\\t\\twidth: 80%;\\r\\n\\t\\theight: 3px;\\r\\n\\t\\tmargin: 5px 10px 10px -3px;\\r\\n\\t\\tbackground-color: var(--c_light);\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AAyEC,wBAAS,CAAC,AACT,OAAO,CAAE,KAAK,CACd,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,AACZ,CAAC,AAED,qBAAM,CAAC,AACN,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,IAAI,CAC1B,gBAAgB,CAAE,IAAI,SAAS,CAAC,AACjC,CAAC"}`
 };
 var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   var __awaiter = function(thisArg, _arguments, P, generator) {
@@ -40795,7 +40872,7 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 var css = {
   code: ".title.svelte-15c3n33{margin:20px 0 0 0;padding:10px;font-size:1.5em;height:1em;width:100%}.title.svelte-15c3n33:focus{outline:none}.description.svelte-15c3n33{margin:20px;padding:10px;font-size:1em;height:3em;width:50%;border-color:var(--c_light);font-family:'Roboto', sans-serif;border-width:2px}",
-  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nimport ConfirmationButton from '$lib/ConfirmationButton.svelte';\\r\\nlet pollStream;\\r\\nlet index;\\r\\nlet edit = false;\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n        edit = edit || (main.userData.isAdminOf(pollStream.id) && query.get('edit') === 'true');\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = pollStream.description ? -1 : 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    index++;\\r\\n}\\r\\nfunction decrement() {\\r\\n    index--;\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\nfunction share() {\\r\\n    navigator.clipboard.writeText(\\"https://poll.stream/poll/\\" + pollStreamId);\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if !main.auth.currentUser}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{:else}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t{#if index === -1}\\r\\n\\t\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t<div></div>\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t<div>\\r\\n\\t\\t\\t\\t\\t<ConfirmationButton onfirstclick={share} secondText={\\"Copied url to clipboard.\\"}>Share</ConfirmationButton>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\r\\n\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index > 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index === 0}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Write Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else if pollStream.description}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> View Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<span style=\\"margin-top:10pt; font-size: large; font-weight: 700;\\">{index+1} of {pollStream.getPolls().length}</span>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA2KC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
+  map: `{"version":3,"file":"[slug].svelte","sources":["[slug].svelte"],"sourcesContent":["<script context=\\"module\\">\\r\\n\\tlet pageInfo;\\r\\n\\tlet pollStreamId;\\r\\n\\tlet query;\\r\\n\\r\\n\\t/**\\r\\n\\t * @type {import('@sveltejs/kit').Load}\\r\\n\\t */\\r\\n\\texport async function load({ page, fetch, session, context }) {\\r\\n\\t\\tpageInfo = page;\\r\\n\\t\\tpollStreamId = pageInfo.params.slug;\\r\\n\\t\\tquery = pageInfo.query;\\r\\n\\r\\n\\t\\treturn { props: { } };\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<script lang=\\"ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { main } from '$lib/main';\\r\\nimport { onAuthStateChanged } from '@firebase/auth';\\r\\nimport { onMount } from 'svelte';\\r\\nimport PollCard from '$lib/PollCard.svelte';\\r\\nimport { Poll, PollStream } from '$lib/poll';\\r\\nimport BasicButton from '$lib/BasicButton.svelte';\\r\\nimport Column from '$lib/Column.svelte';\\r\\nimport Row from '$lib/Row.svelte';\\r\\nimport FloatingRow from '$lib/FloatingRow.svelte';\\r\\nimport Box from '$lib/Box.svelte';\\r\\nimport { goto } from '$app/navigation';\\r\\nimport ShareButton from '$lib/ShareButton.svelte';\\r\\nlet pollStream;\\r\\nlet index;\\r\\nlet edit = false;\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    pollStream = yield main.readPollStream(pollStreamId);\\r\\n}));\\r\\nfunction addPoll() {\\r\\n    pollStream.addPoll(new Poll());\\r\\n    pollStream = pollStream;\\r\\n    increment();\\r\\n}\\r\\nfunction removePoll(poll) {\\r\\n    pollStream.removePoll(poll);\\r\\n    pollStream = pollStream;\\r\\n    decrement();\\r\\n}\\r\\nfunction save() {\\r\\n    main.writePollStream(pollStream);\\r\\n    edit = false;\\r\\n}\\r\\nonAuthStateChanged(main.auth, (user) => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    if (user) {\\r\\n        yield main.readUserData();\\r\\n        pollStream = yield main.readPollStream(pollStreamId);\\r\\n        edit = edit || (main.userData.isAdminOf(pollStream.id) && query.get('edit') === 'true');\\r\\n        if (!main.userData.isAdminOf(pollStreamId)) {\\r\\n            main.userData.addVisitedPollStreamId(pollStreamId);\\r\\n        }\\r\\n    }\\r\\n    else {\\r\\n        pollStream = null;\\r\\n    }\\r\\n    index = pollStream.description ? -1 : 0;\\r\\n}));\\r\\nfunction increment() {\\r\\n    index++;\\r\\n}\\r\\nfunction decrement() {\\r\\n    index--;\\r\\n}\\r\\nfunction updateParent() {\\r\\n    poll = poll;\\r\\n}\\r\\n$: poll = pollStream ? pollStream.getPolls()[index] : null;\\r\\n$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;\\r\\n</script>\\r\\n\\r\\n{#if pollStream === undefined}\\r\\n\\t<p>Loading...</p>\\r\\n{:else}\\r\\n\\t{#if !main.auth.currentUser}\\r\\n\\t\\t<p style=\\"margin-top: 100px\\">Sign in to access this poll stream!</p>\\r\\n\\t{:else}\\r\\n\\t\\t{#if !pollStream}\\r\\n\\t\\t\\t<h2 style=\\"padding-top: 100pt;\\">404: Found no poll with this ID.</h2>\\r\\n\\t\\t\\t<p>It has either been deleted, or was never created.</p>\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\r\\n\\t\\t\\t<Row>\\r\\n\\t\\t\\t\\t{#if index === -1}\\r\\n\\t\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t\\t{#if isAdmin && edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<input type=\\"text\\" class=\\"title\\" placeholder=\\"Enter title..\\" bind:value={pollStream.title}>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\"title-split\\"></div>\\r\\n\\t\\t\\t\\t\\t\\t\\t<textarea type=\\"text\\" class=\\"description\\" placeholder=\\"Enter description..\\" bind:value={pollStream.description}></textarea>\\r\\n\\t\\t\\t\\t\\t\\t\\t<br>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<h2>{pollStream.title}</h2>\\r\\n\\t\\t\\t\\t\\t\\t\\t<p>{pollStream.description}</p>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t<div></div>\\r\\n\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t<div>\\r\\n\\t\\t\\t\\t\\t<ShareButton {pollStreamId}></ShareButton>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={save} style=\\"background-color:var(--c_green);\\">Save</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => edit = true}>Edit</BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</div>\\r\\n\\t\\t\\t</Row>\\r\\n\\t\\t\\r\\n\\r\\n\\t\\t\\t{#if poll}\\r\\n\\t\\t\\t\\t<Column>\\r\\n\\t\\t\\t\\t\\t<PollCard {poll} remove={() => removePoll(poll)} {edit} {updateParent}></PollCard>\\r\\n\\t\\t\\t\\t</Column>\\r\\n\\t\\t\\t{/if}\\r\\n\\r\\n\\t\\t\\t<FloatingRow style={\\"background-color: white; box-shadow: 0px -4px 10px var(--c_light);\\"}>\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if index > 0}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Back </BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index === 0}\\r\\n\\t\\t\\t\\t\\t\\t{#if edit}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> Write Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{:else if pollStream.description}\\r\\n\\t\\t\\t\\t\\t\\t\\t<BasicButton onclick={decrement}> View Description </BasicButton>\\r\\n\\t\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if pollStream.getPolls().length}\\r\\n\\t\\t\\t\\t\\t\\t<span style=\\"margin-top:10pt; font-size: large; font-weight: 700;\\">{index+1} of {pollStream.getPolls().length}</span>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t\\t\\r\\n\\t\\t\\t\\t<Box visible={false}>\\r\\n\\t\\t\\t\\t\\t{#if isAdmin && edit && (pollStream.getPolls().length === 0 || index === pollStream.getPolls().length - 1)}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={addPoll}>+ New Question</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else if index !== pollStream.getPolls().length - 1}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={increment}\\r\\n\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t>\\r\\n\\t\\t\\t\\t\\t\\t\\tNext\\r\\n\\t\\t\\t\\t\\t\\t</BasicButton>\\r\\n\\t\\t\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t\\t\\t<BasicButton onclick={() => goto(\\"/\\")}\\r\\n\\t\\t\\t\\t\\t\\t\\tstyle={\\"background-color:var(--\\" + (!edit && poll && main.auth.currentUser && poll.getUserChoices(main.auth.currentUser.uid).length ? \\"c_green\\" : \\"c_blue\\") + \\");\\"}\\r\\n\\t\\t\\t\\t\\t\\t> Complete </BasicButton>\\r\\n\\t\\t\\t\\t\\t{/if}\\r\\n\\t\\t\\t\\t</Box>\\r\\n\\t\\t\\t</FloatingRow>\\r\\n\\t\\t{/if}\\r\\n\\t{/if}\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.title{\\r\\n\\t\\tmargin: 20px 0 0 0;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1.5em;\\r\\n\\t\\theight: 1em;\\r\\n\\t\\twidth: 100%;\\r\\n\\t}\\r\\n\\t.title:focus{\\r\\n\\t\\toutline: none;\\r\\n\\t}\\r\\n\\t.description{\\r\\n\\t\\tmargin: 20px;\\r\\n\\t\\tpadding: 10px;\\r\\n\\t\\tfont-size: 1em;\\r\\n\\t\\theight: 3em;\\r\\n\\t\\twidth: 50%;\\r\\n\\t\\tborder-color: var(--c_light);\\r\\n\\t\\tfont-family: 'Roboto', sans-serif;\\r\\n\\t\\tborder-width: 2px;\\r\\n\\t}\\r\\n</style>\\r\\n"],"names":[],"mappings":"AA2KC,qBAAM,CAAC,AACN,MAAM,CAAE,IAAI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAClB,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,IAAI,AACZ,CAAC,AACD,qBAAM,MAAM,CAAC,AACZ,OAAO,CAAE,IAAI,AACd,CAAC,AACD,2BAAY,CAAC,AACZ,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,GAAG,CACd,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,YAAY,CAAE,IAAI,SAAS,CAAC,CAC5B,WAAW,CAAE,QAAQ,CAAC,CAAC,UAAU,CACjC,YAAY,CAAE,GAAG,AAClB,CAAC"}`
 };
 var pageInfo;
 var pollStreamId;
@@ -40805,9 +40882,6 @@ async function load$1({page, fetch: fetch3, session, context}) {
   pollStreamId = pageInfo.params.slug;
   query = pageInfo.query;
   return {props: {}};
-}
-function share() {
-  navigator.clipboard.writeText("https://poll.stream/poll/" + pollStreamId);
 }
 var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let poll;
@@ -40864,6 +40938,9 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
       yield main.readUserData();
       pollStream = yield main.readPollStream(pollStreamId);
       edit = edit || main.userData.isAdminOf(pollStream.id) && query.get("edit") === "true";
+      if (!main.userData.isAdminOf(pollStreamId)) {
+        main.userData.addVisitedPollStreamId(pollStreamId);
+      }
     } else {
       pollStream = null;
     }
@@ -40890,10 +40967,7 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
 							<br>` : `<h2>${escape2(pollStream.title)}</h2>
 							<p>${escape2(pollStream.description)}</p>`}`
     })}` : `<div></div>`}
-				<div>${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
-      onfirstclick: share,
-      secondText: "Copied url to clipboard."
-    }, {}, {default: () => `Share`})}
+				<div>${validate_component(ShareButton, "ShareButton").$$render($$result, {pollStreamId}, {}, {})}
 					${isAdmin ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
       onclick: save,
       style: "background-color:var(--c_green);"

@@ -27,7 +27,7 @@
 	import FloatingRow from '$lib/FloatingRow.svelte';
 	import Box from '$lib/Box.svelte';
 	import { goto } from '$app/navigation';
-	import ConfirmationButton from '$lib/ConfirmationButton.svelte';
+	import ShareButton from '$lib/ShareButton.svelte';
 	
 	let pollStream: PollStream;
 	let index: number;
@@ -80,10 +80,6 @@
 		poll = poll;
 	}
 
-	function share() {
-		navigator.clipboard.writeText("https://poll.stream/poll/" + pollStreamId);
-	}
-
 	$: poll = pollStream ? pollStream.getPolls()[index] : null;
 	$: isAdmin = pollStream && main.userData ? main.userData.isAdminOf(pollStream.id) : false;
 </script>
@@ -116,7 +112,7 @@
 					<div></div>
 				{/if}
 				<div>
-					<ConfirmationButton onfirstclick={share} secondText={"Copied url to clipboard."}>Share</ConfirmationButton>
+					<ShareButton {pollStreamId}></ShareButton>
 					{#if isAdmin}
 						{#if edit}
 							<BasicButton onclick={save} style="background-color:var(--c_green);">Save</BasicButton>
