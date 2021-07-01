@@ -114,6 +114,9 @@ export class Main {
 	}
 
 	public async deletePollStream(id: string): Promise<void> {
+		if (!this.userData.isAdminOf(id)) {
+			throw new Error("User tried to delete someone else's poll stream!");
+		}
 		await deleteDoc(doc(this.db, "polls", id));
 		console.log("PollStream deleted from database.");
 		await main.userData.removePollStreamId(id);
@@ -162,6 +165,8 @@ export const main = new Main();
 
 export class UserData {
 	private pollStreamIds: Array<string> = [];
+	private visitedPollStreamIds: Array<string> = [];
+
 	__type = 'UserData'; // For deserialization
 
 	public getPollStreamIds(): Array<string> {
@@ -169,12 +174,32 @@ export class UserData {
 	}
 
 	public async addPollStreamId(pollStreamId: string): Promise<void> {
+		if (this.pollStreamIds.includes(pollStreamId)) {
+			return;
+		}
 		this.pollStreamIds.push(pollStreamId);
 		await main.writeUserData();
 	}
 
 	public async removePollStreamId(pollStreamId: string): Promise<void> {
 		this.pollStreamIds.splice(this.pollStreamIds.indexOf(pollStreamId), 1);
+		await main.writeUserData();
+	}
+
+	public getVisitedPollStreamIds(): Array<string> {
+		return [...this.visitedPollStreamIds];
+	}
+
+	public async addVisitedPollStreamId(pollStreamId: string): Promise<void> {
+		if (this.visitedPollStreamIds.includes(pollStreamId)) {
+			return;
+		}
+		this.visitedPollStreamIds.push(pollStreamId);
+		await main.writeUserData();
+	}
+
+	public async removeVisitedPollStreamId(pollStreamId: string): Promise<void> {
+		this.visitedPollStreamIds.splice(this.visitedPollStreamIds.indexOf(pollStreamId), 1);
 		await main.writeUserData();
 	}
 

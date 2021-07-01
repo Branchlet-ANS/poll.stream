@@ -28,6 +28,9 @@ export class PollStream implements Listener {
 	}
 	
 	public addPoll(poll: Poll) {
+		if (this.polls.includes(poll)) {
+			return;
+		}
 		poll.addListener(this);
 		this.polls = [...this.polls, poll];
 		this.update();
@@ -71,6 +74,9 @@ export class Poll implements Listener, Listenable {
 	}
 
 	public addChoice(choice: Choice) {
+		if (this.choices.includes(choice)) {
+			return;
+		}
 		choice.addListener(this);
 		this.choices.push(choice);
 		this.notifyListeners();

@@ -8,33 +8,52 @@
 	import FloatingRow from '$lib/FloatingRow.svelte';
 	import { goto } from '$app/navigation';
 	import Box from '$lib/Box.svelte';
+	import Row from '$lib/Row.svelte';
 
 	let pollStreams: Array<PollStream>;
-
+	let view: number = 0;
+	
 	async function newPollStream() {
 		var pollStream = await main.newPollStream();
 		goto("/poll/" + pollStream.id + "?edit=true");
 	}
 	
 	async function removePollStream(pollStream: PollStream) {
-		main.deletePollStream(pollStream.id);
+		if (view === 0) {
+			main.deletePollStream(pollStream.id);
+		}
+		else if (view === 1) {
+			main.userData.removeVisitedPollStreamId(pollStream.id)
+		}
 		pollStreams.splice(pollStreams.indexOf(pollStream), 1);
 		pollStreams = pollStreams;
 	}
 	
+	async function readPollStreams(ids: Array<string>) {
+		var result = [];
+		for (let id of ids) {
+			var p = await main.readPollStream(id);
+			if (p != null) {
+				result = [...result, p];
+				pollStreams = result;
+			}
+		}
+		pollStreams = result;
+	} 
+
+	async function build() {
+		if (view === 0) {
+			await readPollStreams(main.userData.getPollStreamIds());
+		}
+		else if (view === 1) {
+			await readPollStreams(main.userData.getVisitedPollStreamIds());
+		}
+	}
+
 	onAuthStateChanged(main.auth, async (user) => {
 		if (user) {
 			await main.readUserData();
-			var result = [];
-			var polls = main.userData.getPollStreamIds();
-			for (let poll of polls) {
-				var p = await main.readPollStream(poll);
-				if (p != null) {
-					result = [...result, p];
-					pollStreams = result;
-				}
-			}
-			pollStreams = result;
+			await build();
 		} else {
 			pollStreams = [];
 		}
@@ -47,16 +66,31 @@
 	{#if !main.auth.currentUser || main.auth.currentUser.isAnonymous}
 		<p style="margin-top: 100px">Sign in to create your own poll streams!</p>
 	{:else}
-		{#if !pollStreams || pollStreams.length == 0}
-			<p style="margin-top: 100px">No Poll Streams!</p>
-			<p>Click the button below to add a stream.</p>
-		{:else}	
-			<Column>
+		<Column>
+			<Row>
+				<div>
+					<BasicButton onclick={() => {view = 0; build();}}>My Poll Streams</BasicButton>
+					<BasicButton onclick={() => {view = 1; build();}}>Visited</BasicButton>
+				</div>
+			</Row>
+			{#if !pollStreams || pollStreams.length == 0}
+				{#if view === 0}	
+					<div style="margin-top: 100px">
+						<p>No Poll Streams!</p>
+						<p>Click the button below to add a stream.</p>
+					</div>
+				{:else if view === 1}
+					<div style="margin-top: 100px">
+						<p>No Poll Streams!</p>
+						<p>Poll Streams you visit will appear here.</p>
+					</div>
+				{/if}
+			{:else}	
 				{#each pollStreams as pollStream}
 					<PollStreamTile remove={() => removePollStream(pollStream)} pollStream={pollStream}></PollStreamTile>
 				{/each}
-			</Column>
-		{/if}
+			{/if}
+		</Column>
 		<FloatingRow>
 			<Box visible={false} style={"max-width:200px;"}>
 				<BasicButton onclick={newPollStream}>+ Create Poll Stream</BasicButton>

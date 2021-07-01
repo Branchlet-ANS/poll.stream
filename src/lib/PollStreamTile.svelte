@@ -5,6 +5,7 @@
 	import Box from './Box.svelte';
 	import Row from '$lib/Row.svelte';
 	import Column from '$lib/Column.svelte';
+import { main } from './main';
 
 	export let remove = () => undefined;
 	export let pollStream: PollStream;
@@ -19,7 +20,11 @@
 					<p>ID: {pollStream.id}</p>
 				</div>
 			</Column>
-			<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}> Delete </ConfirmationButton>
+			{#if main.userData && main.userData.isAdminOf(pollStream.id)}
+				<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}> Delete </ConfirmationButton>
+			{:else}
+				<ConfirmationButton onclick={remove} style={"background-color: var(--c_red);"}> Remove </ConfirmationButton>
+			{/if}
 		</Row>
 	</Box>
 {/if}

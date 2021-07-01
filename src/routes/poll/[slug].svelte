@@ -27,7 +27,7 @@
 	import FloatingRow from '$lib/FloatingRow.svelte';
 	import Box from '$lib/Box.svelte';
 	import { goto } from '$app/navigation';
-import ConfirmationButton from '$lib/ConfirmationButton.svelte';
+	import ConfirmationButton from '$lib/ConfirmationButton.svelte';
 	
 	let pollStream: PollStream;
 	let index: number;
@@ -59,6 +59,9 @@ import ConfirmationButton from '$lib/ConfirmationButton.svelte';
 			await main.readUserData();
 			pollStream = await main.readPollStream(pollStreamId);
 			edit = edit || (main.userData.isAdminOf(pollStream.id) && query.get('edit') === 'true');
+			if (!main.userData.isAdminOf(pollStreamId)) {
+				main.userData.addVisitedPollStreamId(pollStreamId);
+			}
 		} else {
 			pollStream = null;
 		}
