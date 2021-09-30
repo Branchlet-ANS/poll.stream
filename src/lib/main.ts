@@ -2,8 +2,9 @@ import { PollStream, Poll, Choice } from './poll';
 import { initializeApp, getApps, getApp } from "@firebase/app";
 import type { FirebaseApp } from "@firebase/app";
 import { getFirestore, collection, setDoc, doc, getDoc, deleteDoc } from "@firebase/firestore";
-import type { FirebaseFirestore } from "@firebase/firestore";
-import { getAuth, onAuthStateChanged, User } from '@firebase/auth';
+import type { Firestore } from "@firebase/firestore";
+import type { User } from '@firebase/auth';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 import type { Auth } from '@firebase/auth';  
 
@@ -18,7 +19,7 @@ export class Main {
 		measurementId: "G-M76SYZGGMZ"
 	};
 	public readonly firebaseApp: FirebaseApp;
-	public readonly db: FirebaseFirestore;
+	public readonly db: Firestore;
 	public readonly auth: Auth;
 	public userData: UserData;
 	public editMode: boolean = false;
