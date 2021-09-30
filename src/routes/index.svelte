@@ -42,11 +42,13 @@
 	} 
 
 	async function build() {
-		if (view === 0) {
-			await readPollStreams(main.userData.getPollStreamIds());
-		}
-		else if (view === 1) {
-			await readPollStreams(main.userData.getVisitedPollStreamIds());
+		if (main.userData) {
+			if (view === 0) {
+				await readPollStreams(main.userData.getPollStreamIds());
+			}
+			else if (view === 1) {
+				await readPollStreams(main.userData.getVisitedPollStreamIds());
+			}
 		}
 	}
 
@@ -54,7 +56,8 @@
 		if (user) {
 			await main.readUserData();
 			await build();
-		} else {
+		}
+		if (pollStreams === undefined) {
 			pollStreams = [];
 		}
 	});

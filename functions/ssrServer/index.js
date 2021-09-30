@@ -59,6 +59,2378 @@ var __privateSet = (obj, member, value, setter) => {
   return value;
 };
 
+// node_modules/tslib/tslib.js
+var require_tslib = __commonJS({
+  "node_modules/tslib/tslib.js"(exports2, module2) {
+    var __extends;
+    var __assign;
+    var __rest;
+    var __decorate;
+    var __param;
+    var __metadata;
+    var __awaiter;
+    var __generator;
+    var __exportStar;
+    var __values;
+    var __read;
+    var __spread;
+    var __spreadArrays;
+    var __spreadArray;
+    var __await;
+    var __asyncGenerator;
+    var __asyncDelegator;
+    var __asyncValues;
+    var __makeTemplateObject;
+    var __importStar;
+    var __importDefault;
+    var __classPrivateFieldGet;
+    var __classPrivateFieldSet;
+    var __createBinding;
+    (function(factory) {
+      var root = typeof global === "object" ? global : typeof self === "object" ? self : typeof this === "object" ? this : {};
+      if (typeof define === "function" && define.amd) {
+        define("tslib", ["exports"], function(exports3) {
+          factory(createExporter(root, createExporter(exports3)));
+        });
+      } else if (typeof module2 === "object" && typeof module2.exports === "object") {
+        factory(createExporter(root, createExporter(module2.exports)));
+      } else {
+        factory(createExporter(root));
+      }
+      function createExporter(exports3, previous) {
+        if (exports3 !== root) {
+          if (typeof Object.create === "function") {
+            Object.defineProperty(exports3, "__esModule", {value: true});
+          } else {
+            exports3.__esModule = true;
+          }
+        }
+        return function(id, v) {
+          return exports3[id] = previous ? previous(id, v) : v;
+        };
+      }
+    })(function(exporter) {
+      var extendStatics = Object.setPrototypeOf || {__proto__: []} instanceof Array && function(d, b) {
+        d.__proto__ = b;
+      } || function(d, b) {
+        for (var p2 in b)
+          if (Object.prototype.hasOwnProperty.call(b, p2))
+            d[p2] = b[p2];
+      };
+      __extends = function(d, b) {
+        if (typeof b !== "function" && b !== null)
+          throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() {
+          this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+      };
+      __assign = Object.assign || function(t) {
+        for (var s2, i = 1, n = arguments.length; i < n; i++) {
+          s2 = arguments[i];
+          for (var p2 in s2)
+            if (Object.prototype.hasOwnProperty.call(s2, p2))
+              t[p2] = s2[p2];
+        }
+        return t;
+      };
+      __rest = function(s2, e) {
+        var t = {};
+        for (var p2 in s2)
+          if (Object.prototype.hasOwnProperty.call(s2, p2) && e.indexOf(p2) < 0)
+            t[p2] = s2[p2];
+        if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
+          for (var i = 0, p2 = Object.getOwnPropertySymbols(s2); i < p2.length; i++) {
+            if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i]))
+              t[p2[i]] = s2[p2[i]];
+          }
+        return t;
+      };
+      __decorate = function(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+          r = Reflect.decorate(decorators, target, key, desc);
+        else
+          for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+              r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+      };
+      __param = function(paramIndex, decorator) {
+        return function(target, key) {
+          decorator(target, key, paramIndex);
+        };
+      };
+      __metadata = function(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+          return Reflect.metadata(metadataKey, metadataValue);
+      };
+      __awaiter = function(thisArg, _arguments, P, generator) {
+        function adopt(value) {
+          return value instanceof P ? value : new P(function(resolve2) {
+            resolve2(value);
+          });
+        }
+        return new (P || (P = Promise))(function(resolve2, reject) {
+          function fulfilled(value) {
+            try {
+              step(generator.next(value));
+            } catch (e) {
+              reject(e);
+            }
+          }
+          function rejected(value) {
+            try {
+              step(generator["throw"](value));
+            } catch (e) {
+              reject(e);
+            }
+          }
+          function step(result) {
+            result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+          }
+          step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+      };
+      __generator = function(thisArg, body) {
+        var _ = {label: 0, sent: function() {
+          if (t[0] & 1)
+            throw t[1];
+          return t[1];
+        }, trys: [], ops: []}, f, y, t, g;
+        return g = {next: verb(0), "throw": verb(1), "return": verb(2)}, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+          return this;
+        }), g;
+        function verb(n) {
+          return function(v) {
+            return step([n, v]);
+          };
+        }
+        function step(op) {
+          if (f)
+            throw new TypeError("Generator is already executing.");
+          while (_)
+            try {
+              if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+                return t;
+              if (y = 0, t)
+                op = [op[0] & 2, t.value];
+              switch (op[0]) {
+                case 0:
+                case 1:
+                  t = op;
+                  break;
+                case 4:
+                  _.label++;
+                  return {value: op[1], done: false};
+                case 5:
+                  _.label++;
+                  y = op[1];
+                  op = [0];
+                  continue;
+                case 7:
+                  op = _.ops.pop();
+                  _.trys.pop();
+                  continue;
+                default:
+                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                    _ = 0;
+                    continue;
+                  }
+                  if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                    _.label = op[1];
+                    break;
+                  }
+                  if (op[0] === 6 && _.label < t[1]) {
+                    _.label = t[1];
+                    t = op;
+                    break;
+                  }
+                  if (t && _.label < t[2]) {
+                    _.label = t[2];
+                    _.ops.push(op);
+                    break;
+                  }
+                  if (t[2])
+                    _.ops.pop();
+                  _.trys.pop();
+                  continue;
+              }
+              op = body.call(thisArg, _);
+            } catch (e) {
+              op = [6, e];
+              y = 0;
+            } finally {
+              f = t = 0;
+            }
+          if (op[0] & 5)
+            throw op[1];
+          return {value: op[0] ? op[1] : void 0, done: true};
+        }
+      };
+      __exportStar = function(m, o) {
+        for (var p2 in m)
+          if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(o, p2))
+            __createBinding(o, m, p2);
+      };
+      __createBinding = Object.create ? function(o, m, k, k2) {
+        if (k2 === void 0)
+          k2 = k;
+        Object.defineProperty(o, k2, {enumerable: true, get: function() {
+          return m[k];
+        }});
+      } : function(o, m, k, k2) {
+        if (k2 === void 0)
+          k2 = k;
+        o[k2] = m[k];
+      };
+      __values = function(o) {
+        var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
+        if (m)
+          return m.call(o);
+        if (o && typeof o.length === "number")
+          return {
+            next: function() {
+              if (o && i >= o.length)
+                o = void 0;
+              return {value: o && o[i++], done: !o};
+            }
+          };
+        throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
+      };
+      __read = function(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+          return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+          while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+            ar.push(r.value);
+        } catch (error2) {
+          e = {error: error2};
+        } finally {
+          try {
+            if (r && !r.done && (m = i["return"]))
+              m.call(i);
+          } finally {
+            if (e)
+              throw e.error;
+          }
+        }
+        return ar;
+      };
+      __spread = function() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+          ar = ar.concat(__read(arguments[i]));
+        return ar;
+      };
+      __spreadArrays = function() {
+        for (var s2 = 0, i = 0, il = arguments.length; i < il; i++)
+          s2 += arguments[i].length;
+        for (var r = Array(s2), k = 0, i = 0; i < il; i++)
+          for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+        return r;
+      };
+      __spreadArray = function(to, from, pack) {
+        if (pack || arguments.length === 2)
+          for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+              if (!ar)
+                ar = Array.prototype.slice.call(from, 0, i);
+              ar[i] = from[i];
+            }
+          }
+        return to.concat(ar || from);
+      };
+      __await = function(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+      };
+      __asyncGenerator = function(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator)
+          throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+          return this;
+        }, i;
+        function verb(n) {
+          if (g[n])
+            i[n] = function(v) {
+              return new Promise(function(a, b) {
+                q.push([n, v, a, b]) > 1 || resume(n, v);
+              });
+            };
+        }
+        function resume(n, v) {
+          try {
+            step(g[n](v));
+          } catch (e) {
+            settle(q[0][3], e);
+          }
+        }
+        function step(r) {
+          r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+        }
+        function fulfill(value) {
+          resume("next", value);
+        }
+        function reject(value) {
+          resume("throw", value);
+        }
+        function settle(f, v) {
+          if (f(v), q.shift(), q.length)
+            resume(q[0][0], q[0][1]);
+        }
+      };
+      __asyncDelegator = function(o) {
+        var i, p2;
+        return i = {}, verb("next"), verb("throw", function(e) {
+          throw e;
+        }), verb("return"), i[Symbol.iterator] = function() {
+          return this;
+        }, i;
+        function verb(n, f) {
+          i[n] = o[n] ? function(v) {
+            return (p2 = !p2) ? {value: __await(o[n](v)), done: n === "return"} : f ? f(v) : v;
+          } : f;
+        }
+      };
+      __asyncValues = function(o) {
+        if (!Symbol.asyncIterator)
+          throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+          return this;
+        }, i);
+        function verb(n) {
+          i[n] = o[n] && function(v) {
+            return new Promise(function(resolve2, reject) {
+              v = o[n](v), settle(resolve2, reject, v.done, v.value);
+            });
+          };
+        }
+        function settle(resolve2, reject, d, v) {
+          Promise.resolve(v).then(function(v2) {
+            resolve2({value: v2, done: d});
+          }, reject);
+        }
+      };
+      __makeTemplateObject = function(cooked, raw) {
+        if (Object.defineProperty) {
+          Object.defineProperty(cooked, "raw", {value: raw});
+        } else {
+          cooked.raw = raw;
+        }
+        return cooked;
+      };
+      var __setModuleDefault = Object.create ? function(o, v) {
+        Object.defineProperty(o, "default", {enumerable: true, value: v});
+      } : function(o, v) {
+        o["default"] = v;
+      };
+      __importStar = function(mod) {
+        if (mod && mod.__esModule)
+          return mod;
+        var result = {};
+        if (mod != null) {
+          for (var k in mod)
+            if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+              __createBinding(result, mod, k);
+        }
+        __setModuleDefault(result, mod);
+        return result;
+      };
+      __importDefault = function(mod) {
+        return mod && mod.__esModule ? mod : {"default": mod};
+      };
+      __classPrivateFieldGet = function(receiver, state, kind, f) {
+        if (kind === "a" && !f)
+          throw new TypeError("Private accessor was defined without a getter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+          throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+      };
+      __classPrivateFieldSet = function(receiver, state, value, kind, f) {
+        if (kind === "m")
+          throw new TypeError("Private method is not writable");
+        if (kind === "a" && !f)
+          throw new TypeError("Private accessor was defined without a setter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+          throw new TypeError("Cannot write private member to an object whose class did not declare it");
+        return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+      };
+      exporter("__extends", __extends);
+      exporter("__assign", __assign);
+      exporter("__rest", __rest);
+      exporter("__decorate", __decorate);
+      exporter("__param", __param);
+      exporter("__metadata", __metadata);
+      exporter("__awaiter", __awaiter);
+      exporter("__generator", __generator);
+      exporter("__exportStar", __exportStar);
+      exporter("__createBinding", __createBinding);
+      exporter("__values", __values);
+      exporter("__read", __read);
+      exporter("__spread", __spread);
+      exporter("__spreadArrays", __spreadArrays);
+      exporter("__spreadArray", __spreadArray);
+      exporter("__await", __await);
+      exporter("__asyncGenerator", __asyncGenerator);
+      exporter("__asyncDelegator", __asyncDelegator);
+      exporter("__asyncValues", __asyncValues);
+      exporter("__makeTemplateObject", __makeTemplateObject);
+      exporter("__importStar", __importStar);
+      exporter("__importDefault", __importDefault);
+      exporter("__classPrivateFieldGet", __classPrivateFieldGet);
+      exporter("__classPrivateFieldSet", __classPrivateFieldSet);
+    });
+  }
+});
+
+// node_modules/@firebase/util/dist/index.node.cjs.js
+var require_index_node_cjs = __commonJS({
+  "node_modules/@firebase/util/dist/index.node.cjs.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    var tslib = require_tslib();
+    var CONSTANTS = {
+      NODE_CLIENT: false,
+      NODE_ADMIN: false,
+      SDK_VERSION: "${JSCORE_VERSION}"
+    };
+    var assert = function(assertion, message) {
+      if (!assertion) {
+        throw assertionError(message);
+      }
+    };
+    var assertionError = function(message) {
+      return new Error("Firebase Database (" + CONSTANTS.SDK_VERSION + ") INTERNAL ASSERT FAILED: " + message);
+    };
+    var stringToByteArray$1 = function(str) {
+      var out = [];
+      var p2 = 0;
+      for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
+        if (c < 128) {
+          out[p2++] = c;
+        } else if (c < 2048) {
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
+        } else if ((c & 64512) === 55296 && i + 1 < str.length && (str.charCodeAt(i + 1) & 64512) === 56320) {
+          c = 65536 + ((c & 1023) << 10) + (str.charCodeAt(++i) & 1023);
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        } else {
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        }
+      }
+      return out;
+    };
+    var byteArrayToString = function(bytes) {
+      var out = [];
+      var pos = 0, c = 0;
+      while (pos < bytes.length) {
+        var c1 = bytes[pos++];
+        if (c1 < 128) {
+          out[c++] = String.fromCharCode(c1);
+        } else if (c1 > 191 && c1 < 224) {
+          var c2 = bytes[pos++];
+          out[c++] = String.fromCharCode((c1 & 31) << 6 | c2 & 63);
+        } else if (c1 > 239 && c1 < 365) {
+          var c2 = bytes[pos++];
+          var c3 = bytes[pos++];
+          var c4 = bytes[pos++];
+          var u = ((c1 & 7) << 18 | (c2 & 63) << 12 | (c3 & 63) << 6 | c4 & 63) - 65536;
+          out[c++] = String.fromCharCode(55296 + (u >> 10));
+          out[c++] = String.fromCharCode(56320 + (u & 1023));
+        } else {
+          var c2 = bytes[pos++];
+          var c3 = bytes[pos++];
+          out[c++] = String.fromCharCode((c1 & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+        }
+      }
+      return out.join("");
+    };
+    var base64 = {
+      byteToCharMap_: null,
+      charToByteMap_: null,
+      byteToCharMapWebSafe_: null,
+      charToByteMapWebSafe_: null,
+      ENCODED_VALS_BASE: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+      get ENCODED_VALS() {
+        return this.ENCODED_VALS_BASE + "+/=";
+      },
+      get ENCODED_VALS_WEBSAFE() {
+        return this.ENCODED_VALS_BASE + "-_.";
+      },
+      HAS_NATIVE_SUPPORT: typeof atob === "function",
+      encodeByteArray: function(input, webSafe) {
+        if (!Array.isArray(input)) {
+          throw Error("encodeByteArray takes an array as a parameter");
+        }
+        this.init_();
+        var byteToCharMap = webSafe ? this.byteToCharMapWebSafe_ : this.byteToCharMap_;
+        var output = [];
+        for (var i = 0; i < input.length; i += 3) {
+          var byte1 = input[i];
+          var haveByte2 = i + 1 < input.length;
+          var byte2 = haveByte2 ? input[i + 1] : 0;
+          var haveByte3 = i + 2 < input.length;
+          var byte3 = haveByte3 ? input[i + 2] : 0;
+          var outByte1 = byte1 >> 2;
+          var outByte2 = (byte1 & 3) << 4 | byte2 >> 4;
+          var outByte3 = (byte2 & 15) << 2 | byte3 >> 6;
+          var outByte4 = byte3 & 63;
+          if (!haveByte3) {
+            outByte4 = 64;
+            if (!haveByte2) {
+              outByte3 = 64;
+            }
+          }
+          output.push(byteToCharMap[outByte1], byteToCharMap[outByte2], byteToCharMap[outByte3], byteToCharMap[outByte4]);
+        }
+        return output.join("");
+      },
+      encodeString: function(input, webSafe) {
+        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
+          return btoa(input);
+        }
+        return this.encodeByteArray(stringToByteArray$1(input), webSafe);
+      },
+      decodeString: function(input, webSafe) {
+        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
+          return atob(input);
+        }
+        return byteArrayToString(this.decodeStringToByteArray(input, webSafe));
+      },
+      decodeStringToByteArray: function(input, webSafe) {
+        this.init_();
+        var charToByteMap = webSafe ? this.charToByteMapWebSafe_ : this.charToByteMap_;
+        var output = [];
+        for (var i = 0; i < input.length; ) {
+          var byte1 = charToByteMap[input.charAt(i++)];
+          var haveByte2 = i < input.length;
+          var byte2 = haveByte2 ? charToByteMap[input.charAt(i)] : 0;
+          ++i;
+          var haveByte3 = i < input.length;
+          var byte3 = haveByte3 ? charToByteMap[input.charAt(i)] : 64;
+          ++i;
+          var haveByte4 = i < input.length;
+          var byte4 = haveByte4 ? charToByteMap[input.charAt(i)] : 64;
+          ++i;
+          if (byte1 == null || byte2 == null || byte3 == null || byte4 == null) {
+            throw Error();
+          }
+          var outByte1 = byte1 << 2 | byte2 >> 4;
+          output.push(outByte1);
+          if (byte3 !== 64) {
+            var outByte2 = byte2 << 4 & 240 | byte3 >> 2;
+            output.push(outByte2);
+            if (byte4 !== 64) {
+              var outByte3 = byte3 << 6 & 192 | byte4;
+              output.push(outByte3);
+            }
+          }
+        }
+        return output;
+      },
+      init_: function() {
+        if (!this.byteToCharMap_) {
+          this.byteToCharMap_ = {};
+          this.charToByteMap_ = {};
+          this.byteToCharMapWebSafe_ = {};
+          this.charToByteMapWebSafe_ = {};
+          for (var i = 0; i < this.ENCODED_VALS.length; i++) {
+            this.byteToCharMap_[i] = this.ENCODED_VALS.charAt(i);
+            this.charToByteMap_[this.byteToCharMap_[i]] = i;
+            this.byteToCharMapWebSafe_[i] = this.ENCODED_VALS_WEBSAFE.charAt(i);
+            this.charToByteMapWebSafe_[this.byteToCharMapWebSafe_[i]] = i;
+            if (i >= this.ENCODED_VALS_BASE.length) {
+              this.charToByteMap_[this.ENCODED_VALS_WEBSAFE.charAt(i)] = i;
+              this.charToByteMapWebSafe_[this.ENCODED_VALS.charAt(i)] = i;
+            }
+          }
+        }
+      }
+    };
+    var base64Encode = function(str) {
+      var utf8Bytes = stringToByteArray$1(str);
+      return base64.encodeByteArray(utf8Bytes, true);
+    };
+    var base64urlEncodeWithoutPadding = function(str) {
+      return base64Encode(str).replace(/\./g, "");
+    };
+    var base64Decode = function(str) {
+      try {
+        return base64.decodeString(str, true);
+      } catch (e) {
+        console.error("base64Decode failed: ", e);
+      }
+      return null;
+    };
+    function deepCopy(value) {
+      return deepExtend(void 0, value);
+    }
+    function deepExtend(target, source) {
+      if (!(source instanceof Object)) {
+        return source;
+      }
+      switch (source.constructor) {
+        case Date:
+          var dateValue = source;
+          return new Date(dateValue.getTime());
+        case Object:
+          if (target === void 0) {
+            target = {};
+          }
+          break;
+        case Array:
+          target = [];
+          break;
+        default:
+          return source;
+      }
+      for (var prop in source) {
+        if (!source.hasOwnProperty(prop) || !isValidKey(prop)) {
+          continue;
+        }
+        target[prop] = deepExtend(target[prop], source[prop]);
+      }
+      return target;
+    }
+    function isValidKey(key) {
+      return key !== "__proto__";
+    }
+    var Deferred = function() {
+      function Deferred2() {
+        var _this = this;
+        this.reject = function() {
+        };
+        this.resolve = function() {
+        };
+        this.promise = new Promise(function(resolve2, reject) {
+          _this.resolve = resolve2;
+          _this.reject = reject;
+        });
+      }
+      Deferred2.prototype.wrapCallback = function(callback) {
+        var _this = this;
+        return function(error2, value) {
+          if (error2) {
+            _this.reject(error2);
+          } else {
+            _this.resolve(value);
+          }
+          if (typeof callback === "function") {
+            _this.promise.catch(function() {
+            });
+            if (callback.length === 1) {
+              callback(error2);
+            } else {
+              callback(error2, value);
+            }
+          }
+        };
+      };
+      return Deferred2;
+    }();
+    function createMockUserToken(token, projectId) {
+      if (token.uid) {
+        throw new Error('The "uid" field is no longer supported by mockUserToken. Please use "sub" instead for Firebase Auth User ID.');
+      }
+      var header = {
+        alg: "none",
+        type: "JWT"
+      };
+      var project = projectId || "demo-project";
+      var iat = token.iat || 0;
+      var sub = token.sub || token.user_id;
+      if (!sub) {
+        throw new Error("mockUserToken must contain 'sub' or 'user_id' field!");
+      }
+      var payload = tslib.__assign({
+        iss: "https://securetoken.google.com/" + project,
+        aud: project,
+        iat,
+        exp: iat + 3600,
+        auth_time: iat,
+        sub,
+        user_id: sub,
+        firebase: {
+          sign_in_provider: "custom",
+          identities: {}
+        }
+      }, token);
+      var signature = "";
+      return [
+        base64urlEncodeWithoutPadding(JSON.stringify(header)),
+        base64urlEncodeWithoutPadding(JSON.stringify(payload)),
+        signature
+      ].join(".");
+    }
+    function getUA() {
+      if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
+        return navigator["userAgent"];
+      } else {
+        return "";
+      }
+    }
+    function isMobileCordova() {
+      return typeof window !== "undefined" && !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
+    }
+    function isNode() {
+      try {
+        return Object.prototype.toString.call(global.process) === "[object process]";
+      } catch (e) {
+        return false;
+      }
+    }
+    function isBrowser() {
+      return typeof self === "object" && self.self === self;
+    }
+    function isBrowserExtension() {
+      var runtime = typeof chrome === "object" ? chrome.runtime : typeof browser === "object" ? browser.runtime : void 0;
+      return typeof runtime === "object" && runtime.id !== void 0;
+    }
+    function isReactNative() {
+      return typeof navigator === "object" && navigator["product"] === "ReactNative";
+    }
+    function isElectron() {
+      return getUA().indexOf("Electron/") >= 0;
+    }
+    function isIE() {
+      var ua = getUA();
+      return ua.indexOf("MSIE ") >= 0 || ua.indexOf("Trident/") >= 0;
+    }
+    function isUWP() {
+      return getUA().indexOf("MSAppHost/") >= 0;
+    }
+    function isNodeSdk() {
+      return CONSTANTS.NODE_CLIENT === true || CONSTANTS.NODE_ADMIN === true;
+    }
+    function isSafari() {
+      return !isNode() && navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome");
+    }
+    function isIndexedDBAvailable() {
+      return typeof indexedDB === "object";
+    }
+    function validateIndexedDBOpenable() {
+      return new Promise(function(resolve2, reject) {
+        try {
+          var preExist_1 = true;
+          var DB_CHECK_NAME_1 = "validate-browser-context-for-indexeddb-analytics-module";
+          var request_1 = self.indexedDB.open(DB_CHECK_NAME_1);
+          request_1.onsuccess = function() {
+            request_1.result.close();
+            if (!preExist_1) {
+              self.indexedDB.deleteDatabase(DB_CHECK_NAME_1);
+            }
+            resolve2(true);
+          };
+          request_1.onupgradeneeded = function() {
+            preExist_1 = false;
+          };
+          request_1.onerror = function() {
+            var _a2;
+            reject(((_a2 = request_1.error) === null || _a2 === void 0 ? void 0 : _a2.message) || "");
+          };
+        } catch (error2) {
+          reject(error2);
+        }
+      });
+    }
+    function areCookiesEnabled() {
+      if (typeof navigator === "undefined" || !navigator.cookieEnabled) {
+        return false;
+      }
+      return true;
+    }
+    function getGlobal() {
+      if (typeof self !== "undefined") {
+        return self;
+      }
+      if (typeof window !== "undefined") {
+        return window;
+      }
+      if (typeof global !== "undefined") {
+        return global;
+      }
+      throw new Error("Unable to locate global object.");
+    }
+    var ERROR_NAME = "FirebaseError";
+    var FirebaseError = function(_super) {
+      tslib.__extends(FirebaseError2, _super);
+      function FirebaseError2(code, message, customData) {
+        var _this = _super.call(this, message) || this;
+        _this.code = code;
+        _this.customData = customData;
+        _this.name = ERROR_NAME;
+        Object.setPrototypeOf(_this, FirebaseError2.prototype);
+        if (Error.captureStackTrace) {
+          Error.captureStackTrace(_this, ErrorFactory.prototype.create);
+        }
+        return _this;
+      }
+      return FirebaseError2;
+    }(Error);
+    var ErrorFactory = function() {
+      function ErrorFactory2(service, serviceName, errors) {
+        this.service = service;
+        this.serviceName = serviceName;
+        this.errors = errors;
+      }
+      ErrorFactory2.prototype.create = function(code) {
+        var data = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+          data[_i - 1] = arguments[_i];
+        }
+        var customData = data[0] || {};
+        var fullCode = this.service + "/" + code;
+        var template = this.errors[code];
+        var message = template ? replaceTemplate(template, customData) : "Error";
+        var fullMessage = this.serviceName + ": " + message + " (" + fullCode + ").";
+        var error2 = new FirebaseError(fullCode, fullMessage, customData);
+        return error2;
+      };
+      return ErrorFactory2;
+    }();
+    function replaceTemplate(template, data) {
+      return template.replace(PATTERN, function(_, key) {
+        var value = data[key];
+        return value != null ? String(value) : "<" + key + "?>";
+      });
+    }
+    var PATTERN = /\{\$([^}]+)}/g;
+    function jsonEval(str) {
+      return JSON.parse(str);
+    }
+    function stringify(data) {
+      return JSON.stringify(data);
+    }
+    var decode = function(token) {
+      var header = {}, claims = {}, data = {}, signature = "";
+      try {
+        var parts = token.split(".");
+        header = jsonEval(base64Decode(parts[0]) || "");
+        claims = jsonEval(base64Decode(parts[1]) || "");
+        signature = parts[2];
+        data = claims["d"] || {};
+        delete claims["d"];
+      } catch (e) {
+      }
+      return {
+        header,
+        claims,
+        data,
+        signature
+      };
+    };
+    var isValidTimestamp = function(token) {
+      var claims = decode(token).claims;
+      var now = Math.floor(new Date().getTime() / 1e3);
+      var validSince = 0, validUntil = 0;
+      if (typeof claims === "object") {
+        if (claims.hasOwnProperty("nbf")) {
+          validSince = claims["nbf"];
+        } else if (claims.hasOwnProperty("iat")) {
+          validSince = claims["iat"];
+        }
+        if (claims.hasOwnProperty("exp")) {
+          validUntil = claims["exp"];
+        } else {
+          validUntil = validSince + 86400;
+        }
+      }
+      return !!now && !!validSince && !!validUntil && now >= validSince && now <= validUntil;
+    };
+    var issuedAtTime = function(token) {
+      var claims = decode(token).claims;
+      if (typeof claims === "object" && claims.hasOwnProperty("iat")) {
+        return claims["iat"];
+      }
+      return null;
+    };
+    var isValidFormat = function(token) {
+      var decoded = decode(token), claims = decoded.claims;
+      return !!claims && typeof claims === "object" && claims.hasOwnProperty("iat");
+    };
+    var isAdmin = function(token) {
+      var claims = decode(token).claims;
+      return typeof claims === "object" && claims["admin"] === true;
+    };
+    function contains(obj, key) {
+      return Object.prototype.hasOwnProperty.call(obj, key);
+    }
+    function safeGet(obj, key) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        return obj[key];
+      } else {
+        return void 0;
+      }
+    }
+    function isEmpty(obj) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    function map(obj, fn, contextObj) {
+      var res = {};
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          res[key] = fn.call(contextObj, obj[key], key, obj);
+        }
+      }
+      return res;
+    }
+    function deepEqual(a, b) {
+      if (a === b) {
+        return true;
+      }
+      var aKeys = Object.keys(a);
+      var bKeys = Object.keys(b);
+      for (var _i = 0, aKeys_1 = aKeys; _i < aKeys_1.length; _i++) {
+        var k = aKeys_1[_i];
+        if (!bKeys.includes(k)) {
+          return false;
+        }
+        var aProp = a[k];
+        var bProp = b[k];
+        if (isObject(aProp) && isObject(bProp)) {
+          if (!deepEqual(aProp, bProp)) {
+            return false;
+          }
+        } else if (aProp !== bProp) {
+          return false;
+        }
+      }
+      for (var _a2 = 0, bKeys_1 = bKeys; _a2 < bKeys_1.length; _a2++) {
+        var k = bKeys_1[_a2];
+        if (!aKeys.includes(k)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    function isObject(thing) {
+      return thing !== null && typeof thing === "object";
+    }
+    function querystring(querystringParams) {
+      var params = [];
+      var _loop_1 = function(key2, value2) {
+        if (Array.isArray(value2)) {
+          value2.forEach(function(arrayVal) {
+            params.push(encodeURIComponent(key2) + "=" + encodeURIComponent(arrayVal));
+          });
+        } else {
+          params.push(encodeURIComponent(key2) + "=" + encodeURIComponent(value2));
+        }
+      };
+      for (var _i = 0, _a2 = Object.entries(querystringParams); _i < _a2.length; _i++) {
+        var _b = _a2[_i], key = _b[0], value = _b[1];
+        _loop_1(key, value);
+      }
+      return params.length ? "&" + params.join("&") : "";
+    }
+    function querystringDecode(querystring2) {
+      var obj = {};
+      var tokens = querystring2.replace(/^\?/, "").split("&");
+      tokens.forEach(function(token) {
+        if (token) {
+          var _a2 = token.split("="), key = _a2[0], value = _a2[1];
+          obj[decodeURIComponent(key)] = decodeURIComponent(value);
+        }
+      });
+      return obj;
+    }
+    function extractQuerystring(url) {
+      var queryStart = url.indexOf("?");
+      if (!queryStart) {
+        return "";
+      }
+      var fragmentStart = url.indexOf("#", queryStart);
+      return url.substring(queryStart, fragmentStart > 0 ? fragmentStart : void 0);
+    }
+    var Sha1 = function() {
+      function Sha12() {
+        this.chain_ = [];
+        this.buf_ = [];
+        this.W_ = [];
+        this.pad_ = [];
+        this.inbuf_ = 0;
+        this.total_ = 0;
+        this.blockSize = 512 / 8;
+        this.pad_[0] = 128;
+        for (var i = 1; i < this.blockSize; ++i) {
+          this.pad_[i] = 0;
+        }
+        this.reset();
+      }
+      Sha12.prototype.reset = function() {
+        this.chain_[0] = 1732584193;
+        this.chain_[1] = 4023233417;
+        this.chain_[2] = 2562383102;
+        this.chain_[3] = 271733878;
+        this.chain_[4] = 3285377520;
+        this.inbuf_ = 0;
+        this.total_ = 0;
+      };
+      Sha12.prototype.compress_ = function(buf, offset) {
+        if (!offset) {
+          offset = 0;
+        }
+        var W = this.W_;
+        if (typeof buf === "string") {
+          for (var i = 0; i < 16; i++) {
+            W[i] = buf.charCodeAt(offset) << 24 | buf.charCodeAt(offset + 1) << 16 | buf.charCodeAt(offset + 2) << 8 | buf.charCodeAt(offset + 3);
+            offset += 4;
+          }
+        } else {
+          for (var i = 0; i < 16; i++) {
+            W[i] = buf[offset] << 24 | buf[offset + 1] << 16 | buf[offset + 2] << 8 | buf[offset + 3];
+            offset += 4;
+          }
+        }
+        for (var i = 16; i < 80; i++) {
+          var t = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+          W[i] = (t << 1 | t >>> 31) & 4294967295;
+        }
+        var a = this.chain_[0];
+        var b = this.chain_[1];
+        var c = this.chain_[2];
+        var d = this.chain_[3];
+        var e = this.chain_[4];
+        var f, k;
+        for (var i = 0; i < 80; i++) {
+          if (i < 40) {
+            if (i < 20) {
+              f = d ^ b & (c ^ d);
+              k = 1518500249;
+            } else {
+              f = b ^ c ^ d;
+              k = 1859775393;
+            }
+          } else {
+            if (i < 60) {
+              f = b & c | d & (b | c);
+              k = 2400959708;
+            } else {
+              f = b ^ c ^ d;
+              k = 3395469782;
+            }
+          }
+          var t = (a << 5 | a >>> 27) + f + e + k + W[i] & 4294967295;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) & 4294967295;
+          b = a;
+          a = t;
+        }
+        this.chain_[0] = this.chain_[0] + a & 4294967295;
+        this.chain_[1] = this.chain_[1] + b & 4294967295;
+        this.chain_[2] = this.chain_[2] + c & 4294967295;
+        this.chain_[3] = this.chain_[3] + d & 4294967295;
+        this.chain_[4] = this.chain_[4] + e & 4294967295;
+      };
+      Sha12.prototype.update = function(bytes, length) {
+        if (bytes == null) {
+          return;
+        }
+        if (length === void 0) {
+          length = bytes.length;
+        }
+        var lengthMinusBlock = length - this.blockSize;
+        var n = 0;
+        var buf = this.buf_;
+        var inbuf = this.inbuf_;
+        while (n < length) {
+          if (inbuf === 0) {
+            while (n <= lengthMinusBlock) {
+              this.compress_(bytes, n);
+              n += this.blockSize;
+            }
+          }
+          if (typeof bytes === "string") {
+            while (n < length) {
+              buf[inbuf] = bytes.charCodeAt(n);
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          } else {
+            while (n < length) {
+              buf[inbuf] = bytes[n];
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          }
+        }
+        this.inbuf_ = inbuf;
+        this.total_ += length;
+      };
+      Sha12.prototype.digest = function() {
+        var digest = [];
+        var totalBits = this.total_ * 8;
+        if (this.inbuf_ < 56) {
+          this.update(this.pad_, 56 - this.inbuf_);
+        } else {
+          this.update(this.pad_, this.blockSize - (this.inbuf_ - 56));
+        }
+        for (var i = this.blockSize - 1; i >= 56; i--) {
+          this.buf_[i] = totalBits & 255;
+          totalBits /= 256;
+        }
+        this.compress_(this.buf_);
+        var n = 0;
+        for (var i = 0; i < 5; i++) {
+          for (var j = 24; j >= 0; j -= 8) {
+            digest[n] = this.chain_[i] >> j & 255;
+            ++n;
+          }
+        }
+        return digest;
+      };
+      return Sha12;
+    }();
+    function createSubscribe(executor, onNoObservers) {
+      var proxy = new ObserverProxy(executor, onNoObservers);
+      return proxy.subscribe.bind(proxy);
+    }
+    var ObserverProxy = function() {
+      function ObserverProxy2(executor, onNoObservers) {
+        var _this = this;
+        this.observers = [];
+        this.unsubscribes = [];
+        this.observerCount = 0;
+        this.task = Promise.resolve();
+        this.finalized = false;
+        this.onNoObservers = onNoObservers;
+        this.task.then(function() {
+          executor(_this);
+        }).catch(function(e) {
+          _this.error(e);
+        });
+      }
+      ObserverProxy2.prototype.next = function(value) {
+        this.forEachObserver(function(observer) {
+          observer.next(value);
+        });
+      };
+      ObserverProxy2.prototype.error = function(error2) {
+        this.forEachObserver(function(observer) {
+          observer.error(error2);
+        });
+        this.close(error2);
+      };
+      ObserverProxy2.prototype.complete = function() {
+        this.forEachObserver(function(observer) {
+          observer.complete();
+        });
+        this.close();
+      };
+      ObserverProxy2.prototype.subscribe = function(nextOrObserver, error2, complete) {
+        var _this = this;
+        var observer;
+        if (nextOrObserver === void 0 && error2 === void 0 && complete === void 0) {
+          throw new Error("Missing Observer.");
+        }
+        if (implementsAnyMethods(nextOrObserver, [
+          "next",
+          "error",
+          "complete"
+        ])) {
+          observer = nextOrObserver;
+        } else {
+          observer = {
+            next: nextOrObserver,
+            error: error2,
+            complete
+          };
+        }
+        if (observer.next === void 0) {
+          observer.next = noop2;
+        }
+        if (observer.error === void 0) {
+          observer.error = noop2;
+        }
+        if (observer.complete === void 0) {
+          observer.complete = noop2;
+        }
+        var unsub = this.unsubscribeOne.bind(this, this.observers.length);
+        if (this.finalized) {
+          this.task.then(function() {
+            try {
+              if (_this.finalError) {
+                observer.error(_this.finalError);
+              } else {
+                observer.complete();
+              }
+            } catch (e) {
+            }
+            return;
+          });
+        }
+        this.observers.push(observer);
+        return unsub;
+      };
+      ObserverProxy2.prototype.unsubscribeOne = function(i) {
+        if (this.observers === void 0 || this.observers[i] === void 0) {
+          return;
+        }
+        delete this.observers[i];
+        this.observerCount -= 1;
+        if (this.observerCount === 0 && this.onNoObservers !== void 0) {
+          this.onNoObservers(this);
+        }
+      };
+      ObserverProxy2.prototype.forEachObserver = function(fn) {
+        if (this.finalized) {
+          return;
+        }
+        for (var i = 0; i < this.observers.length; i++) {
+          this.sendOne(i, fn);
+        }
+      };
+      ObserverProxy2.prototype.sendOne = function(i, fn) {
+        var _this = this;
+        this.task.then(function() {
+          if (_this.observers !== void 0 && _this.observers[i] !== void 0) {
+            try {
+              fn(_this.observers[i]);
+            } catch (e) {
+              if (typeof console !== "undefined" && console.error) {
+                console.error(e);
+              }
+            }
+          }
+        });
+      };
+      ObserverProxy2.prototype.close = function(err) {
+        var _this = this;
+        if (this.finalized) {
+          return;
+        }
+        this.finalized = true;
+        if (err !== void 0) {
+          this.finalError = err;
+        }
+        this.task.then(function() {
+          _this.observers = void 0;
+          _this.onNoObservers = void 0;
+        });
+      };
+      return ObserverProxy2;
+    }();
+    function async(fn, onError) {
+      return function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        Promise.resolve(true).then(function() {
+          fn.apply(void 0, args);
+        }).catch(function(error2) {
+          if (onError) {
+            onError(error2);
+          }
+        });
+      };
+    }
+    function implementsAnyMethods(obj, methods) {
+      if (typeof obj !== "object" || obj === null) {
+        return false;
+      }
+      for (var _i = 0, methods_1 = methods; _i < methods_1.length; _i++) {
+        var method = methods_1[_i];
+        if (method in obj && typeof obj[method] === "function") {
+          return true;
+        }
+      }
+      return false;
+    }
+    function noop2() {
+    }
+    var validateArgCount = function(fnName, minCount, maxCount, argCount) {
+      var argError;
+      if (argCount < minCount) {
+        argError = "at least " + minCount;
+      } else if (argCount > maxCount) {
+        argError = maxCount === 0 ? "none" : "no more than " + maxCount;
+      }
+      if (argError) {
+        var error2 = fnName + " failed: Was called with " + argCount + (argCount === 1 ? " argument." : " arguments.") + " Expects " + argError + ".";
+        throw new Error(error2);
+      }
+    };
+    function errorPrefix(fnName, argName) {
+      return fnName + " failed: " + argName + " argument ";
+    }
+    function validateNamespace(fnName, namespace, optional) {
+      if (optional && !namespace) {
+        return;
+      }
+      if (typeof namespace !== "string") {
+        throw new Error(errorPrefix(fnName, "namespace") + "must be a valid firebase namespace.");
+      }
+    }
+    function validateCallback(fnName, argumentName, callback, optional) {
+      if (optional && !callback) {
+        return;
+      }
+      if (typeof callback !== "function") {
+        throw new Error(errorPrefix(fnName, argumentName) + "must be a valid function.");
+      }
+    }
+    function validateContextObject(fnName, argumentName, context, optional) {
+      if (optional && !context) {
+        return;
+      }
+      if (typeof context !== "object" || context === null) {
+        throw new Error(errorPrefix(fnName, argumentName) + "must be a valid context object.");
+      }
+    }
+    var stringToByteArray = function(str) {
+      var out = [];
+      var p2 = 0;
+      for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
+        if (c >= 55296 && c <= 56319) {
+          var high = c - 55296;
+          i++;
+          assert(i < str.length, "Surrogate pair missing trail surrogate.");
+          var low = str.charCodeAt(i) - 56320;
+          c = 65536 + (high << 10) + low;
+        }
+        if (c < 128) {
+          out[p2++] = c;
+        } else if (c < 2048) {
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
+        } else if (c < 65536) {
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        } else {
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        }
+      }
+      return out;
+    };
+    var stringLength = function(str) {
+      var p2 = 0;
+      for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
+        if (c < 128) {
+          p2++;
+        } else if (c < 2048) {
+          p2 += 2;
+        } else if (c >= 55296 && c <= 56319) {
+          p2 += 4;
+          i++;
+        } else {
+          p2 += 3;
+        }
+      }
+      return p2;
+    };
+    var DEFAULT_INTERVAL_MILLIS = 1e3;
+    var DEFAULT_BACKOFF_FACTOR = 2;
+    var MAX_VALUE_MILLIS = 4 * 60 * 60 * 1e3;
+    var RANDOM_FACTOR = 0.5;
+    function calculateBackoffMillis(backoffCount, intervalMillis, backoffFactor) {
+      if (intervalMillis === void 0) {
+        intervalMillis = DEFAULT_INTERVAL_MILLIS;
+      }
+      if (backoffFactor === void 0) {
+        backoffFactor = DEFAULT_BACKOFF_FACTOR;
+      }
+      var currBaseValue = intervalMillis * Math.pow(backoffFactor, backoffCount);
+      var randomWait = Math.round(RANDOM_FACTOR * currBaseValue * (Math.random() - 0.5) * 2);
+      return Math.min(MAX_VALUE_MILLIS, currBaseValue + randomWait);
+    }
+    function ordinal(i) {
+      if (!Number.isFinite(i)) {
+        return "" + i;
+      }
+      return i + indicator(i);
+    }
+    function indicator(i) {
+      i = Math.abs(i);
+      var cent = i % 100;
+      if (cent >= 10 && cent <= 20) {
+        return "th";
+      }
+      var dec = i % 10;
+      if (dec === 1) {
+        return "st";
+      }
+      if (dec === 2) {
+        return "nd";
+      }
+      if (dec === 3) {
+        return "rd";
+      }
+      return "th";
+    }
+    function getModularInstance(service) {
+      if (service && service._delegate) {
+        return service._delegate;
+      } else {
+        return service;
+      }
+    }
+    CONSTANTS.NODE_CLIENT = true;
+    exports2.CONSTANTS = CONSTANTS;
+    exports2.Deferred = Deferred;
+    exports2.ErrorFactory = ErrorFactory;
+    exports2.FirebaseError = FirebaseError;
+    exports2.MAX_VALUE_MILLIS = MAX_VALUE_MILLIS;
+    exports2.RANDOM_FACTOR = RANDOM_FACTOR;
+    exports2.Sha1 = Sha1;
+    exports2.areCookiesEnabled = areCookiesEnabled;
+    exports2.assert = assert;
+    exports2.assertionError = assertionError;
+    exports2.async = async;
+    exports2.base64 = base64;
+    exports2.base64Decode = base64Decode;
+    exports2.base64Encode = base64Encode;
+    exports2.base64urlEncodeWithoutPadding = base64urlEncodeWithoutPadding;
+    exports2.calculateBackoffMillis = calculateBackoffMillis;
+    exports2.contains = contains;
+    exports2.createMockUserToken = createMockUserToken;
+    exports2.createSubscribe = createSubscribe;
+    exports2.decode = decode;
+    exports2.deepCopy = deepCopy;
+    exports2.deepEqual = deepEqual;
+    exports2.deepExtend = deepExtend;
+    exports2.errorPrefix = errorPrefix;
+    exports2.extractQuerystring = extractQuerystring;
+    exports2.getGlobal = getGlobal;
+    exports2.getModularInstance = getModularInstance;
+    exports2.getUA = getUA;
+    exports2.isAdmin = isAdmin;
+    exports2.isBrowser = isBrowser;
+    exports2.isBrowserExtension = isBrowserExtension;
+    exports2.isElectron = isElectron;
+    exports2.isEmpty = isEmpty;
+    exports2.isIE = isIE;
+    exports2.isIndexedDBAvailable = isIndexedDBAvailable;
+    exports2.isMobileCordova = isMobileCordova;
+    exports2.isNode = isNode;
+    exports2.isNodeSdk = isNodeSdk;
+    exports2.isReactNative = isReactNative;
+    exports2.isSafari = isSafari;
+    exports2.isUWP = isUWP;
+    exports2.isValidFormat = isValidFormat;
+    exports2.isValidTimestamp = isValidTimestamp;
+    exports2.issuedAtTime = issuedAtTime;
+    exports2.jsonEval = jsonEval;
+    exports2.map = map;
+    exports2.ordinal = ordinal;
+    exports2.querystring = querystring;
+    exports2.querystringDecode = querystringDecode;
+    exports2.safeGet = safeGet;
+    exports2.stringLength = stringLength;
+    exports2.stringToByteArray = stringToByteArray;
+    exports2.stringify = stringify;
+    exports2.validateArgCount = validateArgCount;
+    exports2.validateCallback = validateCallback;
+    exports2.validateContextObject = validateContextObject;
+    exports2.validateIndexedDBOpenable = validateIndexedDBOpenable;
+    exports2.validateNamespace = validateNamespace;
+  }
+});
+
+// node_modules/@firebase/component/dist/index.cjs.js
+var require_index_cjs = __commonJS({
+  "node_modules/@firebase/component/dist/index.cjs.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    var tslib = require_tslib();
+    var util = require_index_node_cjs();
+    var Component = function() {
+      function Component2(name, instanceFactory, type) {
+        this.name = name;
+        this.instanceFactory = instanceFactory;
+        this.type = type;
+        this.multipleInstances = false;
+        this.serviceProps = {};
+        this.instantiationMode = "LAZY";
+        this.onInstanceCreated = null;
+      }
+      Component2.prototype.setInstantiationMode = function(mode) {
+        this.instantiationMode = mode;
+        return this;
+      };
+      Component2.prototype.setMultipleInstances = function(multipleInstances) {
+        this.multipleInstances = multipleInstances;
+        return this;
+      };
+      Component2.prototype.setServiceProps = function(props) {
+        this.serviceProps = props;
+        return this;
+      };
+      Component2.prototype.setInstanceCreatedCallback = function(callback) {
+        this.onInstanceCreated = callback;
+        return this;
+      };
+      return Component2;
+    }();
+    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
+    var Provider = function() {
+      function Provider2(name, container) {
+        this.name = name;
+        this.container = container;
+        this.component = null;
+        this.instances = new Map();
+        this.instancesDeferred = new Map();
+        this.instancesOptions = new Map();
+        this.onInitCallbacks = new Map();
+      }
+      Provider2.prototype.get = function(identifier) {
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
+        if (!this.instancesDeferred.has(normalizedIdentifier)) {
+          var deferred = new util.Deferred();
+          this.instancesDeferred.set(normalizedIdentifier, deferred);
+          if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
+            try {
+              var instance = this.getOrInitializeService({
+                instanceIdentifier: normalizedIdentifier
+              });
+              if (instance) {
+                deferred.resolve(instance);
+              }
+            } catch (e) {
+            }
+          }
+        }
+        return this.instancesDeferred.get(normalizedIdentifier).promise;
+      };
+      Provider2.prototype.getImmediate = function(options2) {
+        var _a2;
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(options2 === null || options2 === void 0 ? void 0 : options2.identifier);
+        var optional = (_a2 = options2 === null || options2 === void 0 ? void 0 : options2.optional) !== null && _a2 !== void 0 ? _a2 : false;
+        if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
+          try {
+            return this.getOrInitializeService({
+              instanceIdentifier: normalizedIdentifier
+            });
+          } catch (e) {
+            if (optional) {
+              return null;
+            } else {
+              throw e;
+            }
+          }
+        } else {
+          if (optional) {
+            return null;
+          } else {
+            throw Error("Service " + this.name + " is not available");
+          }
+        }
+      };
+      Provider2.prototype.getComponent = function() {
+        return this.component;
+      };
+      Provider2.prototype.setComponent = function(component) {
+        var e_1, _a2;
+        if (component.name !== this.name) {
+          throw Error("Mismatching Component " + component.name + " for Provider " + this.name + ".");
+        }
+        if (this.component) {
+          throw Error("Component for " + this.name + " has already been provided");
+        }
+        this.component = component;
+        if (!this.shouldAutoInitialize()) {
+          return;
+        }
+        if (isComponentEager(component)) {
+          try {
+            this.getOrInitializeService({instanceIdentifier: DEFAULT_ENTRY_NAME});
+          } catch (e) {
+          }
+        }
+        try {
+          for (var _b = tslib.__values(this.instancesDeferred.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var _d = tslib.__read(_c.value, 2), instanceIdentifier = _d[0], instanceDeferred = _d[1];
+            var normalizedIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
+            try {
+              var instance = this.getOrInitializeService({
+                instanceIdentifier: normalizedIdentifier
+              });
+              instanceDeferred.resolve(instance);
+            } catch (e) {
+            }
+          }
+        } catch (e_1_1) {
+          e_1 = {error: e_1_1};
+        } finally {
+          try {
+            if (_c && !_c.done && (_a2 = _b.return))
+              _a2.call(_b);
+          } finally {
+            if (e_1)
+              throw e_1.error;
+          }
+        }
+      };
+      Provider2.prototype.clearInstance = function(identifier) {
+        if (identifier === void 0) {
+          identifier = DEFAULT_ENTRY_NAME;
+        }
+        this.instancesDeferred.delete(identifier);
+        this.instancesOptions.delete(identifier);
+        this.instances.delete(identifier);
+      };
+      Provider2.prototype.delete = function() {
+        return tslib.__awaiter(this, void 0, void 0, function() {
+          var services;
+          return tslib.__generator(this, function(_a2) {
+            switch (_a2.label) {
+              case 0:
+                services = Array.from(this.instances.values());
+                return [4, Promise.all(tslib.__spreadArray(tslib.__spreadArray([], tslib.__read(services.filter(function(service) {
+                  return "INTERNAL" in service;
+                }).map(function(service) {
+                  return service.INTERNAL.delete();
+                }))), tslib.__read(services.filter(function(service) {
+                  return "_delete" in service;
+                }).map(function(service) {
+                  return service._delete();
+                }))))];
+              case 1:
+                _a2.sent();
+                return [2];
+            }
+          });
+        });
+      };
+      Provider2.prototype.isComponentSet = function() {
+        return this.component != null;
+      };
+      Provider2.prototype.isInitialized = function(identifier) {
+        if (identifier === void 0) {
+          identifier = DEFAULT_ENTRY_NAME;
+        }
+        return this.instances.has(identifier);
+      };
+      Provider2.prototype.getOptions = function(identifier) {
+        if (identifier === void 0) {
+          identifier = DEFAULT_ENTRY_NAME;
+        }
+        return this.instancesOptions.get(identifier) || {};
+      };
+      Provider2.prototype.initialize = function(opts) {
+        var e_2, _a2;
+        if (opts === void 0) {
+          opts = {};
+        }
+        var _b = opts.options, options2 = _b === void 0 ? {} : _b;
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(opts.instanceIdentifier);
+        if (this.isInitialized(normalizedIdentifier)) {
+          throw Error(this.name + "(" + normalizedIdentifier + ") has already been initialized");
+        }
+        if (!this.isComponentSet()) {
+          throw Error("Component " + this.name + " has not been registered yet");
+        }
+        var instance = this.getOrInitializeService({
+          instanceIdentifier: normalizedIdentifier,
+          options: options2
+        });
+        try {
+          for (var _c = tslib.__values(this.instancesDeferred.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
+            var _e = tslib.__read(_d.value, 2), instanceIdentifier = _e[0], instanceDeferred = _e[1];
+            var normalizedDeferredIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
+            if (normalizedIdentifier === normalizedDeferredIdentifier) {
+              instanceDeferred.resolve(instance);
+            }
+          }
+        } catch (e_2_1) {
+          e_2 = {error: e_2_1};
+        } finally {
+          try {
+            if (_d && !_d.done && (_a2 = _c.return))
+              _a2.call(_c);
+          } finally {
+            if (e_2)
+              throw e_2.error;
+          }
+        }
+        return instance;
+      };
+      Provider2.prototype.onInit = function(callback, identifier) {
+        var _a2;
+        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
+        var existingCallbacks = (_a2 = this.onInitCallbacks.get(normalizedIdentifier)) !== null && _a2 !== void 0 ? _a2 : new Set();
+        existingCallbacks.add(callback);
+        this.onInitCallbacks.set(normalizedIdentifier, existingCallbacks);
+        var existingInstance = this.instances.get(normalizedIdentifier);
+        if (existingInstance) {
+          callback(existingInstance, normalizedIdentifier);
+        }
+        return function() {
+          existingCallbacks.delete(callback);
+        };
+      };
+      Provider2.prototype.invokeOnInitCallbacks = function(instance, identifier) {
+        var e_3, _a2;
+        var callbacks = this.onInitCallbacks.get(identifier);
+        if (!callbacks) {
+          return;
+        }
+        try {
+          for (var callbacks_1 = tslib.__values(callbacks), callbacks_1_1 = callbacks_1.next(); !callbacks_1_1.done; callbacks_1_1 = callbacks_1.next()) {
+            var callback = callbacks_1_1.value;
+            try {
+              callback(instance, identifier);
+            } catch (_b) {
+            }
+          }
+        } catch (e_3_1) {
+          e_3 = {error: e_3_1};
+        } finally {
+          try {
+            if (callbacks_1_1 && !callbacks_1_1.done && (_a2 = callbacks_1.return))
+              _a2.call(callbacks_1);
+          } finally {
+            if (e_3)
+              throw e_3.error;
+          }
+        }
+      };
+      Provider2.prototype.getOrInitializeService = function(_a2) {
+        var instanceIdentifier = _a2.instanceIdentifier, _b = _a2.options, options2 = _b === void 0 ? {} : _b;
+        var instance = this.instances.get(instanceIdentifier);
+        if (!instance && this.component) {
+          instance = this.component.instanceFactory(this.container, {
+            instanceIdentifier: normalizeIdentifierForFactory(instanceIdentifier),
+            options: options2
+          });
+          this.instances.set(instanceIdentifier, instance);
+          this.instancesOptions.set(instanceIdentifier, options2);
+          this.invokeOnInitCallbacks(instance, instanceIdentifier);
+          if (this.component.onInstanceCreated) {
+            try {
+              this.component.onInstanceCreated(this.container, instanceIdentifier, instance);
+            } catch (_c) {
+            }
+          }
+        }
+        return instance || null;
+      };
+      Provider2.prototype.normalizeInstanceIdentifier = function(identifier) {
+        if (identifier === void 0) {
+          identifier = DEFAULT_ENTRY_NAME;
+        }
+        if (this.component) {
+          return this.component.multipleInstances ? identifier : DEFAULT_ENTRY_NAME;
+        } else {
+          return identifier;
+        }
+      };
+      Provider2.prototype.shouldAutoInitialize = function() {
+        return !!this.component && this.component.instantiationMode !== "EXPLICIT";
+      };
+      return Provider2;
+    }();
+    function normalizeIdentifierForFactory(identifier) {
+      return identifier === DEFAULT_ENTRY_NAME ? void 0 : identifier;
+    }
+    function isComponentEager(component) {
+      return component.instantiationMode === "EAGER";
+    }
+    var ComponentContainer = function() {
+      function ComponentContainer2(name) {
+        this.name = name;
+        this.providers = new Map();
+      }
+      ComponentContainer2.prototype.addComponent = function(component) {
+        var provider = this.getProvider(component.name);
+        if (provider.isComponentSet()) {
+          throw new Error("Component " + component.name + " has already been registered with " + this.name);
+        }
+        provider.setComponent(component);
+      };
+      ComponentContainer2.prototype.addOrOverwriteComponent = function(component) {
+        var provider = this.getProvider(component.name);
+        if (provider.isComponentSet()) {
+          this.providers.delete(component.name);
+        }
+        this.addComponent(component);
+      };
+      ComponentContainer2.prototype.getProvider = function(name) {
+        if (this.providers.has(name)) {
+          return this.providers.get(name);
+        }
+        var provider = new Provider(name, this);
+        this.providers.set(name, provider);
+        return provider;
+      };
+      ComponentContainer2.prototype.getProviders = function() {
+        return Array.from(this.providers.values());
+      };
+      return ComponentContainer2;
+    }();
+    exports2.Component = Component;
+    exports2.ComponentContainer = ComponentContainer;
+    exports2.Provider = Provider;
+  }
+});
+
+// node_modules/@firebase/logger/dist/index.cjs.js
+var require_index_cjs2 = __commonJS({
+  "node_modules/@firebase/logger/dist/index.cjs.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    var tslib = require_tslib();
+    var _a2;
+    var instances = [];
+    exports2.LogLevel = void 0;
+    (function(LogLevel) {
+      LogLevel[LogLevel["DEBUG"] = 0] = "DEBUG";
+      LogLevel[LogLevel["VERBOSE"] = 1] = "VERBOSE";
+      LogLevel[LogLevel["INFO"] = 2] = "INFO";
+      LogLevel[LogLevel["WARN"] = 3] = "WARN";
+      LogLevel[LogLevel["ERROR"] = 4] = "ERROR";
+      LogLevel[LogLevel["SILENT"] = 5] = "SILENT";
+    })(exports2.LogLevel || (exports2.LogLevel = {}));
+    var levelStringToEnum = {
+      "debug": exports2.LogLevel.DEBUG,
+      "verbose": exports2.LogLevel.VERBOSE,
+      "info": exports2.LogLevel.INFO,
+      "warn": exports2.LogLevel.WARN,
+      "error": exports2.LogLevel.ERROR,
+      "silent": exports2.LogLevel.SILENT
+    };
+    var defaultLogLevel = exports2.LogLevel.INFO;
+    var ConsoleMethod = (_a2 = {}, _a2[exports2.LogLevel.DEBUG] = "log", _a2[exports2.LogLevel.VERBOSE] = "log", _a2[exports2.LogLevel.INFO] = "info", _a2[exports2.LogLevel.WARN] = "warn", _a2[exports2.LogLevel.ERROR] = "error", _a2);
+    var defaultLogHandler = function(instance, logType) {
+      var args = [];
+      for (var _i = 2; _i < arguments.length; _i++) {
+        args[_i - 2] = arguments[_i];
+      }
+      if (logType < instance.logLevel) {
+        return;
+      }
+      var now = new Date().toISOString();
+      var method = ConsoleMethod[logType];
+      if (method) {
+        console[method].apply(console, tslib.__spreadArray(["[" + now + "]  " + instance.name + ":"], args));
+      } else {
+        throw new Error("Attempted to log a message with an invalid logType (value: " + logType + ")");
+      }
+    };
+    var Logger = function() {
+      function Logger2(name) {
+        this.name = name;
+        this._logLevel = defaultLogLevel;
+        this._logHandler = defaultLogHandler;
+        this._userLogHandler = null;
+        instances.push(this);
+      }
+      Object.defineProperty(Logger2.prototype, "logLevel", {
+        get: function() {
+          return this._logLevel;
+        },
+        set: function(val) {
+          if (!(val in exports2.LogLevel)) {
+            throw new TypeError('Invalid value "' + val + '" assigned to `logLevel`');
+          }
+          this._logLevel = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Logger2.prototype.setLogLevel = function(val) {
+        this._logLevel = typeof val === "string" ? levelStringToEnum[val] : val;
+      };
+      Object.defineProperty(Logger2.prototype, "logHandler", {
+        get: function() {
+          return this._logHandler;
+        },
+        set: function(val) {
+          if (typeof val !== "function") {
+            throw new TypeError("Value assigned to `logHandler` must be a function");
+          }
+          this._logHandler = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(Logger2.prototype, "userLogHandler", {
+        get: function() {
+          return this._userLogHandler;
+        },
+        set: function(val) {
+          this._userLogHandler = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Logger2.prototype.debug = function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        this._userLogHandler && this._userLogHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.DEBUG], args));
+        this._logHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.DEBUG], args));
+      };
+      Logger2.prototype.log = function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        this._userLogHandler && this._userLogHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.VERBOSE], args));
+        this._logHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.VERBOSE], args));
+      };
+      Logger2.prototype.info = function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        this._userLogHandler && this._userLogHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.INFO], args));
+        this._logHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.INFO], args));
+      };
+      Logger2.prototype.warn = function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        this._userLogHandler && this._userLogHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.WARN], args));
+        this._logHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.WARN], args));
+      };
+      Logger2.prototype.error = function() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        this._userLogHandler && this._userLogHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.ERROR], args));
+        this._logHandler.apply(this, tslib.__spreadArray([this, exports2.LogLevel.ERROR], args));
+      };
+      return Logger2;
+    }();
+    function setLogLevel(level) {
+      instances.forEach(function(inst) {
+        inst.setLogLevel(level);
+      });
+    }
+    function setUserLogHandler(logCallback, options2) {
+      var _loop_1 = function(instance2) {
+        var customLogLevel = null;
+        if (options2 && options2.level) {
+          customLogLevel = levelStringToEnum[options2.level];
+        }
+        if (logCallback === null) {
+          instance2.userLogHandler = null;
+        } else {
+          instance2.userLogHandler = function(instance3, level) {
+            var args = [];
+            for (var _i2 = 2; _i2 < arguments.length; _i2++) {
+              args[_i2 - 2] = arguments[_i2];
+            }
+            var message = args.map(function(arg) {
+              if (arg == null) {
+                return null;
+              } else if (typeof arg === "string") {
+                return arg;
+              } else if (typeof arg === "number" || typeof arg === "boolean") {
+                return arg.toString();
+              } else if (arg instanceof Error) {
+                return arg.message;
+              } else {
+                try {
+                  return JSON.stringify(arg);
+                } catch (ignored) {
+                  return null;
+                }
+              }
+            }).filter(function(arg) {
+              return arg;
+            }).join(" ");
+            if (level >= (customLogLevel !== null && customLogLevel !== void 0 ? customLogLevel : instance3.logLevel)) {
+              logCallback({
+                level: exports2.LogLevel[level].toLowerCase(),
+                message,
+                args,
+                type: instance3.name
+              });
+            }
+          };
+        }
+      };
+      for (var _i = 0, instances_1 = instances; _i < instances_1.length; _i++) {
+        var instance = instances_1[_i];
+        _loop_1(instance);
+      }
+    }
+    exports2.Logger = Logger;
+    exports2.setLogLevel = setLogLevel;
+    exports2.setUserLogHandler = setUserLogHandler;
+  }
+});
+
+// node_modules/@firebase/app/dist/index.cjs.js
+var require_index_cjs3 = __commonJS({
+  "node_modules/@firebase/app/dist/index.cjs.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
+    var component = require_index_cjs();
+    var tslib = require_tslib();
+    var logger$1 = require_index_cjs2();
+    var util = require_index_node_cjs();
+    var PlatformLoggerServiceImpl = function() {
+      function PlatformLoggerServiceImpl2(container) {
+        this.container = container;
+      }
+      PlatformLoggerServiceImpl2.prototype.getPlatformInfoString = function() {
+        var providers = this.container.getProviders();
+        return providers.map(function(provider) {
+          if (isVersionServiceProvider(provider)) {
+            var service = provider.getImmediate();
+            return service.library + "/" + service.version;
+          } else {
+            return null;
+          }
+        }).filter(function(logString) {
+          return logString;
+        }).join(" ");
+      };
+      return PlatformLoggerServiceImpl2;
+    }();
+    function isVersionServiceProvider(provider) {
+      var component2 = provider.getComponent();
+      return (component2 === null || component2 === void 0 ? void 0 : component2.type) === "VERSION";
+    }
+    var name$o = "@firebase/app";
+    var version$1 = "0.7.1";
+    var logger = new logger$1.Logger("@firebase/app");
+    var name$n = "@firebase/app-compat";
+    var name$m = "@firebase/analytics-compat";
+    var name$l = "@firebase/analytics";
+    var name$k = "@firebase/app-check-compat";
+    var name$j = "@firebase/app-check";
+    var name$i = "@firebase/auth";
+    var name$h = "@firebase/auth-compat";
+    var name$g = "@firebase/database";
+    var name$f = "@firebase/database-compat";
+    var name$e = "@firebase/functions";
+    var name$d = "@firebase/functions-compat";
+    var name$c = "@firebase/installations";
+    var name$b = "@firebase/installations-compat";
+    var name$a = "@firebase/messaging";
+    var name$9 = "@firebase/messaging-compat";
+    var name$8 = "@firebase/performance";
+    var name$7 = "@firebase/performance-compat";
+    var name$6 = "@firebase/remote-config";
+    var name$5 = "@firebase/remote-config-compat";
+    var name$4 = "@firebase/storage";
+    var name$3 = "@firebase/storage-compat";
+    var name$2 = "@firebase/firestore";
+    var name$1 = "@firebase/firestore-compat";
+    var name = "firebase";
+    var version = "9.1.0";
+    var _a$1;
+    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
+    var PLATFORM_LOG_STRING = (_a$1 = {}, _a$1[name$o] = "fire-core", _a$1[name$n] = "fire-core-compat", _a$1[name$l] = "fire-analytics", _a$1[name$m] = "fire-analytics-compat", _a$1[name$j] = "fire-app-check", _a$1[name$k] = "fire-app-check-compat", _a$1[name$i] = "fire-auth", _a$1[name$h] = "fire-auth-compat", _a$1[name$g] = "fire-rtdb", _a$1[name$f] = "fire-rtdb-compat", _a$1[name$e] = "fire-fn", _a$1[name$d] = "fire-fn-compat", _a$1[name$c] = "fire-iid", _a$1[name$b] = "fire-iid-compat", _a$1[name$a] = "fire-fcm", _a$1[name$9] = "fire-fcm-compat", _a$1[name$8] = "fire-perf", _a$1[name$7] = "fire-perf-compat", _a$1[name$6] = "fire-rc", _a$1[name$5] = "fire-rc-compat", _a$1[name$4] = "fire-gcs", _a$1[name$3] = "fire-gcs-compat", _a$1[name$2] = "fire-fst", _a$1[name$1] = "fire-fst-compat", _a$1["fire-js"] = "fire-js", _a$1[name] = "fire-js-all", _a$1);
+    var _apps = new Map();
+    var _components = new Map();
+    function _addComponent(app, component2) {
+      try {
+        app.container.addComponent(component2);
+      } catch (e) {
+        logger.debug("Component " + component2.name + " failed to register with FirebaseApp " + app.name, e);
+      }
+    }
+    function _addOrOverwriteComponent(app, component2) {
+      app.container.addOrOverwriteComponent(component2);
+    }
+    function _registerComponent(component2) {
+      var e_1, _a3;
+      var componentName = component2.name;
+      if (_components.has(componentName)) {
+        logger.debug("There were multiple attempts to register component " + componentName + ".");
+        return false;
+      }
+      _components.set(componentName, component2);
+      try {
+        for (var _b = tslib.__values(_apps.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
+          var app = _c.value;
+          _addComponent(app, component2);
+        }
+      } catch (e_1_1) {
+        e_1 = {error: e_1_1};
+      } finally {
+        try {
+          if (_c && !_c.done && (_a3 = _b.return))
+            _a3.call(_b);
+        } finally {
+          if (e_1)
+            throw e_1.error;
+        }
+      }
+      return true;
+    }
+    function _getProvider(app, name2) {
+      return app.container.getProvider(name2);
+    }
+    function _removeServiceInstance(app, name2, instanceIdentifier) {
+      if (instanceIdentifier === void 0) {
+        instanceIdentifier = DEFAULT_ENTRY_NAME;
+      }
+      _getProvider(app, name2).clearInstance(instanceIdentifier);
+    }
+    function _clearComponents() {
+      _components.clear();
+    }
+    var _a2;
+    var ERRORS = (_a2 = {}, _a2["no-app"] = "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()", _a2["bad-app-name"] = "Illegal App name: '{$appName}", _a2["duplicate-app"] = "Firebase App named '{$appName}' already exists with different options or config", _a2["app-deleted"] = "Firebase App named '{$appName}' already deleted", _a2["invalid-app-argument"] = "firebase.{$appName}() takes either no argument or a Firebase App instance.", _a2["invalid-log-argument"] = "First argument to `onLog` must be null or a function.", _a2);
+    var ERROR_FACTORY = new util.ErrorFactory("app", "Firebase", ERRORS);
+    var FirebaseAppImpl = function() {
+      function FirebaseAppImpl2(options2, config, container) {
+        var _this = this;
+        this._isDeleted = false;
+        this._options = tslib.__assign({}, options2);
+        this._config = tslib.__assign({}, config);
+        this._name = config.name;
+        this._automaticDataCollectionEnabled = config.automaticDataCollectionEnabled;
+        this._container = container;
+        this.container.addComponent(new component.Component("app", function() {
+          return _this;
+        }, "PUBLIC"));
+      }
+      Object.defineProperty(FirebaseAppImpl2.prototype, "automaticDataCollectionEnabled", {
+        get: function() {
+          this.checkDestroyed();
+          return this._automaticDataCollectionEnabled;
+        },
+        set: function(val) {
+          this.checkDestroyed();
+          this._automaticDataCollectionEnabled = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "name", {
+        get: function() {
+          this.checkDestroyed();
+          return this._name;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "options", {
+        get: function() {
+          this.checkDestroyed();
+          return this._options;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "config", {
+        get: function() {
+          this.checkDestroyed();
+          return this._config;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "container", {
+        get: function() {
+          return this._container;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(FirebaseAppImpl2.prototype, "isDeleted", {
+        get: function() {
+          return this._isDeleted;
+        },
+        set: function(val) {
+          this._isDeleted = val;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      FirebaseAppImpl2.prototype.checkDestroyed = function() {
+        if (this.isDeleted) {
+          throw ERROR_FACTORY.create("app-deleted", {appName: this._name});
+        }
+      };
+      return FirebaseAppImpl2;
+    }();
+    var SDK_VERSION = version;
+    function initializeApp2(options2, rawConfig) {
+      var e_1, _a3;
+      if (rawConfig === void 0) {
+        rawConfig = {};
+      }
+      if (typeof rawConfig !== "object") {
+        var name_1 = rawConfig;
+        rawConfig = {name: name_1};
+      }
+      var config = tslib.__assign({name: DEFAULT_ENTRY_NAME, automaticDataCollectionEnabled: false}, rawConfig);
+      var name2 = config.name;
+      if (typeof name2 !== "string" || !name2) {
+        throw ERROR_FACTORY.create("bad-app-name", {
+          appName: String(name2)
+        });
+      }
+      var existingApp = _apps.get(name2);
+      if (existingApp) {
+        if (util.deepEqual(options2, existingApp.options) && util.deepEqual(config, existingApp.config)) {
+          return existingApp;
+        } else {
+          throw ERROR_FACTORY.create("duplicate-app", {appName: name2});
+        }
+      }
+      var container = new component.ComponentContainer(name2);
+      try {
+        for (var _b = tslib.__values(_components.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
+          var component$1 = _c.value;
+          container.addComponent(component$1);
+        }
+      } catch (e_1_1) {
+        e_1 = {error: e_1_1};
+      } finally {
+        try {
+          if (_c && !_c.done && (_a3 = _b.return))
+            _a3.call(_b);
+        } finally {
+          if (e_1)
+            throw e_1.error;
+        }
+      }
+      var newApp = new FirebaseAppImpl(options2, config, container);
+      _apps.set(name2, newApp);
+      return newApp;
+    }
+    function getApp2(name2) {
+      if (name2 === void 0) {
+        name2 = DEFAULT_ENTRY_NAME;
+      }
+      var app = _apps.get(name2);
+      if (!app) {
+        throw ERROR_FACTORY.create("no-app", {appName: name2});
+      }
+      return app;
+    }
+    function getApps2() {
+      return Array.from(_apps.values());
+    }
+    function deleteApp(app) {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        var name2;
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
+            case 0:
+              name2 = app.name;
+              if (!_apps.has(name2))
+                return [3, 2];
+              _apps.delete(name2);
+              return [4, Promise.all(app.container.getProviders().map(function(provider) {
+                return provider.delete();
+              }))];
+            case 1:
+              _a3.sent();
+              app.isDeleted = true;
+              _a3.label = 2;
+            case 2:
+              return [2];
+          }
+        });
+      });
+    }
+    function registerVersion(libraryKeyOrName, version2, variant) {
+      var _a3;
+      var library = (_a3 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a3 !== void 0 ? _a3 : libraryKeyOrName;
+      if (variant) {
+        library += "-" + variant;
+      }
+      var libraryMismatch = library.match(/\s|\//);
+      var versionMismatch = version2.match(/\s|\//);
+      if (libraryMismatch || versionMismatch) {
+        var warning = [
+          'Unable to register library "' + library + '" with version "' + version2 + '":'
+        ];
+        if (libraryMismatch) {
+          warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
+        }
+        if (libraryMismatch && versionMismatch) {
+          warning.push("and");
+        }
+        if (versionMismatch) {
+          warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
+        }
+        logger.warn(warning.join(" "));
+        return;
+      }
+      _registerComponent(new component.Component(library + "-version", function() {
+        return {library, version: version2};
+      }, "VERSION"));
+    }
+    function onLog(logCallback, options2) {
+      if (logCallback !== null && typeof logCallback !== "function") {
+        throw ERROR_FACTORY.create("invalid-log-argument");
+      }
+      logger$1.setUserLogHandler(logCallback, options2);
+    }
+    function setLogLevel(logLevel) {
+      logger$1.setLogLevel(logLevel);
+    }
+    function registerCoreComponents(variant) {
+      _registerComponent(new component.Component("platform-logger", function(container) {
+        return new PlatformLoggerServiceImpl(container);
+      }, "PRIVATE"));
+      registerVersion(name$o, version$1, variant);
+      registerVersion("fire-js", "");
+    }
+    registerCoreComponents();
+    Object.defineProperty(exports2, "FirebaseError", {
+      enumerable: true,
+      get: function() {
+        return util.FirebaseError;
+      }
+    });
+    exports2.SDK_VERSION = SDK_VERSION;
+    exports2._DEFAULT_ENTRY_NAME = DEFAULT_ENTRY_NAME;
+    exports2._addComponent = _addComponent;
+    exports2._addOrOverwriteComponent = _addOrOverwriteComponent;
+    exports2._apps = _apps;
+    exports2._clearComponents = _clearComponents;
+    exports2._components = _components;
+    exports2._getProvider = _getProvider;
+    exports2._registerComponent = _registerComponent;
+    exports2._removeServiceInstance = _removeServiceInstance;
+    exports2.deleteApp = deleteApp;
+    exports2.getApp = getApp2;
+    exports2.getApps = getApps2;
+    exports2.initializeApp = initializeApp2;
+    exports2.onLog = onLog;
+    exports2.registerVersion = registerVersion;
+    exports2.setLogLevel = setLogLevel;
+  }
+});
+
 // node_modules/node-fetch/lib/index.js
 var require_lib = __commonJS({
   "node_modules/node-fetch/lib/index.js"(exports2, module2) {
@@ -72,7 +2444,7 @@ var require_lib = __commonJS({
     var Url = _interopDefault(require("url"));
     var https2 = _interopDefault(require("https"));
     var zlib2 = _interopDefault(require("zlib"));
-    var Readable2 = Stream2.Readable;
+    var Readable = Stream2.Readable;
     var BUFFER = Symbol("buffer");
     var TYPE = Symbol("type");
     var Blob2 = class {
@@ -124,7 +2496,7 @@ var require_lib = __commonJS({
         return Promise.resolve(ab);
       }
       stream() {
-        const readable = new Readable2();
+        const readable = new Readable();
         readable._read = function() {
         };
         readable.push(this[BUFFER]);
@@ -223,8 +2595,8 @@ var require_lib = __commonJS({
       this.timeout = timeout;
       if (body instanceof Stream2) {
         body.on("error", function(err) {
-          const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-          _this[INTERNALS2].error = error3;
+          const error2 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+          _this[INTERNALS2].error = error2;
         });
       }
     }
@@ -442,7 +2814,7 @@ var require_lib = __commonJS({
         return "text/plain;charset=UTF-8";
       }
     }
-    function getTotalBytes2(instance) {
+    function getTotalBytes(instance) {
       const body = instance.body;
       if (body === null) {
         return 0;
@@ -459,7 +2831,7 @@ var require_lib = __commonJS({
         return null;
       }
     }
-    function writeToStream2(dest, instance) {
+    function writeToStream(dest, instance) {
       const body = instance.body;
       if (body === null) {
         dest.end();
@@ -499,10 +2871,10 @@ var require_lib = __commonJS({
     var MAP = Symbol("map");
     var Headers2 = class {
       constructor() {
-        let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
+        let init = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
         this[MAP] = Object.create(null);
-        if (init2 instanceof Headers2) {
-          const rawHeaders = init2.raw();
+        if (init instanceof Headers2) {
+          const rawHeaders = init.raw();
           const headerNames = Object.keys(rawHeaders);
           for (const headerName of headerNames) {
             for (const value of rawHeaders[headerName]) {
@@ -511,16 +2883,16 @@ var require_lib = __commonJS({
           }
           return;
         }
-        if (init2 == null)
+        if (init == null)
           ;
-        else if (typeof init2 === "object") {
-          const method = init2[Symbol.iterator];
+        else if (typeof init === "object") {
+          const method = init[Symbol.iterator];
           if (method != null) {
             if (typeof method !== "function") {
               throw new TypeError("Header pairs must be iterable");
             }
             const pairs = [];
-            for (const pair of init2) {
+            for (const pair of init) {
               if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") {
                 throw new TypeError("Each header pair must be iterable");
               }
@@ -533,8 +2905,8 @@ var require_lib = __commonJS({
               this.append(pair[0], pair[1]);
             }
           } else {
-            for (const key of Object.keys(init2)) {
-              const value = init2[key];
+            for (const key of Object.keys(init)) {
+              const value = init[key];
               this.append(key, value);
             }
           }
@@ -786,9 +3158,9 @@ var require_lib = __commonJS({
       const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
       return !!(proto && proto.constructor.name === "AbortSignal");
     }
-    var Request2 = class {
+    var Request3 = class {
       constructor(input) {
-        let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        let init = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         let parsedURL;
         if (!isRequest2(input)) {
           if (input && input.href) {
@@ -800,17 +3172,17 @@ var require_lib = __commonJS({
         } else {
           parsedURL = parse_url(input.url);
         }
-        let method = init2.method || input.method || "GET";
+        let method = init.method || input.method || "GET";
         method = method.toUpperCase();
-        if ((init2.body != null || isRequest2(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
+        if ((init.body != null || isRequest2(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
           throw new TypeError("Request with GET/HEAD method cannot have body");
         }
-        let inputBody = init2.body != null ? init2.body : isRequest2(input) && input.body !== null ? clone2(input) : null;
+        let inputBody = init.body != null ? init.body : isRequest2(input) && input.body !== null ? clone2(input) : null;
         Body2.call(this, inputBody, {
-          timeout: init2.timeout || input.timeout || 0,
-          size: init2.size || input.size || 0
+          timeout: init.timeout || input.timeout || 0,
+          size: init.size || input.size || 0
         });
-        const headers = new Headers2(init2.headers || input.headers || {});
+        const headers = new Headers2(init.headers || input.headers || {});
         if (inputBody != null && !headers.has("Content-Type")) {
           const contentType = extractContentType2(inputBody);
           if (contentType) {
@@ -818,22 +3190,22 @@ var require_lib = __commonJS({
           }
         }
         let signal = isRequest2(input) ? input.signal : null;
-        if ("signal" in init2)
-          signal = init2.signal;
+        if ("signal" in init)
+          signal = init.signal;
         if (signal != null && !isAbortSignal2(signal)) {
           throw new TypeError("Expected signal to be an instanceof AbortSignal");
         }
         this[INTERNALS$22] = {
           method,
-          redirect: init2.redirect || input.redirect || "follow",
+          redirect: init.redirect || input.redirect || "follow",
           headers,
           parsedURL,
           signal
         };
-        this.follow = init2.follow !== void 0 ? init2.follow : input.follow !== void 0 ? input.follow : 20;
-        this.compress = init2.compress !== void 0 ? init2.compress : input.compress !== void 0 ? input.compress : true;
-        this.counter = init2.counter || input.counter || 0;
-        this.agent = init2.agent || input.agent;
+        this.follow = init.follow !== void 0 ? init.follow : input.follow !== void 0 ? input.follow : 20;
+        this.compress = init.compress !== void 0 ? init.compress : input.compress !== void 0 ? input.compress : true;
+        this.counter = init.counter || input.counter || 0;
+        this.agent = init.agent || input.agent;
       }
       get method() {
         return this[INTERNALS$22].method;
@@ -851,17 +3223,17 @@ var require_lib = __commonJS({
         return this[INTERNALS$22].signal;
       }
       clone() {
-        return new Request2(this);
+        return new Request3(this);
       }
     };
-    Body2.mixIn(Request2.prototype);
-    Object.defineProperty(Request2.prototype, Symbol.toStringTag, {
+    Body2.mixIn(Request3.prototype);
+    Object.defineProperty(Request3.prototype, Symbol.toStringTag, {
       value: "Request",
       writable: false,
       enumerable: false,
       configurable: true
     });
-    Object.defineProperties(Request2.prototype, {
+    Object.defineProperties(Request3.prototype, {
       method: {enumerable: true},
       url: {enumerable: true},
       headers: {enumerable: true},
@@ -869,7 +3241,7 @@ var require_lib = __commonJS({
       clone: {enumerable: true},
       signal: {enumerable: true}
     });
-    function getNodeRequestOptions2(request) {
+    function getNodeRequestOptions(request) {
       const parsedURL = request[INTERNALS$22].parsedURL;
       const headers = new Headers2(request[INTERNALS$22].headers);
       if (!headers.has("Accept")) {
@@ -889,7 +3261,7 @@ var require_lib = __commonJS({
         contentLengthValue = "0";
       }
       if (request.body != null) {
-        const totalBytes = getTotalBytes2(request);
+        const totalBytes = getTotalBytes(request);
         if (typeof totalBytes === "number") {
           contentLengthValue = String(totalBytes);
         }
@@ -916,37 +3288,37 @@ var require_lib = __commonJS({
         agent
       });
     }
-    function AbortError2(message) {
+    function AbortError(message) {
       Error.call(this, message);
       this.type = "aborted";
       this.message = message;
       Error.captureStackTrace(this, this.constructor);
     }
-    AbortError2.prototype = Object.create(Error.prototype);
-    AbortError2.prototype.constructor = AbortError2;
-    AbortError2.prototype.name = "AbortError";
+    AbortError.prototype = Object.create(Error.prototype);
+    AbortError.prototype.constructor = AbortError;
+    AbortError.prototype.name = "AbortError";
     var PassThrough$1 = Stream2.PassThrough;
     var resolve_url = Url.resolve;
-    function fetch3(url, opts) {
-      if (!fetch3.Promise) {
+    function fetch2(url, opts) {
+      if (!fetch2.Promise) {
         throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
       }
-      Body2.Promise = fetch3.Promise;
-      return new fetch3.Promise(function(resolve2, reject) {
-        const request = new Request2(url, opts);
-        const options2 = getNodeRequestOptions2(request);
+      Body2.Promise = fetch2.Promise;
+      return new fetch2.Promise(function(resolve2, reject) {
+        const request = new Request3(url, opts);
+        const options2 = getNodeRequestOptions(request);
         const send = (options2.protocol === "https:" ? https2 : http2).request;
         const signal = request.signal;
         let response = null;
         const abort = function abort2() {
-          let error3 = new AbortError2("The user aborted a request.");
-          reject(error3);
+          let error2 = new AbortError("The user aborted a request.");
+          reject(error2);
           if (request.body && request.body instanceof Stream2.Readable) {
-            request.body.destroy(error3);
+            request.body.destroy(error2);
           }
           if (!response || !response.body)
             return;
-          response.body.emit("error", error3);
+          response.body.emit("error", error2);
         };
         if (signal && signal.aborted) {
           abort();
@@ -982,7 +3354,7 @@ var require_lib = __commonJS({
         req.on("response", function(res) {
           clearTimeout(reqTimeout);
           const headers = createHeadersLenient(res.headers);
-          if (fetch3.isRedirect(res.statusCode)) {
+          if (fetch2.isRedirect(res.statusCode)) {
             const location = headers.get("Location");
             const locationURL = location === null ? null : resolve_url(request.url, location);
             switch (request.redirect) {
@@ -1020,7 +3392,7 @@ var require_lib = __commonJS({
                   timeout: request.timeout,
                   size: request.size
                 };
-                if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
+                if (res.statusCode !== 303 && request.body && getTotalBytes(request) === null) {
                   reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
                   finalize();
                   return;
@@ -1030,7 +3402,7 @@ var require_lib = __commonJS({
                   requestOpts.body = void 0;
                   requestOpts.headers.delete("content-length");
                 }
-                resolve2(fetch3(new Request2(locationURL, requestOpts)));
+                resolve2(fetch2(new Request3(locationURL, requestOpts)));
                 finalize();
                 return;
             }
@@ -1087,2342 +3459,196 @@ var require_lib = __commonJS({
           response = new Response3(body, response_options);
           resolve2(response);
         });
-        writeToStream2(req, request);
+        writeToStream(req, request);
       });
     }
-    fetch3.isRedirect = function(code) {
+    fetch2.isRedirect = function(code) {
       return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
     };
-    fetch3.Promise = global.Promise;
-    module2.exports = exports2 = fetch3;
+    fetch2.Promise = global.Promise;
+    module2.exports = exports2 = fetch2;
     Object.defineProperty(exports2, "__esModule", {value: true});
     exports2.default = exports2;
     exports2.Headers = Headers2;
-    exports2.Request = Request2;
+    exports2.Request = Request3;
     exports2.Response = Response3;
     exports2.FetchError = FetchError2;
   }
 });
 
-// node_modules/tslib/tslib.js
-var require_tslib = __commonJS({
-  "node_modules/tslib/tslib.js"(exports2, module2) {
-    var __extends;
-    var __assign;
-    var __rest;
-    var __decorate;
-    var __param;
-    var __metadata;
-    var __awaiter;
-    var __generator;
-    var __exportStar;
-    var __values;
-    var __read;
-    var __spread;
-    var __spreadArrays;
-    var __spreadArray;
-    var __await;
-    var __asyncGenerator;
-    var __asyncDelegator;
-    var __asyncValues;
-    var __makeTemplateObject;
-    var __importStar;
-    var __importDefault;
-    var __classPrivateFieldGet;
-    var __classPrivateFieldSet;
-    var __createBinding;
-    (function(factory) {
-      var root = typeof global === "object" ? global : typeof self === "object" ? self : typeof this === "object" ? this : {};
-      if (typeof define === "function" && define.amd) {
-        define("tslib", ["exports"], function(exports3) {
-          factory(createExporter(root, createExporter(exports3)));
-        });
-      } else if (typeof module2 === "object" && typeof module2.exports === "object") {
-        factory(createExporter(root, createExporter(module2.exports)));
-      } else {
-        factory(createExporter(root));
-      }
-      function createExporter(exports3, previous) {
-        if (exports3 !== root) {
-          if (typeof Object.create === "function") {
-            Object.defineProperty(exports3, "__esModule", {value: true});
-          } else {
-            exports3.__esModule = true;
-          }
-        }
-        return function(id, v) {
-          return exports3[id] = previous ? previous(id, v) : v;
-        };
-      }
-    })(function(exporter) {
-      var extendStatics = Object.setPrototypeOf || {__proto__: []} instanceof Array && function(d2, b) {
-        d2.__proto__ = b;
-      } || function(d2, b) {
-        for (var p2 in b)
-          if (Object.prototype.hasOwnProperty.call(b, p2))
-            d2[p2] = b[p2];
-      };
-      __extends = function(d2, b) {
-        if (typeof b !== "function" && b !== null)
-          throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d2, b);
-        function __() {
-          this.constructor = d2;
-        }
-        d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-      };
-      __assign = Object.assign || function(t) {
-        for (var s2, i = 1, n = arguments.length; i < n; i++) {
-          s2 = arguments[i];
-          for (var p2 in s2)
-            if (Object.prototype.hasOwnProperty.call(s2, p2))
-              t[p2] = s2[p2];
-        }
-        return t;
-      };
-      __rest = function(s2, e) {
-        var t = {};
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2) && e.indexOf(p2) < 0)
-            t[p2] = s2[p2];
-        if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
-          for (var i = 0, p2 = Object.getOwnPropertySymbols(s2); i < p2.length; i++) {
-            if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i]))
-              t[p2[i]] = s2[p2[i]];
-          }
-        return t;
-      };
-      __decorate = function(decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-          r = Reflect.decorate(decorators, target, key, desc);
-        else
-          for (var i = decorators.length - 1; i >= 0; i--)
-            if (d2 = decorators[i])
-              r = (c < 3 ? d2(r) : c > 3 ? d2(target, key, r) : d2(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-      };
-      __param = function(paramIndex, decorator) {
-        return function(target, key) {
-          decorator(target, key, paramIndex);
-        };
-      };
-      __metadata = function(metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-          return Reflect.metadata(metadataKey, metadataValue);
-      };
-      __awaiter = function(thisArg, _arguments, P, generator) {
-        function adopt(value) {
-          return value instanceof P ? value : new P(function(resolve2) {
-            resolve2(value);
-          });
-        }
-        return new (P || (P = Promise))(function(resolve2, reject) {
-          function fulfilled(value) {
-            try {
-              step(generator.next(value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-          function rejected(value) {
-            try {
-              step(generator["throw"](value));
-            } catch (e) {
-              reject(e);
-            }
-          }
-          function step(result) {
-            result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
-          }
-          step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-      };
-      __generator = function(thisArg, body) {
-        var _ = {label: 0, sent: function() {
-          if (t[0] & 1)
-            throw t[1];
-          return t[1];
-        }, trys: [], ops: []}, f, y, t, g;
-        return g = {next: verb(0), "throw": verb(1), "return": verb(2)}, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-          return this;
-        }), g;
-        function verb(n) {
-          return function(v) {
-            return step([n, v]);
-          };
-        }
-        function step(op) {
-          if (f)
-            throw new TypeError("Generator is already executing.");
-          while (_)
-            try {
-              if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-                return t;
-              if (y = 0, t)
-                op = [op[0] & 2, t.value];
-              switch (op[0]) {
-                case 0:
-                case 1:
-                  t = op;
-                  break;
-                case 4:
-                  _.label++;
-                  return {value: op[1], done: false};
-                case 5:
-                  _.label++;
-                  y = op[1];
-                  op = [0];
-                  continue;
-                case 7:
-                  op = _.ops.pop();
-                  _.trys.pop();
-                  continue;
-                default:
-                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                    _ = 0;
-                    continue;
-                  }
-                  if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                    _.label = op[1];
-                    break;
-                  }
-                  if (op[0] === 6 && _.label < t[1]) {
-                    _.label = t[1];
-                    t = op;
-                    break;
-                  }
-                  if (t && _.label < t[2]) {
-                    _.label = t[2];
-                    _.ops.push(op);
-                    break;
-                  }
-                  if (t[2])
-                    _.ops.pop();
-                  _.trys.pop();
-                  continue;
-              }
-              op = body.call(thisArg, _);
-            } catch (e) {
-              op = [6, e];
-              y = 0;
-            } finally {
-              f = t = 0;
-            }
-          if (op[0] & 5)
-            throw op[1];
-          return {value: op[0] ? op[1] : void 0, done: true};
-        }
-      };
-      __exportStar = function(m, o) {
-        for (var p2 in m)
-          if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(o, p2))
-            __createBinding(o, m, p2);
-      };
-      __createBinding = Object.create ? function(o, m, k, k2) {
-        if (k2 === void 0)
-          k2 = k;
-        Object.defineProperty(o, k2, {enumerable: true, get: function() {
-          return m[k];
-        }});
-      } : function(o, m, k, k2) {
-        if (k2 === void 0)
-          k2 = k;
-        o[k2] = m[k];
-      };
-      __values = function(o) {
-        var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
-        if (m)
-          return m.call(o);
-        if (o && typeof o.length === "number")
-          return {
-            next: function() {
-              if (o && i >= o.length)
-                o = void 0;
-              return {value: o && o[i++], done: !o};
-            }
-          };
-        throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
-      };
-      __read = function(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-          return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-          while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-            ar.push(r.value);
-        } catch (error3) {
-          e = {error: error3};
-        } finally {
-          try {
-            if (r && !r.done && (m = i["return"]))
-              m.call(i);
-          } finally {
-            if (e)
-              throw e.error;
-          }
-        }
-        return ar;
-      };
-      __spread = function() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-          ar = ar.concat(__read(arguments[i]));
-        return ar;
-      };
-      __spreadArrays = function() {
-        for (var s2 = 0, i = 0, il = arguments.length; i < il; i++)
-          s2 += arguments[i].length;
-        for (var r = Array(s2), k = 0, i = 0; i < il; i++)
-          for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-        return r;
-      };
-      __spreadArray = function(to, from, pack) {
-        if (pack || arguments.length === 2)
-          for (var i = 0, l = from.length, ar; i < l; i++) {
-            if (ar || !(i in from)) {
-              if (!ar)
-                ar = Array.prototype.slice.call(from, 0, i);
-              ar[i] = from[i];
-            }
-          }
-        return to.concat(ar || from);
-      };
-      __await = function(v) {
-        return this instanceof __await ? (this.v = v, this) : new __await(v);
-      };
-      __asyncGenerator = function(thisArg, _arguments, generator) {
-        if (!Symbol.asyncIterator)
-          throw new TypeError("Symbol.asyncIterator is not defined.");
-        var g = generator.apply(thisArg, _arguments || []), i, q = [];
-        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
-          return this;
-        }, i;
-        function verb(n) {
-          if (g[n])
-            i[n] = function(v) {
-              return new Promise(function(a, b) {
-                q.push([n, v, a, b]) > 1 || resume(n, v);
-              });
-            };
-        }
-        function resume(n, v) {
-          try {
-            step(g[n](v));
-          } catch (e) {
-            settle(q[0][3], e);
-          }
-        }
-        function step(r) {
-          r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
-        }
-        function fulfill(value) {
-          resume("next", value);
-        }
-        function reject(value) {
-          resume("throw", value);
-        }
-        function settle(f, v) {
-          if (f(v), q.shift(), q.length)
-            resume(q[0][0], q[0][1]);
-        }
-      };
-      __asyncDelegator = function(o) {
-        var i, p2;
-        return i = {}, verb("next"), verb("throw", function(e) {
-          throw e;
-        }), verb("return"), i[Symbol.iterator] = function() {
-          return this;
-        }, i;
-        function verb(n, f) {
-          i[n] = o[n] ? function(v) {
-            return (p2 = !p2) ? {value: __await(o[n](v)), done: n === "return"} : f ? f(v) : v;
-          } : f;
-        }
-      };
-      __asyncValues = function(o) {
-        if (!Symbol.asyncIterator)
-          throw new TypeError("Symbol.asyncIterator is not defined.");
-        var m = o[Symbol.asyncIterator], i;
-        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
-          return this;
-        }, i);
-        function verb(n) {
-          i[n] = o[n] && function(v) {
-            return new Promise(function(resolve2, reject) {
-              v = o[n](v), settle(resolve2, reject, v.done, v.value);
-            });
-          };
-        }
-        function settle(resolve2, reject, d2, v) {
-          Promise.resolve(v).then(function(v2) {
-            resolve2({value: v2, done: d2});
-          }, reject);
-        }
-      };
-      __makeTemplateObject = function(cooked, raw) {
-        if (Object.defineProperty) {
-          Object.defineProperty(cooked, "raw", {value: raw});
-        } else {
-          cooked.raw = raw;
-        }
-        return cooked;
-      };
-      var __setModuleDefault = Object.create ? function(o, v) {
-        Object.defineProperty(o, "default", {enumerable: true, value: v});
-      } : function(o, v) {
-        o["default"] = v;
-      };
-      __importStar = function(mod) {
-        if (mod && mod.__esModule)
-          return mod;
-        var result = {};
-        if (mod != null) {
-          for (var k in mod)
-            if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-              __createBinding(result, mod, k);
-        }
-        __setModuleDefault(result, mod);
-        return result;
-      };
-      __importDefault = function(mod) {
-        return mod && mod.__esModule ? mod : {"default": mod};
-      };
-      __classPrivateFieldGet = function(receiver, state, kind, f) {
-        if (kind === "a" && !f)
-          throw new TypeError("Private accessor was defined without a getter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-          throw new TypeError("Cannot read private member from an object whose class did not declare it");
-        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-      };
-      __classPrivateFieldSet = function(receiver, state, value, kind, f) {
-        if (kind === "m")
-          throw new TypeError("Private method is not writable");
-        if (kind === "a" && !f)
-          throw new TypeError("Private accessor was defined without a setter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-          throw new TypeError("Cannot write private member to an object whose class did not declare it");
-        return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
-      };
-      exporter("__extends", __extends);
-      exporter("__assign", __assign);
-      exporter("__rest", __rest);
-      exporter("__decorate", __decorate);
-      exporter("__param", __param);
-      exporter("__metadata", __metadata);
-      exporter("__awaiter", __awaiter);
-      exporter("__generator", __generator);
-      exporter("__exportStar", __exportStar);
-      exporter("__createBinding", __createBinding);
-      exporter("__values", __values);
-      exporter("__read", __read);
-      exporter("__spread", __spread);
-      exporter("__spreadArrays", __spreadArrays);
-      exporter("__spreadArray", __spreadArray);
-      exporter("__await", __await);
-      exporter("__asyncGenerator", __asyncGenerator);
-      exporter("__asyncDelegator", __asyncDelegator);
-      exporter("__asyncValues", __asyncValues);
-      exporter("__makeTemplateObject", __makeTemplateObject);
-      exporter("__importStar", __importStar);
-      exporter("__importDefault", __importDefault);
-      exporter("__classPrivateFieldGet", __classPrivateFieldGet);
-      exporter("__classPrivateFieldSet", __classPrivateFieldSet);
-    });
-  }
-});
-
-// node_modules/@firebase/util/dist/index.node.cjs.js
-var require_index_node_cjs = __commonJS({
-  "node_modules/@firebase/util/dist/index.node.cjs.js"(exports2) {
+// node_modules/@firebase/auth/dist/node/index-9110c4a0.js
+var require_index_9110c4a0 = __commonJS({
+  "node_modules/@firebase/auth/dist/node/index-9110c4a0.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    var tslib = require_tslib();
-    var CONSTANTS = {
-      NODE_CLIENT: false,
-      NODE_ADMIN: false,
-      SDK_VERSION: "${JSCORE_VERSION}"
-    };
-    var assert = function(assertion, message) {
-      if (!assertion) {
-        throw assertionError(message);
-      }
-    };
-    var assertionError = function(message) {
-      return new Error("Firebase Database (" + CONSTANTS.SDK_VERSION + ") INTERNAL ASSERT FAILED: " + message);
-    };
-    var stringToByteArray = function(str) {
-      var out = [];
-      var p2 = 0;
-      for (var i = 0; i < str.length; i++) {
-        var c = str.charCodeAt(i);
-        if (c < 128) {
-          out[p2++] = c;
-        } else if (c < 2048) {
-          out[p2++] = c >> 6 | 192;
-          out[p2++] = c & 63 | 128;
-        } else if ((c & 64512) === 55296 && i + 1 < str.length && (str.charCodeAt(i + 1) & 64512) === 56320) {
-          c = 65536 + ((c & 1023) << 10) + (str.charCodeAt(++i) & 1023);
-          out[p2++] = c >> 18 | 240;
-          out[p2++] = c >> 12 & 63 | 128;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        } else {
-          out[p2++] = c >> 12 | 224;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        }
-      }
-      return out;
-    };
-    var byteArrayToString = function(bytes) {
-      var out = [];
-      var pos = 0, c = 0;
-      while (pos < bytes.length) {
-        var c1 = bytes[pos++];
-        if (c1 < 128) {
-          out[c++] = String.fromCharCode(c1);
-        } else if (c1 > 191 && c1 < 224) {
-          var c2 = bytes[pos++];
-          out[c++] = String.fromCharCode((c1 & 31) << 6 | c2 & 63);
-        } else if (c1 > 239 && c1 < 365) {
-          var c2 = bytes[pos++];
-          var c3 = bytes[pos++];
-          var c4 = bytes[pos++];
-          var u = ((c1 & 7) << 18 | (c2 & 63) << 12 | (c3 & 63) << 6 | c4 & 63) - 65536;
-          out[c++] = String.fromCharCode(55296 + (u >> 10));
-          out[c++] = String.fromCharCode(56320 + (u & 1023));
-        } else {
-          var c2 = bytes[pos++];
-          var c3 = bytes[pos++];
-          out[c++] = String.fromCharCode((c1 & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-        }
-      }
-      return out.join("");
-    };
-    var base64 = {
-      byteToCharMap_: null,
-      charToByteMap_: null,
-      byteToCharMapWebSafe_: null,
-      charToByteMapWebSafe_: null,
-      ENCODED_VALS_BASE: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-      get ENCODED_VALS() {
-        return this.ENCODED_VALS_BASE + "+/=";
-      },
-      get ENCODED_VALS_WEBSAFE() {
-        return this.ENCODED_VALS_BASE + "-_.";
-      },
-      HAS_NATIVE_SUPPORT: typeof atob === "function",
-      encodeByteArray: function(input, webSafe) {
-        if (!Array.isArray(input)) {
-          throw Error("encodeByteArray takes an array as a parameter");
-        }
-        this.init_();
-        var byteToCharMap = webSafe ? this.byteToCharMapWebSafe_ : this.byteToCharMap_;
-        var output = [];
-        for (var i = 0; i < input.length; i += 3) {
-          var byte1 = input[i];
-          var haveByte2 = i + 1 < input.length;
-          var byte2 = haveByte2 ? input[i + 1] : 0;
-          var haveByte3 = i + 2 < input.length;
-          var byte3 = haveByte3 ? input[i + 2] : 0;
-          var outByte1 = byte1 >> 2;
-          var outByte2 = (byte1 & 3) << 4 | byte2 >> 4;
-          var outByte3 = (byte2 & 15) << 2 | byte3 >> 6;
-          var outByte4 = byte3 & 63;
-          if (!haveByte3) {
-            outByte4 = 64;
-            if (!haveByte2) {
-              outByte3 = 64;
-            }
-          }
-          output.push(byteToCharMap[outByte1], byteToCharMap[outByte2], byteToCharMap[outByte3], byteToCharMap[outByte4]);
-        }
-        return output.join("");
-      },
-      encodeString: function(input, webSafe) {
-        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
-          return btoa(input);
-        }
-        return this.encodeByteArray(stringToByteArray(input), webSafe);
-      },
-      decodeString: function(input, webSafe) {
-        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
-          return atob(input);
-        }
-        return byteArrayToString(this.decodeStringToByteArray(input, webSafe));
-      },
-      decodeStringToByteArray: function(input, webSafe) {
-        this.init_();
-        var charToByteMap = webSafe ? this.charToByteMapWebSafe_ : this.charToByteMap_;
-        var output = [];
-        for (var i = 0; i < input.length; ) {
-          var byte1 = charToByteMap[input.charAt(i++)];
-          var haveByte2 = i < input.length;
-          var byte2 = haveByte2 ? charToByteMap[input.charAt(i)] : 0;
-          ++i;
-          var haveByte3 = i < input.length;
-          var byte3 = haveByte3 ? charToByteMap[input.charAt(i)] : 64;
-          ++i;
-          var haveByte4 = i < input.length;
-          var byte4 = haveByte4 ? charToByteMap[input.charAt(i)] : 64;
-          ++i;
-          if (byte1 == null || byte2 == null || byte3 == null || byte4 == null) {
-            throw Error();
-          }
-          var outByte1 = byte1 << 2 | byte2 >> 4;
-          output.push(outByte1);
-          if (byte3 !== 64) {
-            var outByte2 = byte2 << 4 & 240 | byte3 >> 2;
-            output.push(outByte2);
-            if (byte4 !== 64) {
-              var outByte3 = byte3 << 6 & 192 | byte4;
-              output.push(outByte3);
-            }
-          }
-        }
-        return output;
-      },
-      init_: function() {
-        if (!this.byteToCharMap_) {
-          this.byteToCharMap_ = {};
-          this.charToByteMap_ = {};
-          this.byteToCharMapWebSafe_ = {};
-          this.charToByteMapWebSafe_ = {};
-          for (var i = 0; i < this.ENCODED_VALS.length; i++) {
-            this.byteToCharMap_[i] = this.ENCODED_VALS.charAt(i);
-            this.charToByteMap_[this.byteToCharMap_[i]] = i;
-            this.byteToCharMapWebSafe_[i] = this.ENCODED_VALS_WEBSAFE.charAt(i);
-            this.charToByteMapWebSafe_[this.byteToCharMapWebSafe_[i]] = i;
-            if (i >= this.ENCODED_VALS_BASE.length) {
-              this.charToByteMap_[this.ENCODED_VALS_WEBSAFE.charAt(i)] = i;
-              this.charToByteMapWebSafe_[this.ENCODED_VALS.charAt(i)] = i;
-            }
-          }
-        }
-      }
-    };
-    var base64Encode = function(str) {
-      var utf8Bytes = stringToByteArray(str);
-      return base64.encodeByteArray(utf8Bytes, true);
-    };
-    var base64Decode = function(str) {
-      try {
-        return base64.decodeString(str, true);
-      } catch (e) {
-        console.error("base64Decode failed: ", e);
-      }
-      return null;
-    };
-    function deepCopy(value) {
-      return deepExtend(void 0, value);
-    }
-    function deepExtend(target, source) {
-      if (!(source instanceof Object)) {
-        return source;
-      }
-      switch (source.constructor) {
-        case Date:
-          var dateValue = source;
-          return new Date(dateValue.getTime());
-        case Object:
-          if (target === void 0) {
-            target = {};
-          }
-          break;
-        case Array:
-          target = [];
-          break;
-        default:
-          return source;
-      }
-      for (var prop in source) {
-        if (!source.hasOwnProperty(prop) || !isValidKey(prop)) {
-          continue;
-        }
-        target[prop] = deepExtend(target[prop], source[prop]);
-      }
-      return target;
-    }
-    function isValidKey(key) {
-      return key !== "__proto__";
-    }
-    var Deferred = function() {
-      function Deferred2() {
-        var _this = this;
-        this.reject = function() {
-        };
-        this.resolve = function() {
-        };
-        this.promise = new Promise(function(resolve2, reject) {
-          _this.resolve = resolve2;
-          _this.reject = reject;
-        });
-      }
-      Deferred2.prototype.wrapCallback = function(callback) {
-        var _this = this;
-        return function(error3, value) {
-          if (error3) {
-            _this.reject(error3);
-          } else {
-            _this.resolve(value);
-          }
-          if (typeof callback === "function") {
-            _this.promise.catch(function() {
-            });
-            if (callback.length === 1) {
-              callback(error3);
-            } else {
-              callback(error3, value);
-            }
-          }
-        };
-      };
-      return Deferred2;
-    }();
-    function createMockUserToken(token, projectId) {
-      if (token.uid) {
-        throw new Error('The "uid" field is no longer supported by mockUserToken. Please use "sub" instead for Firebase Auth User ID.');
-      }
-      var header = {
-        alg: "none",
-        type: "JWT"
-      };
-      var project = projectId || "demo-project";
-      var iat = token.iat || 0;
-      var sub = token.sub || token.user_id;
-      if (!sub) {
-        throw new Error("mockUserToken must contain 'sub' or 'user_id' field!");
-      }
-      var payload = tslib.__assign({
-        iss: "https://securetoken.google.com/" + project,
-        aud: project,
-        iat,
-        exp: iat + 3600,
-        auth_time: iat,
-        sub,
-        user_id: sub,
-        firebase: {
-          sign_in_provider: "custom",
-          identities: {}
-        }
-      }, token);
-      var signature = "";
-      return [
-        base64.encodeString(JSON.stringify(header), false),
-        base64.encodeString(JSON.stringify(payload), false),
-        signature
-      ].join(".");
-    }
-    function getUA() {
-      if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
-        return navigator["userAgent"];
-      } else {
-        return "";
-      }
-    }
-    function isMobileCordova() {
-      return typeof window !== "undefined" && !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
-    }
-    function isNode() {
-      try {
-        return Object.prototype.toString.call(global.process) === "[object process]";
-      } catch (e) {
-        return false;
-      }
-    }
-    function isBrowser() {
-      return typeof self === "object" && self.self === self;
-    }
-    function isBrowserExtension() {
-      var runtime = typeof chrome === "object" ? chrome.runtime : typeof browser === "object" ? browser.runtime : void 0;
-      return typeof runtime === "object" && runtime.id !== void 0;
-    }
-    function isReactNative() {
-      return typeof navigator === "object" && navigator["product"] === "ReactNative";
-    }
-    function isElectron() {
-      return getUA().indexOf("Electron/") >= 0;
-    }
-    function isIE() {
-      var ua = getUA();
-      return ua.indexOf("MSIE ") >= 0 || ua.indexOf("Trident/") >= 0;
-    }
-    function isUWP() {
-      return getUA().indexOf("MSAppHost/") >= 0;
-    }
-    function isNodeSdk() {
-      return CONSTANTS.NODE_CLIENT === true || CONSTANTS.NODE_ADMIN === true;
-    }
-    function isSafari() {
-      return !isNode() && navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome");
-    }
-    function isIndexedDBAvailable() {
-      return "indexedDB" in self && indexedDB != null;
-    }
-    function validateIndexedDBOpenable() {
-      return new Promise(function(resolve2, reject) {
-        try {
-          var preExist_1 = true;
-          var DB_CHECK_NAME_1 = "validate-browser-context-for-indexeddb-analytics-module";
-          var request_1 = self.indexedDB.open(DB_CHECK_NAME_1);
-          request_1.onsuccess = function() {
-            request_1.result.close();
-            if (!preExist_1) {
-              self.indexedDB.deleteDatabase(DB_CHECK_NAME_1);
-            }
-            resolve2(true);
-          };
-          request_1.onupgradeneeded = function() {
-            preExist_1 = false;
-          };
-          request_1.onerror = function() {
-            var _a;
-            reject(((_a = request_1.error) === null || _a === void 0 ? void 0 : _a.message) || "");
-          };
-        } catch (error3) {
-          reject(error3);
-        }
-      });
-    }
-    function areCookiesEnabled() {
-      if (!navigator || !navigator.cookieEnabled) {
-        return false;
-      }
-      return true;
-    }
-    function getGlobal() {
-      if (typeof self !== "undefined") {
-        return self;
-      }
-      if (typeof window !== "undefined") {
-        return window;
-      }
-      if (typeof global !== "undefined") {
-        return global;
-      }
-      throw new Error("Unable to locate global object.");
-    }
-    var ERROR_NAME = "FirebaseError";
-    var FirebaseError = function(_super) {
-      tslib.__extends(FirebaseError2, _super);
-      function FirebaseError2(code, message, customData) {
-        var _this = _super.call(this, message) || this;
-        _this.code = code;
-        _this.customData = customData;
-        _this.name = ERROR_NAME;
-        Object.setPrototypeOf(_this, FirebaseError2.prototype);
-        if (Error.captureStackTrace) {
-          Error.captureStackTrace(_this, ErrorFactory.prototype.create);
-        }
-        return _this;
-      }
-      return FirebaseError2;
-    }(Error);
-    var ErrorFactory = function() {
-      function ErrorFactory2(service, serviceName, errors) {
-        this.service = service;
-        this.serviceName = serviceName;
-        this.errors = errors;
-      }
-      ErrorFactory2.prototype.create = function(code) {
-        var data = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-          data[_i - 1] = arguments[_i];
-        }
-        var customData = data[0] || {};
-        var fullCode = this.service + "/" + code;
-        var template2 = this.errors[code];
-        var message = template2 ? replaceTemplate(template2, customData) : "Error";
-        var fullMessage = this.serviceName + ": " + message + " (" + fullCode + ").";
-        var error3 = new FirebaseError(fullCode, fullMessage, customData);
-        return error3;
-      };
-      return ErrorFactory2;
-    }();
-    function replaceTemplate(template2, data) {
-      return template2.replace(PATTERN, function(_, key) {
-        var value = data[key];
-        return value != null ? String(value) : "<" + key + "?>";
-      });
-    }
-    var PATTERN = /\{\$([^}]+)}/g;
-    function jsonEval(str) {
-      return JSON.parse(str);
-    }
-    function stringify(data) {
-      return JSON.stringify(data);
-    }
-    var decode = function(token) {
-      var header = {}, claims = {}, data = {}, signature = "";
-      try {
-        var parts = token.split(".");
-        header = jsonEval(base64Decode(parts[0]) || "");
-        claims = jsonEval(base64Decode(parts[1]) || "");
-        signature = parts[2];
-        data = claims["d"] || {};
-        delete claims["d"];
-      } catch (e) {
-      }
-      return {
-        header,
-        claims,
-        data,
-        signature
-      };
-    };
-    var isValidTimestamp = function(token) {
-      var claims = decode(token).claims;
-      var now = Math.floor(new Date().getTime() / 1e3);
-      var validSince = 0, validUntil = 0;
-      if (typeof claims === "object") {
-        if (claims.hasOwnProperty("nbf")) {
-          validSince = claims["nbf"];
-        } else if (claims.hasOwnProperty("iat")) {
-          validSince = claims["iat"];
-        }
-        if (claims.hasOwnProperty("exp")) {
-          validUntil = claims["exp"];
-        } else {
-          validUntil = validSince + 86400;
-        }
-      }
-      return !!now && !!validSince && !!validUntil && now >= validSince && now <= validUntil;
-    };
-    var issuedAtTime = function(token) {
-      var claims = decode(token).claims;
-      if (typeof claims === "object" && claims.hasOwnProperty("iat")) {
-        return claims["iat"];
-      }
-      return null;
-    };
-    var isValidFormat = function(token) {
-      var decoded = decode(token), claims = decoded.claims;
-      return !!claims && typeof claims === "object" && claims.hasOwnProperty("iat");
-    };
-    var isAdmin = function(token) {
-      var claims = decode(token).claims;
-      return typeof claims === "object" && claims["admin"] === true;
-    };
-    function contains(obj, key) {
-      return Object.prototype.hasOwnProperty.call(obj, key);
-    }
-    function safeGet(obj, key) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        return obj[key];
-      } else {
-        return void 0;
-      }
-    }
-    function isEmpty(obj) {
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          return false;
-        }
-      }
-      return true;
-    }
-    function map(obj, fn, contextObj) {
-      var res = {};
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          res[key] = fn.call(contextObj, obj[key], key, obj);
-        }
-      }
-      return res;
-    }
-    function querystring(querystringParams) {
-      var params = [];
-      var _loop_1 = function(key2, value2) {
-        if (Array.isArray(value2)) {
-          value2.forEach(function(arrayVal) {
-            params.push(encodeURIComponent(key2) + "=" + encodeURIComponent(arrayVal));
-          });
-        } else {
-          params.push(encodeURIComponent(key2) + "=" + encodeURIComponent(value2));
-        }
-      };
-      for (var _i = 0, _a = Object.entries(querystringParams); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], value = _b[1];
-        _loop_1(key, value);
-      }
-      return params.length ? "&" + params.join("&") : "";
-    }
-    function querystringDecode(querystring2) {
-      var obj = {};
-      var tokens = querystring2.replace(/^\?/, "").split("&");
-      tokens.forEach(function(token) {
-        if (token) {
-          var _a = token.split("="), key = _a[0], value = _a[1];
-          obj[decodeURIComponent(key)] = decodeURIComponent(value);
-        }
-      });
-      return obj;
-    }
-    function extractQuerystring(url) {
-      var queryStart = url.indexOf("?");
-      if (!queryStart) {
-        return "";
-      }
-      var fragmentStart = url.indexOf("#", queryStart);
-      return url.substring(queryStart, fragmentStart > 0 ? fragmentStart : void 0);
-    }
-    var Sha1 = function() {
-      function Sha12() {
-        this.chain_ = [];
-        this.buf_ = [];
-        this.W_ = [];
-        this.pad_ = [];
-        this.inbuf_ = 0;
-        this.total_ = 0;
-        this.blockSize = 512 / 8;
-        this.pad_[0] = 128;
-        for (var i = 1; i < this.blockSize; ++i) {
-          this.pad_[i] = 0;
-        }
-        this.reset();
-      }
-      Sha12.prototype.reset = function() {
-        this.chain_[0] = 1732584193;
-        this.chain_[1] = 4023233417;
-        this.chain_[2] = 2562383102;
-        this.chain_[3] = 271733878;
-        this.chain_[4] = 3285377520;
-        this.inbuf_ = 0;
-        this.total_ = 0;
-      };
-      Sha12.prototype.compress_ = function(buf, offset) {
-        if (!offset) {
-          offset = 0;
-        }
-        var W = this.W_;
-        if (typeof buf === "string") {
-          for (var i = 0; i < 16; i++) {
-            W[i] = buf.charCodeAt(offset) << 24 | buf.charCodeAt(offset + 1) << 16 | buf.charCodeAt(offset + 2) << 8 | buf.charCodeAt(offset + 3);
-            offset += 4;
-          }
-        } else {
-          for (var i = 0; i < 16; i++) {
-            W[i] = buf[offset] << 24 | buf[offset + 1] << 16 | buf[offset + 2] << 8 | buf[offset + 3];
-            offset += 4;
-          }
-        }
-        for (var i = 16; i < 80; i++) {
-          var t = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
-          W[i] = (t << 1 | t >>> 31) & 4294967295;
-        }
-        var a = this.chain_[0];
-        var b = this.chain_[1];
-        var c = this.chain_[2];
-        var d2 = this.chain_[3];
-        var e = this.chain_[4];
-        var f, k;
-        for (var i = 0; i < 80; i++) {
-          if (i < 40) {
-            if (i < 20) {
-              f = d2 ^ b & (c ^ d2);
-              k = 1518500249;
-            } else {
-              f = b ^ c ^ d2;
-              k = 1859775393;
-            }
-          } else {
-            if (i < 60) {
-              f = b & c | d2 & (b | c);
-              k = 2400959708;
-            } else {
-              f = b ^ c ^ d2;
-              k = 3395469782;
-            }
-          }
-          var t = (a << 5 | a >>> 27) + f + e + k + W[i] & 4294967295;
-          e = d2;
-          d2 = c;
-          c = (b << 30 | b >>> 2) & 4294967295;
-          b = a;
-          a = t;
-        }
-        this.chain_[0] = this.chain_[0] + a & 4294967295;
-        this.chain_[1] = this.chain_[1] + b & 4294967295;
-        this.chain_[2] = this.chain_[2] + c & 4294967295;
-        this.chain_[3] = this.chain_[3] + d2 & 4294967295;
-        this.chain_[4] = this.chain_[4] + e & 4294967295;
-      };
-      Sha12.prototype.update = function(bytes, length) {
-        if (bytes == null) {
-          return;
-        }
-        if (length === void 0) {
-          length = bytes.length;
-        }
-        var lengthMinusBlock = length - this.blockSize;
-        var n = 0;
-        var buf = this.buf_;
-        var inbuf = this.inbuf_;
-        while (n < length) {
-          if (inbuf === 0) {
-            while (n <= lengthMinusBlock) {
-              this.compress_(bytes, n);
-              n += this.blockSize;
-            }
-          }
-          if (typeof bytes === "string") {
-            while (n < length) {
-              buf[inbuf] = bytes.charCodeAt(n);
-              ++inbuf;
-              ++n;
-              if (inbuf === this.blockSize) {
-                this.compress_(buf);
-                inbuf = 0;
-                break;
-              }
-            }
-          } else {
-            while (n < length) {
-              buf[inbuf] = bytes[n];
-              ++inbuf;
-              ++n;
-              if (inbuf === this.blockSize) {
-                this.compress_(buf);
-                inbuf = 0;
-                break;
-              }
-            }
-          }
-        }
-        this.inbuf_ = inbuf;
-        this.total_ += length;
-      };
-      Sha12.prototype.digest = function() {
-        var digest = [];
-        var totalBits = this.total_ * 8;
-        if (this.inbuf_ < 56) {
-          this.update(this.pad_, 56 - this.inbuf_);
-        } else {
-          this.update(this.pad_, this.blockSize - (this.inbuf_ - 56));
-        }
-        for (var i = this.blockSize - 1; i >= 56; i--) {
-          this.buf_[i] = totalBits & 255;
-          totalBits /= 256;
-        }
-        this.compress_(this.buf_);
-        var n = 0;
-        for (var i = 0; i < 5; i++) {
-          for (var j = 24; j >= 0; j -= 8) {
-            digest[n] = this.chain_[i] >> j & 255;
-            ++n;
-          }
-        }
-        return digest;
-      };
-      return Sha12;
-    }();
-    function createSubscribe(executor, onNoObservers) {
-      var proxy = new ObserverProxy(executor, onNoObservers);
-      return proxy.subscribe.bind(proxy);
-    }
-    var ObserverProxy = function() {
-      function ObserverProxy2(executor, onNoObservers) {
-        var _this = this;
-        this.observers = [];
-        this.unsubscribes = [];
-        this.observerCount = 0;
-        this.task = Promise.resolve();
-        this.finalized = false;
-        this.onNoObservers = onNoObservers;
-        this.task.then(function() {
-          executor(_this);
-        }).catch(function(e) {
-          _this.error(e);
-        });
-      }
-      ObserverProxy2.prototype.next = function(value) {
-        this.forEachObserver(function(observer) {
-          observer.next(value);
-        });
-      };
-      ObserverProxy2.prototype.error = function(error3) {
-        this.forEachObserver(function(observer) {
-          observer.error(error3);
-        });
-        this.close(error3);
-      };
-      ObserverProxy2.prototype.complete = function() {
-        this.forEachObserver(function(observer) {
-          observer.complete();
-        });
-        this.close();
-      };
-      ObserverProxy2.prototype.subscribe = function(nextOrObserver, error3, complete) {
-        var _this = this;
-        var observer;
-        if (nextOrObserver === void 0 && error3 === void 0 && complete === void 0) {
-          throw new Error("Missing Observer.");
-        }
-        if (implementsAnyMethods(nextOrObserver, [
-          "next",
-          "error",
-          "complete"
-        ])) {
-          observer = nextOrObserver;
-        } else {
-          observer = {
-            next: nextOrObserver,
-            error: error3,
-            complete
-          };
-        }
-        if (observer.next === void 0) {
-          observer.next = noop3;
-        }
-        if (observer.error === void 0) {
-          observer.error = noop3;
-        }
-        if (observer.complete === void 0) {
-          observer.complete = noop3;
-        }
-        var unsub = this.unsubscribeOne.bind(this, this.observers.length);
-        if (this.finalized) {
-          this.task.then(function() {
-            try {
-              if (_this.finalError) {
-                observer.error(_this.finalError);
-              } else {
-                observer.complete();
-              }
-            } catch (e) {
-            }
-            return;
-          });
-        }
-        this.observers.push(observer);
-        return unsub;
-      };
-      ObserverProxy2.prototype.unsubscribeOne = function(i) {
-        if (this.observers === void 0 || this.observers[i] === void 0) {
-          return;
-        }
-        delete this.observers[i];
-        this.observerCount -= 1;
-        if (this.observerCount === 0 && this.onNoObservers !== void 0) {
-          this.onNoObservers(this);
-        }
-      };
-      ObserverProxy2.prototype.forEachObserver = function(fn) {
-        if (this.finalized) {
-          return;
-        }
-        for (var i = 0; i < this.observers.length; i++) {
-          this.sendOne(i, fn);
-        }
-      };
-      ObserverProxy2.prototype.sendOne = function(i, fn) {
-        var _this = this;
-        this.task.then(function() {
-          if (_this.observers !== void 0 && _this.observers[i] !== void 0) {
-            try {
-              fn(_this.observers[i]);
-            } catch (e) {
-              if (typeof console !== "undefined" && console.error) {
-                console.error(e);
-              }
-            }
-          }
-        });
-      };
-      ObserverProxy2.prototype.close = function(err) {
-        var _this = this;
-        if (this.finalized) {
-          return;
-        }
-        this.finalized = true;
-        if (err !== void 0) {
-          this.finalError = err;
-        }
-        this.task.then(function() {
-          _this.observers = void 0;
-          _this.onNoObservers = void 0;
-        });
-      };
-      return ObserverProxy2;
-    }();
-    function async(fn, onError) {
-      return function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        Promise.resolve(true).then(function() {
-          fn.apply(void 0, args);
-        }).catch(function(error3) {
-          if (onError) {
-            onError(error3);
-          }
-        });
-      };
-    }
-    function implementsAnyMethods(obj, methods) {
-      if (typeof obj !== "object" || obj === null) {
-        return false;
-      }
-      for (var _i = 0, methods_1 = methods; _i < methods_1.length; _i++) {
-        var method = methods_1[_i];
-        if (method in obj && typeof obj[method] === "function") {
-          return true;
-        }
-      }
-      return false;
-    }
-    function noop3() {
-    }
-    var validateArgCount = function(fnName, minCount, maxCount, argCount) {
-      var argError;
-      if (argCount < minCount) {
-        argError = "at least " + minCount;
-      } else if (argCount > maxCount) {
-        argError = maxCount === 0 ? "none" : "no more than " + maxCount;
-      }
-      if (argError) {
-        var error3 = fnName + " failed: Was called with " + argCount + (argCount === 1 ? " argument." : " arguments.") + " Expects " + argError + ".";
-        throw new Error(error3);
-      }
-    };
-    function errorPrefix(fnName, argName) {
-      return fnName + " failed: " + argName + " argument ";
-    }
-    function validateNamespace(fnName, namespace, optional) {
-      if (optional && !namespace) {
-        return;
-      }
-      if (typeof namespace !== "string") {
-        throw new Error(errorPrefix(fnName, "namespace") + "must be a valid firebase namespace.");
-      }
-    }
-    function validateCallback(fnName, argumentName, callback, optional) {
-      if (optional && !callback) {
-        return;
-      }
-      if (typeof callback !== "function") {
-        throw new Error(errorPrefix(fnName, argumentName) + "must be a valid function.");
-      }
-    }
-    function validateContextObject(fnName, argumentName, context, optional) {
-      if (optional && !context) {
-        return;
-      }
-      if (typeof context !== "object" || context === null) {
-        throw new Error(errorPrefix(fnName, argumentName) + "must be a valid context object.");
-      }
-    }
-    var stringToByteArray$1 = function(str) {
-      var out = [];
-      var p2 = 0;
-      for (var i = 0; i < str.length; i++) {
-        var c = str.charCodeAt(i);
-        if (c >= 55296 && c <= 56319) {
-          var high = c - 55296;
-          i++;
-          assert(i < str.length, "Surrogate pair missing trail surrogate.");
-          var low = str.charCodeAt(i) - 56320;
-          c = 65536 + (high << 10) + low;
-        }
-        if (c < 128) {
-          out[p2++] = c;
-        } else if (c < 2048) {
-          out[p2++] = c >> 6 | 192;
-          out[p2++] = c & 63 | 128;
-        } else if (c < 65536) {
-          out[p2++] = c >> 12 | 224;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        } else {
-          out[p2++] = c >> 18 | 240;
-          out[p2++] = c >> 12 & 63 | 128;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        }
-      }
-      return out;
-    };
-    var stringLength = function(str) {
-      var p2 = 0;
-      for (var i = 0; i < str.length; i++) {
-        var c = str.charCodeAt(i);
-        if (c < 128) {
-          p2++;
-        } else if (c < 2048) {
-          p2 += 2;
-        } else if (c >= 55296 && c <= 56319) {
-          p2 += 4;
-          i++;
-        } else {
-          p2 += 3;
-        }
-      }
-      return p2;
-    };
-    var DEFAULT_INTERVAL_MILLIS = 1e3;
-    var DEFAULT_BACKOFF_FACTOR = 2;
-    var MAX_VALUE_MILLIS = 4 * 60 * 60 * 1e3;
-    var RANDOM_FACTOR = 0.5;
-    function calculateBackoffMillis(backoffCount, intervalMillis, backoffFactor) {
-      if (intervalMillis === void 0) {
-        intervalMillis = DEFAULT_INTERVAL_MILLIS;
-      }
-      if (backoffFactor === void 0) {
-        backoffFactor = DEFAULT_BACKOFF_FACTOR;
-      }
-      var currBaseValue = intervalMillis * Math.pow(backoffFactor, backoffCount);
-      var randomWait = Math.round(RANDOM_FACTOR * currBaseValue * (Math.random() - 0.5) * 2);
-      return Math.min(MAX_VALUE_MILLIS, currBaseValue + randomWait);
-    }
-    function ordinal(i) {
-      if (!Number.isFinite(i)) {
-        return "" + i;
-      }
-      return i + indicator(i);
-    }
-    function indicator(i) {
-      i = Math.abs(i);
-      var cent = i % 100;
-      if (cent >= 10 && cent <= 20) {
-        return "th";
-      }
-      var dec = i % 10;
-      if (dec === 1) {
-        return "st";
-      }
-      if (dec === 2) {
-        return "nd";
-      }
-      if (dec === 3) {
-        return "rd";
-      }
-      return "th";
-    }
-    function getModularInstance(service) {
-      if (service && service._delegate) {
-        return service._delegate;
-      } else {
-        return service;
-      }
-    }
-    CONSTANTS.NODE_CLIENT = true;
-    exports2.CONSTANTS = CONSTANTS;
-    exports2.Deferred = Deferred;
-    exports2.ErrorFactory = ErrorFactory;
-    exports2.FirebaseError = FirebaseError;
-    exports2.MAX_VALUE_MILLIS = MAX_VALUE_MILLIS;
-    exports2.RANDOM_FACTOR = RANDOM_FACTOR;
-    exports2.Sha1 = Sha1;
-    exports2.areCookiesEnabled = areCookiesEnabled;
-    exports2.assert = assert;
-    exports2.assertionError = assertionError;
-    exports2.async = async;
-    exports2.base64 = base64;
-    exports2.base64Decode = base64Decode;
-    exports2.base64Encode = base64Encode;
-    exports2.calculateBackoffMillis = calculateBackoffMillis;
-    exports2.contains = contains;
-    exports2.createMockUserToken = createMockUserToken;
-    exports2.createSubscribe = createSubscribe;
-    exports2.decode = decode;
-    exports2.deepCopy = deepCopy;
-    exports2.deepExtend = deepExtend;
-    exports2.errorPrefix = errorPrefix;
-    exports2.extractQuerystring = extractQuerystring;
-    exports2.getGlobal = getGlobal;
-    exports2.getModularInstance = getModularInstance;
-    exports2.getUA = getUA;
-    exports2.isAdmin = isAdmin;
-    exports2.isBrowser = isBrowser;
-    exports2.isBrowserExtension = isBrowserExtension;
-    exports2.isElectron = isElectron;
-    exports2.isEmpty = isEmpty;
-    exports2.isIE = isIE;
-    exports2.isIndexedDBAvailable = isIndexedDBAvailable;
-    exports2.isMobileCordova = isMobileCordova;
-    exports2.isNode = isNode;
-    exports2.isNodeSdk = isNodeSdk;
-    exports2.isReactNative = isReactNative;
-    exports2.isSafari = isSafari;
-    exports2.isUWP = isUWP;
-    exports2.isValidFormat = isValidFormat;
-    exports2.isValidTimestamp = isValidTimestamp;
-    exports2.issuedAtTime = issuedAtTime;
-    exports2.jsonEval = jsonEval;
-    exports2.map = map;
-    exports2.ordinal = ordinal;
-    exports2.querystring = querystring;
-    exports2.querystringDecode = querystringDecode;
-    exports2.safeGet = safeGet;
-    exports2.stringLength = stringLength;
-    exports2.stringToByteArray = stringToByteArray$1;
-    exports2.stringify = stringify;
-    exports2.validateArgCount = validateArgCount;
-    exports2.validateCallback = validateCallback;
-    exports2.validateContextObject = validateContextObject;
-    exports2.validateIndexedDBOpenable = validateIndexedDBOpenable;
-    exports2.validateNamespace = validateNamespace;
-  }
-});
-
-// node_modules/@firebase/component/dist/index.cjs.js
-var require_index_cjs = __commonJS({
-  "node_modules/@firebase/component/dist/index.cjs.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
     var tslib = require_tslib();
     var util = require_index_node_cjs();
-    var Component = function() {
-      function Component2(name, instanceFactory, type) {
-        this.name = name;
-        this.instanceFactory = instanceFactory;
-        this.type = type;
-        this.multipleInstances = false;
-        this.serviceProps = {};
-        this.instantiationMode = "LAZY";
-        this.onInstanceCreated = null;
-      }
-      Component2.prototype.setInstantiationMode = function(mode) {
-        this.instantiationMode = mode;
-        return this;
-      };
-      Component2.prototype.setMultipleInstances = function(multipleInstances) {
-        this.multipleInstances = multipleInstances;
-        return this;
-      };
-      Component2.prototype.setServiceProps = function(props) {
-        this.serviceProps = props;
-        return this;
-      };
-      Component2.prototype.setInstanceCreatedCallback = function(callback) {
-        this.onInstanceCreated = callback;
-        return this;
-      };
-      return Component2;
-    }();
-    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
-    var Provider = function() {
-      function Provider2(name, container) {
-        this.name = name;
-        this.container = container;
-        this.component = null;
-        this.instances = new Map();
-        this.instancesDeferred = new Map();
-        this.onInitCallbacks = new Set();
-      }
-      Provider2.prototype.get = function(identifier) {
-        if (identifier === void 0) {
-          identifier = DEFAULT_ENTRY_NAME;
-        }
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
-        if (!this.instancesDeferred.has(normalizedIdentifier)) {
-          var deferred = new util.Deferred();
-          this.instancesDeferred.set(normalizedIdentifier, deferred);
-          if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
-            try {
-              var instance = this.getOrInitializeService({
-                instanceIdentifier: normalizedIdentifier
-              });
-              if (instance) {
-                deferred.resolve(instance);
-              }
-            } catch (e) {
-            }
-          }
-        }
-        return this.instancesDeferred.get(normalizedIdentifier).promise;
-      };
-      Provider2.prototype.getImmediate = function(options2) {
-        var _a = tslib.__assign({identifier: DEFAULT_ENTRY_NAME, optional: false}, options2), identifier = _a.identifier, optional = _a.optional;
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(identifier);
-        if (this.isInitialized(normalizedIdentifier) || this.shouldAutoInitialize()) {
-          try {
-            return this.getOrInitializeService({
-              instanceIdentifier: normalizedIdentifier
-            });
-          } catch (e) {
-            if (optional) {
-              return null;
-            } else {
-              throw e;
-            }
-          }
-        } else {
-          if (optional) {
-            return null;
-          } else {
-            throw Error("Service " + this.name + " is not available");
-          }
-        }
-      };
-      Provider2.prototype.getComponent = function() {
-        return this.component;
-      };
-      Provider2.prototype.setComponent = function(component) {
-        var e_1, _a;
-        if (component.name !== this.name) {
-          throw Error("Mismatching Component " + component.name + " for Provider " + this.name + ".");
-        }
-        if (this.component) {
-          throw Error("Component for " + this.name + " has already been provided");
-        }
-        this.component = component;
-        if (!this.shouldAutoInitialize()) {
-          return;
-        }
-        if (isComponentEager(component)) {
-          try {
-            this.getOrInitializeService({instanceIdentifier: DEFAULT_ENTRY_NAME});
-          } catch (e) {
-          }
-        }
-        try {
-          for (var _b = tslib.__values(this.instancesDeferred.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-            var _d = tslib.__read(_c.value, 2), instanceIdentifier = _d[0], instanceDeferred = _d[1];
-            var normalizedIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
-            try {
-              var instance = this.getOrInitializeService({
-                instanceIdentifier: normalizedIdentifier
-              });
-              instanceDeferred.resolve(instance);
-            } catch (e) {
-            }
-          }
-        } catch (e_1_1) {
-          e_1 = {error: e_1_1};
-        } finally {
-          try {
-            if (_c && !_c.done && (_a = _b.return))
-              _a.call(_b);
-          } finally {
-            if (e_1)
-              throw e_1.error;
-          }
-        }
-      };
-      Provider2.prototype.clearInstance = function(identifier) {
-        if (identifier === void 0) {
-          identifier = DEFAULT_ENTRY_NAME;
-        }
-        this.instancesDeferred.delete(identifier);
-        this.instances.delete(identifier);
-      };
-      Provider2.prototype.delete = function() {
-        return tslib.__awaiter(this, void 0, void 0, function() {
-          var services;
-          return tslib.__generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                services = Array.from(this.instances.values());
-                return [4, Promise.all(tslib.__spreadArray(tslib.__spreadArray([], tslib.__read(services.filter(function(service) {
-                  return "INTERNAL" in service;
-                }).map(function(service) {
-                  return service.INTERNAL.delete();
-                }))), tslib.__read(services.filter(function(service) {
-                  return "_delete" in service;
-                }).map(function(service) {
-                  return service._delete();
-                }))))];
-              case 1:
-                _a.sent();
-                return [2];
-            }
-          });
-        });
-      };
-      Provider2.prototype.isComponentSet = function() {
-        return this.component != null;
-      };
-      Provider2.prototype.isInitialized = function(identifier) {
-        if (identifier === void 0) {
-          identifier = DEFAULT_ENTRY_NAME;
-        }
-        return this.instances.has(identifier);
-      };
-      Provider2.prototype.initialize = function(opts) {
-        var e_2, _a;
-        if (opts === void 0) {
-          opts = {};
-        }
-        var _b = opts.instanceIdentifier, instanceIdentifier = _b === void 0 ? DEFAULT_ENTRY_NAME : _b, _c = opts.options, options2 = _c === void 0 ? {} : _c;
-        var normalizedIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier);
-        if (this.isInitialized(normalizedIdentifier)) {
-          throw Error(this.name + "(" + normalizedIdentifier + ") has already been initialized");
-        }
-        if (!this.isComponentSet()) {
-          throw Error("Component " + this.name + " has not been registered yet");
-        }
-        var instance = this.getOrInitializeService({
-          instanceIdentifier: normalizedIdentifier,
-          options: options2
-        });
-        try {
-          for (var _d = tslib.__values(this.instancesDeferred.entries()), _e = _d.next(); !_e.done; _e = _d.next()) {
-            var _f = tslib.__read(_e.value, 2), instanceIdentifier_1 = _f[0], instanceDeferred = _f[1];
-            var normalizedDeferredIdentifier = this.normalizeInstanceIdentifier(instanceIdentifier_1);
-            if (normalizedIdentifier === normalizedDeferredIdentifier) {
-              instanceDeferred.resolve(instance);
-            }
-          }
-        } catch (e_2_1) {
-          e_2 = {error: e_2_1};
-        } finally {
-          try {
-            if (_e && !_e.done && (_a = _d.return))
-              _a.call(_d);
-          } finally {
-            if (e_2)
-              throw e_2.error;
-          }
-        }
-        this.invokeOnInitCallbacks(instance, normalizedIdentifier);
-        return instance;
-      };
-      Provider2.prototype.onInit = function(callback) {
-        var _this = this;
-        this.onInitCallbacks.add(callback);
-        return function() {
-          _this.onInitCallbacks.delete(callback);
-        };
-      };
-      Provider2.prototype.invokeOnInitCallbacks = function(instance, identifier) {
-        var e_3, _a;
-        try {
-          for (var _b = tslib.__values(this.onInitCallbacks), _c = _b.next(); !_c.done; _c = _b.next()) {
-            var callback = _c.value;
-            try {
-              callback(instance, identifier);
-            } catch (_d) {
-            }
-          }
-        } catch (e_3_1) {
-          e_3 = {error: e_3_1};
-        } finally {
-          try {
-            if (_c && !_c.done && (_a = _b.return))
-              _a.call(_b);
-          } finally {
-            if (e_3)
-              throw e_3.error;
-          }
-        }
-      };
-      Provider2.prototype.getOrInitializeService = function(_a) {
-        var instanceIdentifier = _a.instanceIdentifier, _b = _a.options, options2 = _b === void 0 ? {} : _b;
-        var instance = this.instances.get(instanceIdentifier);
-        if (!instance && this.component) {
-          instance = this.component.instanceFactory(this.container, {
-            instanceIdentifier: normalizeIdentifierForFactory(instanceIdentifier),
-            options: options2
-          });
-          this.instances.set(instanceIdentifier, instance);
-          if (this.component.onInstanceCreated) {
-            try {
-              this.component.onInstanceCreated(this.container, instanceIdentifier, instance);
-            } catch (_c) {
-            }
-          }
-        }
-        return instance || null;
-      };
-      Provider2.prototype.normalizeInstanceIdentifier = function(identifier) {
-        if (this.component) {
-          return this.component.multipleInstances ? identifier : DEFAULT_ENTRY_NAME;
-        } else {
-          return identifier;
-        }
-      };
-      Provider2.prototype.shouldAutoInitialize = function() {
-        return !!this.component && this.component.instantiationMode !== "EXPLICIT";
-      };
-      return Provider2;
-    }();
-    function normalizeIdentifierForFactory(identifier) {
-      return identifier === DEFAULT_ENTRY_NAME ? void 0 : identifier;
-    }
-    function isComponentEager(component) {
-      return component.instantiationMode === "EAGER";
-    }
-    var ComponentContainer = function() {
-      function ComponentContainer2(name) {
-        this.name = name;
-        this.providers = new Map();
-      }
-      ComponentContainer2.prototype.addComponent = function(component) {
-        var provider = this.getProvider(component.name);
-        if (provider.isComponentSet()) {
-          throw new Error("Component " + component.name + " has already been registered with " + this.name);
-        }
-        provider.setComponent(component);
-      };
-      ComponentContainer2.prototype.addOrOverwriteComponent = function(component) {
-        var provider = this.getProvider(component.name);
-        if (provider.isComponentSet()) {
-          this.providers.delete(component.name);
-        }
-        this.addComponent(component);
-      };
-      ComponentContainer2.prototype.getProvider = function(name) {
-        if (this.providers.has(name)) {
-          return this.providers.get(name);
-        }
-        var provider = new Provider(name, this);
-        this.providers.set(name, provider);
-        return provider;
-      };
-      ComponentContainer2.prototype.getProviders = function() {
-        return Array.from(this.providers.values());
-      };
-      return ComponentContainer2;
-    }();
-    exports2.Component = Component;
-    exports2.ComponentContainer = ComponentContainer;
-    exports2.Provider = Provider;
-  }
-});
-
-// node_modules/@firebase/logger/dist/index.cjs.js
-var require_index_cjs2 = __commonJS({
-  "node_modules/@firebase/logger/dist/index.cjs.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    function __spreadArrays() {
-      for (var s2 = 0, i = 0, il = arguments.length; i < il; i++)
-        s2 += arguments[i].length;
-      for (var r = Array(s2), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-          r[k] = a[j];
-      return r;
-    }
-    var _a;
-    var instances = [];
-    (function(LogLevel) {
-      LogLevel[LogLevel["DEBUG"] = 0] = "DEBUG";
-      LogLevel[LogLevel["VERBOSE"] = 1] = "VERBOSE";
-      LogLevel[LogLevel["INFO"] = 2] = "INFO";
-      LogLevel[LogLevel["WARN"] = 3] = "WARN";
-      LogLevel[LogLevel["ERROR"] = 4] = "ERROR";
-      LogLevel[LogLevel["SILENT"] = 5] = "SILENT";
-    })(exports2.LogLevel || (exports2.LogLevel = {}));
-    var levelStringToEnum = {
-      "debug": exports2.LogLevel.DEBUG,
-      "verbose": exports2.LogLevel.VERBOSE,
-      "info": exports2.LogLevel.INFO,
-      "warn": exports2.LogLevel.WARN,
-      "error": exports2.LogLevel.ERROR,
-      "silent": exports2.LogLevel.SILENT
-    };
-    var defaultLogLevel = exports2.LogLevel.INFO;
-    var ConsoleMethod = (_a = {}, _a[exports2.LogLevel.DEBUG] = "log", _a[exports2.LogLevel.VERBOSE] = "log", _a[exports2.LogLevel.INFO] = "info", _a[exports2.LogLevel.WARN] = "warn", _a[exports2.LogLevel.ERROR] = "error", _a);
-    var defaultLogHandler = function(instance, logType) {
-      var args = [];
-      for (var _i = 2; _i < arguments.length; _i++) {
-        args[_i - 2] = arguments[_i];
-      }
-      if (logType < instance.logLevel) {
-        return;
-      }
-      var now = new Date().toISOString();
-      var method = ConsoleMethod[logType];
-      if (method) {
-        console[method].apply(console, __spreadArrays(["[" + now + "]  " + instance.name + ":"], args));
-      } else {
-        throw new Error("Attempted to log a message with an invalid logType (value: " + logType + ")");
-      }
-    };
-    var Logger = function() {
-      function Logger2(name) {
-        this.name = name;
-        this._logLevel = defaultLogLevel;
-        this._logHandler = defaultLogHandler;
-        this._userLogHandler = null;
-        instances.push(this);
-      }
-      Object.defineProperty(Logger2.prototype, "logLevel", {
-        get: function() {
-          return this._logLevel;
-        },
-        set: function(val) {
-          if (!(val in exports2.LogLevel)) {
-            throw new TypeError('Invalid value "' + val + '" assigned to `logLevel`');
-          }
-          this._logLevel = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Logger2.prototype.setLogLevel = function(val) {
-        this._logLevel = typeof val === "string" ? levelStringToEnum[val] : val;
-      };
-      Object.defineProperty(Logger2.prototype, "logHandler", {
-        get: function() {
-          return this._logHandler;
-        },
-        set: function(val) {
-          if (typeof val !== "function") {
-            throw new TypeError("Value assigned to `logHandler` must be a function");
-          }
-          this._logHandler = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(Logger2.prototype, "userLogHandler", {
-        get: function() {
-          return this._userLogHandler;
-        },
-        set: function(val) {
-          this._userLogHandler = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Logger2.prototype.debug = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        this._userLogHandler && this._userLogHandler.apply(this, __spreadArrays([this, exports2.LogLevel.DEBUG], args));
-        this._logHandler.apply(this, __spreadArrays([this, exports2.LogLevel.DEBUG], args));
-      };
-      Logger2.prototype.log = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        this._userLogHandler && this._userLogHandler.apply(this, __spreadArrays([this, exports2.LogLevel.VERBOSE], args));
-        this._logHandler.apply(this, __spreadArrays([this, exports2.LogLevel.VERBOSE], args));
-      };
-      Logger2.prototype.info = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        this._userLogHandler && this._userLogHandler.apply(this, __spreadArrays([this, exports2.LogLevel.INFO], args));
-        this._logHandler.apply(this, __spreadArrays([this, exports2.LogLevel.INFO], args));
-      };
-      Logger2.prototype.warn = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        this._userLogHandler && this._userLogHandler.apply(this, __spreadArrays([this, exports2.LogLevel.WARN], args));
-        this._logHandler.apply(this, __spreadArrays([this, exports2.LogLevel.WARN], args));
-      };
-      Logger2.prototype.error = function() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        this._userLogHandler && this._userLogHandler.apply(this, __spreadArrays([this, exports2.LogLevel.ERROR], args));
-        this._logHandler.apply(this, __spreadArrays([this, exports2.LogLevel.ERROR], args));
-      };
-      return Logger2;
-    }();
-    function setLogLevel(level) {
-      instances.forEach(function(inst) {
-        inst.setLogLevel(level);
-      });
-    }
-    function setUserLogHandler(logCallback, options2) {
-      var _loop_1 = function(instance2) {
-        var customLogLevel = null;
-        if (options2 && options2.level) {
-          customLogLevel = levelStringToEnum[options2.level];
-        }
-        if (logCallback === null) {
-          instance2.userLogHandler = null;
-        } else {
-          instance2.userLogHandler = function(instance3, level) {
-            var args = [];
-            for (var _i2 = 2; _i2 < arguments.length; _i2++) {
-              args[_i2 - 2] = arguments[_i2];
-            }
-            var message = args.map(function(arg) {
-              if (arg == null) {
-                return null;
-              } else if (typeof arg === "string") {
-                return arg;
-              } else if (typeof arg === "number" || typeof arg === "boolean") {
-                return arg.toString();
-              } else if (arg instanceof Error) {
-                return arg.message;
-              } else {
-                try {
-                  return JSON.stringify(arg);
-                } catch (ignored) {
-                  return null;
-                }
-              }
-            }).filter(function(arg) {
-              return arg;
-            }).join(" ");
-            if (level >= (customLogLevel !== null && customLogLevel !== void 0 ? customLogLevel : instance3.logLevel)) {
-              logCallback({
-                level: exports2.LogLevel[level].toLowerCase(),
-                message,
-                args,
-                type: instance3.name
-              });
-            }
-          };
-        }
-      };
-      for (var _i = 0, instances_1 = instances; _i < instances_1.length; _i++) {
-        var instance = instances_1[_i];
-        _loop_1(instance);
-      }
-    }
-    exports2.Logger = Logger;
-    exports2.setLogLevel = setLogLevel;
-    exports2.setUserLogHandler = setUserLogHandler;
-  }
-});
-
-// node_modules/@firebase/app/dist/index.cjs.js
-var require_index_cjs3 = __commonJS({
-  "node_modules/@firebase/app/dist/index.cjs.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", {value: true});
-    var component = require_index_cjs();
-    var tslib = require_tslib();
-    var logger$1 = require_index_cjs2();
-    var util = require_index_node_cjs();
-    var PlatformLoggerServiceImpl = function() {
-      function PlatformLoggerServiceImpl2(container) {
-        this.container = container;
-      }
-      PlatformLoggerServiceImpl2.prototype.getPlatformInfoString = function() {
-        var providers = this.container.getProviders();
-        return providers.map(function(provider) {
-          if (isVersionServiceProvider(provider)) {
-            var service = provider.getImmediate();
-            return service.library + "/" + service.version;
-          } else {
-            return null;
-          }
-        }).filter(function(logString) {
-          return logString;
-        }).join(" ");
-      };
-      return PlatformLoggerServiceImpl2;
-    }();
-    function isVersionServiceProvider(provider) {
-      var component2 = provider.getComponent();
-      return (component2 === null || component2 === void 0 ? void 0 : component2.type) === "VERSION";
-    }
-    var name = "@firebase/app-exp";
-    var version = "0.0.900-exp.d92a36260";
-    var logger = new logger$1.Logger("@firebase/app");
-    var name$1 = "@firebase/app-compat";
-    var name$2 = "@firebase/analytics-compat";
-    var name$3 = "@firebase/analytics-exp";
-    var name$4 = "@firebase/auth-exp";
-    var name$5 = "@firebase/auth-compat";
-    var name$6 = "@firebase/database";
-    var name$7 = "@firebase/database-compat";
-    var name$8 = "@firebase/functions-exp";
-    var name$9 = "@firebase/functions-compat";
-    var name$a = "@firebase/installations-exp";
-    var name$b = "@firebase/installations-compat";
-    var name$c = "@firebase/messaging-exp";
-    var name$d = "@firebase/messaging-compat";
-    var name$e = "@firebase/performance-exp";
-    var name$f = "@firebase/performance-compat";
-    var name$g = "@firebase/remote-config-exp";
-    var name$h = "@firebase/remote-config-compat";
-    var name$i = "@firebase/storage";
-    var name$j = "@firebase/storage-compat";
-    var name$k = "@firebase/firestore";
-    var name$l = "@firebase/firestore-compat";
-    var name$m = "firebase-exp";
-    var version$1 = "9.0.0-beta.2";
-    var _a;
-    var DEFAULT_ENTRY_NAME = "[DEFAULT]";
-    var PLATFORM_LOG_STRING = (_a = {}, _a[name] = "fire-core", _a[name$1] = "fire-core-compat", _a[name$3] = "fire-analytics", _a[name$2] = "fire-analytics-compat", _a[name$4] = "fire-auth", _a[name$5] = "fire-auth-compat", _a[name$6] = "fire-rtdb", _a[name$7] = "fire-rtdb-compat", _a[name$8] = "fire-fn", _a[name$9] = "fire-fn-compat", _a[name$a] = "fire-iid", _a[name$b] = "fire-iid-compat", _a[name$c] = "fire-fcm", _a[name$d] = "fire-fcm-compat", _a[name$e] = "fire-perf", _a[name$f] = "fire-perf-compat", _a[name$g] = "fire-rc", _a[name$h] = "fire-rc-compat", _a[name$i] = "fire-gcs", _a[name$j] = "fire-gcs-compat", _a[name$k] = "fire-fst", _a[name$l] = "fire-fst-compat", _a["fire-js"] = "fire-js", _a[name$m] = "fire-js-all", _a);
-    var _apps = new Map();
-    var _components = new Map();
-    function _addComponent(app, component2) {
-      try {
-        app.container.addComponent(component2);
-      } catch (e) {
-        logger.debug("Component " + component2.name + " failed to register with FirebaseApp " + app.name, e);
-      }
-    }
-    function _addOrOverwriteComponent(app, component2) {
-      app.container.addOrOverwriteComponent(component2);
-    }
-    function _registerComponent(component2) {
-      var e_1, _a2;
-      var componentName = component2.name;
-      if (_components.has(componentName)) {
-        logger.debug("There were multiple attempts to register component " + componentName + ".");
-        return false;
-      }
-      _components.set(componentName, component2);
-      try {
-        for (var _b = tslib.__values(_apps.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
-          var app = _c.value;
-          _addComponent(app, component2);
-        }
-      } catch (e_1_1) {
-        e_1 = {error: e_1_1};
-      } finally {
-        try {
-          if (_c && !_c.done && (_a2 = _b.return))
-            _a2.call(_b);
-        } finally {
-          if (e_1)
-            throw e_1.error;
-        }
-      }
-      return true;
-    }
-    function _getProvider(app, name2) {
-      return app.container.getProvider(name2);
-    }
-    function _removeServiceInstance(app, name2, instanceIdentifier) {
-      if (instanceIdentifier === void 0) {
-        instanceIdentifier = DEFAULT_ENTRY_NAME;
-      }
-      _getProvider(app, name2).clearInstance(instanceIdentifier);
-    }
-    function _clearComponents() {
-      _components.clear();
-    }
-    var _a$1;
-    var ERRORS = (_a$1 = {}, _a$1["no-app"] = "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()", _a$1["bad-app-name"] = "Illegal App name: '{$appName}", _a$1["duplicate-app"] = "Firebase App named '{$appName}' already exists", _a$1["app-deleted"] = "Firebase App named '{$appName}' already deleted", _a$1["invalid-app-argument"] = "firebase.{$appName}() takes either no argument or a Firebase App instance.", _a$1["invalid-log-argument"] = "First argument to `onLog` must be null or a function.", _a$1);
-    var ERROR_FACTORY = new util.ErrorFactory("app", "Firebase", ERRORS);
-    var FirebaseAppImpl = function() {
-      function FirebaseAppImpl2(options2, config, container) {
-        var _this = this;
-        this._isDeleted = false;
-        this._options = tslib.__assign({}, options2);
-        this._name = config.name;
-        this._automaticDataCollectionEnabled = config.automaticDataCollectionEnabled;
-        this._container = container;
-        this.container.addComponent(new component.Component("app-exp", function() {
-          return _this;
-        }, "PUBLIC"));
-      }
-      Object.defineProperty(FirebaseAppImpl2.prototype, "automaticDataCollectionEnabled", {
-        get: function() {
-          this.checkDestroyed();
-          return this._automaticDataCollectionEnabled;
-        },
-        set: function(val) {
-          this.checkDestroyed();
-          this._automaticDataCollectionEnabled = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "name", {
-        get: function() {
-          this.checkDestroyed();
-          return this._name;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "options", {
-        get: function() {
-          this.checkDestroyed();
-          return this._options;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "container", {
-        get: function() {
-          return this._container;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(FirebaseAppImpl2.prototype, "isDeleted", {
-        get: function() {
-          return this._isDeleted;
-        },
-        set: function(val) {
-          this._isDeleted = val;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      FirebaseAppImpl2.prototype.checkDestroyed = function() {
-        if (this.isDeleted) {
-          throw ERROR_FACTORY.create("app-deleted", {appName: this._name});
-        }
-      };
-      return FirebaseAppImpl2;
-    }();
-    var SDK_VERSION = version$1;
-    function initializeApp2(options2, rawConfig) {
-      var e_1, _a2;
-      if (rawConfig === void 0) {
-        rawConfig = {};
-      }
-      if (typeof rawConfig !== "object") {
-        var name_1 = rawConfig;
-        rawConfig = {name: name_1};
-      }
-      var config = tslib.__assign({name: DEFAULT_ENTRY_NAME, automaticDataCollectionEnabled: false}, rawConfig);
-      var name2 = config.name;
-      if (typeof name2 !== "string" || !name2) {
-        throw ERROR_FACTORY.create("bad-app-name", {
-          appName: String(name2)
-        });
-      }
-      if (_apps.has(name2)) {
-        throw ERROR_FACTORY.create("duplicate-app", {appName: name2});
-      }
-      var container = new component.ComponentContainer(name2);
-      try {
-        for (var _b = tslib.__values(_components.values()), _c = _b.next(); !_c.done; _c = _b.next()) {
-          var component$1 = _c.value;
-          container.addComponent(component$1);
-        }
-      } catch (e_1_1) {
-        e_1 = {error: e_1_1};
-      } finally {
-        try {
-          if (_c && !_c.done && (_a2 = _b.return))
-            _a2.call(_b);
-        } finally {
-          if (e_1)
-            throw e_1.error;
-        }
-      }
-      var newApp = new FirebaseAppImpl(options2, config, container);
-      _apps.set(name2, newApp);
-      return newApp;
-    }
-    function getApp2(name2) {
-      if (name2 === void 0) {
-        name2 = DEFAULT_ENTRY_NAME;
-      }
-      var app = _apps.get(name2);
-      if (!app) {
-        throw ERROR_FACTORY.create("no-app", {appName: name2});
-      }
-      return app;
-    }
-    function getApps2() {
-      return Array.from(_apps.values());
-    }
-    function deleteApp(app) {
-      return tslib.__awaiter(this, void 0, void 0, function() {
-        var name2;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
-            case 0:
-              name2 = app.name;
-              if (!_apps.has(name2))
-                return [3, 2];
-              _apps.delete(name2);
-              return [4, Promise.all(app.container.getProviders().map(function(provider) {
-                return provider.delete();
-              }))];
-            case 1:
-              _a2.sent();
-              app.isDeleted = true;
-              _a2.label = 2;
-            case 2:
-              return [2];
-          }
-        });
-      });
-    }
-    function registerVersion(libraryKeyOrName, version2, variant) {
-      var _a2;
-      var library = (_a2 = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a2 !== void 0 ? _a2 : libraryKeyOrName;
-      if (variant) {
-        library += "-" + variant;
-      }
-      var libraryMismatch = library.match(/\s|\//);
-      var versionMismatch = version2.match(/\s|\//);
-      if (libraryMismatch || versionMismatch) {
-        var warning = [
-          'Unable to register library "' + library + '" with version "' + version2 + '":'
-        ];
-        if (libraryMismatch) {
-          warning.push('library name "' + library + '" contains illegal characters (whitespace or "/")');
-        }
-        if (libraryMismatch && versionMismatch) {
-          warning.push("and");
-        }
-        if (versionMismatch) {
-          warning.push('version name "' + version2 + '" contains illegal characters (whitespace or "/")');
-        }
-        logger.warn(warning.join(" "));
-        return;
-      }
-      _registerComponent(new component.Component(library + "-version", function() {
-        return {library, version: version2};
-      }, "VERSION"));
-    }
-    function onLog(logCallback, options2) {
-      if (logCallback !== null && typeof logCallback !== "function") {
-        throw ERROR_FACTORY.create("invalid-log-argument");
-      }
-      logger$1.setUserLogHandler(logCallback, options2);
-    }
-    function setLogLevel(logLevel) {
-      logger$1.setLogLevel(logLevel);
-    }
-    function registerCoreComponents(variant) {
-      _registerComponent(new component.Component("platform-logger", function(container) {
-        return new PlatformLoggerServiceImpl(container);
-      }, "PRIVATE"));
-      registerVersion(name, version, variant);
-      registerVersion("fire-js", "");
-    }
-    registerCoreComponents();
-    exports2.SDK_VERSION = SDK_VERSION;
-    exports2._DEFAULT_ENTRY_NAME = DEFAULT_ENTRY_NAME;
-    exports2._addComponent = _addComponent;
-    exports2._addOrOverwriteComponent = _addOrOverwriteComponent;
-    exports2._apps = _apps;
-    exports2._clearComponents = _clearComponents;
-    exports2._components = _components;
-    exports2._getProvider = _getProvider;
-    exports2._registerComponent = _registerComponent;
-    exports2._removeServiceInstance = _removeServiceInstance;
-    exports2.deleteApp = deleteApp;
-    exports2.getApp = getApp2;
-    exports2.getApps = getApps2;
-    exports2.initializeApp = initializeApp2;
-    exports2.onLog = onLog;
-    exports2.registerVersion = registerVersion;
-    exports2.setLogLevel = setLogLevel;
-  }
-});
-
-// node_modules/@firebase/auth/dist/node/register-2a5ac87a.js
-var require_register_2a5ac87a = __commonJS({
-  "node_modules/@firebase/auth/dist/node/register-2a5ac87a.js"(exports2) {
-    "use strict";
     var app = require_index_cjs3();
-    var tslib = require_tslib();
-    var util = require_index_node_cjs();
     var logger = require_index_cjs2();
     var component = require_index_cjs();
+    var fetchImpl = require_lib();
+    function _interopNamespace(e) {
+      if (e && e.__esModule)
+        return e;
+      var n = Object.create(null);
+      if (e) {
+        Object.keys(e).forEach(function(k) {
+          if (k !== "default") {
+            var d = Object.getOwnPropertyDescriptor(e, k);
+            Object.defineProperty(n, k, d.get ? d : {
+              enumerable: true,
+              get: function() {
+                return e[k];
+              }
+            });
+          }
+        });
+      }
+      n["default"] = e;
+      return Object.freeze(n);
+    }
+    var fetchImpl__namespace = /* @__PURE__ */ _interopNamespace(fetchImpl);
+    var FactorId = {
+      PHONE: "phone"
+    };
+    var ProviderId = {
+      FACEBOOK: "facebook.com",
+      GITHUB: "github.com",
+      GOOGLE: "google.com",
+      PASSWORD: "password",
+      PHONE: "phone",
+      TWITTER: "twitter.com"
+    };
+    var SignInMethod = {
+      EMAIL_LINK: "emailLink",
+      EMAIL_PASSWORD: "password",
+      FACEBOOK: "facebook.com",
+      GITHUB: "github.com",
+      GOOGLE: "google.com",
+      PHONE: "phone",
+      TWITTER: "twitter.com"
+    };
+    var OperationType = {
+      LINK: "link",
+      REAUTHENTICATE: "reauthenticate",
+      SIGN_IN: "signIn"
+    };
+    var ActionCodeOperation = {
+      EMAIL_SIGNIN: "EMAIL_SIGNIN",
+      PASSWORD_RESET: "PASSWORD_RESET",
+      RECOVER_EMAIL: "RECOVER_EMAIL",
+      REVERT_SECOND_FACTOR_ADDITION: "REVERT_SECOND_FACTOR_ADDITION",
+      VERIFY_AND_CHANGE_EMAIL: "VERIFY_AND_CHANGE_EMAIL",
+      VERIFY_EMAIL: "VERIFY_EMAIL"
+    };
     function _debugErrorMap() {
-      var _a2;
-      return _a2 = {}, _a2["admin-restricted-operation"] = "This operation is restricted to administrators only.", _a2["argument-error"] = "", _a2["app-not-authorized"] = "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.", _a2["app-not-installed"] = "The requested mobile application corresponding to the identifier (Android package name or iOS bundle ID) provided is not installed on this device.", _a2["captcha-check-failed"] = "The reCAPTCHA response token provided is either invalid, expired, already used or the domain associated with it does not match the list of whitelisted domains.", _a2["code-expired"] = "The SMS code has expired. Please re-send the verification code to try again.", _a2["cordova-not-ready"] = "Cordova framework is not ready.", _a2["cors-unsupported"] = "This browser is not supported.", _a2["credential-already-in-use"] = "This credential is already associated with a different user account.", _a2["custom-token-mismatch"] = "The custom token corresponds to a different audience.", _a2["requires-recent-login"] = "This operation is sensitive and requires recent authentication. Log in again before retrying this request.", _a2["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a2["dynamic-link-not-activated"] = "Please activate Dynamic Links in the Firebase Console and agree to the terms and conditions.", _a2["email-change-needs-verification"] = "Multi-factor users must always have a verified email.", _a2["email-already-in-use"] = "The email address is already in use by another account.", _a2["emulator-config-failed"] = 'Auth instance has already been used to make a network call. Auth can no longer be configured to use the emulator. Try calling "useAuthEmulator()" sooner.', _a2["expired-action-code"] = "The action code has expired.", _a2["cancelled-popup-request"] = "This operation has been cancelled due to another conflicting popup being opened.", _a2["internal-error"] = "An internal AuthError has occurred.", _a2["invalid-app-credential"] = "The phone verification request contains an invalid application verifier. The reCAPTCHA token response is either invalid or expired.", _a2["invalid-app-id"] = "The mobile app identifier is not registed for the current project.", _a2["invalid-user-token"] = "This user's credential isn't valid for this project. This can happen if the user's token has been tampered with, or if the user isn't for the project associated with this API key.", _a2["invalid-auth-event"] = "An internal AuthError has occurred.", _a2["invalid-verification-code"] = "The SMS verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.", _a2["invalid-continue-uri"] = "The continue URL provided in the request is invalid.", _a2["invalid-cordova-configuration"] = "The following Cordova plugins must be installed to enable OAuth sign-in: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser and cordova-plugin-customurlscheme.", _a2["invalid-custom-token"] = "The custom token format is incorrect. Please check the documentation.", _a2["invalid-dynamic-link-domain"] = "The provided dynamic link domain is not configured or authorized for the current project.", _a2["invalid-email"] = "The email address is badly formatted.", _a2["invalid-emulator-scheme"] = "Emulator URL must start with a valid scheme (http:// or https://).", _a2["invalid-api-key"] = "Your API key is invalid, please check you have copied it correctly.", _a2["invalid-cert-hash"] = "The SHA-1 certificate hash provided is invalid.", _a2["invalid-credential"] = "The supplied auth credential is malformed or has expired.", _a2["invalid-message-payload"] = "The email template corresponding to this action contains invalid characters in its message. Please fix by going to the Auth email templates section in the Firebase Console.", _a2["invalid-multi-factor-session"] = "The request does not contain a valid proof of first factor successful sign-in.", _a2["invalid-oauth-provider"] = "EmailAuthProvider is not supported for this operation. This operation only supports OAuth providers.", _a2["invalid-oauth-client-id"] = "The OAuth client ID provided is either invalid or does not match the specified API key.", _a2["unauthorized-domain"] = "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.", _a2["invalid-action-code"] = "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.", _a2["wrong-password"] = "The password is invalid or the user does not have a password.", _a2["invalid-persistence-type"] = "The specified persistence type is invalid. It can only be local, session or none.", _a2["invalid-phone-number"] = "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code].", _a2["invalid-provider-id"] = "The specified provider ID is invalid.", _a2["invalid-recipient-email"] = "The email corresponding to this action failed to send as the provided recipient email address is invalid.", _a2["invalid-sender"] = "The email template corresponding to this action contains an invalid sender email or name. Please fix by going to the Auth email templates section in the Firebase Console.", _a2["invalid-verification-id"] = "The verification ID used to create the phone auth credential is invalid.", _a2["invalid-tenant-id"] = "The Auth instance's tenant ID is invalid.", _a2["missing-android-pkg-name"] = "An Android Package Name must be provided if the Android App is required to be installed.", _a2["auth-domain-config-required"] = "Be sure to include authDomain when calling firebase.initializeApp(), by following the instructions in the Firebase console.", _a2["missing-app-credential"] = "The phone verification request is missing an application verifier assertion. A reCAPTCHA response token needs to be provided.", _a2["missing-verification-code"] = "The phone auth credential was created with an empty SMS verification code.", _a2["missing-continue-uri"] = "A continue URL must be provided in the request.", _a2["missing-iframe-start"] = "An internal AuthError has occurred.", _a2["missing-ios-bundle-id"] = "An iOS Bundle ID must be provided if an App Store ID is provided.", _a2["missing-or-invalid-nonce"] = "The request does not contain a valid nonce. This can occur if the SHA-256 hash of the provided raw nonce does not match the hashed nonce in the ID token payload.", _a2["missing-multi-factor-info"] = "No second factor identifier is provided.", _a2["missing-multi-factor-session"] = "The request is missing proof of first factor successful sign-in.", _a2["missing-phone-number"] = "To send verification codes, provide a phone number for the recipient.", _a2["missing-verification-id"] = "The phone auth credential was created with an empty verification ID.", _a2["app-deleted"] = "This instance of FirebaseApp has been deleted.", _a2["multi-factor-info-not-found"] = "The user does not have a second factor matching the identifier provided.", _a2["multi-factor-auth-required"] = "Proof of ownership of a second factor is required to complete sign-in.", _a2["account-exists-with-different-credential"] = "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.", _a2["network-request-failed"] = "A network AuthError (such as timeout, interrupted connection or unreachable host) has occurred.", _a2["no-auth-event"] = "An internal AuthError has occurred.", _a2["no-such-provider"] = "User was not linked to an account with the given provider.", _a2["null-user"] = "A null user object was provided as the argument for an operation which requires a non-null user object.", _a2["operation-not-allowed"] = "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.", _a2["operation-not-supported-in-this-environment"] = 'This operation is not supported in the environment this application is running on. "location.protocol" must be http, https or chrome-extension and web storage must be enabled.', _a2["popup-blocked"] = "Unable to establish a connection with the popup. It may have been blocked by the browser.", _a2["popup-closed-by-user"] = "The popup has been closed by the user before finalizing the operation.", _a2["provider-already-linked"] = "User can only be linked to one identity for the given provider.", _a2["quota-exceeded"] = "The project's quota for this operation has been exceeded.", _a2["redirect-cancelled-by-user"] = "The redirect operation has been cancelled by the user before finalizing.", _a2["redirect-operation-pending"] = "A redirect sign-in operation is already pending.", _a2["rejected-credential"] = "The request contains malformed or mismatching credentials.", _a2["second-factor-already-in-use"] = "The second factor is already enrolled on this account.", _a2["maximum-second-factor-count-exceeded"] = "The maximum allowed number of second factors on a user has been exceeded.", _a2["tenant-id-mismatch"] = "The provided tenant ID does not match the Auth instance's tenant ID", _a2["timeout"] = "The operation has timed out.", _a2["user-token-expired"] = "The user's credential is no longer valid. The user must sign in again.", _a2["too-many-requests"] = "We have blocked all requests from this device due to unusual activity. Try again later.", _a2["unauthorized-continue-uri"] = "The domain of the continue URL is not whitelisted.  Please whitelist the domain in the Firebase console.", _a2["unsupported-first-factor"] = "Enrolling a second factor or signing in with a multi-factor account requires sign-in with a supported first factor.", _a2["unsupported-persistence-type"] = "The current environment does not support the specified persistence type.", _a2["unsupported-tenant-operation"] = "This operation is not supported in a multi-tenant context.", _a2["unverified-email"] = "The operation requires a verified email.", _a2["user-cancelled"] = "The user did not grant your application the permissions it requested.", _a2["user-not-found"] = "There is no user record corresponding to this identifier. The user may have been deleted.", _a2["user-disabled"] = "The user account has been disabled by an administrator.", _a2["user-mismatch"] = "The supplied credentials do not correspond to the previously signed in user.", _a2["user-signed-out"] = "", _a2["weak-password"] = "The password must be 6 characters long or more.", _a2["web-storage-unsupported"] = "This browser is not supported or 3rd party cookies and data may be disabled.", _a2["already-initialized"] = "Auth can only be initialized once per app.", _a2;
+      var _a3;
+      return _a3 = {}, _a3["admin-restricted-operation"] = "This operation is restricted to administrators only.", _a3["argument-error"] = "", _a3["app-not-authorized"] = "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.", _a3["app-not-installed"] = "The requested mobile application corresponding to the identifier (Android package name or iOS bundle ID) provided is not installed on this device.", _a3["captcha-check-failed"] = "The reCAPTCHA response token provided is either invalid, expired, already used or the domain associated with it does not match the list of whitelisted domains.", _a3["code-expired"] = "The SMS code has expired. Please re-send the verification code to try again.", _a3["cordova-not-ready"] = "Cordova framework is not ready.", _a3["cors-unsupported"] = "This browser is not supported.", _a3["credential-already-in-use"] = "This credential is already associated with a different user account.", _a3["custom-token-mismatch"] = "The custom token corresponds to a different audience.", _a3["requires-recent-login"] = "This operation is sensitive and requires recent authentication. Log in again before retrying this request.", _a3["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a3["dynamic-link-not-activated"] = "Please activate Dynamic Links in the Firebase Console and agree to the terms and conditions.", _a3["email-change-needs-verification"] = "Multi-factor users must always have a verified email.", _a3["email-already-in-use"] = "The email address is already in use by another account.", _a3["emulator-config-failed"] = 'Auth instance has already been used to make a network call. Auth can no longer be configured to use the emulator. Try calling "connectAuthEmulator()" sooner.', _a3["expired-action-code"] = "The action code has expired.", _a3["cancelled-popup-request"] = "This operation has been cancelled due to another conflicting popup being opened.", _a3["internal-error"] = "An internal AuthError has occurred.", _a3["invalid-app-credential"] = "The phone verification request contains an invalid application verifier. The reCAPTCHA token response is either invalid or expired.", _a3["invalid-app-id"] = "The mobile app identifier is not registed for the current project.", _a3["invalid-user-token"] = "This user's credential isn't valid for this project. This can happen if the user's token has been tampered with, or if the user isn't for the project associated with this API key.", _a3["invalid-auth-event"] = "An internal AuthError has occurred.", _a3["invalid-verification-code"] = "The SMS verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure to use the verification code provided by the user.", _a3["invalid-continue-uri"] = "The continue URL provided in the request is invalid.", _a3["invalid-cordova-configuration"] = "The following Cordova plugins must be installed to enable OAuth sign-in: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser and cordova-plugin-customurlscheme.", _a3["invalid-custom-token"] = "The custom token format is incorrect. Please check the documentation.", _a3["invalid-dynamic-link-domain"] = "The provided dynamic link domain is not configured or authorized for the current project.", _a3["invalid-email"] = "The email address is badly formatted.", _a3["invalid-emulator-scheme"] = "Emulator URL must start with a valid scheme (http:// or https://).", _a3["invalid-api-key"] = "Your API key is invalid, please check you have copied it correctly.", _a3["invalid-cert-hash"] = "The SHA-1 certificate hash provided is invalid.", _a3["invalid-credential"] = "The supplied auth credential is malformed or has expired.", _a3["invalid-message-payload"] = "The email template corresponding to this action contains invalid characters in its message. Please fix by going to the Auth email templates section in the Firebase Console.", _a3["invalid-multi-factor-session"] = "The request does not contain a valid proof of first factor successful sign-in.", _a3["invalid-oauth-provider"] = "EmailAuthProvider is not supported for this operation. This operation only supports OAuth providers.", _a3["invalid-oauth-client-id"] = "The OAuth client ID provided is either invalid or does not match the specified API key.", _a3["unauthorized-domain"] = "This domain is not authorized for OAuth operations for your Firebase project. Edit the list of authorized domains from the Firebase console.", _a3["invalid-action-code"] = "The action code is invalid. This can happen if the code is malformed, expired, or has already been used.", _a3["wrong-password"] = "The password is invalid or the user does not have a password.", _a3["invalid-persistence-type"] = "The specified persistence type is invalid. It can only be local, session or none.", _a3["invalid-phone-number"] = "The format of the phone number provided is incorrect. Please enter the phone number in a format that can be parsed into E.164 format. E.164 phone numbers are written in the format [+][country code][subscriber number including area code].", _a3["invalid-provider-id"] = "The specified provider ID is invalid.", _a3["invalid-recipient-email"] = "The email corresponding to this action failed to send as the provided recipient email address is invalid.", _a3["invalid-sender"] = "The email template corresponding to this action contains an invalid sender email or name. Please fix by going to the Auth email templates section in the Firebase Console.", _a3["invalid-verification-id"] = "The verification ID used to create the phone auth credential is invalid.", _a3["invalid-tenant-id"] = "The Auth instance's tenant ID is invalid.", _a3["missing-android-pkg-name"] = "An Android Package Name must be provided if the Android App is required to be installed.", _a3["auth-domain-config-required"] = "Be sure to include authDomain when calling firebase.initializeApp(), by following the instructions in the Firebase console.", _a3["missing-app-credential"] = "The phone verification request is missing an application verifier assertion. A reCAPTCHA response token needs to be provided.", _a3["missing-verification-code"] = "The phone auth credential was created with an empty SMS verification code.", _a3["missing-continue-uri"] = "A continue URL must be provided in the request.", _a3["missing-iframe-start"] = "An internal AuthError has occurred.", _a3["missing-ios-bundle-id"] = "An iOS Bundle ID must be provided if an App Store ID is provided.", _a3["missing-or-invalid-nonce"] = "The request does not contain a valid nonce. This can occur if the SHA-256 hash of the provided raw nonce does not match the hashed nonce in the ID token payload.", _a3["missing-multi-factor-info"] = "No second factor identifier is provided.", _a3["missing-multi-factor-session"] = "The request is missing proof of first factor successful sign-in.", _a3["missing-phone-number"] = "To send verification codes, provide a phone number for the recipient.", _a3["missing-verification-id"] = "The phone auth credential was created with an empty verification ID.", _a3["app-deleted"] = "This instance of FirebaseApp has been deleted.", _a3["multi-factor-info-not-found"] = "The user does not have a second factor matching the identifier provided.", _a3["multi-factor-auth-required"] = "Proof of ownership of a second factor is required to complete sign-in.", _a3["account-exists-with-different-credential"] = "An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.", _a3["network-request-failed"] = "A network AuthError (such as timeout, interrupted connection or unreachable host) has occurred.", _a3["no-auth-event"] = "An internal AuthError has occurred.", _a3["no-such-provider"] = "User was not linked to an account with the given provider.", _a3["null-user"] = "A null user object was provided as the argument for an operation which requires a non-null user object.", _a3["operation-not-allowed"] = "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.", _a3["operation-not-supported-in-this-environment"] = 'This operation is not supported in the environment this application is running on. "location.protocol" must be http, https or chrome-extension and web storage must be enabled.', _a3["popup-blocked"] = "Unable to establish a connection with the popup. It may have been blocked by the browser.", _a3["popup-closed-by-user"] = "The popup has been closed by the user before finalizing the operation.", _a3["provider-already-linked"] = "User can only be linked to one identity for the given provider.", _a3["quota-exceeded"] = "The project's quota for this operation has been exceeded.", _a3["redirect-cancelled-by-user"] = "The redirect operation has been cancelled by the user before finalizing.", _a3["redirect-operation-pending"] = "A redirect sign-in operation is already pending.", _a3["rejected-credential"] = "The request contains malformed or mismatching credentials.", _a3["second-factor-already-in-use"] = "The second factor is already enrolled on this account.", _a3["maximum-second-factor-count-exceeded"] = "The maximum allowed number of second factors on a user has been exceeded.", _a3["tenant-id-mismatch"] = "The provided tenant ID does not match the Auth instance's tenant ID", _a3["timeout"] = "The operation has timed out.", _a3["user-token-expired"] = "The user's credential is no longer valid. The user must sign in again.", _a3["too-many-requests"] = "We have blocked all requests from this device due to unusual activity. Try again later.", _a3["unauthorized-continue-uri"] = "The domain of the continue URL is not whitelisted.  Please whitelist the domain in the Firebase console.", _a3["unsupported-first-factor"] = "Enrolling a second factor or signing in with a multi-factor account requires sign-in with a supported first factor.", _a3["unsupported-persistence-type"] = "The current environment does not support the specified persistence type.", _a3["unsupported-tenant-operation"] = "This operation is not supported in a multi-tenant context.", _a3["unverified-email"] = "The operation requires a verified email.", _a3["user-cancelled"] = "The user did not grant your application the permissions it requested.", _a3["user-not-found"] = "There is no user record corresponding to this identifier. The user may have been deleted.", _a3["user-disabled"] = "The user account has been disabled by an administrator.", _a3["user-mismatch"] = "The supplied credentials do not correspond to the previously signed in user.", _a3["user-signed-out"] = "", _a3["weak-password"] = "The password must be 6 characters long or more.", _a3["web-storage-unsupported"] = "This browser is not supported or 3rd party cookies and data may be disabled.", _a3["already-initialized"] = "initializeAuth() has already been called with different options. To avoid this error, call initializeAuth() with the same options as when it was originally called, or call getAuth() to return the already initialized instance.", _a3;
     }
     function _prodErrorMap() {
-      var _a2;
-      return _a2 = {}, _a2["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a2;
+      var _a3;
+      return _a3 = {}, _a3["dependent-sdk-initialized-before-auth"] = "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK.", _a3;
     }
     var debugErrorMap = _debugErrorMap;
     var prodErrorMap = _prodErrorMap;
     var _DEFAULT_AUTH_ERROR_FACTORY = new util.ErrorFactory("auth", "Firebase", _prodErrorMap());
-    var logClient = new logger.Logger("@firebase/auth-exp");
+    var AUTH_ERROR_CODES_MAP_DO_NOT_USE_INTERNALLY = {
+      ADMIN_ONLY_OPERATION: "auth/admin-restricted-operation",
+      ARGUMENT_ERROR: "auth/argument-error",
+      APP_NOT_AUTHORIZED: "auth/app-not-authorized",
+      APP_NOT_INSTALLED: "auth/app-not-installed",
+      CAPTCHA_CHECK_FAILED: "auth/captcha-check-failed",
+      CODE_EXPIRED: "auth/code-expired",
+      CORDOVA_NOT_READY: "auth/cordova-not-ready",
+      CORS_UNSUPPORTED: "auth/cors-unsupported",
+      CREDENTIAL_ALREADY_IN_USE: "auth/credential-already-in-use",
+      CREDENTIAL_MISMATCH: "auth/custom-token-mismatch",
+      CREDENTIAL_TOO_OLD_LOGIN_AGAIN: "auth/requires-recent-login",
+      DEPENDENT_SDK_INIT_BEFORE_AUTH: "auth/dependent-sdk-initialized-before-auth",
+      DYNAMIC_LINK_NOT_ACTIVATED: "auth/dynamic-link-not-activated",
+      EMAIL_CHANGE_NEEDS_VERIFICATION: "auth/email-change-needs-verification",
+      EMAIL_EXISTS: "auth/email-already-in-use",
+      EMULATOR_CONFIG_FAILED: "auth/emulator-config-failed",
+      EXPIRED_OOB_CODE: "auth/expired-action-code",
+      EXPIRED_POPUP_REQUEST: "auth/cancelled-popup-request",
+      INTERNAL_ERROR: "auth/internal-error",
+      INVALID_API_KEY: "auth/invalid-api-key",
+      INVALID_APP_CREDENTIAL: "auth/invalid-app-credential",
+      INVALID_APP_ID: "auth/invalid-app-id",
+      INVALID_AUTH: "auth/invalid-user-token",
+      INVALID_AUTH_EVENT: "auth/invalid-auth-event",
+      INVALID_CERT_HASH: "auth/invalid-cert-hash",
+      INVALID_CODE: "auth/invalid-verification-code",
+      INVALID_CONTINUE_URI: "auth/invalid-continue-uri",
+      INVALID_CORDOVA_CONFIGURATION: "auth/invalid-cordova-configuration",
+      INVALID_CUSTOM_TOKEN: "auth/invalid-custom-token",
+      INVALID_DYNAMIC_LINK_DOMAIN: "auth/invalid-dynamic-link-domain",
+      INVALID_EMAIL: "auth/invalid-email",
+      INVALID_EMULATOR_SCHEME: "auth/invalid-emulator-scheme",
+      INVALID_IDP_RESPONSE: "auth/invalid-credential",
+      INVALID_MESSAGE_PAYLOAD: "auth/invalid-message-payload",
+      INVALID_MFA_SESSION: "auth/invalid-multi-factor-session",
+      INVALID_OAUTH_CLIENT_ID: "auth/invalid-oauth-client-id",
+      INVALID_OAUTH_PROVIDER: "auth/invalid-oauth-provider",
+      INVALID_OOB_CODE: "auth/invalid-action-code",
+      INVALID_ORIGIN: "auth/unauthorized-domain",
+      INVALID_PASSWORD: "auth/wrong-password",
+      INVALID_PERSISTENCE: "auth/invalid-persistence-type",
+      INVALID_PHONE_NUMBER: "auth/invalid-phone-number",
+      INVALID_PROVIDER_ID: "auth/invalid-provider-id",
+      INVALID_RECIPIENT_EMAIL: "auth/invalid-recipient-email",
+      INVALID_SENDER: "auth/invalid-sender",
+      INVALID_SESSION_INFO: "auth/invalid-verification-id",
+      INVALID_TENANT_ID: "auth/invalid-tenant-id",
+      MFA_INFO_NOT_FOUND: "auth/multi-factor-info-not-found",
+      MFA_REQUIRED: "auth/multi-factor-auth-required",
+      MISSING_ANDROID_PACKAGE_NAME: "auth/missing-android-pkg-name",
+      MISSING_APP_CREDENTIAL: "auth/missing-app-credential",
+      MISSING_AUTH_DOMAIN: "auth/auth-domain-config-required",
+      MISSING_CODE: "auth/missing-verification-code",
+      MISSING_CONTINUE_URI: "auth/missing-continue-uri",
+      MISSING_IFRAME_START: "auth/missing-iframe-start",
+      MISSING_IOS_BUNDLE_ID: "auth/missing-ios-bundle-id",
+      MISSING_OR_INVALID_NONCE: "auth/missing-or-invalid-nonce",
+      MISSING_MFA_INFO: "auth/missing-multi-factor-info",
+      MISSING_MFA_SESSION: "auth/missing-multi-factor-session",
+      MISSING_PHONE_NUMBER: "auth/missing-phone-number",
+      MISSING_SESSION_INFO: "auth/missing-verification-id",
+      MODULE_DESTROYED: "auth/app-deleted",
+      NEED_CONFIRMATION: "auth/account-exists-with-different-credential",
+      NETWORK_REQUEST_FAILED: "auth/network-request-failed",
+      NULL_USER: "auth/null-user",
+      NO_AUTH_EVENT: "auth/no-auth-event",
+      NO_SUCH_PROVIDER: "auth/no-such-provider",
+      OPERATION_NOT_ALLOWED: "auth/operation-not-allowed",
+      OPERATION_NOT_SUPPORTED: "auth/operation-not-supported-in-this-environment",
+      POPUP_BLOCKED: "auth/popup-blocked",
+      POPUP_CLOSED_BY_USER: "auth/popup-closed-by-user",
+      PROVIDER_ALREADY_LINKED: "auth/provider-already-linked",
+      QUOTA_EXCEEDED: "auth/quota-exceeded",
+      REDIRECT_CANCELLED_BY_USER: "auth/redirect-cancelled-by-user",
+      REDIRECT_OPERATION_PENDING: "auth/redirect-operation-pending",
+      REJECTED_CREDENTIAL: "auth/rejected-credential",
+      SECOND_FACTOR_ALREADY_ENROLLED: "auth/second-factor-already-in-use",
+      SECOND_FACTOR_LIMIT_EXCEEDED: "auth/maximum-second-factor-count-exceeded",
+      TENANT_ID_MISMATCH: "auth/tenant-id-mismatch",
+      TIMEOUT: "auth/timeout",
+      TOKEN_EXPIRED: "auth/user-token-expired",
+      TOO_MANY_ATTEMPTS_TRY_LATER: "auth/too-many-requests",
+      UNAUTHORIZED_DOMAIN: "auth/unauthorized-continue-uri",
+      UNSUPPORTED_FIRST_FACTOR: "auth/unsupported-first-factor",
+      UNSUPPORTED_PERSISTENCE: "auth/unsupported-persistence-type",
+      UNSUPPORTED_TENANT_OPERATION: "auth/unsupported-tenant-operation",
+      UNVERIFIED_EMAIL: "auth/unverified-email",
+      USER_CANCELLED: "auth/user-cancelled",
+      USER_DELETED: "auth/user-not-found",
+      USER_DISABLED: "auth/user-disabled",
+      USER_MISMATCH: "auth/user-mismatch",
+      USER_SIGNED_OUT: "auth/user-signed-out",
+      WEAK_PASSWORD: "auth/weak-password",
+      WEB_STORAGE_UNSUPPORTED: "auth/web-storage-unsupported",
+      ALREADY_INITIALIZED: "auth/already-initialized"
+    };
+    var logClient = new logger.Logger("@firebase/auth");
     function _logError(msg) {
       var args = [];
       for (var _i = 1; _i < arguments.length; _i++) {
@@ -3446,8 +3672,16 @@ var require_register_2a5ac87a = __commonJS({
       }
       return createErrorInternal.apply(void 0, tslib.__spreadArray([authOrCode], rest));
     }
+    function _errorWithCustomMessage(auth, code, message) {
+      var _a3;
+      var errorMap = tslib.__assign(tslib.__assign({}, prodErrorMap()), (_a3 = {}, _a3[code] = message, _a3));
+      var factory = new util.ErrorFactory("auth", "Firebase", errorMap);
+      return factory.create(code, {
+        appName: auth.name
+      });
+    }
     function createErrorInternal(authOrCode) {
-      var _a2;
+      var _a3;
       var rest = [];
       for (var _i = 1; _i < arguments.length; _i++) {
         rest[_i - 1] = arguments[_i];
@@ -3458,7 +3692,7 @@ var require_register_2a5ac87a = __commonJS({
         if (fullParams[0]) {
           fullParams[0].appName = authOrCode.name;
         }
-        return (_a2 = authOrCode._errorFactory).create.apply(_a2, tslib.__spreadArray([code], fullParams));
+        return (_a3 = authOrCode._errorFactory).create.apply(_a3, tslib.__spreadArray([code], fullParams));
       }
       return _DEFAULT_AUTH_ERROR_FACTORY.create.apply(_DEFAULT_AUTH_ERROR_FACTORY, tslib.__spreadArray([authOrCode], rest));
     }
@@ -3494,10 +3728,15 @@ var require_register_2a5ac87a = __commonJS({
       return instance;
     }
     function initializeAuth(app$1, deps) {
-      var provider = app._getProvider(app$1, "auth-exp");
+      var provider = app._getProvider(app$1, "auth");
       if (provider.isInitialized()) {
         var auth_1 = provider.getImmediate();
-        _fail(auth_1, "already-initialized");
+        var initialOptions = provider.getOptions();
+        if (util.deepEqual(initialOptions, deps !== null && deps !== void 0 ? deps : {})) {
+          return auth_1;
+        } else {
+          _fail(auth_1, "already-initialized");
+        }
       }
       var auth = provider.initialize({options: deps});
       return auth;
@@ -3511,15 +3750,15 @@ var require_register_2a5ac87a = __commonJS({
       auth._initializeWithPersistence(hierarchy, deps === null || deps === void 0 ? void 0 : deps.popupRedirectResolver);
     }
     function _getCurrentUrl() {
-      var _a2;
-      return typeof self !== "undefined" && ((_a2 = self.location) === null || _a2 === void 0 ? void 0 : _a2.href) || "";
+      var _a3;
+      return typeof self !== "undefined" && ((_a3 = self.location) === null || _a3 === void 0 ? void 0 : _a3.href) || "";
     }
     function _isHttpOrHttps() {
       return _getCurrentScheme() === "http:" || _getCurrentScheme() === "https:";
     }
     function _getCurrentScheme() {
-      var _a2;
-      return typeof self !== "undefined" && ((_a2 = self.location) === null || _a2 === void 0 ? void 0 : _a2.protocol) || null;
+      var _a3;
+      return typeof self !== "undefined" && ((_a3 = self.location) === null || _a3 === void 0 ? void 0 : _a3.protocol) || null;
     }
     function _isOnline() {
       if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && (_isHttpOrHttps() || util.isBrowserExtension() || "connection" in navigator)) {
@@ -3560,8 +3799,8 @@ var require_register_2a5ac87a = __commonJS({
     var FetchProvider = function() {
       function FetchProvider2() {
       }
-      FetchProvider2.initialize = function(fetchImpl, headersImpl, responseImpl) {
-        this.fetchImpl = fetchImpl;
+      FetchProvider2.initialize = function(fetchImpl2, headersImpl, responseImpl) {
+        this.fetchImpl = fetchImpl2;
         if (headersImpl) {
           this.headersImpl = headersImpl;
         }
@@ -3598,8 +3837,8 @@ var require_register_2a5ac87a = __commonJS({
       };
       return FetchProvider2;
     }();
-    var _a;
-    var SERVER_ERROR_MAP = (_a = {}, _a["CREDENTIAL_MISMATCH"] = "custom-token-mismatch", _a["MISSING_CUSTOM_TOKEN"] = "internal-error", _a["INVALID_IDENTIFIER"] = "invalid-email", _a["MISSING_CONTINUE_URI"] = "internal-error", _a["INVALID_PASSWORD"] = "wrong-password", _a["MISSING_PASSWORD"] = "internal-error", _a["EMAIL_EXISTS"] = "email-already-in-use", _a["PASSWORD_LOGIN_DISABLED"] = "operation-not-allowed", _a["INVALID_IDP_RESPONSE"] = "invalid-credential", _a["INVALID_PENDING_TOKEN"] = "invalid-credential", _a["FEDERATED_USER_ID_ALREADY_LINKED"] = "credential-already-in-use", _a["MISSING_REQ_TYPE"] = "internal-error", _a["EMAIL_NOT_FOUND"] = "user-not-found", _a["RESET_PASSWORD_EXCEED_LIMIT"] = "too-many-requests", _a["EXPIRED_OOB_CODE"] = "expired-action-code", _a["INVALID_OOB_CODE"] = "invalid-action-code", _a["MISSING_OOB_CODE"] = "internal-error", _a["CREDENTIAL_TOO_OLD_LOGIN_AGAIN"] = "requires-recent-login", _a["INVALID_ID_TOKEN"] = "invalid-user-token", _a["TOKEN_EXPIRED"] = "user-token-expired", _a["USER_NOT_FOUND"] = "user-token-expired", _a["TOO_MANY_ATTEMPTS_TRY_LATER"] = "too-many-requests", _a["INVALID_CODE"] = "invalid-verification-code", _a["INVALID_SESSION_INFO"] = "invalid-verification-id", _a["INVALID_TEMPORARY_PROOF"] = "invalid-credential", _a["MISSING_SESSION_INFO"] = "missing-verification-id", _a["SESSION_EXPIRED"] = "code-expired", _a["MISSING_ANDROID_PACKAGE_NAME"] = "missing-android-pkg-name", _a["UNAUTHORIZED_DOMAIN"] = "unauthorized-continue-uri", _a["INVALID_OAUTH_CLIENT_ID"] = "invalid-oauth-client-id", _a["ADMIN_ONLY_OPERATION"] = "admin-restricted-operation", _a["INVALID_MFA_PENDING_CREDENTIAL"] = "invalid-multi-factor-session", _a["MFA_ENROLLMENT_NOT_FOUND"] = "multi-factor-info-not-found", _a["MISSING_MFA_ENROLLMENT_ID"] = "missing-multi-factor-info", _a["MISSING_MFA_PENDING_CREDENTIAL"] = "missing-multi-factor-session", _a["SECOND_FACTOR_EXISTS"] = "second-factor-already-in-use", _a["SECOND_FACTOR_LIMIT_EXCEEDED"] = "maximum-second-factor-count-exceeded", _a);
+    var _a$1;
+    var SERVER_ERROR_MAP = (_a$1 = {}, _a$1["CREDENTIAL_MISMATCH"] = "custom-token-mismatch", _a$1["MISSING_CUSTOM_TOKEN"] = "internal-error", _a$1["INVALID_IDENTIFIER"] = "invalid-email", _a$1["MISSING_CONTINUE_URI"] = "internal-error", _a$1["INVALID_PASSWORD"] = "wrong-password", _a$1["MISSING_PASSWORD"] = "internal-error", _a$1["EMAIL_EXISTS"] = "email-already-in-use", _a$1["PASSWORD_LOGIN_DISABLED"] = "operation-not-allowed", _a$1["INVALID_IDP_RESPONSE"] = "invalid-credential", _a$1["INVALID_PENDING_TOKEN"] = "invalid-credential", _a$1["FEDERATED_USER_ID_ALREADY_LINKED"] = "credential-already-in-use", _a$1["MISSING_REQ_TYPE"] = "internal-error", _a$1["EMAIL_NOT_FOUND"] = "user-not-found", _a$1["RESET_PASSWORD_EXCEED_LIMIT"] = "too-many-requests", _a$1["EXPIRED_OOB_CODE"] = "expired-action-code", _a$1["INVALID_OOB_CODE"] = "invalid-action-code", _a$1["MISSING_OOB_CODE"] = "internal-error", _a$1["CREDENTIAL_TOO_OLD_LOGIN_AGAIN"] = "requires-recent-login", _a$1["INVALID_ID_TOKEN"] = "invalid-user-token", _a$1["TOKEN_EXPIRED"] = "user-token-expired", _a$1["USER_NOT_FOUND"] = "user-token-expired", _a$1["TOO_MANY_ATTEMPTS_TRY_LATER"] = "too-many-requests", _a$1["INVALID_CODE"] = "invalid-verification-code", _a$1["INVALID_SESSION_INFO"] = "invalid-verification-id", _a$1["INVALID_TEMPORARY_PROOF"] = "invalid-credential", _a$1["MISSING_SESSION_INFO"] = "missing-verification-id", _a$1["SESSION_EXPIRED"] = "code-expired", _a$1["MISSING_ANDROID_PACKAGE_NAME"] = "missing-android-pkg-name", _a$1["UNAUTHORIZED_DOMAIN"] = "unauthorized-continue-uri", _a$1["INVALID_OAUTH_CLIENT_ID"] = "invalid-oauth-client-id", _a$1["ADMIN_ONLY_OPERATION"] = "admin-restricted-operation", _a$1["INVALID_MFA_PENDING_CREDENTIAL"] = "invalid-multi-factor-session", _a$1["MFA_ENROLLMENT_NOT_FOUND"] = "multi-factor-info-not-found", _a$1["MISSING_MFA_ENROLLMENT_ID"] = "missing-multi-factor-info", _a$1["MISSING_MFA_PENDING_CREDENTIAL"] = "missing-multi-factor-session", _a$1["SECOND_FACTOR_EXISTS"] = "second-factor-already-in-use", _a$1["SECOND_FACTOR_LIMIT_EXCEEDED"] = "maximum-second-factor-count-exceeded", _a$1["BLOCKING_FUNCTION_ERROR_RESPONSE"] = "internal-error", _a$1);
     var DEFAULT_API_TIMEOUT_MS = new Delay(3e4, 6e4);
     function _addTidIfNecessary(auth, request) {
       if (auth.tenantId && !request.tenantId) {
@@ -3612,7 +3851,7 @@ var require_register_2a5ac87a = __commonJS({
         customErrorMap = {};
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performFetchWithErrorHandling(auth, customErrorMap, function() {
             var body = {};
             var params = {};
@@ -3643,26 +3882,26 @@ var require_register_2a5ac87a = __commonJS({
     }
     function _performFetchWithErrorHandling(auth, customErrorMap, fetchFn) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var errorMap, networkTimeout, response, json, errorMessage, serverErrorCode, authError, e_1;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        var errorMap, networkTimeout, response, json, errorMessage, _a3, serverErrorCode, serverErrorMessage, authError, e_1;
+        return tslib.__generator(this, function(_b) {
+          switch (_b.label) {
             case 0:
               auth._canInitEmulator = false;
               errorMap = tslib.__assign(tslib.__assign({}, SERVER_ERROR_MAP), customErrorMap);
-              _a2.label = 1;
+              _b.label = 1;
             case 1:
-              _a2.trys.push([1, 4, , 5]);
+              _b.trys.push([1, 4, , 5]);
               networkTimeout = new NetworkTimeout(auth);
               return [4, Promise.race([
                 fetchFn(),
                 networkTimeout.promise
               ])];
             case 2:
-              response = _a2.sent();
+              response = _b.sent();
               networkTimeout.clearNetworkTimeout();
               return [4, response.json()];
             case 3:
-              json = _a2.sent();
+              json = _b.sent();
               if ("needConfirmation" in json) {
                 throw _makeTaggedError(auth, "account-exists-with-different-credential", json);
               }
@@ -3670,18 +3909,22 @@ var require_register_2a5ac87a = __commonJS({
                 return [2, json];
               } else {
                 errorMessage = response.ok ? json.errorMessage : json.error.message;
-                serverErrorCode = errorMessage.split(" : ")[0];
+                _a3 = errorMessage.split(" : "), serverErrorCode = _a3[0], serverErrorMessage = _a3[1];
                 if (serverErrorCode === "FEDERATED_USER_ID_ALREADY_LINKED") {
                   throw _makeTaggedError(auth, "credential-already-in-use", json);
                 } else if (serverErrorCode === "EMAIL_EXISTS") {
                   throw _makeTaggedError(auth, "email-already-in-use", json);
                 }
                 authError = errorMap[serverErrorCode] || serverErrorCode.toLowerCase().replace(/[_\s]+/g, "-");
-                _fail(auth, authError);
+                if (serverErrorMessage) {
+                  throw _errorWithCustomMessage(auth, authError, serverErrorMessage);
+                } else {
+                  _fail(auth, authError);
+                }
               }
               return [3, 5];
             case 4:
-              e_1 = _a2.sent();
+              e_1 = _b.sent();
               if (e_1 instanceof util.FirebaseError) {
                 throw e_1;
               }
@@ -3699,12 +3942,12 @@ var require_register_2a5ac87a = __commonJS({
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
         var serverResponse;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, _performApiRequest(auth, method, path, request, customErrorMap)];
             case 1:
-              serverResponse = _a2.sent();
+              serverResponse = _a3.sent();
               if ("mfaPendingCredential" in serverResponse) {
                 _fail(auth, "multi-factor-auth-required", {
                   serverResponse
@@ -3748,27 +3991,27 @@ var require_register_2a5ac87a = __commonJS({
       if (response.phoneNumber) {
         errorParams.phoneNumber = response.phoneNumber;
       }
-      var error3 = _createError(auth, code, errorParams);
-      error3.customData._tokenResponse = response;
-      return error3;
+      var error2 = _createError(auth, code, errorParams);
+      error2.customData._tokenResponse = response;
+      return error2;
     }
     function deleteAccount(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:delete", request)];
         });
       });
     }
     function deleteLinkedAccounts(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
         });
       });
     }
     function getAccountInfo(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:lookup", request)];
         });
       });
@@ -3798,13 +4041,13 @@ var require_register_2a5ac87a = __commonJS({
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal, token, claims, firebase, signInProvider;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               userInternal = util.getModularInstance(user);
               return [4, userInternal.getIdToken(forceRefresh)];
             case 1:
-              token = _a2.sent();
+              token = _a3.sent();
               claims = _parseToken(token);
               _assert(claims && claims.exp && claims.auth_time && claims.iat, userInternal.auth, "internal-error");
               firebase = typeof claims.firebase === "object" ? claims.firebase : void 0;
@@ -3826,7 +4069,7 @@ var require_register_2a5ac87a = __commonJS({
       return Number(seconds) * 1e3;
     }
     function _parseToken(token) {
-      var _a2 = token.split("."), algorithm = _a2[0], payload = _a2[1], signature = _a2[2];
+      var _a3 = token.split("."), algorithm = _a3[0], payload = _a3[1], signature = _a3[2];
       if (algorithm === void 0 || payload === void 0 || signature === void 0) {
         _logError("JWT malformed, contained fewer than 3 sections");
         return null;
@@ -3856,28 +4099,28 @@ var require_register_2a5ac87a = __commonJS({
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
         var e_1;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               if (bypassAuthState) {
                 return [2, promise];
               }
-              _a2.label = 1;
+              _a3.label = 1;
             case 1:
-              _a2.trys.push([1, 3, , 6]);
+              _a3.trys.push([1, 3, , 6]);
               return [4, promise];
             case 2:
-              return [2, _a2.sent()];
+              return [2, _a3.sent()];
             case 3:
-              e_1 = _a2.sent();
+              e_1 = _a3.sent();
               if (!(e_1 instanceof util.FirebaseError && isUserInvalidated(e_1)))
                 return [3, 5];
               if (!(user.auth.currentUser === user))
                 return [3, 5];
               return [4, user.auth.signOut()];
             case 4:
-              _a2.sent();
-              _a2.label = 5;
+              _a3.sent();
+              _a3.label = 5;
             case 5:
               throw e_1;
             case 6:
@@ -3886,8 +4129,8 @@ var require_register_2a5ac87a = __commonJS({
         });
       });
     }
-    function isUserInvalidated(_a2) {
-      var code = _a2.code;
+    function isUserInvalidated(_a3) {
+      var code = _a3.code;
       return code === "auth/user-disabled" || code === "auth/user-token-expired";
     }
     var ProactiveRefresh = function() {
@@ -3914,14 +4157,14 @@ var require_register_2a5ac87a = __commonJS({
         }
       };
       ProactiveRefresh2.prototype.getInterval = function(wasError) {
-        var _a2;
+        var _a3;
         if (wasError) {
           var interval = this.errorBackoff;
           this.errorBackoff = Math.min(this.errorBackoff * 2, 96e4);
           return interval;
         } else {
           this.errorBackoff = 3e4;
-          var expTime = (_a2 = this.user.stsTokenManager.expirationTime) !== null && _a2 !== void 0 ? _a2 : 0;
+          var expTime = (_a3 = this.user.stsTokenManager.expirationTime) !== null && _a3 !== void 0 ? _a3 : 0;
           var interval = expTime - Date.now() - 3e5;
           return Math.max(0, interval);
         }
@@ -3937,12 +4180,12 @@ var require_register_2a5ac87a = __commonJS({
         var interval = this.getInterval(wasError);
         this.timerId = setTimeout(function() {
           return tslib.__awaiter(_this, void 0, void 0, function() {
-            return tslib.__generator(this, function(_a2) {
-              switch (_a2.label) {
+            return tslib.__generator(this, function(_a3) {
+              switch (_a3.label) {
                 case 0:
                   return [4, this.iteration()];
                 case 1:
-                  _a2.sent();
+                  _a3.sent();
                   return [2];
               }
             });
@@ -3952,16 +4195,16 @@ var require_register_2a5ac87a = __commonJS({
       ProactiveRefresh2.prototype.iteration = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var e_1;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
-                _a2.trys.push([0, 2, , 3]);
+                _a3.trys.push([0, 2, , 3]);
                 return [4, this.user.getIdToken(true)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 return [3, 3];
               case 2:
-                e_1 = _a2.sent();
+                e_1 = _a3.sent();
                 if (e_1.code === "auth/network-request-failed") {
                   this.schedule(true);
                 }
@@ -3999,7 +4242,7 @@ var require_register_2a5ac87a = __commonJS({
       return UserMetadata2;
     }();
     function _reloadWithoutSaving(user) {
-      var _a2;
+      var _a3;
       return tslib.__awaiter(this, void 0, void 0, function() {
         var auth, idToken, response, coreAccount, newProviderData, providerData, oldIsAnonymous, newIsAnonymous, isAnonymous, updates;
         return tslib.__generator(this, function(_b) {
@@ -4015,7 +4258,7 @@ var require_register_2a5ac87a = __commonJS({
               _assert(response === null || response === void 0 ? void 0 : response.users.length, auth, "internal-error");
               coreAccount = response.users[0];
               user._notifyReloadListener(coreAccount);
-              newProviderData = ((_a2 = coreAccount.providerUserInfo) === null || _a2 === void 0 ? void 0 : _a2.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
+              newProviderData = ((_a3 = coreAccount.providerUserInfo) === null || _a3 === void 0 ? void 0 : _a3.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
               providerData = mergeProviderData(user.providerData, newProviderData);
               oldIsAnonymous = user.isAnonymous;
               newIsAnonymous = !(user.email && coreAccount.passwordHash) && !(providerData === null || providerData === void 0 ? void 0 : providerData.length);
@@ -4041,16 +4284,16 @@ var require_register_2a5ac87a = __commonJS({
     function reload(user) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               userInternal = util.getModularInstance(user);
               return [4, _reloadWithoutSaving(userInternal)];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [4, userInternal.auth._persistUserIfCurrent(userInternal)];
             case 2:
-              _a2.sent();
+              _a3.sent();
               userInternal.auth._notifyListenersIfCurrent(userInternal);
               return [2];
           }
@@ -4066,8 +4309,8 @@ var require_register_2a5ac87a = __commonJS({
       return tslib.__spreadArray(tslib.__spreadArray([], deduped), newData);
     }
     function extractProviderData(providers) {
-      return providers.map(function(_a2) {
-        var providerId = _a2.providerId, provider = tslib.__rest(_a2, ["providerId"]);
+      return providers.map(function(_a3) {
+        var providerId = _a3.providerId, provider = tslib.__rest(_a3, ["providerId"]);
         return {
           providerId,
           uid: provider.rawId || "",
@@ -4081,15 +4324,15 @@ var require_register_2a5ac87a = __commonJS({
     function requestStsToken(auth, refreshToken) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var response;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, _performFetchWithErrorHandling(auth, {}, function() {
                 var body = util.querystring({
                   "grant_type": "refresh_token",
                   "refresh_token": refreshToken
                 }).slice(1);
-                var _a3 = auth.config, tokenApiHost = _a3.tokenApiHost, apiKey = _a3.apiKey;
+                var _a4 = auth.config, tokenApiHost = _a4.tokenApiHost, apiKey = _a4.apiKey;
                 var url = _getFinalTarget(auth, tokenApiHost, "/v1/token", "key=" + apiKey);
                 return FetchProvider.fetch()(url, {
                   method: "POST",
@@ -4101,7 +4344,7 @@ var require_register_2a5ac87a = __commonJS({
                 });
               })];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               return [2, {
                 accessToken: response.access_token,
                 expiresIn: response.expires_in,
@@ -4136,8 +4379,8 @@ var require_register_2a5ac87a = __commonJS({
           forceRefresh = false;
         }
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 _assert(!this.accessToken || this.refreshToken, auth, "user-token-expired");
                 if (!forceRefresh && this.accessToken && !this.isExpired) {
@@ -4147,7 +4390,7 @@ var require_register_2a5ac87a = __commonJS({
                   return [3, 2];
                 return [4, this.refresh(auth, this.refreshToken)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 return [2, this.accessToken];
               case 2:
                 return [2, null];
@@ -4160,13 +4403,13 @@ var require_register_2a5ac87a = __commonJS({
       };
       StsTokenManager2.prototype.refresh = function(auth, oldToken) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          var _a2, accessToken, refreshToken, expiresIn;
+          var _a3, accessToken, refreshToken, expiresIn;
           return tslib.__generator(this, function(_b) {
             switch (_b.label) {
               case 0:
                 return [4, requestStsToken(auth, oldToken)];
               case 1:
-                _a2 = _b.sent(), accessToken = _a2.accessToken, refreshToken = _a2.refreshToken, expiresIn = _a2.expiresIn;
+                _a3 = _b.sent(), accessToken = _a3.accessToken, refreshToken = _a3.refreshToken, expiresIn = _a3.expiresIn;
                 this.updateTokensAndExpiration(accessToken, refreshToken, Number(expiresIn));
                 return [2];
             }
@@ -4225,8 +4468,8 @@ var require_register_2a5ac87a = __commonJS({
       _assert(typeof assertion === "string" || typeof assertion === "undefined", "internal-error", {appName});
     }
     var UserImpl = function() {
-      function UserImpl2(_a2) {
-        var uid = _a2.uid, auth = _a2.auth, stsTokenManager = _a2.stsTokenManager, opt = tslib.__rest(_a2, ["uid", "auth", "stsTokenManager"]);
+      function UserImpl2(_a3) {
+        var uid = _a3.uid, auth = _a3.auth, stsTokenManager = _a3.stsTokenManager, opt = tslib.__rest(_a3, ["uid", "auth", "stsTokenManager"]);
         this.providerId = "firebase";
         this.emailVerified = false;
         this.isAnonymous = false;
@@ -4241,6 +4484,7 @@ var require_register_2a5ac87a = __commonJS({
         this.accessToken = stsTokenManager.accessToken;
         this.displayName = opt.displayName || null;
         this.email = opt.email || null;
+        this.emailVerified = opt.emailVerified || false;
         this.phoneNumber = opt.phoneNumber || null;
         this.photoURL = opt.photoURL || null;
         this.isAnonymous = opt.isAnonymous || false;
@@ -4249,21 +4493,21 @@ var require_register_2a5ac87a = __commonJS({
       UserImpl2.prototype.getIdToken = function(forceRefresh) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var accessToken;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, _logoutIfInvalidated(this, this.stsTokenManager.getToken(this.auth, forceRefresh))];
               case 1:
-                accessToken = _a2.sent();
+                accessToken = _a3.sent();
                 _assert(accessToken, this.auth, "internal-error");
                 if (!(this.accessToken !== accessToken))
                   return [3, 3];
                 this.accessToken = accessToken;
                 return [4, this.auth._persistUserIfCurrent(this)];
               case 2:
-                _a2.sent();
+                _a3.sent();
                 this.auth._notifyListenersIfCurrent(this);
-                _a2.label = 3;
+                _a3.label = 3;
               case 3:
                 return [2, accessToken];
             }
@@ -4324,8 +4568,8 @@ var require_register_2a5ac87a = __commonJS({
         }
         return tslib.__awaiter(this, void 0, void 0, function() {
           var tokensRefreshed;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 tokensRefreshed = false;
                 if (response.idToken && response.idToken !== this.stsTokenManager.accessToken) {
@@ -4336,12 +4580,12 @@ var require_register_2a5ac87a = __commonJS({
                   return [3, 2];
                 return [4, _reloadWithoutSaving(this)];
               case 1:
-                _a2.sent();
-                _a2.label = 2;
+                _a3.sent();
+                _a3.label = 2;
               case 2:
                 return [4, this.auth._persistUserIfCurrent(this)];
               case 3:
-                _a2.sent();
+                _a3.sent();
                 if (tokensRefreshed) {
                   this.auth._notifyListenersIfCurrent(this);
                 }
@@ -4353,15 +4597,15 @@ var require_register_2a5ac87a = __commonJS({
       UserImpl2.prototype.delete = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var idToken;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, this.getIdToken()];
               case 1:
-                idToken = _a2.sent();
+                idToken = _a3.sent();
                 return [4, _logoutIfInvalidated(this, deleteAccount(this.auth, {idToken}))];
               case 2:
-                _a2.sent();
+                _a3.sent();
                 this.stsTokenManager.clearRefreshToken();
                 return [2, this.auth.signOut()];
             }
@@ -4396,8 +4640,8 @@ var require_register_2a5ac87a = __commonJS({
         configurable: true
       });
       UserImpl2._fromJSON = function(auth, object) {
-        var _a2, _b, _c, _d, _e, _f, _g, _h;
-        var displayName = (_a2 = object.displayName) !== null && _a2 !== void 0 ? _a2 : void 0;
+        var _a3, _b, _c, _d, _e, _f, _g, _h;
+        var displayName = (_a3 = object.displayName) !== null && _a3 !== void 0 ? _a3 : void 0;
         var email = (_b = object.email) !== null && _b !== void 0 ? _b : void 0;
         var phoneNumber = (_c = object.phoneNumber) !== null && _c !== void 0 ? _c : void 0;
         var photoURL = (_d = object.photoURL) !== null && _d !== void 0 ? _d : void 0;
@@ -4449,8 +4693,8 @@ var require_register_2a5ac87a = __commonJS({
         }
         return tslib.__awaiter(this, void 0, void 0, function() {
           var stsTokenManager, user;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 stsTokenManager = new StsTokenManager();
                 stsTokenManager.updateFromServerResponse(idTokenResponse);
@@ -4462,7 +4706,7 @@ var require_register_2a5ac87a = __commonJS({
                 });
                 return [4, _reloadWithoutSaving(user)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 return [2, user];
             }
           });
@@ -4477,14 +4721,14 @@ var require_register_2a5ac87a = __commonJS({
       }
       InMemoryPersistence2.prototype._isAvailable = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             return [2, true];
           });
         });
       };
       InMemoryPersistence2.prototype._set = function(key, value) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             this.storage[key] = value;
             return [2];
           });
@@ -4493,7 +4737,7 @@ var require_register_2a5ac87a = __commonJS({
       InMemoryPersistence2.prototype._get = function(key) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var value;
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             value = this.storage[key];
             return [2, value === void 0 ? null : value];
           });
@@ -4501,7 +4745,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       InMemoryPersistence2.prototype._remove = function(key) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             delete this.storage[key];
             return [2];
           });
@@ -4525,7 +4769,7 @@ var require_register_2a5ac87a = __commonJS({
         this.persistence = persistence;
         this.auth = auth;
         this.userKey = userKey;
-        var _a2 = this.auth, config = _a2.config, name2 = _a2.name;
+        var _a3 = this.auth, config = _a3.config, name2 = _a3.name;
         this.fullUserKey = _persistenceKeyName(this.userKey, config.apiKey, name2);
         this.fullPersistenceKey = _persistenceKeyName("persistence", config.apiKey, name2);
         this.boundEventHandler = auth._onStorageEvent.bind(auth);
@@ -4537,12 +4781,12 @@ var require_register_2a5ac87a = __commonJS({
       PersistenceUserManager2.prototype.getCurrentUser = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var blob;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, this.persistence._get(this.fullUserKey)];
               case 1:
-                blob = _a2.sent();
+                blob = _a3.sent();
                 return [2, blob ? UserImpl._fromJSON(this.auth, blob) : null];
             }
           });
@@ -4557,18 +4801,18 @@ var require_register_2a5ac87a = __commonJS({
       PersistenceUserManager2.prototype.setPersistence = function(newPersistence) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var currentUser;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 if (this.persistence === newPersistence) {
                   return [2];
                 }
                 return [4, this.getCurrentUser()];
               case 1:
-                currentUser = _a2.sent();
+                currentUser = _a3.sent();
                 return [4, this.removeCurrentUser()];
               case 2:
-                _a2.sent();
+                _a3.sent();
                 this.persistence = newPersistence;
                 if (currentUser) {
                   return [2, this.setCurrentUser(currentUser)];
@@ -4586,75 +4830,84 @@ var require_register_2a5ac87a = __commonJS({
           userKey = "authUser";
         }
         return tslib.__awaiter(this, void 0, void 0, function() {
-          var chosenPersistence, _i, persistenceHierarchy_1, persistence, userToMigrate, key, _a2, persistenceHierarchy_2, persistence, blob, user, _b;
+          var availablePersistences, selectedPersistence, key, userToMigrate, _i, persistenceHierarchy_1, persistence, blob, user, migrationHierarchy;
           var _this = this;
-          return tslib.__generator(this, function(_c) {
-            switch (_c.label) {
+          return tslib.__generator(this, function(_b) {
+            switch (_b.label) {
               case 0:
                 if (!persistenceHierarchy.length) {
                   return [2, new PersistenceUserManager2(_getInstance(inMemoryPersistence), auth, userKey)];
                 }
-                chosenPersistence = _getInstance(inMemoryPersistence);
-                _i = 0, persistenceHierarchy_1 = persistenceHierarchy;
-                _c.label = 1;
-              case 1:
-                if (!(_i < persistenceHierarchy_1.length))
-                  return [3, 4];
-                persistence = persistenceHierarchy_1[_i];
-                return [4, persistence._isAvailable()];
-              case 2:
-                if (_c.sent()) {
-                  chosenPersistence = persistence;
-                  return [3, 4];
-                }
-                _c.label = 3;
-              case 3:
-                _i++;
-                return [3, 1];
-              case 4:
-                userToMigrate = null;
-                key = _persistenceKeyName(userKey, auth.config.apiKey, auth.name);
-                _a2 = 0, persistenceHierarchy_2 = persistenceHierarchy;
-                _c.label = 5;
-              case 5:
-                if (!(_a2 < persistenceHierarchy_2.length))
-                  return [3, 10];
-                persistence = persistenceHierarchy_2[_a2];
-                _c.label = 6;
-              case 6:
-                _c.trys.push([6, 8, , 9]);
-                return [4, persistence._get(key)];
-              case 7:
-                blob = _c.sent();
-                if (blob) {
-                  user = UserImpl._fromJSON(auth, blob);
-                  if (persistence !== chosenPersistence) {
-                    userToMigrate = user;
-                  }
-                  return [3, 10];
-                }
-                return [3, 9];
-              case 8:
-                _b = _c.sent();
-                return [3, 9];
-              case 9:
-                _a2++;
-                return [3, 5];
-              case 10:
-                if (!userToMigrate)
-                  return [3, 12];
-                return [4, chosenPersistence._set(key, userToMigrate.toJSON())];
-              case 11:
-                _c.sent();
-                _c.label = 12;
-              case 12:
                 return [4, Promise.all(persistenceHierarchy.map(function(persistence2) {
                   return tslib.__awaiter(_this, void 0, void 0, function() {
-                    var _a3;
+                    return tslib.__generator(this, function(_a3) {
+                      switch (_a3.label) {
+                        case 0:
+                          return [4, persistence2._isAvailable()];
+                        case 1:
+                          if (_a3.sent()) {
+                            return [2, persistence2];
+                          }
+                          return [2, void 0];
+                      }
+                    });
+                  });
+                }))];
+              case 1:
+                availablePersistences = _b.sent().filter(function(persistence2) {
+                  return persistence2;
+                });
+                selectedPersistence = availablePersistences[0] || _getInstance(inMemoryPersistence);
+                key = _persistenceKeyName(userKey, auth.config.apiKey, auth.name);
+                userToMigrate = null;
+                _i = 0, persistenceHierarchy_1 = persistenceHierarchy;
+                _b.label = 2;
+              case 2:
+                if (!(_i < persistenceHierarchy_1.length))
+                  return [3, 7];
+                persistence = persistenceHierarchy_1[_i];
+                _b.label = 3;
+              case 3:
+                _b.trys.push([3, 5, , 6]);
+                return [4, persistence._get(key)];
+              case 4:
+                blob = _b.sent();
+                if (blob) {
+                  user = UserImpl._fromJSON(auth, blob);
+                  if (persistence !== selectedPersistence) {
+                    userToMigrate = user;
+                  }
+                  selectedPersistence = persistence;
+                  return [3, 7];
+                }
+                return [3, 6];
+              case 5:
+                _b.sent();
+                return [3, 6];
+              case 6:
+                _i++;
+                return [3, 2];
+              case 7:
+                migrationHierarchy = availablePersistences.filter(function(p2) {
+                  return p2._shouldAllowMigration;
+                });
+                if (!selectedPersistence._shouldAllowMigration || !migrationHierarchy.length) {
+                  return [2, new PersistenceUserManager2(selectedPersistence, auth, userKey)];
+                }
+                selectedPersistence = migrationHierarchy[0];
+                if (!userToMigrate)
+                  return [3, 9];
+                return [4, selectedPersistence._set(key, userToMigrate.toJSON())];
+              case 8:
+                _b.sent();
+                _b.label = 9;
+              case 9:
+                return [4, Promise.all(persistenceHierarchy.map(function(persistence2) {
+                  return tslib.__awaiter(_this, void 0, void 0, function() {
                     return tslib.__generator(this, function(_b2) {
                       switch (_b2.label) {
                         case 0:
-                          if (!(persistence2 !== chosenPersistence))
+                          if (!(persistence2 !== selectedPersistence))
                             return [3, 4];
                           _b2.label = 1;
                         case 1:
@@ -4664,7 +4917,7 @@ var require_register_2a5ac87a = __commonJS({
                           _b2.sent();
                           return [3, 4];
                         case 3:
-                          _a3 = _b2.sent();
+                          _b2.sent();
                           return [3, 4];
                         case 4:
                           return [2];
@@ -4672,9 +4925,9 @@ var require_register_2a5ac87a = __commonJS({
                     });
                   });
                 }))];
-              case 13:
-                _c.sent();
-                return [2, new PersistenceUserManager2(chosenPersistence, auth, userKey)];
+              case 10:
+                _b.sent();
+                return [2, new PersistenceUserManager2(selectedPersistence, auth, userKey)];
             }
           });
         });
@@ -4769,13 +5022,6 @@ var require_register_2a5ac87a = __commonJS({
       }
       return /(iPad|iPhone|iPod).*OS 7_\d/i.test(ua) || /(iPad|iPhone|iPod).*OS 8_\d/i.test(ua);
     }
-    function _isIOSStandalone(ua) {
-      var _a2;
-      if (ua === void 0) {
-        ua = util.getUA();
-      }
-      return _isIOS(ua) && !!((_a2 = window.navigator) === null || _a2 === void 0 ? void 0 : _a2.standalone);
-    }
     function _isIE10() {
       return util.isIE() && document.documentMode === 10;
     }
@@ -4821,7 +5067,6 @@ var require_register_2a5ac87a = __commonJS({
         this.idTokenSubscription = new Subscription(this);
         this.redirectUser = null;
         this.isProactiveRefreshEnabled = false;
-        this.redirectInitializerError = null;
         this._canInitEmulator = true;
         this._isInitialized = false;
         this._deleted = false;
@@ -4843,7 +5088,7 @@ var require_register_2a5ac87a = __commonJS({
         }
         this._initializationPromise = this.queue(function() {
           return tslib.__awaiter(_this, void 0, void 0, function() {
-            var _a2;
+            var _a3;
             var _b;
             return tslib.__generator(this, function(_c) {
               switch (_c.label) {
@@ -4851,10 +5096,10 @@ var require_register_2a5ac87a = __commonJS({
                   if (this._deleted) {
                     return [2];
                   }
-                  _a2 = this;
+                  _a3 = this;
                   return [4, PersistenceUserManager.create(this, persistenceHierarchy)];
                 case 1:
-                  _a2.persistenceManager = _c.sent();
+                  _a3.persistenceManager = _c.sent();
                   if (this._deleted) {
                     return [2];
                   }
@@ -4877,24 +5122,20 @@ var require_register_2a5ac87a = __commonJS({
             });
           });
         });
-        return this._initializationPromise.then(function() {
-          if (_this.redirectInitializerError) {
-            throw _this.redirectInitializerError;
-          }
-        });
+        return this._initializationPromise;
       };
       AuthImpl2.prototype._onStorageEvent = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var user;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 if (this._deleted) {
                   return [2];
                 }
                 return [4, this.assertedPersistence.getCurrentUser()];
               case 1:
-                user = _a2.sent();
+                user = _a3.sent();
                 if (!this.currentUser && !user) {
                   return [2];
                 }
@@ -4903,19 +5144,19 @@ var require_register_2a5ac87a = __commonJS({
                 this._currentUser._assign(user);
                 return [4, this.currentUser.getIdToken()];
               case 2:
-                _a2.sent();
+                _a3.sent();
                 return [2];
               case 3:
                 return [4, this._updateCurrentUser(user)];
               case 4:
-                _a2.sent();
+                _a3.sent();
                 return [2];
             }
           });
         });
       };
       AuthImpl2.prototype.initializeCurrentUser = function(popupRedirectResolver) {
-        var _a2;
+        var _a3;
         return tslib.__awaiter(this, void 0, void 0, function() {
           var storedUser, redirectUserEventId, storedUserEventId, result;
           return tslib.__generator(this, function(_b) {
@@ -4929,7 +5170,7 @@ var require_register_2a5ac87a = __commonJS({
                 return [4, this.getOrInitRedirectPersistenceManager()];
               case 2:
                 _b.sent();
-                redirectUserEventId = (_a2 = this.redirectUser) === null || _a2 === void 0 ? void 0 : _a2._redirectEventId;
+                redirectUserEventId = (_a3 = this.redirectUser) === null || _a3 === void 0 ? void 0 : _a3._redirectEventId;
                 storedUserEventId = storedUser === null || storedUser === void 0 ? void 0 : storedUser._redirectEventId;
                 return [4, this.tryRedirectSignIn(popupRedirectResolver)];
               case 3:
@@ -4959,24 +5200,23 @@ var require_register_2a5ac87a = __commonJS({
       };
       AuthImpl2.prototype.tryRedirectSignIn = function(redirectResolver) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          var result, e_1;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          var result;
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 result = null;
-                _a2.label = 1;
+                _a3.label = 1;
               case 1:
-                _a2.trys.push([1, 3, , 5]);
+                _a3.trys.push([1, 3, , 5]);
                 return [4, this._popupRedirectResolver._completeRedirectFn(this, redirectResolver, true)];
               case 2:
-                result = _a2.sent();
+                result = _a3.sent();
                 return [3, 5];
               case 3:
-                e_1 = _a2.sent();
-                this.redirectInitializerError = e_1;
+                _a3.sent();
                 return [4, this._setRedirectUser(null)];
               case 4:
-                _a2.sent();
+                _a3.sent();
                 return [3, 5];
               case 5:
                 return [2, result];
@@ -4987,16 +5227,16 @@ var require_register_2a5ac87a = __commonJS({
       AuthImpl2.prototype.reloadAndSetCurrentUserOrClear = function(user) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var e_2;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
-                _a2.trys.push([0, 2, , 3]);
+                _a3.trys.push([0, 2, , 3]);
                 return [4, _reloadWithoutSaving(user)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 return [3, 3];
               case 2:
-                e_2 = _a2.sent();
+                e_2 = _a3.sent();
                 if (e_2.code !== "auth/network-request-failed") {
                   return [2, this.directlySetCurrentUser(null)];
                 }
@@ -5012,7 +5252,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       AuthImpl2.prototype._delete = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             this._deleted = true;
             return [2];
           });
@@ -5021,7 +5261,7 @@ var require_register_2a5ac87a = __commonJS({
       AuthImpl2.prototype.updateCurrentUser = function(userExtern) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var user;
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             user = userExtern ? util.getModularInstance(userExtern) : null;
             if (user) {
               _assert(user.auth.config.apiKey === this.config.apiKey, this, "invalid-user-token");
@@ -5033,7 +5273,7 @@ var require_register_2a5ac87a = __commonJS({
       AuthImpl2.prototype._updateCurrentUser = function(user) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var _this = this;
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             if (this._deleted) {
               return [2];
             }
@@ -5042,12 +5282,12 @@ var require_register_2a5ac87a = __commonJS({
             }
             return [2, this.queue(function() {
               return tslib.__awaiter(_this, void 0, void 0, function() {
-                return tslib.__generator(this, function(_a3) {
-                  switch (_a3.label) {
+                return tslib.__generator(this, function(_a4) {
+                  switch (_a4.label) {
                     case 0:
                       return [4, this.directlySetCurrentUser(user)];
                     case 1:
-                      _a3.sent();
+                      _a4.sent();
                       this.notifyAuthListeners();
                       return [2];
                   }
@@ -5059,15 +5299,15 @@ var require_register_2a5ac87a = __commonJS({
       };
       AuthImpl2.prototype.signOut = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 if (!(this.redirectPersistenceManager || this._popupRedirectResolver))
                   return [3, 2];
                 return [4, this._setRedirectUser(null)];
               case 1:
-                _a2.sent();
-                _a2.label = 2;
+                _a3.sent();
+                _a3.label = 2;
               case 2:
                 return [2, this._updateCurrentUser(null)];
             }
@@ -5078,12 +5318,12 @@ var require_register_2a5ac87a = __commonJS({
         var _this = this;
         return this.queue(function() {
           return tslib.__awaiter(_this, void 0, void 0, function() {
-            return tslib.__generator(this, function(_a2) {
-              switch (_a2.label) {
+            return tslib.__generator(this, function(_a3) {
+              switch (_a3.label) {
                 case 0:
                   return [4, this.assertedPersistence.setPersistence(_getInstance(persistence))];
                 case 1:
-                  _a2.sent();
+                  _a3.sent();
                   return [2];
               }
             });
@@ -5096,30 +5336,30 @@ var require_register_2a5ac87a = __commonJS({
       AuthImpl2.prototype._updateErrorMap = function(errorMap) {
         this._errorFactory = new util.ErrorFactory("auth", "Firebase", errorMap());
       };
-      AuthImpl2.prototype.onAuthStateChanged = function(nextOrObserver, error3, completed) {
-        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error3, completed);
+      AuthImpl2.prototype.onAuthStateChanged = function(nextOrObserver, error2, completed) {
+        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error2, completed);
       };
-      AuthImpl2.prototype.onIdTokenChanged = function(nextOrObserver, error3, completed) {
-        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error3, completed);
+      AuthImpl2.prototype.onIdTokenChanged = function(nextOrObserver, error2, completed) {
+        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error2, completed);
       };
       AuthImpl2.prototype.toJSON = function() {
-        var _a2;
+        var _a3;
         return {
           apiKey: this.config.apiKey,
           authDomain: this.config.authDomain,
           appName: this.name,
-          currentUser: (_a2 = this._currentUser) === null || _a2 === void 0 ? void 0 : _a2.toJSON()
+          currentUser: (_a3 = this._currentUser) === null || _a3 === void 0 ? void 0 : _a3.toJSON()
         };
       };
       AuthImpl2.prototype._setRedirectUser = function(user, popupRedirectResolver) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var redirectManager;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, this.getOrInitRedirectPersistenceManager(popupRedirectResolver)];
               case 1:
-                redirectManager = _a2.sent();
+                redirectManager = _a3.sent();
                 return [2, user === null ? redirectManager.removeCurrentUser() : redirectManager.setCurrentUser(user)];
             }
           });
@@ -5127,7 +5367,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       AuthImpl2.prototype.getOrInitRedirectPersistenceManager = function(popupRedirectResolver) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          var resolver, _a2, _b;
+          var resolver, _a3, _b;
           return tslib.__generator(this, function(_c) {
             switch (_c.label) {
               case 0:
@@ -5135,10 +5375,10 @@ var require_register_2a5ac87a = __commonJS({
                   return [3, 3];
                 resolver = popupRedirectResolver && _getInstance(popupRedirectResolver) || this._popupRedirectResolver;
                 _assert(resolver, this, "argument-error");
-                _a2 = this;
+                _a3 = this;
                 return [4, PersistenceUserManager.create(this, [_getInstance(resolver._redirectPersistence)], "redirectUser")];
               case 1:
-                _a2.redirectPersistenceManager = _c.sent();
+                _a3.redirectPersistenceManager = _c.sent();
                 _b = this;
                 return [4, this.redirectPersistenceManager.getCurrentUser()];
               case 2:
@@ -5151,7 +5391,7 @@ var require_register_2a5ac87a = __commonJS({
         });
       };
       AuthImpl2.prototype._redirectUserForId = function(id) {
-        var _a2, _b;
+        var _a3, _b;
         return tslib.__awaiter(this, void 0, void 0, function() {
           var _this = this;
           return tslib.__generator(this, function(_c) {
@@ -5161,7 +5401,7 @@ var require_register_2a5ac87a = __commonJS({
                   return [3, 2];
                 return [4, this.queue(function() {
                   return tslib.__awaiter(_this, void 0, void 0, function() {
-                    return tslib.__generator(this, function(_a3) {
+                    return tslib.__generator(this, function(_a4) {
                       return [2];
                     });
                   });
@@ -5170,7 +5410,7 @@ var require_register_2a5ac87a = __commonJS({
                 _c.sent();
                 _c.label = 2;
               case 2:
-                if (((_a2 = this._currentUser) === null || _a2 === void 0 ? void 0 : _a2._redirectEventId) === id) {
+                if (((_a3 = this._currentUser) === null || _a3 === void 0 ? void 0 : _a3._redirectEventId) === id) {
                   return [2, this._currentUser];
                 }
                 if (((_b = this.redirectUser) === null || _b === void 0 ? void 0 : _b._redirectEventId) === id) {
@@ -5184,11 +5424,11 @@ var require_register_2a5ac87a = __commonJS({
       AuthImpl2.prototype._persistUserIfCurrent = function(user) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var _this = this;
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             if (user === this.currentUser) {
               return [2, this.queue(function() {
                 return tslib.__awaiter(_this, void 0, void 0, function() {
-                  return tslib.__generator(this, function(_a3) {
+                  return tslib.__generator(this, function(_a4) {
                     return [2, this.directlySetCurrentUser(user)];
                   });
                 });
@@ -5226,39 +5466,39 @@ var require_register_2a5ac87a = __commonJS({
         configurable: true
       });
       AuthImpl2.prototype.notifyAuthListeners = function() {
-        var _a2, _b;
+        var _a3, _b;
         if (!this._isInitialized) {
           return;
         }
         this.idTokenSubscription.next(this.currentUser);
-        var currentUid = (_b = (_a2 = this.currentUser) === null || _a2 === void 0 ? void 0 : _a2.uid) !== null && _b !== void 0 ? _b : null;
+        var currentUid = (_b = (_a3 = this.currentUser) === null || _a3 === void 0 ? void 0 : _a3.uid) !== null && _b !== void 0 ? _b : null;
         if (this.lastNotifiedUid !== currentUid) {
           this.lastNotifiedUid = currentUid;
           this.authStateSubscription.next(this.currentUser);
         }
       };
-      AuthImpl2.prototype.registerStateListener = function(subscription, nextOrObserver, error3, completed) {
+      AuthImpl2.prototype.registerStateListener = function(subscription, nextOrObserver, error2, completed) {
         var _this = this;
         if (this._deleted) {
           return function() {
           };
         }
-        var cb = typeof nextOrObserver === "function" ? nextOrObserver : nextOrObserver.next;
+        var cb = typeof nextOrObserver === "function" ? nextOrObserver : nextOrObserver.next.bind(nextOrObserver);
         var promise = this._isInitialized ? Promise.resolve() : this._initializationPromise;
         _assert(promise, this, "internal-error");
         promise.then(function() {
           return cb(_this.currentUser);
         });
         if (typeof nextOrObserver === "function") {
-          return subscription.addObserver(nextOrObserver, error3, completed);
+          return subscription.addObserver(nextOrObserver, error2, completed);
         } else {
           return subscription.addObserver(nextOrObserver);
         }
       };
       AuthImpl2.prototype.directlySetCurrentUser = function(user) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 if (this.currentUser && this.currentUser !== user) {
                   this._currentUser._stopProactiveRefresh();
@@ -5271,13 +5511,13 @@ var require_register_2a5ac87a = __commonJS({
                   return [3, 2];
                 return [4, this.assertedPersistence.setCurrentUser(user)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 return [3, 4];
               case 2:
                 return [4, this.assertedPersistence.removeCurrentUser()];
               case 3:
-                _a2.sent();
-                _a2.label = 4;
+                _a3.sent();
+                _a3.label = 4;
               case 4:
                 return [2];
             }
@@ -5334,13 +5574,13 @@ var require_register_2a5ac87a = __commonJS({
       });
       return Subscription2;
     }();
-    function useAuthEmulator(auth, url, options2) {
+    function connectAuthEmulator(auth, url, options2) {
       var authInternal = _castAuth(auth);
       _assert(authInternal._canInitEmulator, authInternal, "emulator-config-failed");
       _assert(/^https?:\/\//.test(url), authInternal, "invalid-emulator-scheme");
       var disableWarnings = !!(options2 === null || options2 === void 0 ? void 0 : options2.disableWarnings);
       var protocol = extractProtocol(url);
-      var _a2 = extractHostAndPort(url), host = _a2.host, port = _a2.port;
+      var _a3 = extractHostAndPort(url), host = _a3.host, port = _a3.port;
       var portStr = port === null ? "" : ":" + port;
       authInternal.config.emulator = {url: protocol + "//" + host + portStr + "/"};
       authInternal.settings.appVerificationDisabledForTesting = true;
@@ -5368,7 +5608,7 @@ var require_register_2a5ac87a = __commonJS({
         var host = bracketedIPv6[1];
         return {host, port: parsePort(hostAndPort.substr(host.length + 1))};
       } else {
-        var _a2 = hostAndPort.split(":"), host = _a2[0], port = _a2[1];
+        var _a3 = hostAndPort.split(":"), host = _a3[0], port = _a3[1];
         return {host, port: parsePort(port)};
       }
     }
@@ -5432,77 +5672,77 @@ var require_register_2a5ac87a = __commonJS({
     }();
     function resetPassword(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:resetPassword", _addTidIfNecessary(auth, request))];
         });
       });
     }
     function updateEmailPassword(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
         });
       });
     }
-    function applyActionCode(auth, request) {
+    function applyActionCode$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", _addTidIfNecessary(auth, request))];
         });
       });
     }
     function signInWithPassword(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPassword", _addTidIfNecessary(auth, request))];
         });
       });
     }
     function sendOobCode(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:sendOobCode", _addTidIfNecessary(auth, request))];
         });
       });
     }
-    function sendEmailVerification(auth, request) {
+    function sendEmailVerification$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, sendOobCode(auth, request)];
         });
       });
     }
-    function sendPasswordResetEmail(auth, request) {
+    function sendPasswordResetEmail$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, sendOobCode(auth, request)];
         });
       });
     }
-    function sendSignInLinkToEmail(auth, request) {
+    function sendSignInLinkToEmail$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, sendOobCode(auth, request)];
         });
       });
     }
     function verifyAndChangeEmail(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, sendOobCode(auth, request)];
         });
       });
     }
-    function signInWithEmailLink(auth, request) {
+    function signInWithEmailLink$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithEmailLink", _addTidIfNecessary(auth, request))];
         });
       });
     }
     function signInWithEmailLinkForLinking(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithEmailLink", _addTidIfNecessary(auth, request))];
         });
       });
@@ -5549,7 +5789,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       EmailAuthCredential2.prototype._getIdTokenResponse = function(auth) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             switch (this.signInMethod) {
               case "password":
                 return [2, signInWithPassword(auth, {
@@ -5558,7 +5798,7 @@ var require_register_2a5ac87a = __commonJS({
                   password: this._password
                 })];
               case "emailLink":
-                return [2, signInWithEmailLink(auth, {
+                return [2, signInWithEmailLink$1(auth, {
                   email: this._email,
                   oobCode: this._password
                 })];
@@ -5571,7 +5811,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       EmailAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             switch (this.signInMethod) {
               case "password":
                 return [2, updateEmailPassword(auth, {
@@ -5600,12 +5840,12 @@ var require_register_2a5ac87a = __commonJS({
     }(AuthCredential);
     function signInWithIdp(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithIdp", _addTidIfNecessary(auth, request))];
         });
       });
     }
-    var IDP_REQUEST_URI = "http://localhost";
+    var IDP_REQUEST_URI$1 = "http://localhost";
     var OAuthCredential = function(_super) {
       tslib.__extends(OAuthCredential2, _super);
       function OAuthCredential2() {
@@ -5673,7 +5913,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       OAuthCredential2.prototype.buildRequest = function() {
         var request = {
-          requestUri: IDP_REQUEST_URI,
+          requestUri: IDP_REQUEST_URI$1,
           returnSecureToken: true
         };
         if (this.pendingToken) {
@@ -5699,30 +5939,23 @@ var require_register_2a5ac87a = __commonJS({
       };
       return OAuthCredential2;
     }(AuthCredential);
-    var _a$1;
-    function sendPhoneVerificationCode(auth, request) {
+    var _a2;
+    function signInWithPhoneNumber$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
-          return [2, _performApiRequest(auth, "POST", "/v1/accounts:sendVerificationCode", _addTidIfNecessary(auth, request))];
-        });
-      });
-    }
-    function signInWithPhoneNumber(auth, request) {
-      return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, request))];
         });
       });
     }
-    function linkWithPhoneNumber(auth, request) {
+    function linkWithPhoneNumber$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var response;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, request))];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               if (response.temporaryProof) {
                 throw _makeTaggedError(auth, "account-exists-with-different-credential", response);
               }
@@ -5731,11 +5964,11 @@ var require_register_2a5ac87a = __commonJS({
         });
       });
     }
-    var VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_ = (_a$1 = {}, _a$1["USER_NOT_FOUND"] = "user-not-found", _a$1);
+    var VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_ = (_a2 = {}, _a2["USER_NOT_FOUND"] = "user-not-found", _a2);
     function verifyPhoneNumberForExisting(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var apiRequest;
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           apiRequest = tslib.__assign(tslib.__assign({}, request), {operation: "REAUTH"});
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithPhoneNumber", _addTidIfNecessary(auth, apiRequest), VERIFY_PHONE_NUMBER_FOR_EXISTING_ERROR_MAP_)];
         });
@@ -5755,16 +5988,16 @@ var require_register_2a5ac87a = __commonJS({
         return new PhoneAuthCredential2({phoneNumber, temporaryProof});
       };
       PhoneAuthCredential2.prototype._getIdTokenResponse = function(auth) {
-        return signInWithPhoneNumber(auth, this._makeVerificationRequest());
+        return signInWithPhoneNumber$1(auth, this._makeVerificationRequest());
       };
       PhoneAuthCredential2.prototype._linkToIdToken = function(auth, idToken) {
-        return linkWithPhoneNumber(auth, tslib.__assign({idToken}, this._makeVerificationRequest()));
+        return linkWithPhoneNumber$1(auth, tslib.__assign({idToken}, this._makeVerificationRequest()));
       };
       PhoneAuthCredential2.prototype._getReauthenticationResolver = function(auth) {
         return verifyPhoneNumberForExisting(auth, this._makeVerificationRequest());
       };
       PhoneAuthCredential2.prototype._makeVerificationRequest = function() {
-        var _a2 = this.params, temporaryProof = _a2.temporaryProof, phoneNumber = _a2.phoneNumber, verificationId = _a2.verificationId, verificationCode = _a2.verificationCode;
+        var _a3 = this.params, temporaryProof = _a3.temporaryProof, phoneNumber = _a3.phoneNumber, verificationId = _a3.verificationId, verificationCode = _a3.verificationCode;
         if (temporaryProof && phoneNumber) {
           return {temporaryProof, phoneNumber};
         }
@@ -5795,7 +6028,7 @@ var require_register_2a5ac87a = __commonJS({
         if (typeof json === "string") {
           json = JSON.parse(json);
         }
-        var _a2 = json, verificationId = _a2.verificationId, verificationCode = _a2.verificationCode, phoneNumber = _a2.phoneNumber, temporaryProof = _a2.temporaryProof;
+        var _a3 = json, verificationId = _a3.verificationId, verificationCode = _a3.verificationCode, phoneNumber = _a3.phoneNumber, temporaryProof = _a3.temporaryProof;
         if (!verificationCode && !verificationId && !phoneNumber && !temporaryProof) {
           return null;
         }
@@ -5835,9 +6068,9 @@ var require_register_2a5ac87a = __commonJS({
     }
     var ActionCodeURL = function() {
       function ActionCodeURL2(actionLink) {
-        var _a2, _b, _c, _d, _e, _f;
+        var _a3, _b, _c, _d, _e, _f;
         var searchParams = util.querystringDecode(util.extractQuerystring(actionLink));
-        var apiKey = (_a2 = searchParams["apiKey"]) !== null && _a2 !== void 0 ? _a2 : null;
+        var apiKey = (_a3 = searchParams["apiKey"]) !== null && _a3 !== void 0 ? _a3 : null;
         var code = (_b = searchParams["oobCode"]) !== null && _b !== void 0 ? _b : null;
         var operation = parseMode((_c = searchParams["mode"]) !== null && _c !== void 0 ? _c : null);
         _assert(apiKey && code && operation, "argument-error");
@@ -5852,7 +6085,7 @@ var require_register_2a5ac87a = __commonJS({
         var actionLink = parseDeepLink(link);
         try {
           return new ActionCodeURL2(actionLink);
-        } catch (_a2) {
+        } catch (_a3) {
           return null;
         }
       };
@@ -5934,11 +6167,11 @@ var require_register_2a5ac87a = __commonJS({
       OAuthProvider2.credentialFromResult = function(userCredential) {
         return OAuthProvider2.oauthCredentialFromTaggedObject(userCredential);
       };
-      OAuthProvider2.credentialFromError = function(error3) {
-        return OAuthProvider2.oauthCredentialFromTaggedObject(error3.customData || {});
+      OAuthProvider2.credentialFromError = function(error2) {
+        return OAuthProvider2.oauthCredentialFromTaggedObject(error2.customData || {});
       };
-      OAuthProvider2.oauthCredentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      OAuthProvider2.oauthCredentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse) {
           return null;
         }
@@ -5977,11 +6210,11 @@ var require_register_2a5ac87a = __commonJS({
       FacebookAuthProvider2.credentialFromResult = function(userCredential) {
         return FacebookAuthProvider2.credentialFromTaggedObject(userCredential);
       };
-      FacebookAuthProvider2.credentialFromError = function(error3) {
-        return FacebookAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      FacebookAuthProvider2.credentialFromError = function(error2) {
+        return FacebookAuthProvider2.credentialFromTaggedObject(error2.customData || {});
       };
-      FacebookAuthProvider2.credentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      FacebookAuthProvider2.credentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse || !("oauthAccessToken" in tokenResponse)) {
           return null;
         }
@@ -6016,11 +6249,11 @@ var require_register_2a5ac87a = __commonJS({
       GoogleAuthProvider2.credentialFromResult = function(userCredential) {
         return GoogleAuthProvider2.credentialFromTaggedObject(userCredential);
       };
-      GoogleAuthProvider2.credentialFromError = function(error3) {
-        return GoogleAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      GoogleAuthProvider2.credentialFromError = function(error2) {
+        return GoogleAuthProvider2.credentialFromTaggedObject(error2.customData || {});
       };
-      GoogleAuthProvider2.credentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      GoogleAuthProvider2.credentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse) {
           return null;
         }
@@ -6053,11 +6286,11 @@ var require_register_2a5ac87a = __commonJS({
       GithubAuthProvider2.credentialFromResult = function(userCredential) {
         return GithubAuthProvider2.credentialFromTaggedObject(userCredential);
       };
-      GithubAuthProvider2.credentialFromError = function(error3) {
-        return GithubAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      GithubAuthProvider2.credentialFromError = function(error2) {
+        return GithubAuthProvider2.credentialFromTaggedObject(error2.customData || {});
       };
-      GithubAuthProvider2.credentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      GithubAuthProvider2.credentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse || !("oauthAccessToken" in tokenResponse)) {
           return null;
         }
@@ -6074,7 +6307,7 @@ var require_register_2a5ac87a = __commonJS({
       GithubAuthProvider2.PROVIDER_ID = "github.com";
       return GithubAuthProvider2;
     }(BaseOAuthProvider);
-    var IDP_REQUEST_URI$1 = "http://localhost";
+    var IDP_REQUEST_URI = "http://localhost";
     var SAMLAuthCredential = function(_super) {
       tslib.__extends(SAMLAuthCredential2, _super);
       function SAMLAuthCredential2(providerId, pendingToken) {
@@ -6116,7 +6349,7 @@ var require_register_2a5ac87a = __commonJS({
       };
       SAMLAuthCredential2.prototype.buildRequest = function() {
         return {
-          requestUri: IDP_REQUEST_URI$1,
+          requestUri: IDP_REQUEST_URI,
           returnSecureToken: true,
           pendingToken: this.pendingToken
         };
@@ -6135,16 +6368,16 @@ var require_register_2a5ac87a = __commonJS({
       SAMLAuthProvider2.credentialFromResult = function(userCredential) {
         return SAMLAuthProvider2.samlCredentialFromTaggedObject(userCredential);
       };
-      SAMLAuthProvider2.credentialFromError = function(error3) {
-        return SAMLAuthProvider2.samlCredentialFromTaggedObject(error3.customData || {});
+      SAMLAuthProvider2.credentialFromError = function(error2) {
+        return SAMLAuthProvider2.samlCredentialFromTaggedObject(error2.customData || {});
       };
       SAMLAuthProvider2.credentialFromJSON = function(json) {
         var credential = SAMLAuthCredential.fromJSON(json);
         _assert(credential, "argument-error");
         return credential;
       };
-      SAMLAuthProvider2.samlCredentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      SAMLAuthProvider2.samlCredentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse) {
           return null;
         }
@@ -6176,11 +6409,11 @@ var require_register_2a5ac87a = __commonJS({
       TwitterAuthProvider2.credentialFromResult = function(userCredential) {
         return TwitterAuthProvider2.credentialFromTaggedObject(userCredential);
       };
-      TwitterAuthProvider2.credentialFromError = function(error3) {
-        return TwitterAuthProvider2.credentialFromTaggedObject(error3.customData || {});
+      TwitterAuthProvider2.credentialFromError = function(error2) {
+        return TwitterAuthProvider2.credentialFromTaggedObject(error2.customData || {});
       };
-      TwitterAuthProvider2.credentialFromTaggedObject = function(_a2) {
-        var tokenResponse = _a2._tokenResponse;
+      TwitterAuthProvider2.credentialFromTaggedObject = function(_a3) {
+        var tokenResponse = _a3._tokenResponse;
         if (!tokenResponse) {
           return null;
         }
@@ -6200,7 +6433,7 @@ var require_register_2a5ac87a = __commonJS({
     }(BaseOAuthProvider);
     function signUp(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signUp", _addTidIfNecessary(auth, request))];
         });
       });
@@ -6218,12 +6451,12 @@ var require_register_2a5ac87a = __commonJS({
         }
         return tslib.__awaiter(this, void 0, void 0, function() {
           var user, providerId, userCred;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, UserImpl._fromIdTokenResponse(auth, idTokenResponse, isAnonymous)];
               case 1:
-                user = _a2.sent();
+                user = _a3.sent();
                 providerId = providerIdForResponse(idTokenResponse);
                 userCred = new UserCredentialImpl2({
                   user,
@@ -6239,12 +6472,12 @@ var require_register_2a5ac87a = __commonJS({
       UserCredentialImpl2._forOperation = function(user, operationType, response) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var providerId;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 return [4, user._updateTokensIfNecessary(response, true)];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 providerId = providerIdForResponse(response);
                 return [2, new UserCredentialImpl2({
                   user,
@@ -6268,14 +6501,17 @@ var require_register_2a5ac87a = __commonJS({
       return null;
     }
     function signInAnonymously2(auth) {
-      var _a2;
+      var _a3;
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authInternal, response, userCredential;
         return tslib.__generator(this, function(_b) {
           switch (_b.label) {
             case 0:
               authInternal = _castAuth(auth);
-              if ((_a2 = authInternal.currentUser) === null || _a2 === void 0 ? void 0 : _a2.isAnonymous) {
+              return [4, authInternal._initializationPromise];
+            case 1:
+              _b.sent();
+              if ((_a3 = authInternal.currentUser) === null || _a3 === void 0 ? void 0 : _a3.isAnonymous) {
                 return [2, new UserCredentialImpl({
                   user: authInternal.currentUser,
                   providerId: null,
@@ -6285,13 +6521,13 @@ var require_register_2a5ac87a = __commonJS({
               return [4, signUp(authInternal, {
                 returnSecureToken: true
               })];
-            case 1:
+            case 2:
               response = _b.sent();
               return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response, true)];
-            case 2:
+            case 3:
               userCredential = _b.sent();
               return [4, authInternal._updateCurrentUser(userCredential.user)];
-            case 3:
+            case 4:
               _b.sent();
               return [2, userCredential];
           }
@@ -6300,36 +6536,36 @@ var require_register_2a5ac87a = __commonJS({
     }
     var MultiFactorError = function(_super) {
       tslib.__extends(MultiFactorError2, _super);
-      function MultiFactorError2(auth, error3, operationType, user) {
-        var _a2;
-        var _this = _super.call(this, error3.code, error3.message) || this;
+      function MultiFactorError2(auth, error2, operationType, user) {
+        var _a3;
+        var _this = _super.call(this, error2.code, error2.message) || this;
         _this.operationType = operationType;
         _this.user = user;
         _this.name = "FirebaseError";
         Object.setPrototypeOf(_this, MultiFactorError2.prototype);
         _this.appName = auth.name;
-        _this.code = error3.code;
-        _this.tenantId = (_a2 = auth.tenantId) !== null && _a2 !== void 0 ? _a2 : void 0;
-        _this.serverResponse = error3.customData.serverResponse;
+        _this.code = error2.code;
+        _this.tenantId = (_a3 = auth.tenantId) !== null && _a3 !== void 0 ? _a3 : void 0;
+        _this.serverResponse = error2.customData.serverResponse;
         return _this;
       }
-      MultiFactorError2._fromErrorAndOperation = function(auth, error3, operationType, user) {
-        return new MultiFactorError2(auth, error3, operationType, user);
+      MultiFactorError2._fromErrorAndOperation = function(auth, error2, operationType, user) {
+        return new MultiFactorError2(auth, error2, operationType, user);
       };
       return MultiFactorError2;
     }(util.FirebaseError);
     function _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential, user) {
       var idTokenProvider = operationType === "reauthenticate" ? credential._getReauthenticationResolver(auth) : credential._getIdTokenResponse(auth);
-      return idTokenProvider.catch(function(error3) {
-        if (error3.code === "auth/multi-factor-auth-required") {
-          throw MultiFactorError._fromErrorAndOperation(auth, error3, operationType, user);
+      return idTokenProvider.catch(function(error2) {
+        if (error2.code === "auth/multi-factor-auth-required") {
+          throw MultiFactorError._fromErrorAndOperation(auth, error2, operationType, user);
         }
-        throw error3;
+        throw error2;
       });
     }
     function providerDataAsNames(providerData) {
-      return new Set(providerData.map(function(_a2) {
-        var providerId = _a2.providerId;
+      return new Set(providerData.map(function(_a3) {
+        var providerId = _a3.providerId;
         return providerId;
       }).filter(function(pid) {
         return !!pid;
@@ -6337,7 +6573,7 @@ var require_register_2a5ac87a = __commonJS({
     }
     function unlink(user, providerId) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var userInternal, providerUserInfo, _a2, _b, providersLeft;
+        var userInternal, providerUserInfo, _a3, _b, providersLeft;
         var _c;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
@@ -6346,12 +6582,12 @@ var require_register_2a5ac87a = __commonJS({
               return [4, _assertLinkedStatus(true, userInternal, providerId)];
             case 1:
               _d.sent();
-              _a2 = deleteLinkedAccounts;
+              _a3 = deleteLinkedAccounts;
               _b = [userInternal.auth];
               _c = {};
               return [4, userInternal.getIdToken()];
             case 2:
-              return [4, _a2.apply(void 0, _b.concat([(_c.idToken = _d.sent(), _c.deleteProvider = [providerId], _c)]))];
+              return [4, _a3.apply(void 0, _b.concat([(_c.idToken = _d.sent(), _c.deleteProvider = [providerId], _c)]))];
             case 3:
               providerUserInfo = _d.sent().providerUserInfo;
               providersLeft = providerDataAsNames(providerUserInfo || []);
@@ -6374,17 +6610,17 @@ var require_register_2a5ac87a = __commonJS({
         bypassAuthState = false;
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var response, _a2, _b, _c, _d, _e;
+        var response, _a3, _b, _c, _d, _e;
         return tslib.__generator(this, function(_f) {
           switch (_f.label) {
             case 0:
-              _a2 = _logoutIfInvalidated;
+              _a3 = _logoutIfInvalidated;
               _b = [user];
               _d = (_c = credential)._linkToIdToken;
               _e = [user.auth];
               return [4, user.getIdToken()];
             case 1:
-              return [4, _a2.apply(void 0, _b.concat([_d.apply(_c, _e.concat([_f.sent()])), bypassAuthState]))];
+              return [4, _a3.apply(void 0, _b.concat([_d.apply(_c, _e.concat([_f.sent()])), bypassAuthState]))];
             case 2:
               response = _f.sent();
               return [2, UserCredentialImpl._forOperation(user, "link", response)];
@@ -6395,12 +6631,12 @@ var require_register_2a5ac87a = __commonJS({
     function _assertLinkedStatus(expected, user, provider) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var providerIds, code;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, _reloadWithoutSaving(user)];
             case 1:
-              _a2.sent();
+              _a3.sent();
               providerIds = providerDataAsNames(user.providerData);
               code = expected === false ? "provider-already-linked" : "no-such-provider";
               _assert(providerIds.has(provider) === expected, user.auth, code);
@@ -6415,17 +6651,17 @@ var require_register_2a5ac87a = __commonJS({
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
         var auth, operationType, response, parsed, localId, e_1;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               auth = user.auth;
               operationType = "reauthenticate";
-              _a2.label = 1;
+              _a3.label = 1;
             case 1:
-              _a2.trys.push([1, 3, , 4]);
+              _a3.trys.push([1, 3, , 4]);
               return [4, _logoutIfInvalidated(user, _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential, user), bypassAuthState)];
             case 2:
-              response = _a2.sent();
+              response = _a3.sent();
               _assert(response.idToken, auth, "internal-error");
               parsed = _parseToken(response.idToken);
               _assert(parsed, auth, "internal-error");
@@ -6433,7 +6669,7 @@ var require_register_2a5ac87a = __commonJS({
               _assert(user.uid === localId, auth, "user-mismatch");
               return [2, UserCredentialImpl._forOperation(user, operationType, response)];
             case 3:
-              e_1 = _a2.sent();
+              e_1 = _a3.sent();
               if ((e_1 === null || e_1 === void 0 ? void 0 : e_1.code) === "auth/user-not-found") {
                 _fail(auth, "user-mismatch");
               }
@@ -6450,22 +6686,22 @@ var require_register_2a5ac87a = __commonJS({
       }
       return tslib.__awaiter(this, void 0, void 0, function() {
         var operationType, response, userCredential;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               operationType = "signIn";
               return [4, _processCredentialSavingMfaContextIfNecessary(auth, operationType, credential)];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               return [4, UserCredentialImpl._fromIdTokenResponse(auth, operationType, response)];
             case 2:
-              userCredential = _a2.sent();
+              userCredential = _a3.sent();
               if (!!bypassAuthState)
                 return [3, 4];
               return [4, auth._updateCurrentUser(userCredential.user)];
             case 3:
-              _a2.sent();
-              _a2.label = 4;
+              _a3.sent();
+              _a3.label = 4;
             case 4:
               return [2, userCredential];
           }
@@ -6474,7 +6710,7 @@ var require_register_2a5ac87a = __commonJS({
     }
     function signInWithCredential(auth, credential) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _signInWithCredential(_castAuth(auth), credential)];
         });
       });
@@ -6482,13 +6718,13 @@ var require_register_2a5ac87a = __commonJS({
     function linkWithCredential(user, credential) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               userInternal = util.getModularInstance(user);
               return [4, _assertLinkedStatus(false, userInternal, credential.providerId)];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [2, _link(userInternal, credential)];
           }
         });
@@ -6496,37 +6732,37 @@ var require_register_2a5ac87a = __commonJS({
     }
     function reauthenticateWithCredential(user, credential) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _reauthenticate(util.getModularInstance(user), credential)];
         });
       });
     }
-    function signInWithCustomToken(auth, request) {
+    function signInWithCustomToken$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performSignInRequest(auth, "POST", "/v1/accounts:signInWithCustomToken", _addTidIfNecessary(auth, request))];
         });
       });
     }
-    function signInWithCustomToken$1(auth, customToken) {
+    function signInWithCustomToken(auth, customToken) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authInternal, response, cred;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               authInternal = _castAuth(auth);
-              return [4, signInWithCustomToken(authInternal, {
+              return [4, signInWithCustomToken$1(authInternal, {
                 token: customToken,
                 returnSecureToken: true
               })];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response)];
             case 2:
-              cred = _a2.sent();
+              cred = _a3.sent();
               return [4, authInternal._updateCurrentUser(cred.user)];
             case 3:
-              _a2.sent();
+              _a3.sent();
               return [2, cred];
           }
         });
@@ -6560,8 +6796,8 @@ var require_register_2a5ac87a = __commonJS({
       return PhoneMultiFactorInfo2;
     }(MultiFactorInfoImpl);
     function _setActionCodeSettingsOnRequest(auth, request, actionCodeSettings) {
-      var _a2;
-      _assert(((_a2 = actionCodeSettings.url) === null || _a2 === void 0 ? void 0 : _a2.length) > 0, auth, "invalid-continue-uri");
+      var _a3;
+      _assert(((_a3 = actionCodeSettings.url) === null || _a3 === void 0 ? void 0 : _a3.length) > 0, auth, "invalid-continue-uri");
       _assert(typeof actionCodeSettings.dynamicLinkDomain === "undefined" || actionCodeSettings.dynamicLinkDomain.length > 0, auth, "invalid-dynamic-link-domain");
       request.continueUrl = actionCodeSettings.url;
       request.dynamicLinkDomain = actionCodeSettings.dynamicLinkDomain;
@@ -6577,11 +6813,11 @@ var require_register_2a5ac87a = __commonJS({
         request.androidPackageName = actionCodeSettings.android.packageName;
       }
     }
-    function sendPasswordResetEmail$1(auth, email, actionCodeSettings) {
+    function sendPasswordResetEmail(auth, email, actionCodeSettings) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authModular, request;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               authModular = util.getModularInstance(auth);
               request = {
@@ -6591,9 +6827,9 @@ var require_register_2a5ac87a = __commonJS({
               if (actionCodeSettings) {
                 _setActionCodeSettingsOnRequest(authModular, request, actionCodeSettings);
               }
-              return [4, sendPasswordResetEmail(authModular, request)];
+              return [4, sendPasswordResetEmail$1(authModular, request)];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [2];
           }
         });
@@ -6601,28 +6837,28 @@ var require_register_2a5ac87a = __commonJS({
     }
     function confirmPasswordReset(auth, oobCode, newPassword) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, resetPassword(util.getModularInstance(auth), {
                 oobCode,
                 newPassword
               })];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [2];
           }
         });
       });
     }
-    function applyActionCode$1(auth, oobCode) {
+    function applyActionCode(auth, oobCode) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
-              return [4, applyActionCode(util.getModularInstance(auth), {oobCode})];
+              return [4, applyActionCode$1(util.getModularInstance(auth), {oobCode})];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [2];
           }
         });
@@ -6631,13 +6867,13 @@ var require_register_2a5ac87a = __commonJS({
     function checkActionCode(auth, oobCode) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authModular, response, operation, multiFactorInfo;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               authModular = util.getModularInstance(auth);
               return [4, resetPassword(authModular, {oobCode})];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               operation = response.requestType;
               _assert(operation, authModular, "internal-error");
               switch (operation) {
@@ -6670,12 +6906,12 @@ var require_register_2a5ac87a = __commonJS({
     function verifyPasswordResetCode(auth, code) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var data;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               return [4, checkActionCode(util.getModularInstance(auth), code)];
             case 1:
-              data = _a2.sent().data;
+              data = _a3.sent().data;
               return [2, data.email];
           }
         });
@@ -6684,8 +6920,8 @@ var require_register_2a5ac87a = __commonJS({
     function createUserWithEmailAndPassword(auth, email, password) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authInternal, response, userCredential;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               authInternal = _castAuth(auth);
               return [4, signUp(authInternal, {
@@ -6694,13 +6930,13 @@ var require_register_2a5ac87a = __commonJS({
                 password
               })];
             case 1:
-              response = _a2.sent();
+              response = _a3.sent();
               return [4, UserCredentialImpl._fromIdTokenResponse(authInternal, "signIn", response)];
             case 2:
-              userCredential = _a2.sent();
+              userCredential = _a3.sent();
               return [4, authInternal._updateCurrentUser(userCredential.user)];
             case 3:
-              _a2.sent();
+              _a3.sent();
               return [2, userCredential];
           }
         });
@@ -6709,11 +6945,11 @@ var require_register_2a5ac87a = __commonJS({
     function signInWithEmailAndPassword(auth, email, password) {
       return signInWithCredential(util.getModularInstance(auth), EmailAuthProvider.credential(email, password));
     }
-    function sendSignInLinkToEmail$1(auth, email, actionCodeSettings) {
+    function sendSignInLinkToEmail(auth, email, actionCodeSettings) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authModular, request;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               authModular = util.getModularInstance(auth);
               request = {
@@ -6724,9 +6960,9 @@ var require_register_2a5ac87a = __commonJS({
               if (actionCodeSettings) {
                 _setActionCodeSettingsOnRequest(authModular, request, actionCodeSettings);
               }
-              return [4, sendSignInLinkToEmail(authModular, request)];
+              return [4, sendSignInLinkToEmail$1(authModular, request)];
             case 1:
-              _a2.sent();
+              _a3.sent();
               return [2];
           }
         });
@@ -6736,10 +6972,10 @@ var require_register_2a5ac87a = __commonJS({
       var actionCodeUrl = ActionCodeURL.parseLink(emailLink);
       return (actionCodeUrl === null || actionCodeUrl === void 0 ? void 0 : actionCodeUrl.operation) === "EMAIL_SIGNIN";
     }
-    function signInWithEmailLink$1(auth, email, emailLink) {
+    function signInWithEmailLink(auth, email, emailLink) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var authModular, credential;
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           authModular = util.getModularInstance(auth);
           credential = EmailAuthProvider.credentialWithLink(email, emailLink || _getCurrentUrl());
           _assert(credential._tenantId === (authModular.tenantId || null), authModular, "tenant-id-mismatch");
@@ -6749,7 +6985,7 @@ var require_register_2a5ac87a = __commonJS({
     }
     function createAuthUri(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:createAuthUri", _addTidIfNecessary(auth, request))];
         });
       });
@@ -6757,8 +6993,8 @@ var require_register_2a5ac87a = __commonJS({
     function fetchSignInMethodsForEmail(auth, email) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var continueUri, request, signinMethods;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               continueUri = _isHttpOrHttps() ? _getCurrentUrl() : "http://localhost";
               request = {
@@ -6767,22 +7003,22 @@ var require_register_2a5ac87a = __commonJS({
               };
               return [4, createAuthUri(util.getModularInstance(auth), request)];
             case 1:
-              signinMethods = _a2.sent().signinMethods;
+              signinMethods = _a3.sent().signinMethods;
               return [2, signinMethods || []];
           }
         });
       });
     }
-    function sendEmailVerification$1(user, actionCodeSettings) {
+    function sendEmailVerification(user, actionCodeSettings) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal, idToken, request, email;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               userInternal = util.getModularInstance(user);
               return [4, user.getIdToken()];
             case 1:
-              idToken = _a2.sent();
+              idToken = _a3.sent();
               request = {
                 requestType: "VERIFY_EMAIL",
                 idToken
@@ -6790,15 +7026,15 @@ var require_register_2a5ac87a = __commonJS({
               if (actionCodeSettings) {
                 _setActionCodeSettingsOnRequest(userInternal.auth, request, actionCodeSettings);
               }
-              return [4, sendEmailVerification(userInternal.auth, request)];
+              return [4, sendEmailVerification$1(userInternal.auth, request)];
             case 2:
-              email = _a2.sent().email;
+              email = _a3.sent().email;
               if (!(email !== user.email))
                 return [3, 4];
               return [4, user.reload()];
             case 3:
-              _a2.sent();
-              _a2.label = 4;
+              _a3.sent();
+              _a3.label = 4;
             case 4:
               return [2];
           }
@@ -6808,13 +7044,13 @@ var require_register_2a5ac87a = __commonJS({
     function verifyBeforeUpdateEmail(user, newEmail, actionCodeSettings) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal, idToken, request, email;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               userInternal = util.getModularInstance(user);
               return [4, user.getIdToken()];
             case 1:
-              idToken = _a2.sent();
+              idToken = _a3.sent();
               request = {
                 requestType: "VERIFY_AND_CHANGE_EMAIL",
                 idToken,
@@ -6825,28 +7061,28 @@ var require_register_2a5ac87a = __commonJS({
               }
               return [4, verifyAndChangeEmail(userInternal.auth, request)];
             case 2:
-              email = _a2.sent().email;
+              email = _a3.sent().email;
               if (!(email !== user.email))
                 return [3, 4];
               return [4, user.reload()];
             case 3:
-              _a2.sent();
-              _a2.label = 4;
+              _a3.sent();
+              _a3.label = 4;
             case 4:
               return [2];
           }
         });
       });
     }
-    function updateProfile(auth, request) {
+    function updateProfile$1(auth, request) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, _performApiRequest(auth, "POST", "/v1/accounts:update", request)];
         });
       });
     }
-    function updateProfile$1(user, _a2) {
-      var displayName = _a2.displayName, photoUrl = _a2.photoURL;
+    function updateProfile(user, _a3) {
+      var displayName = _a3.displayName, photoUrl = _a3.photoURL;
       return tslib.__awaiter(this, void 0, void 0, function() {
         var userInternal, idToken, profileRequest, response, passwordProvider;
         return tslib.__generator(this, function(_b) {
@@ -6865,13 +7101,13 @@ var require_register_2a5ac87a = __commonJS({
                 photoUrl,
                 returnSecureToken: true
               };
-              return [4, _logoutIfInvalidated(userInternal, updateProfile(userInternal.auth, profileRequest))];
+              return [4, _logoutIfInvalidated(userInternal, updateProfile$1(userInternal.auth, profileRequest))];
             case 2:
               response = _b.sent();
               userInternal.displayName = response.displayName || null;
               userInternal.photoURL = response.photoUrl || null;
-              passwordProvider = userInternal.providerData.find(function(_a3) {
-                var providerId = _a3.providerId;
+              passwordProvider = userInternal.providerData.find(function(_a4) {
+                var providerId = _a4.providerId;
                 return providerId === "password";
               });
               if (passwordProvider) {
@@ -6895,13 +7131,13 @@ var require_register_2a5ac87a = __commonJS({
     function updateEmailOrPassword(user, email, password) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var auth, idToken, request, response;
-        return tslib.__generator(this, function(_a2) {
-          switch (_a2.label) {
+        return tslib.__generator(this, function(_a3) {
+          switch (_a3.label) {
             case 0:
               auth = user.auth;
               return [4, user.getIdToken()];
             case 1:
-              idToken = _a2.sent();
+              idToken = _a3.sent();
               request = {
                 idToken,
                 returnSecureToken: true
@@ -6914,17 +7150,17 @@ var require_register_2a5ac87a = __commonJS({
               }
               return [4, _logoutIfInvalidated(user, updateEmailPassword(auth, request))];
             case 2:
-              response = _a2.sent();
+              response = _a3.sent();
               return [4, user._updateTokensIfNecessary(response, true)];
             case 3:
-              _a2.sent();
+              _a3.sent();
               return [2];
           }
         });
       });
     }
     function _fromIdTokenResponse(idTokenResponse) {
-      var _a2, _b;
+      var _a3, _b;
       if (!idTokenResponse) {
         return null;
       }
@@ -6932,7 +7168,7 @@ var require_register_2a5ac87a = __commonJS({
       var profile = idTokenResponse.rawUserInfo ? JSON.parse(idTokenResponse.rawUserInfo) : {};
       var isNewUser = idTokenResponse.isNewUser || idTokenResponse.kind === "identitytoolkit#SignupNewUserResponse";
       if (!providerId && (idTokenResponse === null || idTokenResponse === void 0 ? void 0 : idTokenResponse.idToken)) {
-        var signInProvider = (_b = (_a2 = _parseToken(idTokenResponse.idToken)) === null || _a2 === void 0 ? void 0 : _a2.firebase) === null || _b === void 0 ? void 0 : _b["sign_in_provider"];
+        var signInProvider = (_b = (_a3 = _parseToken(idTokenResponse.idToken)) === null || _a3 === void 0 ? void 0 : _a3.firebase) === null || _b === void 0 ? void 0 : _b["sign_in_provider"];
         if (signInProvider) {
           var filteredProviderId = signInProvider !== "anonymous" && signInProvider !== "custom" ? signInProvider : null;
           return new GenericAdditionalUserInfo(isNewUser, filteredProviderId);
@@ -7006,7 +7242,7 @@ var require_register_2a5ac87a = __commonJS({
       return TwitterAdditionalUserInfo2;
     }(FederatedAdditionalUserInfoWithUsername);
     function getAdditionalUserInfo(userCredential) {
-      var _a2 = userCredential, user = _a2.user, _tokenResponse = _a2._tokenResponse;
+      var _a3 = userCredential, user = _a3.user, _tokenResponse = _a3._tokenResponse;
       if (user.isAnonymous && !_tokenResponse) {
         return {
           providerId: null,
@@ -7019,11 +7255,11 @@ var require_register_2a5ac87a = __commonJS({
     function setPersistence(auth, persistence) {
       return util.getModularInstance(auth).setPersistence(persistence);
     }
-    function onIdTokenChanged(auth, nextOrObserver, error3, completed) {
-      return util.getModularInstance(auth).onIdTokenChanged(nextOrObserver, error3, completed);
+    function onIdTokenChanged(auth, nextOrObserver, error2, completed) {
+      return util.getModularInstance(auth).onIdTokenChanged(nextOrObserver, error2, completed);
     }
-    function onAuthStateChanged2(auth, nextOrObserver, error3, completed) {
-      return util.getModularInstance(auth).onAuthStateChanged(nextOrObserver, error3, completed);
+    function onAuthStateChanged2(auth, nextOrObserver, error2, completed) {
+      return util.getModularInstance(auth).onAuthStateChanged(nextOrObserver, error2, completed);
     }
     function useDeviceLanguage(auth) {
       util.getModularInstance(auth).useDeviceLanguage();
@@ -7036,7 +7272,7 @@ var require_register_2a5ac87a = __commonJS({
     }
     function deleteUser(user) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        return tslib.__generator(this, function(_a2) {
+        return tslib.__generator(this, function(_a3) {
           return [2, util.getModularInstance(user).delete()];
         });
       });
@@ -7053,16 +7289,16 @@ var require_register_2a5ac87a = __commonJS({
         return new MultiFactorSessionImpl2("signin", mfaPendingCredential);
       };
       MultiFactorSessionImpl2.prototype.toJSON = function() {
-        var _a2;
+        var _a3;
         var key = this.type === "enroll" ? "idToken" : "pendingCredential";
         return {
-          multiFactorSession: (_a2 = {}, _a2[key] = this.credential, _a2)
+          multiFactorSession: (_a3 = {}, _a3[key] = this.credential, _a3)
         };
       };
       MultiFactorSessionImpl2.fromJSON = function(obj) {
-        var _a2, _b;
+        var _a3, _b;
         if (obj === null || obj === void 0 ? void 0 : obj.multiFactorSession) {
-          if ((_a2 = obj.multiFactorSession) === null || _a2 === void 0 ? void 0 : _a2.pendingCredential) {
+          if ((_a3 = obj.multiFactorSession) === null || _a3 === void 0 ? void 0 : _a3.pendingCredential) {
             return MultiFactorSessionImpl2._fromMfaPendingCredential(obj.multiFactorSession.pendingCredential);
           } else if ((_b = obj.multiFactorSession) === null || _b === void 0 ? void 0 : _b.idToken) {
             return MultiFactorSessionImpl2._fromIdtoken(obj.multiFactorSession.idToken);
@@ -7078,28 +7314,28 @@ var require_register_2a5ac87a = __commonJS({
         this.hints = hints;
         this.signInResolver = signInResolver;
       }
-      MultiFactorResolverImpl2._fromError = function(authExtern, error3) {
+      MultiFactorResolverImpl2._fromError = function(authExtern, error2) {
         var _this = this;
         var auth = _castAuth(authExtern);
-        var hints = (error3.serverResponse.mfaInfo || []).map(function(enrollment) {
+        var hints = (error2.serverResponse.mfaInfo || []).map(function(enrollment) {
           return MultiFactorInfoImpl._fromServerResponse(auth, enrollment);
         });
-        _assert(error3.serverResponse.mfaPendingCredential, auth, "internal-error");
-        var session = MultiFactorSessionImpl._fromMfaPendingCredential(error3.serverResponse.mfaPendingCredential);
+        _assert(error2.serverResponse.mfaPendingCredential, auth, "internal-error");
+        var session = MultiFactorSessionImpl._fromMfaPendingCredential(error2.serverResponse.mfaPendingCredential);
         return new MultiFactorResolverImpl2(session, hints, function(assertion) {
           return tslib.__awaiter(_this, void 0, void 0, function() {
-            var mfaResponse, idTokenResponse, _a2, userCredential;
+            var mfaResponse, idTokenResponse, _a3, userCredential;
             return tslib.__generator(this, function(_b) {
               switch (_b.label) {
                 case 0:
                   return [4, assertion._process(auth, session)];
                 case 1:
                   mfaResponse = _b.sent();
-                  delete error3.serverResponse.mfaInfo;
-                  delete error3.serverResponse.mfaPendingCredential;
-                  idTokenResponse = tslib.__assign(tslib.__assign({}, error3.serverResponse), {idToken: mfaResponse.idToken, refreshToken: mfaResponse.refreshToken});
-                  _a2 = error3.operationType;
-                  switch (_a2) {
+                  delete error2.serverResponse.mfaInfo;
+                  delete error2.serverResponse.mfaPendingCredential;
+                  idTokenResponse = tslib.__assign(tslib.__assign({}, error2.serverResponse), {idToken: mfaResponse.idToken, refreshToken: mfaResponse.refreshToken});
+                  _a3 = error2.operationType;
+                  switch (_a3) {
                     case "signIn":
                       return [3, 2];
                     case "reauthenticate":
@@ -7107,7 +7343,7 @@ var require_register_2a5ac87a = __commonJS({
                   }
                   return [3, 6];
                 case 2:
-                  return [4, UserCredentialImpl._fromIdTokenResponse(auth, error3.operationType, idTokenResponse)];
+                  return [4, UserCredentialImpl._fromIdTokenResponse(auth, error2.operationType, idTokenResponse)];
                 case 3:
                   userCredential = _b.sent();
                   return [4, auth._updateCurrentUser(userCredential.user)];
@@ -7115,8 +7351,8 @@ var require_register_2a5ac87a = __commonJS({
                   _b.sent();
                   return [2, userCredential];
                 case 5:
-                  _assert(error3.user, auth, "internal-error");
-                  return [2, UserCredentialImpl._forOperation(error3.user, error3.operationType, idTokenResponse)];
+                  _assert(error2.user, auth, "internal-error");
+                  return [2, UserCredentialImpl._forOperation(error2.user, error2.operationType, idTokenResponse)];
                 case 6:
                   _fail(auth, "internal-error");
                   _b.label = 7;
@@ -7130,7 +7366,7 @@ var require_register_2a5ac87a = __commonJS({
       MultiFactorResolverImpl2.prototype.resolveSignIn = function(assertionExtern) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var assertion;
-          return tslib.__generator(this, function(_a2) {
+          return tslib.__generator(this, function(_a3) {
             assertion = assertionExtern;
             return [2, this.signInResolver(assertion)];
           });
@@ -7138,22 +7374,16 @@ var require_register_2a5ac87a = __commonJS({
       };
       return MultiFactorResolverImpl2;
     }();
-    function getMultiFactorResolver(auth, error3) {
-      var _a2;
+    function getMultiFactorResolver(auth, error2) {
+      var _a3;
       var authModular = util.getModularInstance(auth);
-      var errorInternal = error3;
-      _assert(error3.operationType, authModular, "argument-error");
-      _assert((_a2 = errorInternal.serverResponse) === null || _a2 === void 0 ? void 0 : _a2.mfaPendingCredential, authModular, "argument-error");
+      var errorInternal = error2;
+      _assert(error2.operationType, authModular, "argument-error");
+      _assert((_a3 = errorInternal.serverResponse) === null || _a3 === void 0 ? void 0 : _a3.mfaPendingCredential, authModular, "argument-error");
       return MultiFactorResolverImpl._fromError(authModular, errorInternal);
     }
-    function startEnrollPhoneMfa(auth, request) {
-      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:start", tslib.__assign({tenantId: auth.tenantId}, request));
-    }
-    function finalizeEnrollPhoneMfa(auth, request) {
-      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:finalize", tslib.__assign({tenantId: auth.tenantId}, request));
-    }
     function withdrawMfa(auth, request) {
-      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:withdraw", tslib.__assign({tenantId: auth.tenantId}, request));
+      return _performApiRequest(auth, "POST", "/v2/accounts/mfaEnrollment:withdraw", _addTidIfNecessary(auth, request));
     }
     var MultiFactorUserImpl = function() {
       function MultiFactorUserImpl2(user) {
@@ -7173,14 +7403,14 @@ var require_register_2a5ac87a = __commonJS({
       };
       MultiFactorUserImpl2.prototype.getSession = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
-          var _a2, _b;
+          var _a3, _b;
           return tslib.__generator(this, function(_c) {
             switch (_c.label) {
               case 0:
-                _b = (_a2 = MultiFactorSessionImpl)._fromIdtoken;
+                _b = (_a3 = MultiFactorSessionImpl)._fromIdtoken;
                 return [4, this.user.getIdToken()];
               case 1:
-                return [2, _b.apply(_a2, [_c.sent()])];
+                return [2, _b.apply(_a3, [_c.sent()])];
             }
           });
         });
@@ -7188,19 +7418,19 @@ var require_register_2a5ac87a = __commonJS({
       MultiFactorUserImpl2.prototype.enroll = function(assertionExtern, displayName) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var assertion, session, finalizeMfaResponse;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 assertion = assertionExtern;
                 return [4, this.getSession()];
               case 1:
-                session = _a2.sent();
+                session = _a3.sent();
                 return [4, _logoutIfInvalidated(this.user, assertion._process(this.user.auth, session, displayName))];
               case 2:
-                finalizeMfaResponse = _a2.sent();
+                finalizeMfaResponse = _a3.sent();
                 return [4, this.user._updateTokensIfNecessary(finalizeMfaResponse)];
               case 3:
-                _a2.sent();
+                _a3.sent();
                 return [2, this.user.reload()];
             }
           });
@@ -7209,35 +7439,35 @@ var require_register_2a5ac87a = __commonJS({
       MultiFactorUserImpl2.prototype.unenroll = function(infoOrUid) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var mfaEnrollmentId, idToken, idTokenResponse, e_1;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 mfaEnrollmentId = typeof infoOrUid === "string" ? infoOrUid : infoOrUid.uid;
                 return [4, this.user.getIdToken()];
               case 1:
-                idToken = _a2.sent();
+                idToken = _a3.sent();
                 return [4, _logoutIfInvalidated(this.user, withdrawMfa(this.user.auth, {
                   idToken,
                   mfaEnrollmentId
                 }))];
               case 2:
-                idTokenResponse = _a2.sent();
-                this.enrolledFactors = this.enrolledFactors.filter(function(_a3) {
-                  var uid = _a3.uid;
+                idTokenResponse = _a3.sent();
+                this.enrolledFactors = this.enrolledFactors.filter(function(_a4) {
+                  var uid = _a4.uid;
                   return uid !== mfaEnrollmentId;
                 });
                 return [4, this.user._updateTokensIfNecessary(idTokenResponse)];
               case 3:
-                _a2.sent();
-                _a2.label = 4;
+                _a3.sent();
+                _a3.label = 4;
               case 4:
-                _a2.trys.push([4, 6, , 7]);
+                _a3.trys.push([4, 6, , 7]);
                 return [4, this.user.reload()];
               case 5:
-                _a2.sent();
+                _a3.sent();
                 return [3, 7];
               case 6:
-                e_1 = _a2.sent();
+                e_1 = _a3.sent();
                 if (e_1.code !== "auth/user-token-expired") {
                   throw e_1;
                 }
@@ -7258,34 +7488,34 @@ var require_register_2a5ac87a = __commonJS({
       }
       return multiFactorUserCache.get(userModular);
     }
-    var name = "@firebase/auth-exp";
-    var version = "0.0.900-exp.d92a36260";
+    var name = "@firebase/auth";
+    var version = "0.18.0";
     var AuthInterop = function() {
       function AuthInterop2(auth) {
         this.auth = auth;
         this.internalListeners = new Map();
       }
       AuthInterop2.prototype.getUid = function() {
-        var _a2;
+        var _a3;
         this.assertAuthConfigured();
-        return ((_a2 = this.auth.currentUser) === null || _a2 === void 0 ? void 0 : _a2.uid) || null;
+        return ((_a3 = this.auth.currentUser) === null || _a3 === void 0 ? void 0 : _a3.uid) || null;
       };
       AuthInterop2.prototype.getToken = function(forceRefresh) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var accessToken;
-          return tslib.__generator(this, function(_a2) {
-            switch (_a2.label) {
+          return tslib.__generator(this, function(_a3) {
+            switch (_a3.label) {
               case 0:
                 this.assertAuthConfigured();
                 return [4, this.auth._initializationPromise];
               case 1:
-                _a2.sent();
+                _a3.sent();
                 if (!this.auth.currentUser) {
                   return [2, null];
                 }
                 return [4, this.auth.currentUser.getIdToken(forceRefresh)];
               case 2:
-                accessToken = _a2.sent();
+                accessToken = _a3.sent();
                 return [2, {accessToken}];
             }
           });
@@ -7297,8 +7527,8 @@ var require_register_2a5ac87a = __commonJS({
           return;
         }
         var unsubscribe = this.auth.onIdTokenChanged(function(user) {
-          var _a2;
-          listener(((_a2 = user) === null || _a2 === void 0 ? void 0 : _a2.stsTokenManager.accessToken) || null);
+          var _a3;
+          listener(((_a3 = user) === null || _a3 === void 0 ? void 0 : _a3.stsTokenManager.accessToken) || null);
         });
         this.internalListeners.set(listener, unsubscribe);
         this.updateProactiveRefresh();
@@ -7340,9 +7570,9 @@ var require_register_2a5ac87a = __commonJS({
       }
     }
     function registerAuth(clientPlatform) {
-      app._registerComponent(new component.Component("auth-exp", function(container, _a2) {
-        var deps = _a2.options;
-        var app2 = container.getProvider("app-exp").getImmediate();
+      app._registerComponent(new component.Component("auth", function(container, _a3) {
+        var deps = _a3.options;
+        var app2 = container.getProvider("app").getImmediate();
         var _b = app2.options, apiKey = _b.apiKey, authDomain = _b.authDomain;
         return function(app3) {
           _assert(apiKey && !apiKey.includes(":"), "invalid-api-key", {appName: app3.name});
@@ -7367,49 +7597,109 @@ var require_register_2a5ac87a = __commonJS({
         authInternalProvider.initialize();
       }));
       app._registerComponent(new component.Component("auth-internal", function(container) {
-        var auth = _castAuth(container.getProvider("auth-exp").getImmediate());
+        var auth = _castAuth(container.getProvider("auth").getImmediate());
         return function(auth2) {
           return new AuthInterop(auth2);
         }(auth);
       }, "PRIVATE").setInstantiationMode("EXPLICIT"));
       app.registerVersion(name, version, getVersionForPlatform(clientPlatform));
     }
+    FetchProvider.initialize(fetchImpl__namespace.default, fetchImpl__namespace.Headers, fetchImpl__namespace.Response);
+    function getAuth2(app$1) {
+      if (app$1 === void 0) {
+        app$1 = app.getApp();
+      }
+      var provider = app._getProvider(app$1, "auth");
+      if (provider.isInitialized()) {
+        return provider.getImmediate();
+      }
+      return initializeAuth(app$1);
+    }
+    registerAuth("Node");
+    var NOT_AVAILABLE_ERROR = _createError("operation-not-supported-in-this-environment");
+    function fail() {
+      return tslib.__awaiter(this, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a3) {
+          throw NOT_AVAILABLE_ERROR;
+        });
+      });
+    }
+    var FailClass = function() {
+      function FailClass2() {
+        throw NOT_AVAILABLE_ERROR;
+      }
+      return FailClass2;
+    }();
+    var browserLocalPersistence = inMemoryPersistence;
+    var browserSessionPersistence = inMemoryPersistence;
+    var indexedDBLocalPersistence = inMemoryPersistence;
+    var browserPopupRedirectResolver = NOT_AVAILABLE_ERROR;
+    var PhoneAuthProvider = FailClass;
+    var signInWithPhoneNumber = fail;
+    var linkWithPhoneNumber = fail;
+    var reauthenticateWithPhoneNumber = fail;
+    var updatePhoneNumber = fail;
+    var signInWithPopup = fail;
+    var linkWithPopup = fail;
+    var reauthenticateWithPopup = fail;
+    var signInWithRedirect = fail;
+    var linkWithRedirect = fail;
+    var reauthenticateWithRedirect = fail;
+    var getRedirectResult = fail;
+    var RecaptchaVerifier = FailClass;
+    var PhoneMultiFactorGenerator = function() {
+      function PhoneMultiFactorGenerator2() {
+      }
+      PhoneMultiFactorGenerator2.assertion = function() {
+        throw NOT_AVAILABLE_ERROR;
+      };
+      return PhoneMultiFactorGenerator2;
+    }();
+    AuthImpl.prototype.setPersistence = function() {
+      return tslib.__awaiter(void 0, void 0, void 0, function() {
+        return tslib.__generator(this, function(_a3) {
+          return [2];
+        });
+      });
+    };
+    exports2.AUTH_ERROR_CODES_MAP_DO_NOT_USE_INTERNALLY = AUTH_ERROR_CODES_MAP_DO_NOT_USE_INTERNALLY;
+    exports2.ActionCodeOperation = ActionCodeOperation;
     exports2.ActionCodeURL = ActionCodeURL;
     exports2.AuthCredential = AuthCredential;
     exports2.AuthImpl = AuthImpl;
     exports2.BaseOAuthProvider = BaseOAuthProvider;
-    exports2.Delay = Delay;
     exports2.EmailAuthCredential = EmailAuthCredential;
     exports2.EmailAuthProvider = EmailAuthProvider;
     exports2.FacebookAuthProvider = FacebookAuthProvider;
+    exports2.FactorId = FactorId;
     exports2.FederatedAuthProvider = FederatedAuthProvider;
     exports2.FetchProvider = FetchProvider;
     exports2.GithubAuthProvider = GithubAuthProvider;
     exports2.GoogleAuthProvider = GoogleAuthProvider;
     exports2.OAuthCredential = OAuthCredential;
     exports2.OAuthProvider = OAuthProvider;
+    exports2.OperationType = OperationType;
     exports2.PhoneAuthCredential = PhoneAuthCredential;
+    exports2.PhoneAuthProvider = PhoneAuthProvider;
+    exports2.PhoneMultiFactorGenerator = PhoneMultiFactorGenerator;
+    exports2.ProviderId = ProviderId;
+    exports2.RecaptchaVerifier = RecaptchaVerifier;
     exports2.SAMLAuthCredential = SAMLAuthCredential;
     exports2.SAMLAuthProvider = SAMLAuthProvider;
+    exports2.SignInMethod = SignInMethod;
     exports2.TwitterAuthProvider = TwitterAuthProvider;
     exports2.UserImpl = UserImpl;
     exports2._assert = _assert;
-    exports2._assertLinkedStatus = _assertLinkedStatus;
     exports2._castAuth = _castAuth;
     exports2._createError = _createError;
     exports2._emulatorUrl = _emulatorUrl;
     exports2._fail = _fail;
     exports2._getClientVersion = _getClientVersion;
-    exports2._getCurrentUrl = _getCurrentUrl;
     exports2._getInstance = _getInstance;
     exports2._isAndroid = _isAndroid;
-    exports2._isChromeIOS = _isChromeIOS;
-    exports2._isFirefox = _isFirefox;
-    exports2._isHttpOrHttps = _isHttpOrHttps;
     exports2._isIE10 = _isIE10;
     exports2._isIOS = _isIOS;
     exports2._isIOS7Or8 = _isIOS7Or8;
-    exports2._isIOSStandalone = _isIOSStandalone;
     exports2._isIframe = _isIframe;
     exports2._isMobileBrowser = _isMobileBrowser;
     exports2._isSafari = _isSafari;
@@ -7418,51 +7708,62 @@ var require_register_2a5ac87a = __commonJS({
     exports2._persistenceKeyName = _persistenceKeyName;
     exports2._reauthenticate = _reauthenticate;
     exports2._signInWithCredential = _signInWithCredential;
-    exports2.applyActionCode = applyActionCode$1;
+    exports2.applyActionCode = applyActionCode;
+    exports2.browserLocalPersistence = browserLocalPersistence;
+    exports2.browserPopupRedirectResolver = browserPopupRedirectResolver;
+    exports2.browserSessionPersistence = browserSessionPersistence;
     exports2.checkActionCode = checkActionCode;
     exports2.confirmPasswordReset = confirmPasswordReset;
+    exports2.connectAuthEmulator = connectAuthEmulator;
     exports2.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
     exports2.debugAssert = debugAssert;
     exports2.debugErrorMap = debugErrorMap;
-    exports2.debugFail = debugFail;
     exports2.deleteUser = deleteUser;
     exports2.fetchSignInMethodsForEmail = fetchSignInMethodsForEmail;
-    exports2.finalizeEnrollPhoneMfa = finalizeEnrollPhoneMfa;
     exports2.getAdditionalUserInfo = getAdditionalUserInfo;
+    exports2.getAuth = getAuth2;
     exports2.getIdToken = getIdToken;
     exports2.getIdTokenResult = getIdTokenResult;
     exports2.getMultiFactorResolver = getMultiFactorResolver;
+    exports2.getRedirectResult = getRedirectResult;
     exports2.inMemoryPersistence = inMemoryPersistence;
+    exports2.indexedDBLocalPersistence = indexedDBLocalPersistence;
     exports2.initializeAuth = initializeAuth;
     exports2.isSignInWithEmailLink = isSignInWithEmailLink;
     exports2.linkWithCredential = linkWithCredential;
+    exports2.linkWithPhoneNumber = linkWithPhoneNumber;
+    exports2.linkWithPopup = linkWithPopup;
+    exports2.linkWithRedirect = linkWithRedirect;
     exports2.multiFactor = multiFactor;
     exports2.onAuthStateChanged = onAuthStateChanged2;
     exports2.onIdTokenChanged = onIdTokenChanged;
     exports2.parseActionCodeURL = parseActionCodeURL;
     exports2.prodErrorMap = prodErrorMap;
     exports2.reauthenticateWithCredential = reauthenticateWithCredential;
-    exports2.registerAuth = registerAuth;
+    exports2.reauthenticateWithPhoneNumber = reauthenticateWithPhoneNumber;
+    exports2.reauthenticateWithPopup = reauthenticateWithPopup;
+    exports2.reauthenticateWithRedirect = reauthenticateWithRedirect;
     exports2.reload = reload;
-    exports2.sendEmailVerification = sendEmailVerification$1;
-    exports2.sendPasswordResetEmail = sendPasswordResetEmail$1;
-    exports2.sendPhoneVerificationCode = sendPhoneVerificationCode;
-    exports2.sendSignInLinkToEmail = sendSignInLinkToEmail$1;
+    exports2.sendEmailVerification = sendEmailVerification;
+    exports2.sendPasswordResetEmail = sendPasswordResetEmail;
+    exports2.sendSignInLinkToEmail = sendSignInLinkToEmail;
     exports2.setPersistence = setPersistence;
     exports2.signInAnonymously = signInAnonymously2;
     exports2.signInWithCredential = signInWithCredential;
-    exports2.signInWithCustomToken = signInWithCustomToken$1;
+    exports2.signInWithCustomToken = signInWithCustomToken;
     exports2.signInWithEmailAndPassword = signInWithEmailAndPassword;
-    exports2.signInWithEmailLink = signInWithEmailLink$1;
+    exports2.signInWithEmailLink = signInWithEmailLink;
     exports2.signInWithIdp = signInWithIdp;
+    exports2.signInWithPhoneNumber = signInWithPhoneNumber;
+    exports2.signInWithPopup = signInWithPopup;
+    exports2.signInWithRedirect = signInWithRedirect;
     exports2.signOut = signOut;
-    exports2.startEnrollPhoneMfa = startEnrollPhoneMfa;
     exports2.unlink = unlink;
     exports2.updateCurrentUser = updateCurrentUser;
     exports2.updateEmail = updateEmail;
     exports2.updatePassword = updatePassword;
-    exports2.updateProfile = updateProfile$1;
-    exports2.useAuthEmulator = useAuthEmulator;
+    exports2.updatePhoneNumber = updatePhoneNumber;
+    exports2.updateProfile = updateProfile;
     exports2.useDeviceLanguage = useDeviceLanguage;
     exports2.verifyBeforeUpdateEmail = verifyBeforeUpdateEmail;
     exports2.verifyPasswordResetCode = verifyPasswordResetCode;
@@ -7474,80 +7775,91 @@ var require_node = __commonJS({
   "node_modules/@firebase/auth/dist/node/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", {value: true});
-    var fetchImpl = require_lib();
-    var app = require_index_cjs3();
+    var index2 = require_index_9110c4a0();
     require_tslib();
     require_index_node_cjs();
-    var register = require_register_2a5ac87a();
+    require_index_cjs3();
     require_index_cjs2();
     require_index_cjs();
-    function _interopDefaultLegacy(e) {
-      return e && typeof e === "object" && "default" in e ? e : {"default": e};
-    }
-    var fetchImpl__default = /* @__PURE__ */ _interopDefaultLegacy(fetchImpl);
-    register.FetchProvider.initialize(fetchImpl__default["default"], fetchImpl.Headers, fetchImpl.Response);
-    function getAuth2(app$1) {
-      var provider = app._getProvider(app$1, "auth-exp");
-      if (provider.isInitialized()) {
-        return provider.getImmediate();
-      }
-      return register.initializeAuth(app$1);
-    }
-    register.registerAuth("Node");
-    exports2.ActionCodeURL = register.ActionCodeURL;
-    exports2.AuthCredential = register.AuthCredential;
-    exports2.EmailAuthCredential = register.EmailAuthCredential;
-    exports2.EmailAuthProvider = register.EmailAuthProvider;
-    exports2.FacebookAuthProvider = register.FacebookAuthProvider;
-    exports2.GithubAuthProvider = register.GithubAuthProvider;
-    exports2.GoogleAuthProvider = register.GoogleAuthProvider;
-    exports2.OAuthCredential = register.OAuthCredential;
-    exports2.OAuthProvider = register.OAuthProvider;
-    exports2.PhoneAuthCredential = register.PhoneAuthCredential;
-    exports2.SAMLAuthProvider = register.SAMLAuthProvider;
-    exports2.TwitterAuthProvider = register.TwitterAuthProvider;
-    exports2.applyActionCode = register.applyActionCode;
-    exports2.checkActionCode = register.checkActionCode;
-    exports2.confirmPasswordReset = register.confirmPasswordReset;
-    exports2.createUserWithEmailAndPassword = register.createUserWithEmailAndPassword;
-    exports2.debugErrorMap = register.debugErrorMap;
-    exports2.deleteUser = register.deleteUser;
-    exports2.fetchSignInMethodsForEmail = register.fetchSignInMethodsForEmail;
-    exports2.getAdditionalUserInfo = register.getAdditionalUserInfo;
-    exports2.getIdToken = register.getIdToken;
-    exports2.getIdTokenResult = register.getIdTokenResult;
-    exports2.getMultiFactorResolver = register.getMultiFactorResolver;
-    exports2.inMemoryPersistence = register.inMemoryPersistence;
-    exports2.initializeAuth = register.initializeAuth;
-    exports2.isSignInWithEmailLink = register.isSignInWithEmailLink;
-    exports2.linkWithCredential = register.linkWithCredential;
-    exports2.multiFactor = register.multiFactor;
-    exports2.onAuthStateChanged = register.onAuthStateChanged;
-    exports2.onIdTokenChanged = register.onIdTokenChanged;
-    exports2.parseActionCodeURL = register.parseActionCodeURL;
-    exports2.prodErrorMap = register.prodErrorMap;
-    exports2.reauthenticateWithCredential = register.reauthenticateWithCredential;
-    exports2.reload = register.reload;
-    exports2.sendEmailVerification = register.sendEmailVerification;
-    exports2.sendPasswordResetEmail = register.sendPasswordResetEmail;
-    exports2.sendSignInLinkToEmail = register.sendSignInLinkToEmail;
-    exports2.setPersistence = register.setPersistence;
-    exports2.signInAnonymously = register.signInAnonymously;
-    exports2.signInWithCredential = register.signInWithCredential;
-    exports2.signInWithCustomToken = register.signInWithCustomToken;
-    exports2.signInWithEmailAndPassword = register.signInWithEmailAndPassword;
-    exports2.signInWithEmailLink = register.signInWithEmailLink;
-    exports2.signOut = register.signOut;
-    exports2.unlink = register.unlink;
-    exports2.updateCurrentUser = register.updateCurrentUser;
-    exports2.updateEmail = register.updateEmail;
-    exports2.updatePassword = register.updatePassword;
-    exports2.updateProfile = register.updateProfile;
-    exports2.useAuthEmulator = register.useAuthEmulator;
-    exports2.useDeviceLanguage = register.useDeviceLanguage;
-    exports2.verifyBeforeUpdateEmail = register.verifyBeforeUpdateEmail;
-    exports2.verifyPasswordResetCode = register.verifyPasswordResetCode;
-    exports2.getAuth = getAuth2;
+    require_lib();
+    exports2.ActionCodeOperation = index2.ActionCodeOperation;
+    exports2.ActionCodeURL = index2.ActionCodeURL;
+    exports2.AuthCredential = index2.AuthCredential;
+    exports2.AuthErrorCodes = index2.AUTH_ERROR_CODES_MAP_DO_NOT_USE_INTERNALLY;
+    exports2.EmailAuthCredential = index2.EmailAuthCredential;
+    exports2.EmailAuthProvider = index2.EmailAuthProvider;
+    exports2.FacebookAuthProvider = index2.FacebookAuthProvider;
+    exports2.FactorId = index2.FactorId;
+    exports2.GithubAuthProvider = index2.GithubAuthProvider;
+    exports2.GoogleAuthProvider = index2.GoogleAuthProvider;
+    exports2.OAuthCredential = index2.OAuthCredential;
+    exports2.OAuthProvider = index2.OAuthProvider;
+    exports2.OperationType = index2.OperationType;
+    exports2.PhoneAuthCredential = index2.PhoneAuthCredential;
+    exports2.PhoneAuthProvider = index2.PhoneAuthProvider;
+    exports2.PhoneMultiFactorGenerator = index2.PhoneMultiFactorGenerator;
+    exports2.ProviderId = index2.ProviderId;
+    exports2.RecaptchaVerifier = index2.RecaptchaVerifier;
+    exports2.SAMLAuthProvider = index2.SAMLAuthProvider;
+    exports2.SignInMethod = index2.SignInMethod;
+    exports2.TwitterAuthProvider = index2.TwitterAuthProvider;
+    exports2.applyActionCode = index2.applyActionCode;
+    exports2.browserLocalPersistence = index2.browserLocalPersistence;
+    exports2.browserPopupRedirectResolver = index2.browserPopupRedirectResolver;
+    exports2.browserSessionPersistence = index2.browserSessionPersistence;
+    exports2.checkActionCode = index2.checkActionCode;
+    exports2.confirmPasswordReset = index2.confirmPasswordReset;
+    exports2.connectAuthEmulator = index2.connectAuthEmulator;
+    exports2.createUserWithEmailAndPassword = index2.createUserWithEmailAndPassword;
+    exports2.debugErrorMap = index2.debugErrorMap;
+    exports2.deleteUser = index2.deleteUser;
+    exports2.fetchSignInMethodsForEmail = index2.fetchSignInMethodsForEmail;
+    exports2.getAdditionalUserInfo = index2.getAdditionalUserInfo;
+    exports2.getAuth = index2.getAuth;
+    exports2.getIdToken = index2.getIdToken;
+    exports2.getIdTokenResult = index2.getIdTokenResult;
+    exports2.getMultiFactorResolver = index2.getMultiFactorResolver;
+    exports2.getRedirectResult = index2.getRedirectResult;
+    exports2.inMemoryPersistence = index2.inMemoryPersistence;
+    exports2.indexedDBLocalPersistence = index2.indexedDBLocalPersistence;
+    exports2.initializeAuth = index2.initializeAuth;
+    exports2.isSignInWithEmailLink = index2.isSignInWithEmailLink;
+    exports2.linkWithCredential = index2.linkWithCredential;
+    exports2.linkWithPhoneNumber = index2.linkWithPhoneNumber;
+    exports2.linkWithPopup = index2.linkWithPopup;
+    exports2.linkWithRedirect = index2.linkWithRedirect;
+    exports2.multiFactor = index2.multiFactor;
+    exports2.onAuthStateChanged = index2.onAuthStateChanged;
+    exports2.onIdTokenChanged = index2.onIdTokenChanged;
+    exports2.parseActionCodeURL = index2.parseActionCodeURL;
+    exports2.prodErrorMap = index2.prodErrorMap;
+    exports2.reauthenticateWithCredential = index2.reauthenticateWithCredential;
+    exports2.reauthenticateWithPhoneNumber = index2.reauthenticateWithPhoneNumber;
+    exports2.reauthenticateWithPopup = index2.reauthenticateWithPopup;
+    exports2.reauthenticateWithRedirect = index2.reauthenticateWithRedirect;
+    exports2.reload = index2.reload;
+    exports2.sendEmailVerification = index2.sendEmailVerification;
+    exports2.sendPasswordResetEmail = index2.sendPasswordResetEmail;
+    exports2.sendSignInLinkToEmail = index2.sendSignInLinkToEmail;
+    exports2.setPersistence = index2.setPersistence;
+    exports2.signInAnonymously = index2.signInAnonymously;
+    exports2.signInWithCredential = index2.signInWithCredential;
+    exports2.signInWithCustomToken = index2.signInWithCustomToken;
+    exports2.signInWithEmailAndPassword = index2.signInWithEmailAndPassword;
+    exports2.signInWithEmailLink = index2.signInWithEmailLink;
+    exports2.signInWithPhoneNumber = index2.signInWithPhoneNumber;
+    exports2.signInWithPopup = index2.signInWithPopup;
+    exports2.signInWithRedirect = index2.signInWithRedirect;
+    exports2.signOut = index2.signOut;
+    exports2.unlink = index2.unlink;
+    exports2.updateCurrentUser = index2.updateCurrentUser;
+    exports2.updateEmail = index2.updateEmail;
+    exports2.updatePassword = index2.updatePassword;
+    exports2.updatePhoneNumber = index2.updatePhoneNumber;
+    exports2.updateProfile = index2.updateProfile;
+    exports2.useDeviceLanguage = index2.useDeviceLanguage;
+    exports2.verifyBeforeUpdateEmail = index2.verifyBeforeUpdateEmail;
+    exports2.verifyPasswordResetCode = index2.verifyPasswordResetCode;
   }
 });
 
@@ -7601,7 +7913,7 @@ var require_constants = __commonJS({
 var require_logging = __commonJS({
   "node_modules/@grpc/grpc-js/build/src/logging.js"(exports2) {
     "use strict";
-    var _a;
+    var _a2;
     var _b;
     var _c;
     var _d;
@@ -7610,7 +7922,7 @@ var require_logging = __commonJS({
     var constants_1 = require_constants();
     var _logger = console;
     var _logVerbosity = constants_1.LogVerbosity.ERROR;
-    var verbosityString = (_b = (_a = process.env.GRPC_NODE_VERBOSITY) !== null && _a !== void 0 ? _a : process.env.GRPC_VERBOSITY) !== null && _b !== void 0 ? _b : "";
+    var verbosityString = (_b = (_a2 = process.env.GRPC_NODE_VERBOSITY) !== null && _a2 !== void 0 ? _a2 : process.env.GRPC_VERBOSITY) !== null && _b !== void 0 ? _b : "";
     switch (verbosityString.toUpperCase()) {
       case "DEBUG":
         _logVerbosity = constants_1.LogVerbosity.DEBUG;
@@ -7822,8 +8134,8 @@ var require_metadata = __commonJS({
                 result.add(key, values);
               }
             }
-          } catch (error3) {
-            const message = `Failed to add metadata entry ${key}: ${values}. ${error3.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
+          } catch (error2) {
+            const message = `Failed to add metadata entry ${key}: ${values}. ${error2.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
             logging_1.log(constants_1.LogVerbosity.ERROR, message);
           }
         });
@@ -8197,8 +8509,8 @@ var require_call_stream = __commonJS({
           this.statusOutput = true;
           const filteredStatus = this.filterStack.receiveTrailers(this.finalStatus);
           process.nextTick(() => {
-            var _a;
-            (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveStatus(filteredStatus);
+            var _a2;
+            (_a2 = this.listener) === null || _a2 === void 0 ? void 0 : _a2.onReceiveStatus(filteredStatus);
           });
           if (this.subchannel) {
             this.subchannel.callUnref();
@@ -8228,16 +8540,16 @@ var require_call_stream = __commonJS({
         this.trace("pushing to reader message of length " + (message instanceof Buffer ? message.length : null));
         this.canPush = false;
         process.nextTick(() => {
-          var _a;
+          var _a2;
           if (this.statusOutput) {
             return;
           }
-          (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMessage(message);
+          (_a2 = this.listener) === null || _a2 === void 0 ? void 0 : _a2.onReceiveMessage(message);
           this.maybeOutputStatus();
         });
       }
-      handleFilterError(error3) {
-        this.cancelWithStatus(constants_1.Status.INTERNAL, error3.message);
+      handleFilterError(error2) {
+        this.cancelWithStatus(constants_1.Status.INTERNAL, error2.message);
       }
       handleFilteredRead(message) {
         if (this.finalStatus !== null && this.finalStatus.code !== constants_1.Status.OK) {
@@ -8321,7 +8633,7 @@ var require_call_stream = __commonJS({
           subchannel.addDisconnectListener(this.disconnectListener);
           subchannel.callRef();
           stream.on("response", (headers, flags) => {
-            var _a;
+            var _a2;
             let headersString = "";
             for (const header of Object.keys(headers)) {
               headersString += "		" + header + ": " + headers[header] + "\n";
@@ -8355,21 +8667,21 @@ var require_call_stream = __commonJS({
               let metadata;
               try {
                 metadata = metadata_1.Metadata.fromHttp2Headers(headers);
-              } catch (error3) {
+              } catch (error2) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error3.message,
+                  details: error2.message,
                   metadata: new metadata_1.Metadata()
                 });
                 return;
               }
               try {
                 const finalMetadata = this.filterStack.receiveMetadata(metadata);
-                (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMetadata(finalMetadata);
-              } catch (error3) {
+                (_a2 = this.listener) === null || _a2 === void 0 ? void 0 : _a2.onReceiveMetadata(finalMetadata);
+              } catch (error2) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error3.message,
+                  details: error2.message,
                   metadata: new metadata_1.Metadata()
                 });
               }
@@ -8390,9 +8702,9 @@ var require_call_stream = __commonJS({
           });
           stream.on("close", () => {
             process.nextTick(() => {
-              var _a;
+              var _a2;
               this.trace("HTTP/2 stream closed with code " + stream.rstCode);
-              if (((_a = this.finalStatus) === null || _a === void 0 ? void 0 : _a.code) === constants_1.Status.OK) {
+              if (((_a2 = this.finalStatus) === null || _a2 === void 0 ? void 0 : _a2.code) === constants_1.Status.OK) {
                 return;
               }
               let code;
@@ -8455,7 +8767,15 @@ var require_call_stream = __commonJS({
               throw new Error("Invalid state in write handling code");
             }
             this.trace("sending data chunk of length " + this.pendingWrite.length + " (deferred)");
-            stream.write(this.pendingWrite, this.pendingWriteCallback);
+            try {
+              stream.write(this.pendingWrite, this.pendingWriteCallback);
+            } catch (error2) {
+              this.endCall({
+                code: constants_1.Status.UNAVAILABLE,
+                details: `Write failed with error ${error2.message}`,
+                metadata: new metadata_1.Metadata()
+              });
+            }
           }
           this.maybeCloseWrites();
         }
@@ -8466,10 +8786,10 @@ var require_call_stream = __commonJS({
         this.channel._startCallStream(this, metadata);
       }
       destroyHttp2Stream() {
-        var _a;
+        var _a2;
         if (this.http2Stream !== null && !this.http2Stream.destroyed) {
           let code;
-          if (((_a = this.finalStatus) === null || _a === void 0 ? void 0 : _a.code) === constants_1.Status.OK) {
+          if (((_a2 = this.finalStatus) === null || _a2 === void 0 ? void 0 : _a2.code) === constants_1.Status.OK) {
             code = http2.constants.NGHTTP2_NO_ERROR;
           } else {
             code = http2.constants.NGHTTP2_CANCEL;
@@ -8503,8 +8823,8 @@ var require_call_stream = __commonJS({
         return this.finalStatus;
       }
       getPeer() {
-        var _a, _b;
-        return (_b = (_a = this.subchannel) === null || _a === void 0 ? void 0 : _a.getAddress()) !== null && _b !== void 0 ? _b : this.channel.getTarget();
+        var _a2, _b;
+        return (_b = (_a2 = this.subchannel) === null || _a2 === void 0 ? void 0 : _a2.getAddress()) !== null && _b !== void 0 ? _b : this.channel.getTarget();
       }
       getMethod() {
         return this.methodName;
@@ -8537,13 +8857,13 @@ var require_call_stream = __commonJS({
         }
       }
       sendMessageWithContext(context, message) {
-        var _a;
+        var _a2;
         this.trace("write() called with message of length " + message.length);
         const writeObj = {
           message,
           flags: context.flags
         };
-        const cb = (_a = context.callback) !== null && _a !== void 0 ? _a : () => {
+        const cb = (_a2 = context.callback) !== null && _a2 !== void 0 ? _a2 : () => {
         };
         this.isWriteFilterPending = true;
         this.filterStack.sendMessage(Promise.resolve(writeObj)).then((message2) => {
@@ -8554,7 +8874,15 @@ var require_call_stream = __commonJS({
             this.pendingWriteCallback = cb;
           } else {
             this.trace("sending data chunk of length " + message2.message.length);
-            this.http2Stream.write(message2.message, cb);
+            try {
+              this.http2Stream.write(message2.message, cb);
+            } catch (error2) {
+              this.endCall({
+                code: constants_1.Status.UNAVAILABLE,
+                details: `Write failed with error ${error2.message}`,
+                metadata: new metadata_1.Metadata()
+              });
+            }
             this.maybeCloseWrites();
           }
         }, this.handleFilterError.bind(this));
@@ -8838,14 +9166,14 @@ var require_backoff_timeout = __commonJS({
         clearTimeout(this.timerId);
       }
       runOnce() {
-        var _a, _b;
+        var _a2, _b;
         this.running = true;
         this.timerId = setTimeout(() => {
           this.callback();
           this.running = false;
         }, this.nextDelay);
         if (!this.hasRef) {
-          (_b = (_a = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+          (_b = (_a2 = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         }
         const nextBackoff = Math.min(this.nextDelay * this.multiplier, this.maxDelay);
         const jitterMagnitude = nextBackoff * this.jitter;
@@ -8862,14 +9190,14 @@ var require_backoff_timeout = __commonJS({
         return this.running;
       }
       ref() {
-        var _a, _b;
+        var _a2, _b;
         this.hasRef = true;
-        (_b = (_a = this.timerId).ref) === null || _b === void 0 ? void 0 : _b.call(_a);
+        (_b = (_a2 = this.timerId).ref) === null || _b === void 0 ? void 0 : _b.call(_a2);
       }
       unref() {
-        var _a, _b;
+        var _a2, _b;
         this.hasRef = false;
-        (_b = (_a = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+        (_b = (_a2 = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
       }
     };
     exports2.BackoffTimeout = BackoffTimeout;
@@ -9203,7 +9531,7 @@ var require_resolver_dns = __commonJS({
     }
     var DnsResolver = class {
       constructor(target, listener, channelOptions) {
-        var _a, _b;
+        var _a2, _b;
         this.target = target;
         this.listener = listener;
         this.pendingLookupPromise = null;
@@ -9222,7 +9550,7 @@ var require_resolver_dns = __commonJS({
             this.ipResult = [
               {
                 host: hostPort.host,
-                port: (_a = hostPort.port) !== null && _a !== void 0 ? _a : DEFAULT_PORT
+                port: (_a2 = hostPort.port) !== null && _a2 !== void 0 ? _a2 : DEFAULT_PORT
               }
             ];
             this.dnsHostname = null;
@@ -9374,7 +9702,7 @@ var require_resolver_ip = __commonJS({
     var DEFAULT_PORT = 443;
     var IpResolver = class {
       constructor(target, listener, channelOptions) {
-        var _a;
+        var _a2;
         this.target = target;
         this.listener = listener;
         this.addresses = [];
@@ -9410,7 +9738,7 @@ var require_resolver_ip = __commonJS({
           }
           addresses.push({
             host: hostPort.host,
-            port: (_a = hostPort.port) !== null && _a !== void 0 ? _a : DEFAULT_PORT
+            port: (_a2 = hostPort.port) !== null && _a2 !== void 0 ? _a2 : DEFAULT_PORT
           });
         }
         this.addresses = addresses;
@@ -9582,12 +9910,12 @@ var require_http_proxy = __commonJS({
       }
     }
     function mapProxyName(target, options2) {
-      var _a;
+      var _a2;
       const noProxyResult = {
         target,
         extraOptions: {}
       };
-      if (((_a = options2["grpc.enable_http_proxy"]) !== null && _a !== void 0 ? _a : 1) === 0) {
+      if (((_a2 = options2["grpc.enable_http_proxy"]) !== null && _a2 !== void 0 ? _a2 : 1) === 0) {
         return noProxyResult;
       }
       const proxyInfo = getProxyInfo();
@@ -9649,7 +9977,7 @@ var require_http_proxy = __commonJS({
       return new Promise((resolve2, reject) => {
         const request = http2.request(options2);
         request.once("connect", (res, socket, head) => {
-          var _a;
+          var _a2;
           request.removeAllListeners();
           socket.removeAllListeners();
           if (res.statusCode === 200) {
@@ -9657,15 +9985,17 @@ var require_http_proxy = __commonJS({
             if ("secureContext" in connectionOptions) {
               const targetPath = resolver_1.getDefaultAuthority(parsedTarget);
               const hostPort = uri_parser_1.splitHostPort(targetPath);
-              const remoteHost = (_a = hostPort === null || hostPort === void 0 ? void 0 : hostPort.host) !== null && _a !== void 0 ? _a : targetPath;
+              const remoteHost = (_a2 = hostPort === null || hostPort === void 0 ? void 0 : hostPort.host) !== null && _a2 !== void 0 ? _a2 : targetPath;
               const cts = tls.connect(Object.assign({host: remoteHost, servername: remoteHost, socket}, connectionOptions), () => {
                 trace("Successfully established a TLS connection to " + options2.path + " through proxy " + proxyAddressString);
                 resolve2({socket: cts, realTarget: parsedTarget});
               });
-              cts.on("error", () => {
+              cts.on("error", (error2) => {
+                trace("Failed to establish a TLS connection to " + options2.path + " through proxy " + proxyAddressString + " with error " + error2.message);
                 reject();
               });
             } else {
+              trace("Successfully established a plaintext connection to " + options2.path + " through proxy " + proxyAddressString);
               resolve2({
                 socket,
                 realTarget: parsedTarget
@@ -9692,39 +10022,34 @@ var require_http_proxy = __commonJS({
 var require_package = __commonJS({
   "node_modules/@grpc/grpc-js/package.json"(exports2, module2) {
     module2.exports = {
-      _args: [
-        [
-          "@grpc/grpc-js@1.3.3",
-          "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream"
-        ]
-      ],
-      _from: "@grpc/grpc-js@1.3.3",
-      _id: "@grpc/grpc-js@1.3.3",
+      _from: "@grpc/grpc-js@^1.3.2",
+      _id: "@grpc/grpc-js@1.3.7",
       _inBundle: false,
-      _integrity: "sha512-KkKZrX3fVTBYCtUk8I+Y4xWaauEEOIR1mIGoPFUK8C+a9TTub5dmjowJpFGz0dqYj//wJcgVR9fqpoNhSYFfHQ==",
+      _integrity: "sha512-CKQVuwuSPh40tgOkR7c0ZisxYRiN05PcKPW72mQL5y++qd7CwBRoaJZvU5xfXnCJDFBmS3qZGQ71Frx6Ofo2XA==",
       _location: "/@grpc/grpc-js",
       _phantomChildren: {},
       _requested: {
-        type: "version",
+        type: "range",
         registry: true,
-        raw: "@grpc/grpc-js@1.3.3",
+        raw: "@grpc/grpc-js@^1.3.2",
         name: "@grpc/grpc-js",
         escapedName: "@grpc%2fgrpc-js",
         scope: "@grpc",
-        rawSpec: "1.3.3",
+        rawSpec: "^1.3.2",
         saveSpec: null,
-        fetchSpec: "1.3.3"
+        fetchSpec: "^1.3.2"
       },
       _requiredBy: [
-        "/@firebase/firestore",
-        "/@firebase/firestore-compat"
+        "/@firebase/firestore"
       ],
-      _resolved: "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.3.tgz",
-      _spec: "1.3.3",
-      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream",
+      _resolved: "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.3.7.tgz",
+      _shasum: "58b687aff93b743aafde237fd2ee9a3259d7f2d8",
+      _spec: "@grpc/grpc-js@^1.3.2",
+      _where: "C:\\Users\\tenst\\Documents\\GitHub\\poll.stream\\node_modules\\@firebase\\firestore",
       author: {
         name: "Google Inc."
       },
+      bundleDependencies: false,
       contributors: [
         {
           name: "Google Inc."
@@ -9733,6 +10058,7 @@ var require_package = __commonJS({
       dependencies: {
         "@types/node": ">=12.12.47"
       },
+      deprecated: false,
       description: "gRPC Library for Node - pure JS implementation",
       devDependencies: {
         "@grpc/proto-loader": "^0.5.5",
@@ -9796,7 +10122,7 @@ var require_package = __commonJS({
         test: "gulp test"
       },
       types: "build/src/index.d.ts",
-      version: "1.3.3"
+      version: "1.3.7"
     };
   }
 });
@@ -9911,26 +10237,35 @@ var require_subchannel = __commonJS({
         this.backoffTimeout.reset();
       }
       sendPing() {
+        var _a2, _b;
         logging.trace(constants_1.LogVerbosity.DEBUG, "keepalive", "Sending ping to " + this.subchannelAddressString);
         this.keepaliveTimeoutId = setTimeout(() => {
           this.transitionToState([channel_1.ConnectivityState.READY], channel_1.ConnectivityState.IDLE);
         }, this.keepaliveTimeoutMs);
+        (_b = (_a2 = this.keepaliveTimeoutId).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         this.session.ping((err, duration, payload) => {
           clearTimeout(this.keepaliveTimeoutId);
         });
       }
       startKeepalivePings() {
+        var _a2, _b;
         this.keepaliveIntervalId = setInterval(() => {
           this.sendPing();
         }, this.keepaliveTimeMs);
+        (_b = (_a2 = this.keepaliveIntervalId).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
       }
       stopKeepalivePings() {
         clearInterval(this.keepaliveIntervalId);
         clearTimeout(this.keepaliveTimeoutId);
       }
       createSession(proxyConnectionResult) {
-        var _a, _b, _c;
-        const targetAuthority = resolver_1.getDefaultAuthority((_a = proxyConnectionResult.realTarget) !== null && _a !== void 0 ? _a : this.channelTarget);
+        var _a2, _b, _c;
+        if (proxyConnectionResult.realTarget) {
+          trace(this.subchannelAddressString + " creating HTTP/2 session through proxy to " + proxyConnectionResult.realTarget);
+        } else {
+          trace(this.subchannelAddressString + " creating HTTP/2 session");
+        }
+        const targetAuthority = resolver_1.getDefaultAuthority((_a2 = proxyConnectionResult.realTarget) !== null && _a2 !== void 0 ? _a2 : this.channelTarget);
         let connectionOptions = this.credentials._getConnectionOptions() || {};
         connectionOptions.maxSendHeaderBlockLength = Number.MAX_SAFE_INTEGER;
         if ("grpc-node.max_session_memory" in this.options) {
@@ -9974,6 +10309,7 @@ var require_subchannel = __commonJS({
         });
         session.once("close", () => {
           if (this.session === session) {
+            trace(this.subchannelAddressString + " connection closed");
             this.transitionToState([channel_1.ConnectivityState.CONNECTING], channel_1.ConnectivityState.TRANSIENT_FAILURE);
             this.transitionToState([channel_1.ConnectivityState.READY], channel_1.ConnectivityState.IDLE);
           }
@@ -9988,12 +10324,12 @@ var require_subchannel = __commonJS({
             this.transitionToState([channel_1.ConnectivityState.CONNECTING, channel_1.ConnectivityState.READY], channel_1.ConnectivityState.IDLE);
           }
         });
-        session.once("error", (error3) => {
-          trace(this.subchannelAddressString + " connection closed with error " + error3.message);
+        session.once("error", (error2) => {
+          trace(this.subchannelAddressString + " connection closed with error " + error2.message);
         });
       }
       startConnectingInternal() {
-        var _a, _b;
+        var _a2, _b;
         const connectionOptions = this.credentials._getConnectionOptions() || {};
         if ("secureContext" in connectionOptions) {
           connectionOptions.ALPNProtocols = ["h2"];
@@ -10005,7 +10341,7 @@ var require_subchannel = __commonJS({
             connectionOptions.servername = sslTargetNameOverride;
           } else {
             if ("grpc.http_connect_target" in this.options) {
-              const targetPath = resolver_1.getDefaultAuthority((_a = uri_parser_1.parseUri(this.options["grpc.http_connect_target"])) !== null && _a !== void 0 ? _a : {
+              const targetPath = resolver_1.getDefaultAuthority((_a2 = uri_parser_1.parseUri(this.options["grpc.http_connect_target"])) !== null && _a2 !== void 0 ? _a2 : {
                 path: "localhost"
               });
               const hostPort = uri_parser_1.splitHostPort(targetPath);
@@ -10693,12 +11029,12 @@ var require_load_balancer_child_handler = __commonJS({
             return this.parent.channelControlHelper.createSubchannel(subchannelAddress, subchannelArgs);
           }
           updateState(connectivityState, picker) {
-            var _a;
+            var _a2;
             if (this.calledByPendingChild()) {
               if (connectivityState !== channel_1.ConnectivityState.READY) {
                 return;
               }
-              (_a = this.parent.currentChild) === null || _a === void 0 ? void 0 : _a.destroy();
+              (_a2 = this.parent.currentChild) === null || _a2 === void 0 ? void 0 : _a2.destroy();
               this.parent.currentChild = this.parent.pendingChild;
               this.parent.pendingChild = null;
             } else if (!this.calledByCurrentChild()) {
@@ -10707,8 +11043,8 @@ var require_load_balancer_child_handler = __commonJS({
             this.parent.channelControlHelper.updateState(connectivityState, picker);
           }
           requestReresolution() {
-            var _a;
-            const latestChild = (_a = this.parent.pendingChild) !== null && _a !== void 0 ? _a : this.parent.currentChild;
+            var _a2;
+            const latestChild = (_a2 = this.parent.pendingChild) !== null && _a2 !== void 0 ? _a2 : this.parent.currentChild;
             if (this.child === latestChild) {
               this.parent.channelControlHelper.requestReresolution();
             }
@@ -10807,9 +11143,9 @@ var require_resolving_load_balancer = __commonJS({
     }
     function getDefaultConfigSelector(serviceConfig) {
       return function defaultConfigSelector(methodName, metadata) {
-        var _a, _b;
+        var _a2, _b;
         const splitName = methodName.split("/").filter((x) => x.length > 0);
-        const service = (_a = splitName[0]) !== null && _a !== void 0 ? _a : "";
+        const service = (_a2 = splitName[0]) !== null && _a2 !== void 0 ? _a2 : "";
         const method = (_b = splitName[1]) !== null && _b !== void 0 ? _b : "";
         if (serviceConfig && serviceConfig.methodConfig) {
           for (const methodConfig of serviceConfig.methodConfig) {
@@ -10869,7 +11205,7 @@ var require_resolving_load_balancer = __commonJS({
         });
         this.innerResolver = resolver_1.createResolver(target, {
           onSuccessfulResolution: (addressList, serviceConfig, serviceConfigError, configSelector, attributes) => {
-            var _a;
+            var _a2;
             let workingServiceConfig = null;
             if (serviceConfig === null) {
               if (serviceConfigError === null) {
@@ -10886,7 +11222,7 @@ var require_resolving_load_balancer = __commonJS({
               workingServiceConfig = serviceConfig;
               this.previousServiceConfig = serviceConfig;
             }
-            const workingConfigList = (_a = workingServiceConfig === null || workingServiceConfig === void 0 ? void 0 : workingServiceConfig.loadBalancingConfig) !== null && _a !== void 0 ? _a : [];
+            const workingConfigList = (_a2 = workingServiceConfig === null || workingServiceConfig === void 0 ? void 0 : workingServiceConfig.loadBalancingConfig) !== null && _a2 !== void 0 ? _a2 : [];
             const loadBalancingConfig = load_balancer_1.getFirstUsableConfig(workingConfigList, true);
             if (loadBalancingConfig === null) {
               this.handleResolutionFailure({
@@ -10900,8 +11236,8 @@ var require_resolving_load_balancer = __commonJS({
             const finalServiceConfig = workingServiceConfig !== null && workingServiceConfig !== void 0 ? workingServiceConfig : this.defaultServiceConfig;
             this.onSuccessfulResolution(configSelector !== null && configSelector !== void 0 ? configSelector : getDefaultConfigSelector(finalServiceConfig));
           },
-          onError: (error3) => {
-            this.handleResolutionFailure(error3);
+          onError: (error2) => {
+            this.handleResolutionFailure(error2);
           }
         }, channelOptions);
         this.backoffTimeout = new backoff_timeout_1.BackoffTimeout(() => {
@@ -10928,10 +11264,10 @@ var require_resolving_load_balancer = __commonJS({
         this.currentState = connectivityState;
         this.channelControlHelper.updateState(connectivityState, picker);
       }
-      handleResolutionFailure(error3) {
+      handleResolutionFailure(error2) {
         if (this.latestChildState === channel_1.ConnectivityState.IDLE) {
-          this.updateState(channel_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error3));
-          this.onFailedResolution(error3);
+          this.updateState(channel_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error2));
+          this.onFailedResolution(error2);
         }
         this.backoffTimeout.runOnce();
       }
@@ -11042,12 +11378,12 @@ var require_subchannel_pool = __commonJS({
         }
       }
       ensureCleanupTask() {
-        var _a, _b;
+        var _a2, _b;
         if (this.global && this.cleanupTimer === null) {
           this.cleanupTimer = setInterval(() => {
             this.unrefUnusedSubchannels();
           }, REF_CHECK_INTERVAL);
-          (_b = (_a = this.cleanupTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+          (_b = (_a2 = this.cleanupTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         }
       }
       getOrCreateSubchannel(channelTargetUri, subchannelTarget, channelArguments, channelCredentials) {
@@ -11128,7 +11464,7 @@ var require_call_credentials_filter = __commonJS({
     var uri_parser_1 = require_uri_parser();
     var CallCredentialsFilter = class extends filter_1.BaseFilter {
       constructor(channel, stream) {
-        var _a, _b;
+        var _a2, _b;
         super();
         this.channel = channel;
         this.stream = stream;
@@ -11139,7 +11475,7 @@ var require_call_credentials_filter = __commonJS({
         if (splitPath.length >= 2) {
           serviceName = splitPath[1];
         }
-        const hostname = (_b = (_a = uri_parser_1.splitHostPort(stream.getHost())) === null || _a === void 0 ? void 0 : _a.host) !== null && _b !== void 0 ? _b : "localhost";
+        const hostname = (_b = (_a2 = uri_parser_1.splitHostPort(stream.getHost())) === null || _a2 === void 0 ? void 0 : _a2.host) !== null && _b !== void 0 ? _b : "localhost";
         this.serviceUrl = `https://${hostname}/${serviceName}`;
       }
       async sendMetadata(metadata) {
@@ -11150,8 +11486,8 @@ var require_call_credentials_filter = __commonJS({
         const resultMetadata = await metadata;
         try {
           resultMetadata.merge(await credsMetadata);
-        } catch (error3) {
-          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error3.message}`);
+        } catch (error2) {
+          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error2.message}`);
           return Promise.reject("Failed to retrieve auth metadata");
         }
         if (resultMetadata.get("authorization").length > 1) {
@@ -11202,7 +11538,7 @@ var require_deadline_filter = __commonJS({
     }
     var DeadlineFilter = class extends filter_1.BaseFilter {
       constructor(channel, callStream) {
-        var _a, _b;
+        var _a2, _b;
         super();
         this.channel = channel;
         this.callStream = callStream;
@@ -11223,7 +11559,7 @@ var require_deadline_filter = __commonJS({
           this.timer = setTimeout(() => {
             callStream.cancelWithStatus(constants_1.Status.DEADLINE_EXCEEDED, "Deadline exceeded");
           }, timeout);
-          (_b = (_a = this.timer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+          (_b = (_a2 = this.timer).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         }
       }
       async sendMetadata(metadata) {
@@ -11523,7 +11859,7 @@ var require_channel = __commonJS({
     }
     var ChannelImplementation = class {
       constructor(target, credentials, options2) {
-        var _a, _b, _c;
+        var _a2, _b, _c;
         this.credentials = credentials;
         this.options = options2;
         this.connectivityState = ConnectivityState.IDLE;
@@ -11553,7 +11889,7 @@ var require_channel = __commonJS({
         }
         this.callRefTimer = setInterval(() => {
         }, MAX_TIMEOUT_TIME);
-        (_b = (_a = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+        (_b = (_a2 = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         if (this.options["grpc.default_authority"]) {
           this.defaultAuthority = this.options["grpc.default_authority"];
         } else {
@@ -11616,17 +11952,17 @@ var require_channel = __commonJS({
         ]);
       }
       callRefTimerRef() {
-        var _a, _b, _c, _d;
-        if (!((_b = (_a = this.callRefTimer).hasRef) === null || _b === void 0 ? void 0 : _b.call(_a))) {
+        var _a2, _b, _c, _d;
+        if (!((_b = (_a2 = this.callRefTimer).hasRef) === null || _b === void 0 ? void 0 : _b.call(_a2))) {
           logging_1.trace(constants_1.LogVerbosity.DEBUG, "channel", "callRefTimer.ref | configSelectionQueue.length=" + this.configSelectionQueue.length + " pickQueue.length=" + this.pickQueue.length);
           (_d = (_c = this.callRefTimer).ref) === null || _d === void 0 ? void 0 : _d.call(_c);
         }
       }
       callRefTimerUnref() {
-        var _a, _b;
+        var _a2, _b;
         if (!this.callRefTimer.hasRef || this.callRefTimer.hasRef()) {
           logging_1.trace(constants_1.LogVerbosity.DEBUG, "channel", "callRefTimer.unref | configSelectionQueue.length=" + this.configSelectionQueue.length + " pickQueue.length=" + this.pickQueue.length);
-          (_b = (_a = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+          (_b = (_a2 = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a2);
         }
       }
       pushPick(callStream, callMetadata, callConfig) {
@@ -11634,9 +11970,9 @@ var require_channel = __commonJS({
         this.callRefTimerRef();
       }
       tryPick(callStream, callMetadata, callConfig) {
-        var _a, _b, _c;
+        var _a2, _b, _c;
         const pickResult = this.currentPicker.pick({metadata: callMetadata, extraPickInfo: callConfig.pickInformation});
-        logging_1.trace(constants_1.LogVerbosity.DEBUG, "channel", "Pick result: " + picker_1.PickResultType[pickResult.pickResultType] + " subchannel: " + ((_a = pickResult.subchannel) === null || _a === void 0 ? void 0 : _a.getAddress()) + " status: " + ((_b = pickResult.status) === null || _b === void 0 ? void 0 : _b.code) + " " + ((_c = pickResult.status) === null || _c === void 0 ? void 0 : _c.details));
+        logging_1.trace(constants_1.LogVerbosity.DEBUG, "channel", "Pick result: " + picker_1.PickResultType[pickResult.pickResultType] + " subchannel: " + ((_a2 = pickResult.subchannel) === null || _a2 === void 0 ? void 0 : _a2.getAddress()) + " status: " + ((_b = pickResult.status) === null || _b === void 0 ? void 0 : _b.code) + " " + ((_c = pickResult.status) === null || _c === void 0 ? void 0 : _c.details));
         switch (pickResult.pickResultType) {
           case picker_1.PickResultType.COMPLETE:
             if (pickResult.subchannel === null) {
@@ -11648,28 +11984,28 @@ var require_channel = __commonJS({
                 break;
               }
               callStream.filterStack.sendMetadata(Promise.resolve(callMetadata.clone())).then((finalMetadata) => {
-                var _a2, _b2, _c2;
+                var _a3, _b2, _c2;
                 const subchannelState = pickResult.subchannel.getConnectivityState();
                 if (subchannelState === ConnectivityState.READY) {
                   try {
-                    pickResult.subchannel.startCallStream(finalMetadata, callStream, (_a2 = pickResult.extraFilterFactory) !== null && _a2 !== void 0 ? _a2 : void 0);
+                    pickResult.subchannel.startCallStream(finalMetadata, callStream, (_a3 = pickResult.extraFilterFactory) !== null && _a3 !== void 0 ? _a3 : void 0);
                     (_b2 = callConfig.onCommitted) === null || _b2 === void 0 ? void 0 : _b2.call(callConfig);
                     (_c2 = pickResult.onCallStarted) === null || _c2 === void 0 ? void 0 : _c2.call(pickResult);
-                  } catch (error3) {
-                    if (error3.code === "ERR_HTTP2_GOAWAY_SESSION") {
-                      logging_1.trace(constants_1.LogVerbosity.INFO, "channel", "Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Retrying pick");
+                  } catch (error2) {
+                    if (error2.code === "ERR_HTTP2_GOAWAY_SESSION") {
+                      logging_1.trace(constants_1.LogVerbosity.INFO, "channel", "Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error2.message + ". Retrying pick");
                       this.tryPick(callStream, callMetadata, callConfig);
                     } else {
-                      logging_1.trace(constants_1.LogVerbosity.INFO, "channel", "Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Ending call");
-                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error3.message}`);
+                      logging_1.trace(constants_1.LogVerbosity.INFO, "channel", "Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error2.message + ". Ending call");
+                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error2.message}`);
                     }
                   }
                 } else {
                   logging_1.trace(constants_1.LogVerbosity.INFO, "channel", "Picked subchannel " + pickResult.subchannel.getAddress() + " has state " + ConnectivityState[subchannelState] + " after metadata filters. Retrying pick");
                   this.tryPick(callStream, callMetadata, callConfig);
                 }
-              }, (error3) => {
-                callStream.cancelWithStatus(typeof error3.code === "number" ? error3.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error3.message}`);
+              }, (error2) => {
+                callStream.cancelWithStatus(typeof error2.code === "number" ? error2.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error2.message}`);
               });
             }
             break;
@@ -11815,12 +12151,12 @@ var require_call = __commonJS({
         super();
       }
       cancel() {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
       }
       getPeer() {
-        var _a, _b;
-        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
+        var _a2, _b;
+        return (_b = (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
       }
     };
     exports2.ClientUnaryCallImpl = ClientUnaryCallImpl;
@@ -11830,16 +12166,16 @@ var require_call = __commonJS({
         this.deserialize = deserialize;
       }
       cancel() {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
       }
       getPeer() {
-        var _a, _b;
-        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
+        var _a2, _b;
+        return (_b = (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
       }
-      _read(_size) {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.startRead();
+      _read(_size2) {
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.startRead();
       }
     };
     exports2.ClientReadableStreamImpl = ClientReadableStreamImpl;
@@ -11849,15 +12185,15 @@ var require_call = __commonJS({
         this.serialize = serialize;
       }
       cancel() {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
       }
       getPeer() {
-        var _a, _b;
-        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
+        var _a2, _b;
+        return (_b = (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
       }
       _write(chunk, encoding, cb) {
-        var _a;
+        var _a2;
         const context = {
           callback: cb
         };
@@ -11865,11 +12201,11 @@ var require_call = __commonJS({
         if (!Number.isNaN(flags)) {
           context.flags = flags;
         }
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.sendMessageWithContext(context, chunk);
       }
       _final(cb) {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.halfClose();
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.halfClose();
         cb();
       }
     };
@@ -11881,19 +12217,19 @@ var require_call = __commonJS({
         this.deserialize = deserialize;
       }
       cancel() {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.cancelWithStatus(constants_1.Status.CANCELLED, "Cancelled on client");
       }
       getPeer() {
-        var _a, _b;
-        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
+        var _a2, _b;
+        return (_b = (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.getPeer()) !== null && _b !== void 0 ? _b : "unknown";
       }
-      _read(_size) {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.startRead();
+      _read(_size2) {
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.startRead();
       }
       _write(chunk, encoding, cb) {
-        var _a;
+        var _a2;
         const context = {
           callback: cb
         };
@@ -11901,11 +12237,11 @@ var require_call = __commonJS({
         if (!Number.isNaN(flags)) {
           context.flags = flags;
         }
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.sendMessageWithContext(context, chunk);
       }
       _final(cb) {
-        var _a;
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.halfClose();
+        var _a2;
+        (_a2 = this.call) === null || _a2 === void 0 ? void 0 : _a2.halfClose();
         cb();
       }
     };
@@ -12017,13 +12353,13 @@ var require_client_interceptors = __commonJS({
     };
     var InterceptingCall = class {
       constructor(nextCall, requester) {
-        var _a, _b, _c, _d;
+        var _a2, _b, _c, _d;
         this.nextCall = nextCall;
         this.processingMessage = false;
         this.pendingHalfClose = false;
         if (requester) {
           this.requester = {
-            start: (_a = requester.start) !== null && _a !== void 0 ? _a : defaultRequester.start,
+            start: (_a2 = requester.start) !== null && _a2 !== void 0 ? _a2 : defaultRequester.start,
             sendMessage: (_b = requester.sendMessage) !== null && _b !== void 0 ? _b : defaultRequester.sendMessage,
             halfClose: (_c = requester.halfClose) !== null && _c !== void 0 ? _c : defaultRequester.halfClose,
             cancel: (_d = requester.cancel) !== null && _d !== void 0 ? _d : defaultRequester.cancel
@@ -12041,9 +12377,9 @@ var require_client_interceptors = __commonJS({
         return this.nextCall.getPeer();
       }
       start(metadata, interceptingListener) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a2, _b, _c, _d, _e, _f;
         const fullInterceptingListener = {
-          onReceiveMetadata: (_b = (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(interceptingListener)) !== null && _b !== void 0 ? _b : (metadata2) => {
+          onReceiveMetadata: (_b = (_a2 = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a2 === void 0 ? void 0 : _a2.bind(interceptingListener)) !== null && _b !== void 0 ? _b : (metadata2) => {
           },
           onReceiveMessage: (_d = (_c = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _c === void 0 ? void 0 : _c.bind(interceptingListener)) !== null && _d !== void 0 ? _d : (message) => {
           },
@@ -12051,13 +12387,13 @@ var require_client_interceptors = __commonJS({
           }
         };
         this.requester.start(metadata, fullInterceptingListener, (md, listener) => {
-          var _a2, _b2, _c2;
+          var _a3, _b2, _c2;
           let finalInterceptingListener;
           if (call_stream_1.isInterceptingListener(listener)) {
             finalInterceptingListener = listener;
           } else {
             const fullListener = {
-              onReceiveMetadata: (_a2 = listener.onReceiveMetadata) !== null && _a2 !== void 0 ? _a2 : defaultListener.onReceiveMetadata,
+              onReceiveMetadata: (_a3 = listener.onReceiveMetadata) !== null && _a3 !== void 0 ? _a3 : defaultListener.onReceiveMetadata,
               onReceiveMessage: (_b2 = listener.onReceiveMessage) !== null && _b2 !== void 0 ? _b2 : defaultListener.onReceiveMessage,
               onReceiveStatus: (_c2 = listener.onReceiveStatus) !== null && _c2 !== void 0 ? _c2 : defaultListener.onReceiveStatus
             };
@@ -12097,8 +12433,8 @@ var require_client_interceptors = __commonJS({
     };
     exports2.InterceptingCall = InterceptingCall;
     function getCall(channel, path, options2) {
-      var _a, _b;
-      const deadline = (_a = options2.deadline) !== null && _a !== void 0 ? _a : Infinity;
+      var _a2, _b;
+      const deadline = (_a2 = options2.deadline) !== null && _a2 !== void 0 ? _a2 : Infinity;
       const host = options2.host;
       const parent = (_b = options2.parent) !== null && _b !== void 0 ? _b : null;
       const propagateFlags = options2.propagate_flags;
@@ -12140,11 +12476,11 @@ var require_client_interceptors = __commonJS({
         let readError = null;
         this.call.start(metadata, {
           onReceiveMetadata: (metadata2) => {
-            var _a;
-            (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, metadata2);
+            var _a2;
+            (_a2 = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a2 === void 0 ? void 0 : _a2.call(interceptingListener, metadata2);
           },
           onReceiveMessage: (message) => {
-            var _a;
+            var _a2;
             let deserialized;
             try {
               deserialized = this.methodDefinition.responseDeserialize(message);
@@ -12157,12 +12493,12 @@ var require_client_interceptors = __commonJS({
               this.call.cancelWithStatus(readError.code, readError.details);
               return;
             }
-            (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, deserialized);
+            (_a2 = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _a2 === void 0 ? void 0 : _a2.call(interceptingListener, deserialized);
           },
           onReceiveStatus: (status) => {
-            var _a, _b;
+            var _a2, _b;
             if (readError) {
-              (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, readError);
+              (_a2 = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _a2 === void 0 ? void 0 : _a2.call(interceptingListener, readError);
             } else {
               (_b = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _b === void 0 ? void 0 : _b.call(interceptingListener, status);
             }
@@ -12181,20 +12517,20 @@ var require_client_interceptors = __commonJS({
         super(call, methodDefinition);
       }
       start(metadata, listener) {
-        var _a, _b;
+        var _a2, _b;
         let receivedMessage = false;
         const wrapperListener = {
-          onReceiveMetadata: (_b = (_a = listener === null || listener === void 0 ? void 0 : listener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(listener)) !== null && _b !== void 0 ? _b : (metadata2) => {
+          onReceiveMetadata: (_b = (_a2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMetadata) === null || _a2 === void 0 ? void 0 : _a2.bind(listener)) !== null && _b !== void 0 ? _b : (metadata2) => {
           },
           onReceiveMessage: (message) => {
-            var _a2;
+            var _a3;
             receivedMessage = true;
-            (_a2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a2 === void 0 ? void 0 : _a2.call(listener, message);
+            (_a3 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a3 === void 0 ? void 0 : _a3.call(listener, message);
           },
           onReceiveStatus: (status) => {
-            var _a2, _b2;
+            var _a3, _b2;
             if (!receivedMessage) {
-              (_a2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a2 === void 0 ? void 0 : _a2.call(listener, null);
+              (_a3 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a3 === void 0 ? void 0 : _a3.call(listener, null);
             }
             (_b2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveStatus) === null || _b2 === void 0 ? void 0 : _b2.call(listener, status);
           }
@@ -12258,9 +12594,9 @@ var require_client = __commonJS({
     }
     var Client = class {
       constructor(address, credentials, options2 = {}) {
-        var _a, _b;
+        var _a2, _b;
         options2 = Object.assign({}, options2);
-        this[INTERCEPTOR_SYMBOL] = (_a = options2.interceptors) !== null && _a !== void 0 ? _a : [];
+        this[INTERCEPTOR_SYMBOL] = (_a2 = options2.interceptors) !== null && _a2 !== void 0 ? _a2 : [];
         delete options2.interceptors;
         this[INTERCEPTOR_PROVIDER_SYMBOL] = (_b = options2.interceptor_providers) !== null && _b !== void 0 ? _b : [];
         delete options2.interceptor_providers;
@@ -12327,7 +12663,7 @@ var require_client = __commonJS({
         }
       }
       makeUnaryRequest(method, serialize, deserialize, argument, metadata, options2, callback) {
-        var _a, _b;
+        var _a2, _b;
         const checkedArguments = this.checkOptionalUnaryResponseArguments(metadata, options2, callback);
         const methodDefinition = {
           path: method,
@@ -12352,7 +12688,7 @@ var require_client = __commonJS({
         const interceptorArgs = {
           clientInterceptors: this[INTERCEPTOR_SYMBOL],
           clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-          callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
+          callInterceptors: (_a2 = callProperties.callOptions.interceptors) !== null && _a2 !== void 0 ? _a2 : [],
           callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : []
         };
         const call = client_interceptors_1.getInterceptingCall(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
@@ -12390,7 +12726,7 @@ var require_client = __commonJS({
         return emitter;
       }
       makeClientStreamRequest(method, serialize, deserialize, metadata, options2, callback) {
-        var _a, _b;
+        var _a2, _b;
         const checkedArguments = this.checkOptionalUnaryResponseArguments(metadata, options2, callback);
         const methodDefinition = {
           path: method,
@@ -12414,7 +12750,7 @@ var require_client = __commonJS({
         const interceptorArgs = {
           clientInterceptors: this[INTERCEPTOR_SYMBOL],
           clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-          callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
+          callInterceptors: (_a2 = callProperties.callOptions.interceptors) !== null && _a2 !== void 0 ? _a2 : [],
           callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : []
         };
         const call = client_interceptors_1.getInterceptingCall(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
@@ -12470,7 +12806,7 @@ var require_client = __commonJS({
         return {metadata, options: options2};
       }
       makeServerStreamRequest(method, serialize, deserialize, argument, metadata, options2) {
-        var _a, _b;
+        var _a2, _b;
         const checkedArguments = this.checkMetadataAndOptions(metadata, options2);
         const methodDefinition = {
           path: method,
@@ -12494,7 +12830,7 @@ var require_client = __commonJS({
         const interceptorArgs = {
           clientInterceptors: this[INTERCEPTOR_SYMBOL],
           clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-          callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
+          callInterceptors: (_a2 = callProperties.callOptions.interceptors) !== null && _a2 !== void 0 ? _a2 : [],
           callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : []
         };
         const call = client_interceptors_1.getInterceptingCall(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
@@ -12527,7 +12863,7 @@ var require_client = __commonJS({
         return stream;
       }
       makeBidiStreamRequest(method, serialize, deserialize, metadata, options2) {
-        var _a, _b;
+        var _a2, _b;
         const checkedArguments = this.checkMetadataAndOptions(metadata, options2);
         const methodDefinition = {
           path: method,
@@ -12550,7 +12886,7 @@ var require_client = __commonJS({
         const interceptorArgs = {
           clientInterceptors: this[INTERCEPTOR_SYMBOL],
           clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-          callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
+          callInterceptors: (_a2 = callProperties.callOptions.interceptors) !== null && _a2 !== void 0 ? _a2 : [],
           callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : []
         };
         const call = client_interceptors_1.getInterceptingCall(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
@@ -12878,8 +13214,8 @@ var require_server_call = __commonJS({
         this.stream.once("error", (err) => {
         });
         this.stream.once("close", () => {
-          var _a;
-          trace("Request to method " + ((_a = this.handler) === null || _a === void 0 ? void 0 : _a.path) + " stream closed with rstCode " + this.stream.rstCode);
+          var _a2;
+          trace("Request to method " + ((_a2 = this.handler) === null || _a2 === void 0 ? void 0 : _a2.path) + " stream closed with rstCode " + this.stream.rstCode);
           this.cancelled = true;
           this.emit("cancelled", "cancelled");
         });
@@ -12895,7 +13231,7 @@ var require_server_call = __commonJS({
         clearTimeout(this.deadlineTimer);
       }
       checkCancelled() {
-        if (this.stream.destroyed) {
+        if (this.stream.destroyed || this.stream.closed) {
           this.cancelled = true;
         }
         return this.cancelled;
@@ -13001,11 +13337,11 @@ var require_server_call = __commonJS({
         }
       }
       sendStatus(statusObj) {
-        var _a;
+        var _a2;
         if (this.checkCancelled()) {
           return;
         }
-        trace("Request to method " + ((_a = this.handler) === null || _a === void 0 ? void 0 : _a.path) + " ended with status code: " + constants_1.Status[statusObj.code] + " details: " + statusObj.details);
+        trace("Request to method " + ((_a2 = this.handler) === null || _a2 === void 0 ? void 0 : _a2.path) + " ended with status code: " + constants_1.Status[statusObj.code] + " details: " + statusObj.details);
         clearTimeout(this.deadlineTimer);
         if (!this.wantTrailers) {
           this.wantTrailers = true;
@@ -13020,19 +13356,19 @@ var require_server_call = __commonJS({
           this.stream.end();
         }
       }
-      sendError(error3) {
+      sendError(error2) {
         if (this.checkCancelled()) {
           return;
         }
         const status = {
           code: constants_1.Status.UNKNOWN,
-          details: "message" in error3 ? error3.message : "Unknown Error",
-          metadata: "metadata" in error3 && error3.metadata !== void 0 ? error3.metadata : new metadata_1.Metadata()
+          details: "message" in error2 ? error2.message : "Unknown Error",
+          metadata: "metadata" in error2 && error2.metadata !== void 0 ? error2.metadata : new metadata_1.Metadata()
         };
-        if ("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code)) {
-          status.code = error3.code;
-          if ("details" in error3 && typeof error3.details === "string") {
-            status.details = error3.details;
+        if ("code" in error2 && typeof error2.code === "number" && Number.isInteger(error2.code)) {
+          status.code = error2.code;
+          if ("details" in error2 && typeof error2.details === "string") {
+            status.details = error2.details;
           }
         }
         this.sendStatus(status);
@@ -13118,12 +13454,12 @@ var require_server_call = __commonJS({
           } else {
             this.messagesToPush.push(deserialized);
           }
-        } catch (error3) {
+        } catch (error2) {
           this.bufferedMessages.length = 0;
-          if (!("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code) && error3.code >= constants_1.Status.OK && error3.code <= constants_1.Status.UNAUTHENTICATED)) {
-            error3.code = constants_1.Status.INTERNAL;
+          if (!("code" in error2 && typeof error2.code === "number" && Number.isInteger(error2.code) && error2.code >= constants_1.Status.OK && error2.code <= constants_1.Status.UNAUTHENTICATED)) {
+            error2.code = constants_1.Status.INTERNAL;
           }
-          readable.emit("error", error3);
+          readable.emit("error", error2);
         }
         this.isPushPending = false;
         if (this.bufferedMessages.length > 0) {
@@ -13175,7 +13511,7 @@ var require_server = __commonJS({
     function trace(text) {
       logging.trace(constants_1.LogVerbosity.DEBUG, TRACER_NAME, text);
     }
-    function noop3() {
+    function noop2() {
     }
     function getUnimplementedStatusResponse(methodName) {
       return {
@@ -13311,7 +13647,7 @@ var require_server = __commonJS({
           } else {
             http2Server = http2.createServer(serverOptions);
           }
-          http2Server.setTimeout(0, noop3);
+          http2Server.setTimeout(0, noop2);
           this._setupHandlers(http2Server);
           return http2Server;
         };
@@ -13411,14 +13747,14 @@ var require_server = __commonJS({
                 }
                 callback(null, bindResult.port);
               }
-            }, (error3) => {
+            }, (error2) => {
               const errorString = `No address added out of total ${addressList.length} resolved`;
               logging.log(constants_1.LogVerbosity.ERROR, errorString);
               callback(new Error(errorString), 0);
             });
           },
-          onError: (error3) => {
-            callback(new Error(error3.details), 0);
+          onError: (error2) => {
+            callback(new Error(error2.details), 0);
           }
         };
         const resolver = resolver_1.createResolver(portUri, resolverListener, this.options);
@@ -13878,10 +14214,385 @@ var require_src = __commonJS({
     exports2.experimental = experimental;
     var resolver = require_resolver();
     var load_balancer = require_load_balancer();
+    var clientVersion = require_package().version;
     (() => {
+      logging.trace(constants_1.LogVerbosity.DEBUG, "index", "Loading @grpc/grpc-js version " + clientVersion);
       resolver.registerAll();
       load_balancer.registerAll();
     })();
+  }
+});
+
+// node_modules/lodash.camelcase/index.js
+var require_lodash = __commonJS({
+  "node_modules/lodash.camelcase/index.js"(exports2, module2) {
+    var INFINITY = 1 / 0;
+    var symbolTag = "[object Symbol]";
+    var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+    var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
+    var rsAstralRange = "\\ud800-\\udfff";
+    var rsComboMarksRange = "\\u0300-\\u036f\\ufe20-\\ufe23";
+    var rsComboSymbolsRange = "\\u20d0-\\u20f0";
+    var rsDingbatRange = "\\u2700-\\u27bf";
+    var rsLowerRange = "a-z\\xdf-\\xf6\\xf8-\\xff";
+    var rsMathOpRange = "\\xac\\xb1\\xd7\\xf7";
+    var rsNonCharRange = "\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf";
+    var rsPunctuationRange = "\\u2000-\\u206f";
+    var rsSpaceRange = " \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000";
+    var rsUpperRange = "A-Z\\xc0-\\xd6\\xd8-\\xde";
+    var rsVarRange = "\\ufe0e\\ufe0f";
+    var rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
+    var rsApos = "['\u2019]";
+    var rsAstral = "[" + rsAstralRange + "]";
+    var rsBreak = "[" + rsBreakRange + "]";
+    var rsCombo = "[" + rsComboMarksRange + rsComboSymbolsRange + "]";
+    var rsDigits = "\\d+";
+    var rsDingbat = "[" + rsDingbatRange + "]";
+    var rsLower = "[" + rsLowerRange + "]";
+    var rsMisc = "[^" + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + "]";
+    var rsFitz = "\\ud83c[\\udffb-\\udfff]";
+    var rsModifier = "(?:" + rsCombo + "|" + rsFitz + ")";
+    var rsNonAstral = "[^" + rsAstralRange + "]";
+    var rsRegional = "(?:\\ud83c[\\udde6-\\uddff]){2}";
+    var rsSurrPair = "[\\ud800-\\udbff][\\udc00-\\udfff]";
+    var rsUpper = "[" + rsUpperRange + "]";
+    var rsZWJ = "\\u200d";
+    var rsLowerMisc = "(?:" + rsLower + "|" + rsMisc + ")";
+    var rsUpperMisc = "(?:" + rsUpper + "|" + rsMisc + ")";
+    var rsOptLowerContr = "(?:" + rsApos + "(?:d|ll|m|re|s|t|ve))?";
+    var rsOptUpperContr = "(?:" + rsApos + "(?:D|LL|M|RE|S|T|VE))?";
+    var reOptMod = rsModifier + "?";
+    var rsOptVar = "[" + rsVarRange + "]?";
+    var rsOptJoin = "(?:" + rsZWJ + "(?:" + [rsNonAstral, rsRegional, rsSurrPair].join("|") + ")" + rsOptVar + reOptMod + ")*";
+    var rsSeq = rsOptVar + reOptMod + rsOptJoin;
+    var rsEmoji = "(?:" + [rsDingbat, rsRegional, rsSurrPair].join("|") + ")" + rsSeq;
+    var rsSymbol = "(?:" + [rsNonAstral + rsCombo + "?", rsCombo, rsRegional, rsSurrPair, rsAstral].join("|") + ")";
+    var reApos = RegExp(rsApos, "g");
+    var reComboMark = RegExp(rsCombo, "g");
+    var reUnicode = RegExp(rsFitz + "(?=" + rsFitz + ")|" + rsSymbol + rsSeq, "g");
+    var reUnicodeWord = RegExp([
+      rsUpper + "?" + rsLower + "+" + rsOptLowerContr + "(?=" + [rsBreak, rsUpper, "$"].join("|") + ")",
+      rsUpperMisc + "+" + rsOptUpperContr + "(?=" + [rsBreak, rsUpper + rsLowerMisc, "$"].join("|") + ")",
+      rsUpper + "?" + rsLowerMisc + "+" + rsOptLowerContr,
+      rsUpper + "+" + rsOptUpperContr,
+      rsDigits,
+      rsEmoji
+    ].join("|"), "g");
+    var reHasUnicode = RegExp("[" + rsZWJ + rsAstralRange + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + "]");
+    var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+    var deburredLetters = {
+      "\xC0": "A",
+      "\xC1": "A",
+      "\xC2": "A",
+      "\xC3": "A",
+      "\xC4": "A",
+      "\xC5": "A",
+      "\xE0": "a",
+      "\xE1": "a",
+      "\xE2": "a",
+      "\xE3": "a",
+      "\xE4": "a",
+      "\xE5": "a",
+      "\xC7": "C",
+      "\xE7": "c",
+      "\xD0": "D",
+      "\xF0": "d",
+      "\xC8": "E",
+      "\xC9": "E",
+      "\xCA": "E",
+      "\xCB": "E",
+      "\xE8": "e",
+      "\xE9": "e",
+      "\xEA": "e",
+      "\xEB": "e",
+      "\xCC": "I",
+      "\xCD": "I",
+      "\xCE": "I",
+      "\xCF": "I",
+      "\xEC": "i",
+      "\xED": "i",
+      "\xEE": "i",
+      "\xEF": "i",
+      "\xD1": "N",
+      "\xF1": "n",
+      "\xD2": "O",
+      "\xD3": "O",
+      "\xD4": "O",
+      "\xD5": "O",
+      "\xD6": "O",
+      "\xD8": "O",
+      "\xF2": "o",
+      "\xF3": "o",
+      "\xF4": "o",
+      "\xF5": "o",
+      "\xF6": "o",
+      "\xF8": "o",
+      "\xD9": "U",
+      "\xDA": "U",
+      "\xDB": "U",
+      "\xDC": "U",
+      "\xF9": "u",
+      "\xFA": "u",
+      "\xFB": "u",
+      "\xFC": "u",
+      "\xDD": "Y",
+      "\xFD": "y",
+      "\xFF": "y",
+      "\xC6": "Ae",
+      "\xE6": "ae",
+      "\xDE": "Th",
+      "\xFE": "th",
+      "\xDF": "ss",
+      "\u0100": "A",
+      "\u0102": "A",
+      "\u0104": "A",
+      "\u0101": "a",
+      "\u0103": "a",
+      "\u0105": "a",
+      "\u0106": "C",
+      "\u0108": "C",
+      "\u010A": "C",
+      "\u010C": "C",
+      "\u0107": "c",
+      "\u0109": "c",
+      "\u010B": "c",
+      "\u010D": "c",
+      "\u010E": "D",
+      "\u0110": "D",
+      "\u010F": "d",
+      "\u0111": "d",
+      "\u0112": "E",
+      "\u0114": "E",
+      "\u0116": "E",
+      "\u0118": "E",
+      "\u011A": "E",
+      "\u0113": "e",
+      "\u0115": "e",
+      "\u0117": "e",
+      "\u0119": "e",
+      "\u011B": "e",
+      "\u011C": "G",
+      "\u011E": "G",
+      "\u0120": "G",
+      "\u0122": "G",
+      "\u011D": "g",
+      "\u011F": "g",
+      "\u0121": "g",
+      "\u0123": "g",
+      "\u0124": "H",
+      "\u0126": "H",
+      "\u0125": "h",
+      "\u0127": "h",
+      "\u0128": "I",
+      "\u012A": "I",
+      "\u012C": "I",
+      "\u012E": "I",
+      "\u0130": "I",
+      "\u0129": "i",
+      "\u012B": "i",
+      "\u012D": "i",
+      "\u012F": "i",
+      "\u0131": "i",
+      "\u0134": "J",
+      "\u0135": "j",
+      "\u0136": "K",
+      "\u0137": "k",
+      "\u0138": "k",
+      "\u0139": "L",
+      "\u013B": "L",
+      "\u013D": "L",
+      "\u013F": "L",
+      "\u0141": "L",
+      "\u013A": "l",
+      "\u013C": "l",
+      "\u013E": "l",
+      "\u0140": "l",
+      "\u0142": "l",
+      "\u0143": "N",
+      "\u0145": "N",
+      "\u0147": "N",
+      "\u014A": "N",
+      "\u0144": "n",
+      "\u0146": "n",
+      "\u0148": "n",
+      "\u014B": "n",
+      "\u014C": "O",
+      "\u014E": "O",
+      "\u0150": "O",
+      "\u014D": "o",
+      "\u014F": "o",
+      "\u0151": "o",
+      "\u0154": "R",
+      "\u0156": "R",
+      "\u0158": "R",
+      "\u0155": "r",
+      "\u0157": "r",
+      "\u0159": "r",
+      "\u015A": "S",
+      "\u015C": "S",
+      "\u015E": "S",
+      "\u0160": "S",
+      "\u015B": "s",
+      "\u015D": "s",
+      "\u015F": "s",
+      "\u0161": "s",
+      "\u0162": "T",
+      "\u0164": "T",
+      "\u0166": "T",
+      "\u0163": "t",
+      "\u0165": "t",
+      "\u0167": "t",
+      "\u0168": "U",
+      "\u016A": "U",
+      "\u016C": "U",
+      "\u016E": "U",
+      "\u0170": "U",
+      "\u0172": "U",
+      "\u0169": "u",
+      "\u016B": "u",
+      "\u016D": "u",
+      "\u016F": "u",
+      "\u0171": "u",
+      "\u0173": "u",
+      "\u0174": "W",
+      "\u0175": "w",
+      "\u0176": "Y",
+      "\u0177": "y",
+      "\u0178": "Y",
+      "\u0179": "Z",
+      "\u017B": "Z",
+      "\u017D": "Z",
+      "\u017A": "z",
+      "\u017C": "z",
+      "\u017E": "z",
+      "\u0132": "IJ",
+      "\u0133": "ij",
+      "\u0152": "Oe",
+      "\u0153": "oe",
+      "\u0149": "'n",
+      "\u017F": "ss"
+    };
+    var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
+    var freeSelf = typeof self == "object" && self && self.Object === Object && self;
+    var root = freeGlobal || freeSelf || Function("return this")();
+    function arrayReduce(array, iteratee, accumulator, initAccum) {
+      var index2 = -1, length = array ? array.length : 0;
+      if (initAccum && length) {
+        accumulator = array[++index2];
+      }
+      while (++index2 < length) {
+        accumulator = iteratee(accumulator, array[index2], index2, array);
+      }
+      return accumulator;
+    }
+    function asciiToArray(string) {
+      return string.split("");
+    }
+    function asciiWords(string) {
+      return string.match(reAsciiWord) || [];
+    }
+    function basePropertyOf(object) {
+      return function(key) {
+        return object == null ? void 0 : object[key];
+      };
+    }
+    var deburrLetter = basePropertyOf(deburredLetters);
+    function hasUnicode(string) {
+      return reHasUnicode.test(string);
+    }
+    function hasUnicodeWord(string) {
+      return reHasUnicodeWord.test(string);
+    }
+    function stringToArray(string) {
+      return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
+    }
+    function unicodeToArray(string) {
+      return string.match(reUnicode) || [];
+    }
+    function unicodeWords(string) {
+      return string.match(reUnicodeWord) || [];
+    }
+    var objectProto = Object.prototype;
+    var objectToString = objectProto.toString;
+    var Symbol2 = root.Symbol;
+    var symbolProto = Symbol2 ? Symbol2.prototype : void 0;
+    var symbolToString = symbolProto ? symbolProto.toString : void 0;
+    function baseSlice(array, start, end) {
+      var index2 = -1, length = array.length;
+      if (start < 0) {
+        start = -start > length ? 0 : length + start;
+      }
+      end = end > length ? length : end;
+      if (end < 0) {
+        end += length;
+      }
+      length = start > end ? 0 : end - start >>> 0;
+      start >>>= 0;
+      var result = Array(length);
+      while (++index2 < length) {
+        result[index2] = array[index2 + start];
+      }
+      return result;
+    }
+    function baseToString(value) {
+      if (typeof value == "string") {
+        return value;
+      }
+      if (isSymbol(value)) {
+        return symbolToString ? symbolToString.call(value) : "";
+      }
+      var result = value + "";
+      return result == "0" && 1 / value == -INFINITY ? "-0" : result;
+    }
+    function castSlice(array, start, end) {
+      var length = array.length;
+      end = end === void 0 ? length : end;
+      return !start && end >= length ? array : baseSlice(array, start, end);
+    }
+    function createCaseFirst(methodName) {
+      return function(string) {
+        string = toString(string);
+        var strSymbols = hasUnicode(string) ? stringToArray(string) : void 0;
+        var chr = strSymbols ? strSymbols[0] : string.charAt(0);
+        var trailing = strSymbols ? castSlice(strSymbols, 1).join("") : string.slice(1);
+        return chr[methodName]() + trailing;
+      };
+    }
+    function createCompounder(callback) {
+      return function(string) {
+        return arrayReduce(words(deburr(string).replace(reApos, "")), callback, "");
+      };
+    }
+    function isObjectLike(value) {
+      return !!value && typeof value == "object";
+    }
+    function isSymbol(value) {
+      return typeof value == "symbol" || isObjectLike(value) && objectToString.call(value) == symbolTag;
+    }
+    function toString(value) {
+      return value == null ? "" : baseToString(value);
+    }
+    var camelCase = createCompounder(function(result, word, index2) {
+      word = word.toLowerCase();
+      return result + (index2 ? capitalize(word) : word);
+    });
+    function capitalize(string) {
+      return upperFirst(toString(string).toLowerCase());
+    }
+    function deburr(string) {
+      string = toString(string);
+      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, "");
+    }
+    var upperFirst = createCaseFirst("toUpperCase");
+    function words(string, pattern, guard2) {
+      string = toString(string);
+      pattern = guard2 ? void 0 : pattern;
+      if (pattern === void 0) {
+        return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
+      }
+      return string.match(pattern) || [];
+    }
+    module2.exports = camelCase;
   }
 });
 
@@ -14521,10 +15232,10 @@ var require_minimal = __commonJS({
         return util.Long.fromBits(bits.lo, bits.hi, unsigned);
       return bits.toNumber(Boolean(unsigned));
     };
-    function merge(dst, src2, ifNotSet) {
-      for (var keys = Object.keys(src2), i = 0; i < keys.length; ++i)
+    function merge(dst, src, ifNotSet) {
+      for (var keys = Object.keys(src), i = 0; i < keys.length; ++i)
         if (dst[keys[i]] === void 0 || !ifNotSet)
-          dst[keys[i]] = src2[keys[i]];
+          dst[keys[i]] = src[keys[i]];
       return dst;
     }
     util.merge = merge;
@@ -14611,7 +15322,7 @@ var require_writer = __commonJS({
       this.next = void 0;
       this.val = val;
     }
-    function noop3() {
+    function noop2() {
     }
     function State(writer) {
       this.head = writer.head;
@@ -14621,7 +15332,7 @@ var require_writer = __commonJS({
     }
     function Writer() {
       this.len = 0;
-      this.head = new Op(noop3, 0, 0);
+      this.head = new Op(noop2, 0, 0);
       this.tail = this.head;
       this.states = null;
     }
@@ -14740,7 +15451,7 @@ var require_writer = __commonJS({
     };
     Writer.prototype.fork = function fork() {
       this.states = new State(this);
-      this.head = this.tail = new Op(noop3, 0, 0);
+      this.head = this.tail = new Op(noop2, 0, 0);
       this.len = 0;
       return this;
     };
@@ -14751,7 +15462,7 @@ var require_writer = __commonJS({
         this.len = this.states.len;
         this.states = this.states.next;
       } else {
-        this.head = this.tail = new Op(noop3, 0, 0);
+        this.head = this.tail = new Op(noop2, 0, 0);
         this.len = 0;
       }
       return this;
@@ -15251,25 +15962,25 @@ var require_codegen = __commonJS({
 var require_fetch = __commonJS({
   "node_modules/@protobufjs/fetch/index.js"(exports2, module2) {
     "use strict";
-    module2.exports = fetch3;
+    module2.exports = fetch2;
     var asPromise = require_aspromise();
     var inquire2 = require_inquire();
     var fs = inquire2("fs");
-    function fetch3(filename, options2, callback) {
+    function fetch2(filename, options2, callback) {
       if (typeof options2 === "function") {
         callback = options2;
         options2 = {};
       } else if (!options2)
         options2 = {};
       if (!callback)
-        return asPromise(fetch3, this, filename, options2);
+        return asPromise(fetch2, this, filename, options2);
       if (!options2.xhr && fs && fs.readFile)
         return fs.readFile(filename, function fetchReadFileCallback(err, contents) {
-          return err && typeof XMLHttpRequest !== "undefined" ? fetch3.xhr(filename, options2, callback) : err ? callback(err) : callback(null, options2.binary ? contents : contents.toString("utf8"));
+          return err && typeof XMLHttpRequest !== "undefined" ? fetch2.xhr(filename, options2, callback) : err ? callback(err) : callback(null, options2.binary ? contents : contents.toString("utf8"));
         });
-      return fetch3.xhr(filename, options2, callback);
+      return fetch2.xhr(filename, options2, callback);
     }
-    fetch3.xhr = function fetch_xhr(filename, options2, callback) {
+    fetch2.xhr = function fetch_xhr(filename, options2, callback) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function fetchOnReadyStateChange() {
         if (xhr.readyState !== 4)
@@ -15308,14 +16019,14 @@ var require_path = __commonJS({
     };
     var normalize2 = path.normalize = function normalize3(path2) {
       path2 = path2.replace(/\\/g, "/").replace(/\/{2,}/g, "/");
-      var parts = path2.split("/"), absolute = isAbsolute(path2), prefix = "";
-      if (absolute)
+      var parts = path2.split("/"), absolute2 = isAbsolute(path2), prefix = "";
+      if (absolute2)
         prefix = parts.shift() + "/";
       for (var i = 0; i < parts.length; ) {
         if (parts[i] === "..") {
           if (i > 0 && parts[i - 1] !== "..")
             parts.splice(--i, 2);
-          else if (absolute)
+          else if (absolute2)
             parts.splice(i, 1);
           else
             ++i;
@@ -16902,12 +17613,12 @@ var require_root = __commonJS({
             if (parsed.imports) {
               for (; i2 < parsed.imports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.imports[i2]) || self2.resolvePath(filename2, parsed.imports[i2]))
-                  fetch3(resolved2);
+                  fetch2(resolved2);
             }
             if (parsed.weakImports) {
               for (i2 = 0; i2 < parsed.weakImports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.weakImports[i2]) || self2.resolvePath(filename2, parsed.weakImports[i2]))
-                  fetch3(resolved2, true);
+                  fetch2(resolved2, true);
             }
           }
         } catch (err) {
@@ -16916,7 +17627,7 @@ var require_root = __commonJS({
         if (!sync && !queued)
           finish(null, self2);
       }
-      function fetch3(filename2, weak) {
+      function fetch2(filename2, weak) {
         if (self2.files.indexOf(filename2) > -1)
           return;
         self2.files.push(filename2);
@@ -16964,7 +17675,7 @@ var require_root = __commonJS({
         filename = [filename];
       for (var i = 0, resolved; i < filename.length; ++i)
         if (resolved = self2.resolvePath("", filename[i]))
-          fetch3(resolved);
+          fetch2(resolved);
       if (sync)
         return self2;
       if (!queued)
@@ -19722,379 +20433,6 @@ var require_descriptor2 = __commonJS({
   }
 });
 
-// node_modules/lodash.camelcase/index.js
-var require_lodash = __commonJS({
-  "node_modules/lodash.camelcase/index.js"(exports2, module2) {
-    var INFINITY = 1 / 0;
-    var symbolTag = "[object Symbol]";
-    var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
-    var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
-    var rsAstralRange = "\\ud800-\\udfff";
-    var rsComboMarksRange = "\\u0300-\\u036f\\ufe20-\\ufe23";
-    var rsComboSymbolsRange = "\\u20d0-\\u20f0";
-    var rsDingbatRange = "\\u2700-\\u27bf";
-    var rsLowerRange = "a-z\\xdf-\\xf6\\xf8-\\xff";
-    var rsMathOpRange = "\\xac\\xb1\\xd7\\xf7";
-    var rsNonCharRange = "\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf";
-    var rsPunctuationRange = "\\u2000-\\u206f";
-    var rsSpaceRange = " \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000";
-    var rsUpperRange = "A-Z\\xc0-\\xd6\\xd8-\\xde";
-    var rsVarRange = "\\ufe0e\\ufe0f";
-    var rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
-    var rsApos = "['\u2019]";
-    var rsAstral = "[" + rsAstralRange + "]";
-    var rsBreak = "[" + rsBreakRange + "]";
-    var rsCombo = "[" + rsComboMarksRange + rsComboSymbolsRange + "]";
-    var rsDigits = "\\d+";
-    var rsDingbat = "[" + rsDingbatRange + "]";
-    var rsLower = "[" + rsLowerRange + "]";
-    var rsMisc = "[^" + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + "]";
-    var rsFitz = "\\ud83c[\\udffb-\\udfff]";
-    var rsModifier = "(?:" + rsCombo + "|" + rsFitz + ")";
-    var rsNonAstral = "[^" + rsAstralRange + "]";
-    var rsRegional = "(?:\\ud83c[\\udde6-\\uddff]){2}";
-    var rsSurrPair = "[\\ud800-\\udbff][\\udc00-\\udfff]";
-    var rsUpper = "[" + rsUpperRange + "]";
-    var rsZWJ = "\\u200d";
-    var rsLowerMisc = "(?:" + rsLower + "|" + rsMisc + ")";
-    var rsUpperMisc = "(?:" + rsUpper + "|" + rsMisc + ")";
-    var rsOptLowerContr = "(?:" + rsApos + "(?:d|ll|m|re|s|t|ve))?";
-    var rsOptUpperContr = "(?:" + rsApos + "(?:D|LL|M|RE|S|T|VE))?";
-    var reOptMod = rsModifier + "?";
-    var rsOptVar = "[" + rsVarRange + "]?";
-    var rsOptJoin = "(?:" + rsZWJ + "(?:" + [rsNonAstral, rsRegional, rsSurrPair].join("|") + ")" + rsOptVar + reOptMod + ")*";
-    var rsSeq = rsOptVar + reOptMod + rsOptJoin;
-    var rsEmoji = "(?:" + [rsDingbat, rsRegional, rsSurrPair].join("|") + ")" + rsSeq;
-    var rsSymbol = "(?:" + [rsNonAstral + rsCombo + "?", rsCombo, rsRegional, rsSurrPair, rsAstral].join("|") + ")";
-    var reApos = RegExp(rsApos, "g");
-    var reComboMark = RegExp(rsCombo, "g");
-    var reUnicode = RegExp(rsFitz + "(?=" + rsFitz + ")|" + rsSymbol + rsSeq, "g");
-    var reUnicodeWord = RegExp([
-      rsUpper + "?" + rsLower + "+" + rsOptLowerContr + "(?=" + [rsBreak, rsUpper, "$"].join("|") + ")",
-      rsUpperMisc + "+" + rsOptUpperContr + "(?=" + [rsBreak, rsUpper + rsLowerMisc, "$"].join("|") + ")",
-      rsUpper + "?" + rsLowerMisc + "+" + rsOptLowerContr,
-      rsUpper + "+" + rsOptUpperContr,
-      rsDigits,
-      rsEmoji
-    ].join("|"), "g");
-    var reHasUnicode = RegExp("[" + rsZWJ + rsAstralRange + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + "]");
-    var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-    var deburredLetters = {
-      "\xC0": "A",
-      "\xC1": "A",
-      "\xC2": "A",
-      "\xC3": "A",
-      "\xC4": "A",
-      "\xC5": "A",
-      "\xE0": "a",
-      "\xE1": "a",
-      "\xE2": "a",
-      "\xE3": "a",
-      "\xE4": "a",
-      "\xE5": "a",
-      "\xC7": "C",
-      "\xE7": "c",
-      "\xD0": "D",
-      "\xF0": "d",
-      "\xC8": "E",
-      "\xC9": "E",
-      "\xCA": "E",
-      "\xCB": "E",
-      "\xE8": "e",
-      "\xE9": "e",
-      "\xEA": "e",
-      "\xEB": "e",
-      "\xCC": "I",
-      "\xCD": "I",
-      "\xCE": "I",
-      "\xCF": "I",
-      "\xEC": "i",
-      "\xED": "i",
-      "\xEE": "i",
-      "\xEF": "i",
-      "\xD1": "N",
-      "\xF1": "n",
-      "\xD2": "O",
-      "\xD3": "O",
-      "\xD4": "O",
-      "\xD5": "O",
-      "\xD6": "O",
-      "\xD8": "O",
-      "\xF2": "o",
-      "\xF3": "o",
-      "\xF4": "o",
-      "\xF5": "o",
-      "\xF6": "o",
-      "\xF8": "o",
-      "\xD9": "U",
-      "\xDA": "U",
-      "\xDB": "U",
-      "\xDC": "U",
-      "\xF9": "u",
-      "\xFA": "u",
-      "\xFB": "u",
-      "\xFC": "u",
-      "\xDD": "Y",
-      "\xFD": "y",
-      "\xFF": "y",
-      "\xC6": "Ae",
-      "\xE6": "ae",
-      "\xDE": "Th",
-      "\xFE": "th",
-      "\xDF": "ss",
-      "\u0100": "A",
-      "\u0102": "A",
-      "\u0104": "A",
-      "\u0101": "a",
-      "\u0103": "a",
-      "\u0105": "a",
-      "\u0106": "C",
-      "\u0108": "C",
-      "\u010A": "C",
-      "\u010C": "C",
-      "\u0107": "c",
-      "\u0109": "c",
-      "\u010B": "c",
-      "\u010D": "c",
-      "\u010E": "D",
-      "\u0110": "D",
-      "\u010F": "d",
-      "\u0111": "d",
-      "\u0112": "E",
-      "\u0114": "E",
-      "\u0116": "E",
-      "\u0118": "E",
-      "\u011A": "E",
-      "\u0113": "e",
-      "\u0115": "e",
-      "\u0117": "e",
-      "\u0119": "e",
-      "\u011B": "e",
-      "\u011C": "G",
-      "\u011E": "G",
-      "\u0120": "G",
-      "\u0122": "G",
-      "\u011D": "g",
-      "\u011F": "g",
-      "\u0121": "g",
-      "\u0123": "g",
-      "\u0124": "H",
-      "\u0126": "H",
-      "\u0125": "h",
-      "\u0127": "h",
-      "\u0128": "I",
-      "\u012A": "I",
-      "\u012C": "I",
-      "\u012E": "I",
-      "\u0130": "I",
-      "\u0129": "i",
-      "\u012B": "i",
-      "\u012D": "i",
-      "\u012F": "i",
-      "\u0131": "i",
-      "\u0134": "J",
-      "\u0135": "j",
-      "\u0136": "K",
-      "\u0137": "k",
-      "\u0138": "k",
-      "\u0139": "L",
-      "\u013B": "L",
-      "\u013D": "L",
-      "\u013F": "L",
-      "\u0141": "L",
-      "\u013A": "l",
-      "\u013C": "l",
-      "\u013E": "l",
-      "\u0140": "l",
-      "\u0142": "l",
-      "\u0143": "N",
-      "\u0145": "N",
-      "\u0147": "N",
-      "\u014A": "N",
-      "\u0144": "n",
-      "\u0146": "n",
-      "\u0148": "n",
-      "\u014B": "n",
-      "\u014C": "O",
-      "\u014E": "O",
-      "\u0150": "O",
-      "\u014D": "o",
-      "\u014F": "o",
-      "\u0151": "o",
-      "\u0154": "R",
-      "\u0156": "R",
-      "\u0158": "R",
-      "\u0155": "r",
-      "\u0157": "r",
-      "\u0159": "r",
-      "\u015A": "S",
-      "\u015C": "S",
-      "\u015E": "S",
-      "\u0160": "S",
-      "\u015B": "s",
-      "\u015D": "s",
-      "\u015F": "s",
-      "\u0161": "s",
-      "\u0162": "T",
-      "\u0164": "T",
-      "\u0166": "T",
-      "\u0163": "t",
-      "\u0165": "t",
-      "\u0167": "t",
-      "\u0168": "U",
-      "\u016A": "U",
-      "\u016C": "U",
-      "\u016E": "U",
-      "\u0170": "U",
-      "\u0172": "U",
-      "\u0169": "u",
-      "\u016B": "u",
-      "\u016D": "u",
-      "\u016F": "u",
-      "\u0171": "u",
-      "\u0173": "u",
-      "\u0174": "W",
-      "\u0175": "w",
-      "\u0176": "Y",
-      "\u0177": "y",
-      "\u0178": "Y",
-      "\u0179": "Z",
-      "\u017B": "Z",
-      "\u017D": "Z",
-      "\u017A": "z",
-      "\u017C": "z",
-      "\u017E": "z",
-      "\u0132": "IJ",
-      "\u0133": "ij",
-      "\u0152": "Oe",
-      "\u0153": "oe",
-      "\u0149": "'n",
-      "\u017F": "ss"
-    };
-    var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
-    var freeSelf = typeof self == "object" && self && self.Object === Object && self;
-    var root = freeGlobal || freeSelf || Function("return this")();
-    function arrayReduce(array, iteratee, accumulator, initAccum) {
-      var index2 = -1, length = array ? array.length : 0;
-      if (initAccum && length) {
-        accumulator = array[++index2];
-      }
-      while (++index2 < length) {
-        accumulator = iteratee(accumulator, array[index2], index2, array);
-      }
-      return accumulator;
-    }
-    function asciiToArray(string) {
-      return string.split("");
-    }
-    function asciiWords(string) {
-      return string.match(reAsciiWord) || [];
-    }
-    function basePropertyOf(object) {
-      return function(key) {
-        return object == null ? void 0 : object[key];
-      };
-    }
-    var deburrLetter = basePropertyOf(deburredLetters);
-    function hasUnicode(string) {
-      return reHasUnicode.test(string);
-    }
-    function hasUnicodeWord(string) {
-      return reHasUnicodeWord.test(string);
-    }
-    function stringToArray(string) {
-      return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
-    }
-    function unicodeToArray(string) {
-      return string.match(reUnicode) || [];
-    }
-    function unicodeWords(string) {
-      return string.match(reUnicodeWord) || [];
-    }
-    var objectProto = Object.prototype;
-    var objectToString = objectProto.toString;
-    var Symbol2 = root.Symbol;
-    var symbolProto = Symbol2 ? Symbol2.prototype : void 0;
-    var symbolToString = symbolProto ? symbolProto.toString : void 0;
-    function baseSlice(array, start, end) {
-      var index2 = -1, length = array.length;
-      if (start < 0) {
-        start = -start > length ? 0 : length + start;
-      }
-      end = end > length ? length : end;
-      if (end < 0) {
-        end += length;
-      }
-      length = start > end ? 0 : end - start >>> 0;
-      start >>>= 0;
-      var result = Array(length);
-      while (++index2 < length) {
-        result[index2] = array[index2 + start];
-      }
-      return result;
-    }
-    function baseToString(value) {
-      if (typeof value == "string") {
-        return value;
-      }
-      if (isSymbol(value)) {
-        return symbolToString ? symbolToString.call(value) : "";
-      }
-      var result = value + "";
-      return result == "0" && 1 / value == -INFINITY ? "-0" : result;
-    }
-    function castSlice(array, start, end) {
-      var length = array.length;
-      end = end === void 0 ? length : end;
-      return !start && end >= length ? array : baseSlice(array, start, end);
-    }
-    function createCaseFirst(methodName) {
-      return function(string) {
-        string = toString(string);
-        var strSymbols = hasUnicode(string) ? stringToArray(string) : void 0;
-        var chr = strSymbols ? strSymbols[0] : string.charAt(0);
-        var trailing = strSymbols ? castSlice(strSymbols, 1).join("") : string.slice(1);
-        return chr[methodName]() + trailing;
-      };
-    }
-    function createCompounder(callback) {
-      return function(string) {
-        return arrayReduce(words(deburr(string).replace(reApos, "")), callback, "");
-      };
-    }
-    function isObjectLike(value) {
-      return !!value && typeof value == "object";
-    }
-    function isSymbol(value) {
-      return typeof value == "symbol" || isObjectLike(value) && objectToString.call(value) == symbolTag;
-    }
-    function toString(value) {
-      return value == null ? "" : baseToString(value);
-    }
-    var camelCase = createCompounder(function(result, word, index2) {
-      word = word.toLowerCase();
-      return result + (index2 ? capitalize(word) : word);
-    });
-    function capitalize(string) {
-      return upperFirst(toString(string).toLowerCase());
-    }
-    function deburr(string) {
-      string = toString(string);
-      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, "");
-    }
-    var upperFirst = createCaseFirst("toUpperCase");
-    function words(string, pattern, guard2) {
-      string = toString(string);
-      pattern = guard2 ? void 0 : pattern;
-      if (pattern === void 0) {
-        return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
-      }
-      return string.match(pattern) || [];
-    }
-    module2.exports = camelCase;
-  }
-});
-
 // node_modules/protobufjs/google/protobuf/api.json
 var require_api = __commonJS({
   "node_modules/protobufjs/google/protobuf/api.json"(exports2, module2) {
@@ -20453,16 +20791,88 @@ var require_type2 = __commonJS({
   }
 });
 
-// node_modules/@grpc/proto-loader/build/src/index.js
-var require_src3 = __commonJS({
-  "node_modules/@grpc/proto-loader/build/src/index.js"(exports2) {
+// node_modules/@grpc/proto-loader/build/src/util.js
+var require_util2 = __commonJS({
+  "node_modules/@grpc/proto-loader/build/src/util.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", {value: true});
     var fs = require("fs");
     var path = require("path");
     var Protobuf = require_protobufjs();
-    var descriptor = require_descriptor2();
+    function addIncludePathResolver(root, includePaths) {
+      const originalResolvePath = root.resolvePath;
+      root.resolvePath = (origin, target) => {
+        if (path.isAbsolute(target)) {
+          return target;
+        }
+        for (const directory of includePaths) {
+          const fullPath = path.join(directory, target);
+          try {
+            fs.accessSync(fullPath, fs.constants.R_OK);
+            return fullPath;
+          } catch (err) {
+            continue;
+          }
+        }
+        process.emitWarning(`${target} not found in any of the include paths ${includePaths}`);
+        return originalResolvePath(origin, target);
+      };
+    }
+    async function loadProtosWithOptions(filename, options2) {
+      const root = new Protobuf.Root();
+      options2 = options2 || {};
+      if (!!options2.includeDirs) {
+        if (!Array.isArray(options2.includeDirs)) {
+          return Promise.reject(new Error("The includeDirs option must be an array"));
+        }
+        addIncludePathResolver(root, options2.includeDirs);
+      }
+      const loadedRoot = await root.load(filename, options2);
+      loadedRoot.resolveAll();
+      return loadedRoot;
+    }
+    exports2.loadProtosWithOptions = loadProtosWithOptions;
+    function loadProtosWithOptionsSync(filename, options2) {
+      const root = new Protobuf.Root();
+      options2 = options2 || {};
+      if (!!options2.includeDirs) {
+        if (!Array.isArray(options2.includeDirs)) {
+          throw new Error("The includeDirs option must be an array");
+        }
+        addIncludePathResolver(root, options2.includeDirs);
+      }
+      const loadedRoot = root.loadSync(filename, options2);
+      loadedRoot.resolveAll();
+      return loadedRoot;
+    }
+    exports2.loadProtosWithOptionsSync = loadProtosWithOptionsSync;
+    function addCommonProtos() {
+      const apiDescriptor = require_api();
+      const descriptorDescriptor = require_descriptor();
+      const sourceContextDescriptor = require_source_context();
+      const typeDescriptor = require_type2();
+      Protobuf.common("api", apiDescriptor.nested.google.nested.protobuf.nested);
+      Protobuf.common("descriptor", descriptorDescriptor.nested.google.nested.protobuf.nested);
+      Protobuf.common("source_context", sourceContextDescriptor.nested.google.nested.protobuf.nested);
+      Protobuf.common("type", typeDescriptor.nested.google.nested.protobuf.nested);
+    }
+    exports2.addCommonProtos = addCommonProtos;
+  }
+});
+
+// node_modules/@grpc/proto-loader/build/src/index.js
+var require_src3 = __commonJS({
+  "node_modules/@grpc/proto-loader/build/src/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", {value: true});
     var camelCase = require_lodash();
+    var Protobuf = require_protobufjs();
+    var descriptor = require_descriptor2();
+    var util_1 = require_util2();
+    function isAnyExtension(obj) {
+      return "@type" in obj && typeof obj["@type"] === "string";
+    }
+    exports2.isAnyExtension = isAnyExtension;
     var descriptorOptions = {
       longs: String,
       enums: String,
@@ -20568,25 +20978,6 @@ var require_src3 = __commonJS({
       }
       return def;
     }
-    function addIncludePathResolver(root, includePaths) {
-      const originalResolvePath = root.resolvePath;
-      root.resolvePath = (origin, target) => {
-        if (path.isAbsolute(target)) {
-          return target;
-        }
-        for (const directory of includePaths) {
-          const fullPath = path.join(directory, target);
-          try {
-            fs.accessSync(fullPath, fs.constants.R_OK);
-            return fullPath;
-          } catch (err) {
-            continue;
-          }
-        }
-        process.emitWarning(`${target} not found in any of the include paths ${includePaths}`);
-        return originalResolvePath(origin, target);
-      };
-    }
     function createPackageDefinitionFromDescriptorSet(decodedDescriptorSet, options2) {
       options2 = options2 || {};
       const root = Protobuf.Root.fromDescriptor(decodedDescriptorSet);
@@ -20594,34 +20985,23 @@ var require_src3 = __commonJS({
       return createPackageDefinition(root, options2);
     }
     function load2(filename, options2) {
-      const root = new Protobuf.Root();
-      options2 = options2 || {};
-      if (!!options2.includeDirs) {
-        if (!Array.isArray(options2.includeDirs)) {
-          return Promise.reject(new Error("The includeDirs option must be an array"));
-        }
-        addIncludePathResolver(root, options2.includeDirs);
-      }
-      return root.load(filename, options2).then((loadedRoot) => {
-        loadedRoot.resolveAll();
-        return createPackageDefinition(root, options2);
+      return util_1.loadProtosWithOptions(filename, options2).then((loadedRoot) => {
+        return createPackageDefinition(loadedRoot, options2);
       });
     }
     exports2.load = load2;
     function loadSync(filename, options2) {
-      const root = new Protobuf.Root();
-      options2 = options2 || {};
-      if (!!options2.includeDirs) {
-        if (!Array.isArray(options2.includeDirs)) {
-          throw new Error("The includeDirs option must be an array");
-        }
-        addIncludePathResolver(root, options2.includeDirs);
-      }
-      const loadedRoot = root.loadSync(filename, options2);
-      loadedRoot.resolveAll();
-      return createPackageDefinition(root, options2);
+      const loadedRoot = util_1.loadProtosWithOptionsSync(filename, options2);
+      return createPackageDefinition(loadedRoot, options2);
     }
     exports2.loadSync = loadSync;
+    function fromJSON(json, options2) {
+      options2 = options2 || {};
+      const loadedRoot = Protobuf.Root.fromJSON(json);
+      loadedRoot.resolveAll();
+      return createPackageDefinition(loadedRoot, options2);
+    }
+    exports2.fromJSON = fromJSON;
     function loadFileDescriptorSetFromBuffer(descriptorSet, options2) {
       const decodedDescriptorSet = descriptor.FileDescriptorSet.decode(descriptorSet);
       return createPackageDefinitionFromDescriptorSet(decodedDescriptorSet, options2);
@@ -20632,20 +21012,13 @@ var require_src3 = __commonJS({
       return createPackageDefinitionFromDescriptorSet(decodedDescriptorSet, options2);
     }
     exports2.loadFileDescriptorSetFromObject = loadFileDescriptorSetFromObject;
-    var apiDescriptor = require_api();
-    var descriptorDescriptor = require_descriptor();
-    var sourceContextDescriptor = require_source_context();
-    var typeDescriptor = require_type2();
-    Protobuf.common("api", apiDescriptor.nested.google.nested.protobuf.nested);
-    Protobuf.common("descriptor", descriptorDescriptor.nested.google.nested.protobuf.nested);
-    Protobuf.common("source_context", sourceContextDescriptor.nested.google.nested.protobuf.nested);
-    Protobuf.common("type", typeDescriptor.nested.google.nested.protobuf.nested);
+    util_1.addCommonProtos();
   }
 });
 
-// node_modules/@firebase/firestore/dist/exp/index.node.cjs.js
+// node_modules/@firebase/firestore/dist/index.node.cjs.js
 var require_index_node_cjs2 = __commonJS({
-  "node_modules/@firebase/firestore/dist/exp/index.node.cjs.js"(exports2) {
+  "node_modules/@firebase/firestore/dist/index.node.cjs.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", {value: true});
     var tslib = require_tslib();
@@ -20660,39 +21033,35 @@ var require_index_node_cjs2 = __commonJS({
     var path = require("path");
     var protoLoader = require_src3();
     var name = "@firebase/firestore";
-    var version = "0.0.900-exp.d92a36260";
-    var version$1 = "8.6.1";
-    var SDK_VERSION = version$1;
+    var version$1 = "3.1.0";
+    var User = function() {
+      function User2(uid) {
+        this.uid = uid;
+      }
+      User2.prototype.isAuthenticated = function() {
+        return this.uid != null;
+      };
+      User2.prototype.toKey = function() {
+        if (this.isAuthenticated()) {
+          return "uid:" + this.uid;
+        } else {
+          return "anonymous-user";
+        }
+      };
+      User2.prototype.isEqual = function(otherUser) {
+        return otherUser.uid === this.uid;
+      };
+      return User2;
+    }();
+    User.UNAUTHENTICATED = new User(null);
+    User.GOOGLE_CREDENTIALS = new User("google-credentials-uid");
+    User.FIRST_PARTY = new User("first-party-uid");
+    User.MOCK_USER = new User("mock-user");
+    var version = "9.1.0";
+    var SDK_VERSION = version;
     function setSDKVersion(version2) {
       SDK_VERSION = version2;
     }
-    var ListenSequence = function() {
-      function ListenSequence2(previousValue, sequenceNumberSyncer) {
-        var _this = this;
-        this.previousValue = previousValue;
-        if (sequenceNumberSyncer) {
-          sequenceNumberSyncer.sequenceNumberHandler = function(sequenceNumber) {
-            return _this.setPreviousValue(sequenceNumber);
-          };
-          this.writeNewSequenceNumber = function(sequenceNumber) {
-            return sequenceNumberSyncer.writeSequenceNumber(sequenceNumber);
-          };
-        }
-      }
-      ListenSequence2.prototype.setPreviousValue = function(externalPreviousValue) {
-        this.previousValue = Math.max(externalPreviousValue, this.previousValue);
-        return this.previousValue;
-      };
-      ListenSequence2.prototype.next = function() {
-        var nextValue = ++this.previousValue;
-        if (this.writeNewSequenceNumber) {
-          this.writeNewSequenceNumber(nextValue);
-        }
-        return nextValue;
-      };
-      return ListenSequence2;
-    }();
-    ListenSequence.INVALID = -1;
     function formatJSON(value) {
       return util$1.inspect(value, {depth: 100});
     }
@@ -20757,6 +21126,11 @@ var require_index_node_cjs2 = __commonJS({
         fail();
       }
     }
+    function debugAssert(assertion, message) {
+      if (!assertion) {
+        fail();
+      }
+    }
     function debugCast(obj, constructor) {
       return obj;
     }
@@ -20793,6 +21167,261 @@ var require_index_node_cjs2 = __commonJS({
       }
       return FirestoreError2;
     }(Error);
+    var Deferred = function() {
+      function Deferred2() {
+        var _this = this;
+        this.promise = new Promise(function(resolve2, reject) {
+          _this.resolve = resolve2;
+          _this.reject = reject;
+        });
+      }
+      return Deferred2;
+    }();
+    var OAuthToken = function() {
+      function OAuthToken2(value, user) {
+        this.user = user;
+        this.type = "OAuth";
+        this.authHeaders = {};
+        this.authHeaders["Authorization"] = "Bearer " + value;
+      }
+      return OAuthToken2;
+    }();
+    var EmptyCredentialsProvider = function() {
+      function EmptyCredentialsProvider2() {
+      }
+      EmptyCredentialsProvider2.prototype.getToken = function() {
+        return Promise.resolve(null);
+      };
+      EmptyCredentialsProvider2.prototype.invalidateToken = function() {
+      };
+      EmptyCredentialsProvider2.prototype.start = function(asyncQueue, changeListener) {
+        asyncQueue.enqueueRetryable(function() {
+          return changeListener(User.UNAUTHENTICATED);
+        });
+      };
+      EmptyCredentialsProvider2.prototype.shutdown = function() {
+      };
+      return EmptyCredentialsProvider2;
+    }();
+    var EmulatorCredentialsProvider = function() {
+      function EmulatorCredentialsProvider2(token) {
+        this.token = token;
+        this.changeListener = null;
+      }
+      EmulatorCredentialsProvider2.prototype.getToken = function() {
+        return Promise.resolve(this.token);
+      };
+      EmulatorCredentialsProvider2.prototype.invalidateToken = function() {
+      };
+      EmulatorCredentialsProvider2.prototype.start = function(asyncQueue, changeListener) {
+        var _this = this;
+        this.changeListener = changeListener;
+        asyncQueue.enqueueRetryable(function() {
+          return changeListener(_this.token.user);
+        });
+      };
+      EmulatorCredentialsProvider2.prototype.shutdown = function() {
+        this.changeListener = null;
+      };
+      return EmulatorCredentialsProvider2;
+    }();
+    var FirebaseCredentialsProvider = function() {
+      function FirebaseCredentialsProvider2(authProvider) {
+        this.authProvider = authProvider;
+        this.currentUser = User.UNAUTHENTICATED;
+        this.tokenCounter = 0;
+        this.forceRefresh = false;
+        this.auth = null;
+      }
+      FirebaseCredentialsProvider2.prototype.start = function(asyncQueue, changeListener) {
+        var _this = this;
+        var lastTokenId = this.tokenCounter;
+        var guardedChangeListener = function(user) {
+          if (_this.tokenCounter !== lastTokenId) {
+            lastTokenId = _this.tokenCounter;
+            return changeListener(user);
+          } else {
+            return Promise.resolve();
+          }
+        };
+        var nextToken = new Deferred();
+        this.tokenListener = function() {
+          _this.tokenCounter++;
+          _this.currentUser = _this.getUser();
+          nextToken.resolve();
+          nextToken = new Deferred();
+          asyncQueue.enqueueRetryable(function() {
+            return guardedChangeListener(_this.currentUser);
+          });
+        };
+        var awaitNextToken = function() {
+          var currentTokenAttempt = nextToken;
+          asyncQueue.enqueueRetryable(function() {
+            return tslib.__awaiter(_this, void 0, void 0, function() {
+              return tslib.__generator(this, function(_d) {
+                switch (_d.label) {
+                  case 0:
+                    return [4, currentTokenAttempt.promise];
+                  case 1:
+                    _d.sent();
+                    return [4, guardedChangeListener(this.currentUser)];
+                  case 2:
+                    _d.sent();
+                    return [2];
+                }
+              });
+            });
+          });
+        };
+        var registerAuth = function(auth) {
+          logDebug("FirebaseCredentialsProvider", "Auth detected");
+          _this.auth = auth;
+          _this.auth.addAuthTokenListener(_this.tokenListener);
+          awaitNextToken();
+        };
+        this.authProvider.onInit(function(auth) {
+          return registerAuth(auth);
+        });
+        setTimeout(function() {
+          if (!_this.auth) {
+            var auth = _this.authProvider.getImmediate({optional: true});
+            if (auth) {
+              registerAuth(auth);
+            } else {
+              logDebug("FirebaseCredentialsProvider", "Auth not yet detected");
+              nextToken.resolve();
+              nextToken = new Deferred();
+            }
+          }
+        }, 0);
+        awaitNextToken();
+      };
+      FirebaseCredentialsProvider2.prototype.getToken = function() {
+        var _this = this;
+        var initialTokenCounter = this.tokenCounter;
+        var forceRefresh = this.forceRefresh;
+        this.forceRefresh = false;
+        if (!this.auth) {
+          return Promise.resolve(null);
+        }
+        return this.auth.getToken(forceRefresh).then(function(tokenData) {
+          if (_this.tokenCounter !== initialTokenCounter) {
+            logDebug("FirebaseCredentialsProvider", "getToken aborted due to token change.");
+            return _this.getToken();
+          } else {
+            if (tokenData) {
+              hardAssert(typeof tokenData.accessToken === "string");
+              return new OAuthToken(tokenData.accessToken, _this.currentUser);
+            } else {
+              return null;
+            }
+          }
+        });
+      };
+      FirebaseCredentialsProvider2.prototype.invalidateToken = function() {
+        this.forceRefresh = true;
+      };
+      FirebaseCredentialsProvider2.prototype.shutdown = function() {
+        if (this.auth) {
+          this.auth.removeAuthTokenListener(this.tokenListener);
+        }
+      };
+      FirebaseCredentialsProvider2.prototype.getUser = function() {
+        var currentUid = this.auth && this.auth.getUid();
+        hardAssert(currentUid === null || typeof currentUid === "string");
+        return new User(currentUid);
+      };
+      return FirebaseCredentialsProvider2;
+    }();
+    var FirstPartyToken = function() {
+      function FirstPartyToken2(gapi, sessionIndex, iamToken) {
+        this.gapi = gapi;
+        this.sessionIndex = sessionIndex;
+        this.iamToken = iamToken;
+        this.type = "FirstParty";
+        this.user = User.FIRST_PARTY;
+      }
+      Object.defineProperty(FirstPartyToken2.prototype, "authHeaders", {
+        get: function() {
+          var headers = {
+            "X-Goog-AuthUser": this.sessionIndex
+          };
+          var authHeader = this.gapi["auth"]["getAuthHeaderValueForFirstParty"]([]);
+          if (authHeader) {
+            headers["Authorization"] = authHeader;
+          }
+          if (this.iamToken) {
+            headers["X-Goog-Iam-Authorization-Token"] = this.iamToken;
+          }
+          return headers;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      return FirstPartyToken2;
+    }();
+    var FirstPartyCredentialsProvider = function() {
+      function FirstPartyCredentialsProvider2(gapi, sessionIndex, iamToken) {
+        this.gapi = gapi;
+        this.sessionIndex = sessionIndex;
+        this.iamToken = iamToken;
+      }
+      FirstPartyCredentialsProvider2.prototype.getToken = function() {
+        return Promise.resolve(new FirstPartyToken(this.gapi, this.sessionIndex, this.iamToken));
+      };
+      FirstPartyCredentialsProvider2.prototype.start = function(asyncQueue, changeListener) {
+        asyncQueue.enqueueRetryable(function() {
+          return changeListener(User.FIRST_PARTY);
+        });
+      };
+      FirstPartyCredentialsProvider2.prototype.shutdown = function() {
+      };
+      FirstPartyCredentialsProvider2.prototype.invalidateToken = function() {
+      };
+      return FirstPartyCredentialsProvider2;
+    }();
+    function makeCredentialsProvider(credentials) {
+      if (!credentials) {
+        return new EmptyCredentialsProvider();
+      }
+      switch (credentials["type"]) {
+        case "gapi":
+          var client = credentials["client"];
+          hardAssert(!!(typeof client === "object" && client !== null && client["auth"] && client["auth"]["getAuthHeaderValueForFirstParty"]));
+          return new FirstPartyCredentialsProvider(client, credentials["sessionIndex"] || "0", credentials["iamToken"] || null);
+        case "provider":
+          return credentials["client"];
+        default:
+          throw new FirestoreError(Code.INVALID_ARGUMENT, "makeCredentialsProvider failed due to invalid credential type");
+      }
+    }
+    var ListenSequence = function() {
+      function ListenSequence2(previousValue, sequenceNumberSyncer) {
+        var _this = this;
+        this.previousValue = previousValue;
+        if (sequenceNumberSyncer) {
+          sequenceNumberSyncer.sequenceNumberHandler = function(sequenceNumber) {
+            return _this.setPreviousValue(sequenceNumber);
+          };
+          this.writeNewSequenceNumber = function(sequenceNumber) {
+            return sequenceNumberSyncer.writeSequenceNumber(sequenceNumber);
+          };
+        }
+      }
+      ListenSequence2.prototype.setPreviousValue = function(externalPreviousValue) {
+        this.previousValue = Math.max(externalPreviousValue, this.previousValue);
+        return this.previousValue;
+      };
+      ListenSequence2.prototype.next = function() {
+        var nextValue = ++this.previousValue;
+        if (this.writeNewSequenceNumber) {
+          this.writeNewSequenceNumber(nextValue);
+        }
+        return nextValue;
+      };
+      return ListenSequence2;
+    }();
+    ListenSequence.INVALID = -1;
     var DOCUMENT_KEY_NAME = "__name__";
     var BasePath = function() {
       function BasePath2(segments, offset, length) {
@@ -20942,36 +21571,36 @@ var require_index_node_cjs2 = __commonJS({
       return ResourcePath2;
     }(BasePath);
     var identifierRegExp = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
-    var FieldPath = function(_super) {
-      tslib.__extends(FieldPath2, _super);
-      function FieldPath2() {
+    var FieldPath$1 = function(_super) {
+      tslib.__extends(FieldPath$12, _super);
+      function FieldPath$12() {
         return _super !== null && _super.apply(this, arguments) || this;
       }
-      FieldPath2.prototype.construct = function(segments, offset, length) {
-        return new FieldPath2(segments, offset, length);
+      FieldPath$12.prototype.construct = function(segments, offset, length) {
+        return new FieldPath$12(segments, offset, length);
       };
-      FieldPath2.isValidIdentifier = function(segment) {
+      FieldPath$12.isValidIdentifier = function(segment) {
         return identifierRegExp.test(segment);
       };
-      FieldPath2.prototype.canonicalString = function() {
+      FieldPath$12.prototype.canonicalString = function() {
         return this.toArray().map(function(str) {
           str = str.replace(/\\/g, "\\\\").replace(/`/g, "\\`");
-          if (!FieldPath2.isValidIdentifier(str)) {
+          if (!FieldPath$12.isValidIdentifier(str)) {
             str = "`" + str + "`";
           }
           return str;
         }).join(".");
       };
-      FieldPath2.prototype.toString = function() {
+      FieldPath$12.prototype.toString = function() {
         return this.canonicalString();
       };
-      FieldPath2.prototype.isKeyField = function() {
+      FieldPath$12.prototype.isKeyField = function() {
         return this.length === 1 && this.get(0) === DOCUMENT_KEY_NAME;
       };
-      FieldPath2.keyField = function() {
-        return new FieldPath2([DOCUMENT_KEY_NAME]);
+      FieldPath$12.keyField = function() {
+        return new FieldPath$12([DOCUMENT_KEY_NAME]);
       };
-      FieldPath2.fromServerFormat = function(path2) {
+      FieldPath$12.fromServerFormat = function(path2) {
         var segments = [];
         var current = "";
         var i = 0;
@@ -21010,12 +21639,12 @@ var require_index_node_cjs2 = __commonJS({
         if (inBackticks) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Unterminated ` in path: " + path2);
         }
-        return new FieldPath2(segments);
+        return new FieldPath$12(segments);
       };
-      FieldPath2.emptyPath = function() {
-        return new FieldPath2([]);
+      FieldPath$12.emptyPath = function() {
+        return new FieldPath$12([]);
       };
-      return FieldPath2;
+      return FieldPath$12;
     }(BasePath);
     var escapeChar = "";
     var encodedSeparatorChar = "";
@@ -21301,16 +21930,6 @@ var require_index_node_cjs2 = __commonJS({
       };
       return PersistenceTransaction2;
     }();
-    var Deferred = function() {
-      function Deferred2() {
-        var _this = this;
-        this.promise = new Promise(function(resolve2, reject) {
-          _this.resolve = resolve2;
-          _this.reject = reject;
-        });
-      }
-      return Deferred2;
-    }();
     var PersistencePromise = function() {
       function PersistencePromise2(callback) {
         var _this = this;
@@ -21326,11 +21945,11 @@ var require_index_node_cjs2 = __commonJS({
           if (_this.nextCallback) {
             _this.nextCallback(value);
           }
-        }, function(error3) {
+        }, function(error2) {
           _this.isDone = true;
-          _this.error = error3;
+          _this.error = error2;
           if (_this.catchCallback) {
-            _this.catchCallback(error3);
+            _this.catchCallback(error2);
           }
         });
       }
@@ -21354,8 +21973,8 @@ var require_index_node_cjs2 = __commonJS({
             _this.nextCallback = function(value) {
               _this.wrapSuccess(nextFn, value).next(resolve2, reject);
             };
-            _this.catchCallback = function(error3) {
-              _this.wrapFailure(catchFn, error3).next(resolve2, reject);
+            _this.catchCallback = function(error2) {
+              _this.wrapFailure(catchFn, error2).next(resolve2, reject);
             };
           });
         }
@@ -21387,13 +22006,13 @@ var require_index_node_cjs2 = __commonJS({
           return PersistencePromise2.resolve(value);
         }
       };
-      PersistencePromise2.prototype.wrapFailure = function(catchFn, error3) {
+      PersistencePromise2.prototype.wrapFailure = function(catchFn, error2) {
         if (catchFn) {
           return this.wrapUserFunction(function() {
-            return catchFn(error3);
+            return catchFn(error2);
           });
         } else {
-          return PersistencePromise2.reject(error3);
+          return PersistencePromise2.reject(error2);
         }
       };
       PersistencePromise2.resolve = function(result) {
@@ -21401,9 +22020,9 @@ var require_index_node_cjs2 = __commonJS({
           resolve2(result);
         });
       };
-      PersistencePromise2.reject = function(error3) {
+      PersistencePromise2.reject = function(error2) {
         return new PersistencePromise2(function(resolve2, reject) {
-          reject(error3);
+          reject(error2);
         });
       };
       PersistencePromise2.waitFor = function(all) {
@@ -21455,7 +22074,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return PersistencePromise2;
     }();
-    var LOG_TAG = "SimpleDb";
+    var LOG_TAG$g = "SimpleDb";
     var TRANSACTION_RETRY_COUNT = 3;
     var SimpleDbTransaction = function() {
       function SimpleDbTransaction2(action, transaction) {
@@ -21475,8 +22094,8 @@ var require_index_node_cjs2 = __commonJS({
           }
         };
         this.transaction.onerror = function(event) {
-          var error3 = checkForAndReportiOSError(event.target.error);
-          _this.completionDeferred.reject(new IndexedDbTransactionError(action, error3));
+          var error2 = checkForAndReportiOSError(event.target.error);
+          _this.completionDeferred.reject(new IndexedDbTransactionError(action, error2));
         };
       }
       SimpleDbTransaction2.open = function(db, action, mode, objectStoreNames) {
@@ -21493,12 +22112,12 @@ var require_index_node_cjs2 = __commonJS({
         enumerable: false,
         configurable: true
       });
-      SimpleDbTransaction2.prototype.abort = function(error3) {
-        if (error3) {
-          this.completionDeferred.reject(error3);
+      SimpleDbTransaction2.prototype.abort = function(error2) {
+        if (error2) {
+          this.completionDeferred.reject(error2);
         }
         if (!this.aborted) {
-          logDebug(LOG_TAG, "Aborting transaction:", error3 ? error3.message : "Client-initiated abort");
+          logDebug(LOG_TAG$g, "Aborting transaction:", error2 ? error2.message : "Client-initiated abort");
           this.aborted = true;
           this.transaction.abort();
         }
@@ -21520,11 +22139,11 @@ var require_index_node_cjs2 = __commonJS({
         }
       }
       SimpleDb2.delete = function(name2) {
-        logDebug(LOG_TAG, "Removing database:", name2);
+        logDebug(LOG_TAG$g, "Removing database:", name2);
         return wrapRequest(window.indexedDB.deleteDatabase(name2)).toPromise();
       };
       SimpleDb2.isAvailable = function() {
-        if (typeof indexedDB === "undefined") {
+        if (!util.isIndexedDBAvailable()) {
           return false;
         }
         if (SimpleDb2.isMockPersistence()) {
@@ -21542,8 +22161,8 @@ var require_index_node_cjs2 = __commonJS({
         }
       };
       SimpleDb2.isMockPersistence = function() {
-        var _a;
-        return typeof process !== "undefined" && ((_a = process.env) === null || _a === void 0 ? void 0 : _a.USE_MOCK_PERSISTENCE) === "YES";
+        var _a2;
+        return typeof process !== "undefined" && ((_a2 = process.env) === null || _a2 === void 0 ? void 0 : _a2.USE_MOCK_PERSISTENCE) === "YES";
       };
       SimpleDb2.getStore = function(txn, store) {
         return txn.store(store);
@@ -21567,7 +22186,7 @@ var require_index_node_cjs2 = __commonJS({
               case 0:
                 if (!!this.db)
                   return [3, 2];
-                logDebug(LOG_TAG, "Opening database:", this.name);
+                logDebug(LOG_TAG$g, "Opening database:", this.name);
                 _d = this;
                 return [4, new Promise(function(resolve2, reject) {
                   var request = indexedDB.open(_this.name, _this.version);
@@ -21579,18 +22198,20 @@ var require_index_node_cjs2 = __commonJS({
                     reject(new IndexedDbTransactionError(action, "Cannot upgrade IndexedDB schema while another tab is open. Close all tabs that access Firestore and reload this page to proceed."));
                   };
                   request.onerror = function(event) {
-                    var error3 = event.target.error;
-                    if (error3.name === "VersionError") {
+                    var error2 = event.target.error;
+                    if (error2.name === "VersionError") {
                       reject(new FirestoreError(Code.FAILED_PRECONDITION, "A newer version of the Firestore SDK was previously used and so the persisted data is not compatible with the version of the SDK you are now using. The SDK will operate with persistence disabled. If you need persistence, please re-upgrade to a newer version of the SDK or else clear the persisted IndexedDB data for your app to start fresh."));
+                    } else if (error2.name === "InvalidStateError") {
+                      reject(new FirestoreError(Code.FAILED_PRECONDITION, "Unable to open an IndexedDB connection. This could be due to running in a private browsing session on a browser whose private browsing sessions do not support IndexedDB: " + error2));
                     } else {
-                      reject(new IndexedDbTransactionError(action, error3));
+                      reject(new IndexedDbTransactionError(action, error2));
                     }
                   };
                   request.onupgradeneeded = function(event) {
-                    logDebug(LOG_TAG, 'Database "' + _this.name + '" requires upgrade from version:', event.oldVersion);
+                    logDebug(LOG_TAG$g, 'Database "' + _this.name + '" requires upgrade from version:', event.oldVersion);
                     var db = event.target.result;
                     _this.schemaConverter.createOrUpgrade(db, request.transaction, event.oldVersion, _this.version).next(function() {
-                      logDebug(LOG_TAG, "Database upgrade to version " + _this.version + " complete");
+                      logDebug(LOG_TAG$g, "Database upgrade to version " + _this.version + " complete");
                     });
                   };
                 })];
@@ -21637,9 +22258,9 @@ var require_index_node_cjs2 = __commonJS({
                       case 2:
                         this_1.db = _e.sent();
                         transaction_1 = SimpleDbTransaction.open(this_1.db, action, readonly ? "readonly" : "readwrite", objectStores);
-                        transactionFnResult = transactionFn(transaction_1).catch(function(error3) {
-                          transaction_1.abort(error3);
-                          return PersistencePromise.reject(error3);
+                        transactionFnResult = transactionFn(transaction_1).catch(function(error2) {
+                          transaction_1.abort(error2);
+                          return PersistencePromise.reject(error2);
                         }).toPromise();
                         transactionFnResult.catch(function() {
                         });
@@ -21650,7 +22271,7 @@ var require_index_node_cjs2 = __commonJS({
                       case 4:
                         error_1 = _e.sent();
                         retryable = error_1.name !== "FirebaseError" && attemptNumber < TRANSACTION_RETRY_COUNT;
-                        logDebug(LOG_TAG, "Transaction failed with error:", error_1.message, "Retrying:", retryable);
+                        logDebug(LOG_TAG$g, "Transaction failed with error:", error_1.message, "Retrying:", retryable);
                         this_1.close();
                         if (!retryable) {
                           return [2, {value: Promise.reject(error_1)}];
@@ -21741,16 +22362,16 @@ var require_index_node_cjs2 = __commonJS({
       SimpleDbStore2.prototype.put = function(keyOrValue, value) {
         var request;
         if (value !== void 0) {
-          logDebug(LOG_TAG, "PUT", this.store.name, keyOrValue, value);
+          logDebug(LOG_TAG$g, "PUT", this.store.name, keyOrValue, value);
           request = this.store.put(value, keyOrValue);
         } else {
-          logDebug(LOG_TAG, "PUT", this.store.name, "<auto-key>", keyOrValue);
+          logDebug(LOG_TAG$g, "PUT", this.store.name, "<auto-key>", keyOrValue);
           request = this.store.put(keyOrValue);
         }
         return wrapRequest(request);
       };
       SimpleDbStore2.prototype.add = function(value) {
-        logDebug(LOG_TAG, "ADD", this.store.name, value, value);
+        logDebug(LOG_TAG$g, "ADD", this.store.name, value, value);
         var request = this.store.add(value);
         return wrapRequest(request);
       };
@@ -21761,17 +22382,17 @@ var require_index_node_cjs2 = __commonJS({
           if (result === void 0) {
             result = null;
           }
-          logDebug(LOG_TAG, "GET", _this.store.name, key, result);
+          logDebug(LOG_TAG$g, "GET", _this.store.name, key, result);
           return result;
         });
       };
       SimpleDbStore2.prototype.delete = function(key) {
-        logDebug(LOG_TAG, "DELETE", this.store.name, key);
+        logDebug(LOG_TAG$g, "DELETE", this.store.name, key);
         var request = this.store.delete(key);
         return wrapRequest(request);
       };
       SimpleDbStore2.prototype.count = function() {
-        logDebug(LOG_TAG, "COUNT", this.store.name);
+        logDebug(LOG_TAG$g, "COUNT", this.store.name);
         var request = this.store.count();
         return wrapRequest(request);
       };
@@ -21785,7 +22406,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       };
       SimpleDbStore2.prototype.deleteAll = function(indexOrRange, range) {
-        logDebug(LOG_TAG, "DELETE ALL", this.store.name);
+        logDebug(LOG_TAG$g, "DELETE ALL", this.store.name);
         var options2 = this.options(indexOrRange, range);
         options2.keysOnly = false;
         var cursor = this.cursor(options2);
@@ -21808,8 +22429,8 @@ var require_index_node_cjs2 = __commonJS({
         var cursorRequest = this.cursor({});
         return new PersistencePromise(function(resolve2, reject) {
           cursorRequest.onerror = function(event) {
-            var error3 = checkForAndReportiOSError(event.target.error);
-            reject(error3);
+            var error2 = checkForAndReportiOSError(event.target.error);
+            reject(error2);
           };
           cursorRequest.onsuccess = function(event) {
             var cursor = event.target.result;
@@ -21896,17 +22517,17 @@ var require_index_node_cjs2 = __commonJS({
           resolve2(result);
         };
         request.onerror = function(event) {
-          var error3 = checkForAndReportiOSError(event.target.error);
-          reject(error3);
+          var error2 = checkForAndReportiOSError(event.target.error);
+          reject(error2);
         };
       });
     }
     var reportedIOSError = false;
-    function checkForAndReportiOSError(error3) {
+    function checkForAndReportiOSError(error2) {
       var iOSVersion = SimpleDb.getIOSVersion(util.getUA());
       if (iOSVersion >= 12.2 && iOSVersion < 13) {
         var IOS_ERROR = "An internal error was encountered in the Indexed Database server";
-        if (error3.message.indexOf(IOS_ERROR) >= 0) {
+        if (error2.message.indexOf(IOS_ERROR) >= 0) {
           var newError_1 = new FirestoreError("internal", "IOS_INDEXEDDB_BUG1: IndexedDb has thrown '" + IOS_ERROR + "'. This is likely due to an unavoidable bug in iOS. See https://stackoverflow.com/q/56496296/110915 for details and a potential workaround.");
           if (!reportedIOSError) {
             reportedIOSError = true;
@@ -21917,7 +22538,7 @@ var require_index_node_cjs2 = __commonJS({
           return newError_1;
         }
       }
-      return error3;
+      return error2;
     }
     var IndexedDbTransaction = function(_super) {
       tslib.__extends(IndexedDbTransaction2, _super);
@@ -22089,7 +22710,7 @@ var require_index_node_cjs2 = __commonJS({
     var FieldMask = function() {
       function FieldMask2(fields) {
         this.fields = fields;
-        fields.sort(FieldPath.comparator);
+        fields.sort(FieldPath$1.comparator);
       }
       FieldMask2.prototype.covers = function(fieldPath) {
         for (var _i = 0, _d = this.fields; _i < _d.length; _i++) {
@@ -22115,6 +22736,9 @@ var require_index_node_cjs2 = __commonJS({
     }
     function encodeBase64(raw) {
       return new Buffer(raw, "binary").toString("base64");
+    }
+    function isBase64Available() {
+      return true;
     }
     var ByteString = function() {
       function ByteString2(binaryString) {
@@ -22202,11 +22826,11 @@ var require_index_node_cjs2 = __commonJS({
     var PREVIOUS_VALUE_KEY = "__previous_value__";
     var LOCAL_WRITE_TIME_KEY = "__local_write_time__";
     function isServerTimestamp(value) {
-      var _a, _b;
-      var type = (_b = (((_a = value === null || value === void 0 ? void 0 : value.mapValue) === null || _a === void 0 ? void 0 : _a.fields) || {})[TYPE_KEY]) === null || _b === void 0 ? void 0 : _b.stringValue;
+      var _a2, _b;
+      var type = (_b = (((_a2 = value === null || value === void 0 ? void 0 : value.mapValue) === null || _a2 === void 0 ? void 0 : _a2.fields) || {})[TYPE_KEY]) === null || _b === void 0 ? void 0 : _b.stringValue;
       return type === SERVER_TIMESTAMP_SENTINEL;
     }
-    function serverTimestamp(localWriteTime, previousValue) {
+    function serverTimestamp$1(localWriteTime, previousValue) {
       var _d;
       var mapValue = {
         fields: (_d = {}, _d[TYPE_KEY] = {
@@ -22596,115 +23220,117 @@ var require_index_node_cjs2 = __commonJS({
     function isMapValue(value) {
       return !!value && "mapValue" in value;
     }
+    function deepClone(source) {
+      if (source.geoPointValue) {
+        return {geoPointValue: Object.assign({}, source.geoPointValue)};
+      } else if (source.timestampValue && typeof source.timestampValue === "object") {
+        return {timestampValue: Object.assign({}, source.timestampValue)};
+      } else if (source.mapValue) {
+        var target_1 = {mapValue: {fields: {}}};
+        forEach(source.mapValue.fields, function(key, val) {
+          return target_1.mapValue.fields[key] = deepClone(val);
+        });
+        return target_1;
+      } else if (source.arrayValue) {
+        var target = {arrayValue: {values: []}};
+        for (var i = 0; i < (source.arrayValue.values || []).length; ++i) {
+          target.arrayValue.values[i] = deepClone(source.arrayValue.values[i]);
+        }
+        return target;
+      } else {
+        return Object.assign({}, source);
+      }
+    }
     var ObjectValue = function() {
-      function ObjectValue2(proto) {
-        this.overlayMap = new Map();
-        this.partialValue = proto;
+      function ObjectValue2(value) {
+        this.value = value;
       }
       ObjectValue2.empty = function() {
         return new ObjectValue2({mapValue: {}});
       };
       ObjectValue2.prototype.field = function(path2) {
-        return ObjectValue2.extractNestedValue(this.buildProto(), path2);
-      };
-      ObjectValue2.prototype.toProto = function() {
-        return this.field(FieldPath.emptyPath());
+        if (path2.isEmpty()) {
+          return this.value;
+        } else {
+          var currentLevel = this.value;
+          for (var i = 0; i < path2.length - 1; ++i) {
+            currentLevel = (currentLevel.mapValue.fields || {})[path2.get(i)];
+            if (!isMapValue(currentLevel)) {
+              return null;
+            }
+          }
+          currentLevel = (currentLevel.mapValue.fields || {})[path2.lastSegment()];
+          return currentLevel || null;
+        }
       };
       ObjectValue2.prototype.set = function(path2, value) {
-        this.setOverlay(path2, value);
+        var fieldsMap = this.getFieldsMap(path2.popLast());
+        fieldsMap[path2.lastSegment()] = deepClone(value);
       };
       ObjectValue2.prototype.setAll = function(data) {
         var _this = this;
-        data.forEach(function(value, fieldPath) {
+        var parent = FieldPath$1.emptyPath();
+        var upserts = {};
+        var deletes = [];
+        data.forEach(function(value, path2) {
+          if (!parent.isImmediateParentOf(path2)) {
+            var fieldsMap_1 = _this.getFieldsMap(parent);
+            _this.applyChanges(fieldsMap_1, upserts, deletes);
+            upserts = {};
+            deletes = [];
+            parent = path2.popLast();
+          }
           if (value) {
-            _this.set(fieldPath, value);
+            upserts[path2.lastSegment()] = deepClone(value);
           } else {
-            _this.delete(fieldPath);
+            deletes.push(path2.lastSegment());
           }
         });
+        var fieldsMap = this.getFieldsMap(parent);
+        this.applyChanges(fieldsMap, upserts, deletes);
       };
       ObjectValue2.prototype.delete = function(path2) {
-        this.setOverlay(path2, null);
+        var nestedValue = this.field(path2.popLast());
+        if (isMapValue(nestedValue) && nestedValue.mapValue.fields) {
+          delete nestedValue.mapValue.fields[path2.lastSegment()];
+        }
       };
       ObjectValue2.prototype.isEqual = function(other) {
-        return valueEquals(this.buildProto(), other.buildProto());
+        return valueEquals(this.value, other.value);
       };
-      ObjectValue2.prototype.setOverlay = function(path2, value) {
-        var currentLevel = this.overlayMap;
-        for (var i = 0; i < path2.length - 1; ++i) {
-          var currentSegment = path2.get(i);
-          var currentValue = currentLevel.get(currentSegment);
-          if (currentValue instanceof Map) {
-            currentLevel = currentValue;
-          } else if (currentValue && typeOrder(currentValue) === 10) {
-            currentValue = new Map(Object.entries(currentValue.mapValue.fields || {}));
-            currentLevel.set(currentSegment, currentValue);
-            currentLevel = currentValue;
-          } else {
-            currentValue = new Map();
-            currentLevel.set(currentSegment, currentValue);
-            currentLevel = currentValue;
-          }
+      ObjectValue2.prototype.getFieldsMap = function(path2) {
+        var current = this.value;
+        if (!current.mapValue.fields) {
+          current.mapValue = {fields: {}};
         }
-        currentLevel.set(path2.lastSegment(), value);
-      };
-      ObjectValue2.prototype.applyOverlay = function(currentPath, currentOverlays) {
-        var _this = this;
-        var modified = false;
-        var existingValue = ObjectValue2.extractNestedValue(this.partialValue, currentPath);
-        var resultAtPath = isMapValue(existingValue) ? Object.assign({}, existingValue.mapValue.fields) : {};
-        currentOverlays.forEach(function(value, pathSegment) {
-          if (value instanceof Map) {
-            var nested = _this.applyOverlay(currentPath.child(pathSegment), value);
-            if (nested != null) {
-              resultAtPath[pathSegment] = nested;
-              modified = true;
-            }
-          } else if (value !== null) {
-            resultAtPath[pathSegment] = value;
-            modified = true;
-          } else if (resultAtPath.hasOwnProperty(pathSegment)) {
-            delete resultAtPath[pathSegment];
-            modified = true;
+        for (var i = 0; i < path2.length; ++i) {
+          var next = current.mapValue.fields[path2.get(i)];
+          if (!isMapValue(next) || !next.mapValue.fields) {
+            next = {mapValue: {fields: {}}};
+            current.mapValue.fields[path2.get(i)] = next;
           }
+          current = next;
+        }
+        return current.mapValue.fields;
+      };
+      ObjectValue2.prototype.applyChanges = function(fieldsMap, inserts, deletes) {
+        forEach(inserts, function(key, val) {
+          return fieldsMap[key] = val;
         });
-        return modified ? {mapValue: {fields: resultAtPath}} : null;
-      };
-      ObjectValue2.prototype.buildProto = function() {
-        var mergedResult = this.applyOverlay(FieldPath.emptyPath(), this.overlayMap);
-        if (mergedResult != null) {
-          this.partialValue = mergedResult;
-          this.overlayMap.clear();
-        }
-        return this.partialValue;
-      };
-      ObjectValue2.extractNestedValue = function(proto, path2) {
-        if (path2.isEmpty()) {
-          return proto;
-        } else {
-          var value = proto;
-          for (var i = 0; i < path2.length - 1; ++i) {
-            if (!value.mapValue.fields) {
-              return null;
-            }
-            value = value.mapValue.fields[path2.get(i)];
-            if (!isMapValue(value)) {
-              return null;
-            }
-          }
-          value = (value.mapValue.fields || {})[path2.lastSegment()];
-          return value || null;
+        for (var _i = 0, deletes_1 = deletes; _i < deletes_1.length; _i++) {
+          var field = deletes_1[_i];
+          delete fieldsMap[field];
         }
       };
       ObjectValue2.prototype.clone = function() {
-        return new ObjectValue2(this.buildProto());
+        return new ObjectValue2(deepClone(this.value));
       };
       return ObjectValue2;
     }();
     function extractFieldMask(value) {
       var fields = [];
-      forEach(value.fields || {}, function(key, value2) {
-        var currentPath = new FieldPath([key]);
+      forEach(value.fields, function(key, value2) {
+        var currentPath = new FieldPath$1([key]);
         if (isMapValue(value2)) {
           var nestedMask = extractFieldMask(value2.mapValue);
           var nestedFields = nestedMask.fields;
@@ -22811,7 +23437,7 @@ var require_index_node_cjs2 = __commonJS({
         return new MutableDocument2(this.key, this.documentType, this.version, this.data.clone(), this.documentState);
       };
       MutableDocument2.prototype.toString = function() {
-        return "Document(" + this.key + ", " + this.version + ", " + JSON.stringify(this.data.toProto()) + ", " + ("{documentType: " + this.documentType + "}), ") + ("{documentState: " + this.documentState + "})");
+        return "Document(" + this.key + ", " + this.version + ", " + JSON.stringify(this.data.value) + ", " + ("{documentType: " + this.documentType + "}), ") + ("{documentState: " + this.documentState + "})");
       };
       return MutableDocument2;
     }();
@@ -23091,8 +23717,8 @@ var require_index_node_cjs2 = __commonJS({
       return KeyFieldNotInFilter2;
     }(FieldFilter);
     function extractDocumentKeysFromArrayValue(op, value) {
-      var _a;
-      return (((_a = value.arrayValue) === null || _a === void 0 ? void 0 : _a.values) || []).map(function(v) {
+      var _a2;
+      return (((_a2 = value.arrayValue) === null || _a2 === void 0 ? void 0 : _a2.values) || []).map(function(v) {
         return DocumentKey.fromName(v.referenceValue);
       });
     }
@@ -23300,7 +23926,7 @@ var require_index_node_cjs2 = __commonJS({
     function newQueryForCollectionGroup(collectionId) {
       return new QueryImpl(ResourcePath.emptyPath(), collectionId);
     }
-    function isDocumentQuery(query3) {
+    function isDocumentQuery$1(query3) {
       return DocumentKey.isDocumentKey(query3.path) && query3.collectionGroup === null && query3.filters.length === 0;
     }
     function isCollectionGroupQuery(query3) {
@@ -23316,7 +23942,7 @@ var require_index_node_cjs2 = __commonJS({
           if (!inequalityField.isKeyField()) {
             queryImpl.memoizedOrderBy.push(new OrderBy(inequalityField));
           }
-          queryImpl.memoizedOrderBy.push(new OrderBy(FieldPath.keyField(), "asc"));
+          queryImpl.memoizedOrderBy.push(new OrderBy(FieldPath$1.keyField(), "asc"));
         } else {
           var foundKeyOrdering = false;
           for (var _i = 0, _d = queryImpl.explicitOrderBy; _i < _d.length; _i++) {
@@ -23328,7 +23954,7 @@ var require_index_node_cjs2 = __commonJS({
           }
           if (!foundKeyOrdering) {
             var lastDirection = queryImpl.explicitOrderBy.length > 0 ? queryImpl.explicitOrderBy[queryImpl.explicitOrderBy.length - 1].dir : "asc";
-            queryImpl.memoizedOrderBy.push(new OrderBy(FieldPath.keyField(), lastDirection));
+            queryImpl.memoizedOrderBy.push(new OrderBy(FieldPath$1.keyField(), lastDirection));
           }
         }
       }
@@ -24024,7 +24650,7 @@ var require_index_node_cjs2 = __commonJS({
     }();
     function applyTransformOperationToLocalView(transform, previousValue, localWriteTime) {
       if (transform instanceof ServerTimestampTransform) {
-        return serverTimestamp(localWriteTime, previousValue);
+        return serverTimestamp$1(localWriteTime, previousValue);
       } else if (transform instanceof ArrayUnionTransformOperation) {
         return applyArrayUnionTransformOperation(transform, previousValue);
       } else if (transform instanceof ArrayRemoveTransformOperation) {
@@ -24203,25 +24829,25 @@ var require_index_node_cjs2 = __commonJS({
       }
       return Mutation2;
     }();
-    function applyMutationToRemoteDocument(mutation, document2, mutationResult) {
+    function mutationApplyToRemoteDocument(mutation, document2, mutationResult) {
       if (mutation instanceof SetMutation) {
-        applySetMutationToRemoteDocument(mutation, document2, mutationResult);
+        setMutationApplyToRemoteDocument(mutation, document2, mutationResult);
       } else if (mutation instanceof PatchMutation) {
-        applyPatchMutationToRemoteDocument(mutation, document2, mutationResult);
+        patchMutationApplyToRemoteDocument(mutation, document2, mutationResult);
       } else {
-        applyDeleteMutationToRemoteDocument(mutation, document2, mutationResult);
+        deleteMutationApplyToRemoteDocument(mutation, document2, mutationResult);
       }
     }
-    function applyMutationToLocalView(mutation, document2, localWriteTime) {
+    function mutationApplyToLocalView(mutation, document2, localWriteTime) {
       if (mutation instanceof SetMutation) {
-        applySetMutationToLocalView(mutation, document2, localWriteTime);
+        setMutationApplyToLocalView(mutation, document2, localWriteTime);
       } else if (mutation instanceof PatchMutation) {
-        applyPatchMutationToLocalView(mutation, document2, localWriteTime);
+        patchMutationApplyToLocalView(mutation, document2, localWriteTime);
       } else {
-        applyDeleteMutationToLocalView(mutation, document2);
+        deleteMutationApplyToLocalView(mutation, document2);
       }
     }
-    function extractMutationBaseValue(mutation, document2) {
+    function mutationExtractBaseValue(mutation, document2) {
       var baseObject = null;
       for (var _i = 0, _d = mutation.fieldTransforms; _i < _d.length; _i++) {
         var fieldTransform = _d[_i];
@@ -24276,13 +24902,13 @@ var require_index_node_cjs2 = __commonJS({
       }
       return SetMutation2;
     }(Mutation);
-    function applySetMutationToRemoteDocument(mutation, document2, mutationResult) {
+    function setMutationApplyToRemoteDocument(mutation, document2, mutationResult) {
       var newData = mutation.value.clone();
       var transformResults = serverTransformResults(mutation.fieldTransforms, document2, mutationResult.transformResults);
       newData.setAll(transformResults);
       document2.convertToFoundDocument(mutationResult.version, newData).setHasCommittedMutations();
     }
-    function applySetMutationToLocalView(mutation, document2, localWriteTime) {
+    function setMutationApplyToLocalView(mutation, document2, localWriteTime) {
       if (!preconditionIsValidForDocument(mutation.precondition, document2)) {
         return;
       }
@@ -24308,7 +24934,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       return PatchMutation2;
     }(Mutation);
-    function applyPatchMutationToRemoteDocument(mutation, document2, mutationResult) {
+    function patchMutationApplyToRemoteDocument(mutation, document2, mutationResult) {
       if (!preconditionIsValidForDocument(mutation.precondition, document2)) {
         document2.convertToUnknownDocument(mutationResult.version);
         return;
@@ -24319,7 +24945,7 @@ var require_index_node_cjs2 = __commonJS({
       newData.setAll(transformResults);
       document2.convertToFoundDocument(mutationResult.version, newData).setHasCommittedMutations();
     }
-    function applyPatchMutationToLocalView(mutation, document2, localWriteTime) {
+    function patchMutationApplyToLocalView(mutation, document2, localWriteTime) {
       if (!preconditionIsValidForDocument(mutation.precondition, document2)) {
         return;
       }
@@ -24372,10 +24998,10 @@ var require_index_node_cjs2 = __commonJS({
       }
       return DeleteMutation2;
     }(Mutation);
-    function applyDeleteMutationToRemoteDocument(mutation, document2, mutationResult) {
+    function deleteMutationApplyToRemoteDocument(mutation, document2, mutationResult) {
       document2.convertToNoDocument(mutationResult.version).setHasCommittedMutations();
     }
-    function applyDeleteMutationToLocalView(mutation, document2) {
+    function deleteMutationApplyToLocalView(mutation, document2) {
       if (preconditionIsValidForDocument(mutation.precondition, document2)) {
         document2.convertToNoDocument(SnapshotVersion.min());
       }
@@ -24405,7 +25031,7 @@ var require_index_node_cjs2 = __commonJS({
           var mutation = this.mutations[i];
           if (mutation.key.isEqual(document2.key)) {
             var mutationResult = mutationResults[i];
-            applyMutationToRemoteDocument(mutation, document2, mutationResult);
+            mutationApplyToRemoteDocument(mutation, document2, mutationResult);
           }
         }
       };
@@ -24413,13 +25039,13 @@ var require_index_node_cjs2 = __commonJS({
         for (var _i = 0, _d = this.baseMutations; _i < _d.length; _i++) {
           var mutation = _d[_i];
           if (mutation.key.isEqual(document2.key)) {
-            applyMutationToLocalView(mutation, document2, this.localWriteTime);
+            mutationApplyToLocalView(mutation, document2, this.localWriteTime);
           }
         }
         for (var _e = 0, _f = this.mutations; _e < _f.length; _e++) {
           var mutation = _f[_e];
           if (mutation.key.isEqual(document2.key)) {
-            applyMutationToLocalView(mutation, document2, this.localWriteTime);
+            mutationApplyToLocalView(mutation, document2, this.localWriteTime);
           }
         }
       };
@@ -24711,7 +25337,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return TargetState2;
     }();
-    var LOG_TAG$1 = "WatchChangeAggregator";
+    var LOG_TAG$f = "WatchChangeAggregator";
     var WatchChangeAggregator = function() {
       function WatchChangeAggregator2(metadataProvider) {
         this.metadataProvider = metadataProvider;
@@ -24903,7 +25529,7 @@ var require_index_node_cjs2 = __commonJS({
       WatchChangeAggregator2.prototype.isActiveTarget = function(targetId) {
         var targetActive = this.targetDataForActiveTarget(targetId) !== null;
         if (!targetActive) {
-          logDebug(LOG_TAG$1, "Detected inactive target", targetId);
+          logDebug(LOG_TAG$f, "Detected inactive target", targetId);
         }
         return targetActive;
       };
@@ -25075,13 +25701,13 @@ var require_index_node_cjs2 = __commonJS({
     function toMutationDocument(serializer, key, fields) {
       return {
         name: toName(serializer, key),
-        fields: fields.toProto().mapValue.fields
+        fields: fields.value.mapValue.fields
       };
     }
     function toDocument(serializer, document2) {
       return {
         name: toName(serializer, document2.key),
-        fields: document2.data.toProto().mapValue.fields,
+        fields: document2.data.value.mapValue.fields,
         updateTime: toTimestamp(serializer, document2.version.toTimestamp())
       };
     }
@@ -25341,7 +25967,7 @@ var require_index_node_cjs2 = __commonJS({
       } else {
         fail();
       }
-      var fieldPath = FieldPath.fromServerFormat(proto.fieldPath);
+      var fieldPath = FieldPath$1.fromServerFormat(proto.fieldPath);
       return new FieldTransform(fieldPath, transform);
     }
     function toDocumentsTarget(serializer, target) {
@@ -25566,7 +26192,7 @@ var require_index_node_cjs2 = __commonJS({
       return {fieldPath: path2.canonicalString()};
     }
     function fromFieldPathReference(fieldReference) {
-      return FieldPath.fromServerFormat(fieldReference.fieldPath);
+      return FieldPath$1.fromServerFormat(fieldReference.fieldPath);
     }
     function toPropertyOrder(orderBy2) {
       return {
@@ -25662,7 +26288,7 @@ var require_index_node_cjs2 = __commonJS({
     function fromDocumentMask(proto) {
       var paths = proto.fieldPaths || [];
       return new FieldMask(paths.map(function(path2) {
-        return FieldPath.fromServerFormat(path2);
+        return FieldPath$1.fromServerFormat(path2);
       }));
     }
     function isValidResourceName(path2) {
@@ -25789,7 +26415,7 @@ var require_index_node_cjs2 = __commonJS({
       var version2 = fromDbTimestamp(dbTarget.readTime);
       var lastLimboFreeSnapshotVersion = dbTarget.lastLimboFreeSnapshotVersion !== void 0 ? fromDbTimestamp(dbTarget.lastLimboFreeSnapshotVersion) : SnapshotVersion.min();
       var target;
-      if (isDocumentQuery$1(dbTarget.query)) {
+      if (isDocumentQuery(dbTarget.query)) {
         target = fromDocumentsTarget(dbTarget.query);
       } else {
         target = fromQueryTarget(dbTarget.query);
@@ -25808,7 +26434,7 @@ var require_index_node_cjs2 = __commonJS({
       var resumeToken = targetData.resumeToken.toBase64();
       return new DbTarget(targetData.targetId, canonifyTarget(targetData.target), dbTimestamp, resumeToken, targetData.sequenceNumber, dbLastLimboFreeTimestamp, queryProto);
     }
-    function isDocumentQuery$1(dbQuery) {
+    function isDocumentQuery(dbQuery) {
       return dbQuery.documents !== void 0;
     }
     function fromDbBundle(dbBundle) {
@@ -26026,13 +26652,13 @@ var require_index_node_cjs2 = __commonJS({
         return new IndexedDbMutationQueue2(userId, serializer, indexManager, referenceDelegate);
       };
       IndexedDbMutationQueue2.prototype.checkEmpty = function(transaction) {
-        var empty2 = true;
+        var empty = true;
         var range = IDBKeyRange.bound([this.userId, Number.NEGATIVE_INFINITY], [this.userId, Number.POSITIVE_INFINITY]);
         return mutationsStore(transaction).iterate({index: DbMutationBatch.userMutationsIndex, range}, function(key, value, control) {
-          empty2 = false;
+          empty = false;
           control.done();
         }).next(function() {
-          return empty2;
+          return empty;
         });
       };
       IndexedDbMutationQueue2.prototype.addMutationBatch = function(transaction, localWriteTime, baseMutations, mutations) {
@@ -26228,8 +26854,8 @@ var require_index_node_cjs2 = __commonJS({
       };
       IndexedDbMutationQueue2.prototype.performConsistencyCheck = function(txn) {
         var _this = this;
-        return this.checkEmpty(txn).next(function(empty2) {
-          if (!empty2) {
+        return this.checkEmpty(txn).next(function(empty) {
+          if (!empty) {
             return PersistencePromise.resolve();
           }
           var startRange = IDBKeyRange.lowerBound(DbDocumentMutation.prefixForUser(_this.userId));
@@ -26265,7 +26891,8 @@ var require_index_node_cjs2 = __commonJS({
       var startRange = IDBKeyRange.lowerBound(indexKey);
       var containsKey = false;
       return documentMutationsStore(txn).iterate({range: startRange, keysOnly: true}, function(key2, value, control) {
-        var userID = key2[0], keyPath = key2[1], _ = key2[2];
+        var userID = key2[0], keyPath = key2[1];
+        key2[2];
         if (userID === userId && keyPath === encodedPath) {
           containsKey = true;
         }
@@ -26489,7 +27116,8 @@ var require_index_node_cjs2 = __commonJS({
           keysOnly: true,
           range
         }, function(_d, _, control) {
-          var targetId = _d[0], path3 = _d[1];
+          var targetId = _d[0];
+          _d[1];
           if (targetId !== 0) {
             count++;
             control.done();
@@ -26553,7 +27181,7 @@ var require_index_node_cjs2 = __commonJS({
     LruParams.DEFAULT_MAX_SEQUENCE_NUMBERS_TO_COLLECT = 1e3;
     LruParams.DEFAULT = new LruParams(LRU_DEFAULT_CACHE_SIZE_BYTES, LruParams.DEFAULT_COLLECTION_PERCENTILE, LruParams.DEFAULT_MAX_SEQUENCE_NUMBERS_TO_COLLECT);
     LruParams.DISABLED = new LruParams(LRU_COLLECTION_DISABLED, 0, 0);
-    var LOG_TAG$2 = "LruGarbageCollector";
+    var LOG_TAG$e = "LruGarbageCollector";
     var LRU_MINIMUM_CACHE_SIZE_BYTES = 1 * 1024 * 1024;
     var INITIAL_GC_DELAY_MS = 1 * 60 * 1e3;
     var REGULAR_GC_DELAY_MS = 5 * 60 * 1e3;
@@ -26644,7 +27272,7 @@ var require_index_node_cjs2 = __commonJS({
                   e_1 = _d.sent();
                   if (!isIndexedDbTransactionError(e_1))
                     return [3, 4];
-                  logDebug(LOG_TAG$2, "Ignoring IndexedDB error during garbage collection: ", e_1);
+                  logDebug(LOG_TAG$e, "Ignoring IndexedDB error during garbage collection: ", e_1);
                   return [3, 6];
                 case 4:
                   return [4, ignoreIfPrimaryLeaseLoss(e_1)];
@@ -26815,7 +27443,7 @@ var require_index_node_cjs2 = __commonJS({
                 documentCount++;
                 return changeBuffer.getEntry(txn, docKey).next(function() {
                   changeBuffer.removeEntry(docKey);
-                  return documentTargetStore(txn).delete(sentinelKey(docKey));
+                  return documentTargetStore(txn).delete(sentinelKey$1(docKey));
                 });
               }
             });
@@ -26844,7 +27472,8 @@ var require_index_node_cjs2 = __commonJS({
         return store.iterate({
           index: DbTargetDocument.documentTargetsIndex
         }, function(_d, _e) {
-          var targetId = _d[0], docKey = _d[1];
+          var targetId = _d[0];
+          _d[1];
           var path2 = _e.path, sequenceNumber = _e.sequenceNumber;
           if (targetId === 0) {
             if (nextToReport !== ListenSequence.INVALID) {
@@ -26866,7 +27495,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return IndexedDbLruDelegateImpl2;
     }();
-    function sentinelKey(key) {
+    function sentinelKey$1(key) {
       return [0, encodeResourcePath(key.path)];
     }
     function sentinelRow(key, sequenceNumber) {
@@ -27356,7 +27985,7 @@ var require_index_node_cjs2 = __commonJS({
           var promises = [];
           return documentsStore.iterate(function(key, doc3) {
             var path2 = new ResourcePath(key);
-            var docSentinelKey = sentinelKey$1(path2);
+            var docSentinelKey = sentinelKey(path2);
             promises.push(documentTargetStore2.get(docSentinelKey).next(function(maybeSentinel) {
               if (!maybeSentinel) {
                 return writeSentinelKey2(path2);
@@ -27390,7 +28019,9 @@ var require_index_node_cjs2 = __commonJS({
           return addEntry(path2.popLast());
         }).next(function() {
           return txn.store(DbDocumentMutation.store).iterate({keysOnly: true}, function(_d, _) {
-            var userID = _d[0], encodedPath = _d[1], batchId = _d[2];
+            _d[0];
+            var encodedPath = _d[1];
+            _d[2];
             var path2 = decodeResourcePath(encodedPath);
             return addEntry(path2.popLast());
           });
@@ -27407,7 +28038,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return SchemaConverter2;
     }();
-    function sentinelKey$1(path2) {
+    function sentinelKey(path2) {
       return [0, encodeResourcePath(path2)];
     }
     function createPrimaryClientStore(db) {
@@ -27492,7 +28123,7 @@ var require_index_node_cjs2 = __commonJS({
         keyPath: DbNamedQuery.keyPath
       });
     }
-    var LOG_TAG$3 = "IndexedDbPersistence";
+    var LOG_TAG$d = "IndexedDbPersistence";
     var MAX_CLIENT_AGE_MS = 30 * 60 * 1e3;
     var MAX_PRIMARY_ELIGIBLE_AGE_MS = 5e3;
     var CLIENT_METADATA_REFRESH_INTERVAL_MS = 4e3;
@@ -27538,7 +28169,7 @@ var require_index_node_cjs2 = __commonJS({
         } else {
           this.webStorage = null;
           if (forceOwningTab === false) {
-            logError(LOG_TAG$3, "LocalStorage is unavailable. As a result, persistence may not work reliably. In particular enablePersistence() could fail immediately after refreshing the page.");
+            logError(LOG_TAG$d, "LocalStorage is unavailable. As a result, persistence may not work reliably. In particular enablePersistence() could fail immediately after refreshing the page.");
           }
         }
       }
@@ -27652,13 +28283,13 @@ var require_index_node_cjs2 = __commonJS({
           });
         }).catch(function(e) {
           if (isIndexedDbTransactionError(e)) {
-            logDebug(LOG_TAG$3, "Failed to extend owner lease: ", e);
+            logDebug(LOG_TAG$d, "Failed to extend owner lease: ", e);
             return _this.isPrimary;
           }
           if (!_this.allowTabSynchronization) {
             throw e;
           }
-          logDebug(LOG_TAG$3, "Releasing owner lease after error during lease refresh", e);
+          logDebug(LOG_TAG$d, "Releasing owner lease after error during lease refresh", e);
           return false;
         }).then(function(isPrimary) {
           if (_this.isPrimary !== isPrimary) {
@@ -27772,7 +28403,7 @@ var require_index_node_cjs2 = __commonJS({
           });
         }).next(function(canActAsPrimary) {
           if (_this.isPrimary !== canActAsPrimary) {
-            logDebug(LOG_TAG$3, "Client " + (canActAsPrimary ? "is" : "is not") + " eligible for a primary lease.");
+            logDebug(LOG_TAG$d, "Client " + (canActAsPrimary ? "is" : "is not") + " eligible for a primary lease.");
           }
           return canActAsPrimary;
         });
@@ -27846,7 +28477,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       IndexedDbPersistence2.prototype.runTransaction = function(action, mode, transactionOperation) {
         var _this = this;
-        logDebug(LOG_TAG$3, "Starting transaction:", action);
+        logDebug(LOG_TAG$d, "Starting transaction:", action);
         var simpleDbMode = mode === "readonly" ? "readonly" : "readwrite";
         var persistenceTransaction;
         return this.simpleDb.runTransaction(action, simpleDbMode, ALL_STORES, function(simpleDbTxn) {
@@ -27906,7 +28537,7 @@ var require_index_node_cjs2 = __commonJS({
         var store = primaryClientStore(txn);
         return store.get(DbPrimaryClient.key).next(function(primaryClient) {
           if (_this.isLocalClient(primaryClient)) {
-            logDebug(LOG_TAG$3, "Releasing primary lease.");
+            logDebug(LOG_TAG$d, "Releasing primary lease.");
             return store.delete(DbPrimaryClient.key);
           } else {
             return PersistencePromise.resolve();
@@ -27946,10 +28577,13 @@ var require_index_node_cjs2 = __commonJS({
       };
       IndexedDbPersistence2.prototype.attachWindowUnloadHook = function() {
         var _this = this;
-        var _a;
-        if (typeof ((_a = this.window) === null || _a === void 0 ? void 0 : _a.addEventListener) === "function") {
+        var _a2;
+        if (typeof ((_a2 = this.window) === null || _a2 === void 0 ? void 0 : _a2.addEventListener) === "function") {
           this.windowUnloadHandler = function() {
             _this.markClientZombied();
+            if (util.isSafari() && navigator.appVersion.match("Version/14")) {
+              _this.queue.enterRestrictedMode(true);
+            }
             _this.queue.enqueueAndForget(function() {
               return _this.shutdown();
             });
@@ -27964,13 +28598,13 @@ var require_index_node_cjs2 = __commonJS({
         }
       };
       IndexedDbPersistence2.prototype.isClientZombied = function(clientId) {
-        var _a;
+        var _a2;
         try {
-          var isZombied = ((_a = this.webStorage) === null || _a === void 0 ? void 0 : _a.getItem(this.zombiedClientLocalStorageKey(clientId))) !== null;
-          logDebug(LOG_TAG$3, "Client '" + clientId + "' " + (isZombied ? "is" : "is not") + " zombied in LocalStorage");
+          var isZombied = ((_a2 = this.webStorage) === null || _a2 === void 0 ? void 0 : _a2.getItem(this.zombiedClientLocalStorageKey(clientId))) !== null;
+          logDebug(LOG_TAG$d, "Client '" + clientId + "' " + (isZombied ? "is" : "is not") + " zombied in LocalStorage");
           return isZombied;
         } catch (e) {
-          logError(LOG_TAG$3, "Failed to get zombied client id.", e);
+          logError(LOG_TAG$d, "Failed to get zombied client id.", e);
           return false;
         }
       };
@@ -28073,7 +28707,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       };
       LocalDocumentsView2.prototype.getDocumentsMatchingQuery = function(transaction, query3, sinceReadTime) {
-        if (isDocumentQuery(query3)) {
+        if (isDocumentQuery$1(query3)) {
           return this.getDocumentsMatchingDocumentQuery(transaction, query3.path);
         } else if (isCollectionGroupQuery(query3)) {
           return this.getDocumentsMatchingCollectionGroupQuery(transaction, query3, sinceReadTime);
@@ -28128,7 +28762,7 @@ var require_index_node_cjs2 = __commonJS({
                   document_2 = MutableDocument.newInvalidDocument(key);
                   results = results.insert(key, document_2);
                 }
-                applyMutationToLocalView(mutation, document_2, batch.localWriteTime);
+                mutationApplyToLocalView(mutation, document_2, batch.localWriteTime);
                 if (!document_2.isFoundDocument()) {
                   results = results.remove(key);
                 }
@@ -28167,7 +28801,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return LocalDocumentsView2;
     }();
-    var LOG_TAG$4 = "LocalStore";
+    var LOG_TAG$c = "LocalStore";
     var RESUME_TOKEN_MAX_AGE_MICROS = 5 * 60 * 1e6;
     var LocalStoreImpl = function() {
       function LocalStoreImpl2(persistence, queryEngine, initialUser, serializer) {
@@ -28265,9 +28899,9 @@ var require_index_node_cjs2 = __commonJS({
           var baseMutations = [];
           for (var _i = 0, mutations_2 = mutations; _i < mutations_2.length; _i++) {
             var mutation = mutations_2[_i];
-            var baseValue = extractMutationBaseValue(mutation, existingDocs.get(mutation.key));
+            var baseValue = mutationExtractBaseValue(mutation, existingDocs.get(mutation.key));
             if (baseValue != null) {
-              baseMutations.push(new PatchMutation(mutation.key, baseValue, extractFieldMask(baseValue.toProto().mapValue), Precondition.exists(true)));
+              baseMutations.push(new PatchMutation(mutation.key, baseValue, extractFieldMask(baseValue.value.mapValue), Precondition.exists(true)));
             }
           }
           return localStoreImpl.mutationQueue.addMutationBatch(txn, localWriteTime, baseMutations, mutations);
@@ -28391,7 +29025,7 @@ var require_index_node_cjs2 = __commonJS({
             documentBuffer.addEntry(doc3, docReadTime);
             changedDocs = changedDocs.insert(key, doc3);
           } else {
-            logDebug(LOG_TAG$4, "Ignoring outdated watch update for ", key, ". Current version:", existingDoc.version, " Watch version:", doc3.version);
+            logDebug(LOG_TAG$c, "Ignoring outdated watch update for ", key, ". Current version:", existingDoc.version, " Watch version:", doc3.version);
           }
         });
         return changedDocs;
@@ -28436,7 +29070,7 @@ var require_index_node_cjs2 = __commonJS({
             case 3:
               e_2 = _d.sent();
               if (isIndexedDbTransactionError(e_2)) {
-                logDebug(LOG_TAG$4, "Failed to update sequence numbers: " + e_2);
+                logDebug(LOG_TAG$c, "Failed to update sequence numbers: " + e_2);
               } else {
                 throw e_2;
               }
@@ -28532,7 +29166,7 @@ var require_index_node_cjs2 = __commonJS({
             case 4:
               e_3 = _d.sent();
               if (isIndexedDbTransactionError(e_3)) {
-                logDebug(LOG_TAG$4, "Failed to update sequence numbers for target " + targetId + ": " + e_3);
+                logDebug(LOG_TAG$c, "Failed to update sequence numbers for target " + targetId + ": " + e_3);
               } else {
                 throw e_3;
               }
@@ -28860,7 +29494,7 @@ var require_index_node_cjs2 = __commonJS({
         var batchId = this.nextBatchId;
         this.nextBatchId++;
         if (this.mutationQueue.length > 0) {
-          var prior = this.mutationQueue[this.mutationQueue.length - 1];
+          this.mutationQueue[this.mutationQueue.length - 1];
         }
         var batch = new MutationBatch(batchId, localWriteTime, baseMutations, mutations);
         this.mutationQueue.push(batch);
@@ -29208,7 +29842,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return MemoryTargetCache2;
     }();
-    var LOG_TAG$5 = "MemoryPersistence";
+    var LOG_TAG$b = "MemoryPersistence";
     var MemoryPersistence = function() {
       function MemoryPersistence2(referenceDelegateFactory, serializer) {
         var _this = this;
@@ -29266,7 +29900,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       MemoryPersistence2.prototype.runTransaction = function(action, mode, transactionOperation) {
         var _this = this;
-        logDebug(LOG_TAG$5, "Starting transaction:", action);
+        logDebug(LOG_TAG$b, "Starting transaction:", action);
         var txn = new MemoryTransaction(this.listenSequence.next());
         this.referenceDelegate.onTransactionStarted();
         return transactionOperation(txn).next(function(result) {
@@ -29450,28 +30084,6 @@ var require_index_node_cjs2 = __commonJS({
       };
       return QueryEngine2;
     }();
-    var User = function() {
-      function User2(uid) {
-        this.uid = uid;
-      }
-      User2.prototype.isAuthenticated = function() {
-        return this.uid != null;
-      };
-      User2.prototype.toKey = function() {
-        if (this.isAuthenticated()) {
-          return "uid:" + this.uid;
-        } else {
-          return "anonymous-user";
-        }
-      };
-      User2.prototype.isEqual = function(otherUser) {
-        return otherUser.uid === this.uid;
-      };
-      return User2;
-    }();
-    User.UNAUTHENTICATED = new User(null);
-    User.GOOGLE_CREDENTIALS = new User("google-credentials-uid");
-    User.FIRST_PARTY = new User("first-party-uid");
     var CLIENT_STATE_KEY_PREFIX = "firestore_clients";
     function createWebStorageClientStateKey(persistenceKey, clientId) {
       return CLIENT_STATE_KEY_PREFIX + "_" + persistenceKey + "_" + clientId;
@@ -29500,13 +30112,13 @@ var require_index_node_cjs2 = __commonJS({
     function createWebStorageSequenceNumberKey(persistenceKey) {
       return SEQUENCE_NUMBER_KEY_PREFIX + "_" + persistenceKey;
     }
-    var LOG_TAG$6 = "SharedClientState";
+    var LOG_TAG$a = "SharedClientState";
     var MutationMetadata = function() {
-      function MutationMetadata2(user, batchId, state, error3) {
+      function MutationMetadata2(user, batchId, state, error2) {
         this.user = user;
         this.batchId = batchId;
         this.state = state;
-        this.error = error3;
+        this.error = error2;
       }
       MutationMetadata2.fromWebStorageEntry = function(user, batchId, value) {
         var mutationBatch = JSON.parse(value);
@@ -29521,7 +30133,7 @@ var require_index_node_cjs2 = __commonJS({
         if (validData) {
           return new MutationMetadata2(user, batchId, mutationBatch.state, firestoreError);
         } else {
-          logError(LOG_TAG$6, "Failed to parse mutation state for ID '" + batchId + "': " + value);
+          logError(LOG_TAG$a, "Failed to parse mutation state for ID '" + batchId + "': " + value);
           return null;
         }
       };
@@ -29541,10 +30153,10 @@ var require_index_node_cjs2 = __commonJS({
       return MutationMetadata2;
     }();
     var QueryTargetMetadata = function() {
-      function QueryTargetMetadata2(targetId, state, error3) {
+      function QueryTargetMetadata2(targetId, state, error2) {
         this.targetId = targetId;
         this.state = state;
-        this.error = error3;
+        this.error = error2;
       }
       QueryTargetMetadata2.fromWebStorageEntry = function(targetId, value) {
         var targetState = JSON.parse(value);
@@ -29559,7 +30171,7 @@ var require_index_node_cjs2 = __commonJS({
         if (validData) {
           return new QueryTargetMetadata2(targetId, targetState.state, firestoreError);
         } else {
-          logError(LOG_TAG$6, "Failed to parse target state for ID '" + targetId + "': " + value);
+          logError(LOG_TAG$a, "Failed to parse target state for ID '" + targetId + "': " + value);
           return null;
         }
       };
@@ -29594,7 +30206,7 @@ var require_index_node_cjs2 = __commonJS({
         if (validData) {
           return new RemoteClientState2(clientId, activeTargetIdsSet);
         } else {
-          logError(LOG_TAG$6, "Failed to parse client data for instance '" + clientId + "': " + value);
+          logError(LOG_TAG$a, "Failed to parse client data for instance '" + clientId + "': " + value);
           return null;
         }
       };
@@ -29611,7 +30223,7 @@ var require_index_node_cjs2 = __commonJS({
         if (validData) {
           return new SharedOnlineState2(onlineState.clientId, onlineState.onlineState);
         } else {
-          logError(LOG_TAG$6, "Failed to parse online state: " + value);
+          logError(LOG_TAG$a, "Failed to parse online state: " + value);
           return null;
         }
       };
@@ -29728,8 +30340,8 @@ var require_index_node_cjs2 = __commonJS({
       WebStorageSharedClientState2.prototype.addPendingMutation = function(batchId) {
         this.persistMutationState(batchId, "pending");
       };
-      WebStorageSharedClientState2.prototype.updateMutationState = function(batchId, state, error3) {
-        this.persistMutationState(batchId, state, error3);
+      WebStorageSharedClientState2.prototype.updateMutationState = function(batchId, state, error2) {
+        this.persistMutationState(batchId, state, error2);
         this.removeMutationState(batchId);
       };
       WebStorageSharedClientState2.prototype.addLocalQueryTarget = function(targetId) {
@@ -29757,8 +30369,8 @@ var require_index_node_cjs2 = __commonJS({
       WebStorageSharedClientState2.prototype.clearQueryState = function(targetId) {
         this.removeItem(createWebStorageQueryTargetMetadataKey(this.persistenceKey, targetId));
       };
-      WebStorageSharedClientState2.prototype.updateQueryState = function(targetId, state, error3) {
-        this.persistQueryTargetState(targetId, state, error3);
+      WebStorageSharedClientState2.prototype.updateQueryState = function(targetId, state, error2) {
+        this.persistQueryTargetState(targetId, state, error2);
       };
       WebStorageSharedClientState2.prototype.handleUserChange = function(user, removedBatchIds, addedBatchIds) {
         var _this = this;
@@ -29785,22 +30397,22 @@ var require_index_node_cjs2 = __commonJS({
       };
       WebStorageSharedClientState2.prototype.getItem = function(key) {
         var value = this.storage.getItem(key);
-        logDebug(LOG_TAG$6, "READ", key, value);
+        logDebug(LOG_TAG$a, "READ", key, value);
         return value;
       };
       WebStorageSharedClientState2.prototype.setItem = function(key, value) {
-        logDebug(LOG_TAG$6, "SET", key, value);
+        logDebug(LOG_TAG$a, "SET", key, value);
         this.storage.setItem(key, value);
       };
       WebStorageSharedClientState2.prototype.removeItem = function(key) {
-        logDebug(LOG_TAG$6, "REMOVE", key);
+        logDebug(LOG_TAG$a, "REMOVE", key);
         this.storage.removeItem(key);
       };
       WebStorageSharedClientState2.prototype.handleWebStorageEvent = function(event) {
         var _this = this;
         var storageEvent = event;
         if (storageEvent.storageArea === this.storage) {
-          logDebug(LOG_TAG$6, "EVENT", storageEvent.key, storageEvent.newValue);
+          logDebug(LOG_TAG$a, "EVENT", storageEvent.key, storageEvent.newValue);
           if (storageEvent.key === this.localClientStorageKey) {
             logError("Received WebStorage notification for local change. Another client might have garbage-collected our state");
             return;
@@ -29871,8 +30483,8 @@ var require_index_node_cjs2 = __commonJS({
       WebStorageSharedClientState2.prototype.persistClientState = function() {
         this.setItem(this.localClientStorageKey, this.localClientState.toWebStorageJSON());
       };
-      WebStorageSharedClientState2.prototype.persistMutationState = function(batchId, state, error3) {
-        var mutationState = new MutationMetadata(this.currentUser, batchId, state, error3);
+      WebStorageSharedClientState2.prototype.persistMutationState = function(batchId, state, error2) {
+        var mutationState = new MutationMetadata(this.currentUser, batchId, state, error2);
         var mutationKey = createWebStorageMutationBatchKey(this.persistenceKey, this.currentUser, batchId);
         this.setItem(mutationKey, mutationState.toWebStorageJSON());
       };
@@ -29887,9 +30499,9 @@ var require_index_node_cjs2 = __commonJS({
         };
         this.storage.setItem(this.onlineStateKey, JSON.stringify(entry));
       };
-      WebStorageSharedClientState2.prototype.persistQueryTargetState = function(targetId, state, error3) {
+      WebStorageSharedClientState2.prototype.persistQueryTargetState = function(targetId, state, error2) {
         var targetKey = createWebStorageQueryTargetMetadataKey(this.persistenceKey, targetId);
-        var targetMetadata = new QueryTargetMetadata(targetId, state, error3);
+        var targetMetadata = new QueryTargetMetadata(targetId, state, error2);
         this.setItem(targetKey, targetMetadata.toWebStorageJSON());
       };
       WebStorageSharedClientState2.prototype.persistBundleLoadedState = function() {
@@ -29921,7 +30533,7 @@ var require_index_node_cjs2 = __commonJS({
         return tslib.__awaiter(this, void 0, void 0, function() {
           return tslib.__generator(this, function(_d) {
             if (mutationBatch.user.uid !== this.currentUser.uid) {
-              logDebug(LOG_TAG$6, "Ignoring mutation for non-active user " + mutationBatch.user.uid);
+              logDebug(LOG_TAG$a, "Ignoring mutation for non-active user " + mutationBatch.user.uid);
               return [2];
             }
             return [2, this.syncEngine.applyBatchState(mutationBatch.batchId, mutationBatch.state, mutationBatch.error)];
@@ -29974,7 +30586,7 @@ var require_index_node_cjs2 = __commonJS({
           hardAssert(typeof parsed === "number");
           sequenceNumber = parsed;
         } catch (e) {
-          logError(LOG_TAG$6, "Failed to read sequence number from WebStorage", e);
+          logError(LOG_TAG$a, "Failed to read sequence number from WebStorage", e);
         }
       }
       return sequenceNumber;
@@ -29988,13 +30600,13 @@ var require_index_node_cjs2 = __commonJS({
       }
       MemorySharedClientState2.prototype.addPendingMutation = function(batchId) {
       };
-      MemorySharedClientState2.prototype.updateMutationState = function(batchId, state, error3) {
+      MemorySharedClientState2.prototype.updateMutationState = function(batchId, state, error2) {
       };
       MemorySharedClientState2.prototype.addLocalQueryTarget = function(targetId) {
         this.localState.addQueryTarget(targetId);
         return this.queryState[targetId] || "not-current";
       };
-      MemorySharedClientState2.prototype.updateQueryState = function(targetId, state, error3) {
+      MemorySharedClientState2.prototype.updateQueryState = function(targetId, state, error2) {
         this.queryState[targetId] = state;
       };
       MemorySharedClientState2.prototype.removeLocalQueryTarget = function(targetId) {
@@ -30070,16 +30682,16 @@ var require_index_node_cjs2 = __commonJS({
     }();
     function nodePromise(action) {
       return new Promise(function(resolve2, reject) {
-        action(function(error3, value) {
-          if (error3) {
-            reject(error3);
+        action(function(error2, value) {
+          if (error2) {
+            reject(error2);
           } else {
             resolve2(value);
           }
         });
       });
     }
-    var LOG_TAG$7 = "Connection";
+    var LOG_TAG$9 = "Connection";
     var X_GOOG_API_CLIENT_VALUE = "gl-node/" + process.versions.node + " fire/" + SDK_VERSION + " grpc/" + package_json.version;
     function createMetadata(databasePath, token, appId) {
       hardAssert(token === null || token.type === "OAuth");
@@ -30107,7 +30719,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       GrpcConnection2.prototype.ensureActiveStub = function() {
         if (!this.cachedStub) {
-          logDebug(LOG_TAG$7, "Creating Firestore stub.");
+          logDebug(LOG_TAG$9, "Creating Firestore stub.");
           var credentials$1 = this.databaseInfo.ssl ? grpcJs.credentials.createSsl() : grpcJs.credentials.createInsecure();
           this.cachedStub = new this.firestore.Firestore(this.databaseInfo.host, credentials$1);
         }
@@ -30118,13 +30730,13 @@ var require_index_node_cjs2 = __commonJS({
         var metadata = createMetadata(this.databasePath, token, this.databaseInfo.appId);
         var jsonRequest = Object.assign({database: this.databasePath}, request);
         return nodePromise(function(callback) {
-          logDebug(LOG_TAG$7, "RPC '" + rpcName + "' invoked with request:", request);
+          logDebug(LOG_TAG$9, "RPC '" + rpcName + "' invoked with request:", request);
           return stub[rpcName](jsonRequest, metadata, function(grpcError, value) {
             if (grpcError) {
-              logDebug(LOG_TAG$7, "RPC '" + rpcName + "' failed with error:", grpcError);
+              logDebug(LOG_TAG$9, "RPC '" + rpcName + "' failed with error:", grpcError);
               callback(new FirestoreError(mapCodeFromRpcCode(grpcError.code), grpcError.message));
             } else {
-              logDebug(LOG_TAG$7, "RPC '" + rpcName + "' completed with response:", value);
+              logDebug(LOG_TAG$9, "RPC '" + rpcName + "' completed with response:", value);
               callback(void 0, value);
             }
           });
@@ -30133,21 +30745,21 @@ var require_index_node_cjs2 = __commonJS({
       GrpcConnection2.prototype.invokeStreamingRPC = function(rpcName, path2, request, token) {
         var results = [];
         var responseDeferred = new Deferred();
-        logDebug(LOG_TAG$7, "RPC '" + rpcName + "' invoked (streaming) with request:", request);
+        logDebug(LOG_TAG$9, "RPC '" + rpcName + "' invoked (streaming) with request:", request);
         var stub = this.ensureActiveStub();
         var metadata = createMetadata(this.databasePath, token, this.databaseInfo.appId);
         var jsonRequest = Object.assign(Object.assign({}, request), {database: this.databasePath});
         var stream = stub[rpcName](jsonRequest, metadata);
         stream.on("data", function(response) {
-          logDebug(LOG_TAG$7, "RPC " + rpcName + " received result:", response);
+          logDebug(LOG_TAG$9, "RPC " + rpcName + " received result:", response);
           results.push(response);
         });
         stream.on("end", function() {
-          logDebug(LOG_TAG$7, "RPC '" + rpcName + "' completed.");
+          logDebug(LOG_TAG$9, "RPC '" + rpcName + "' completed.");
           responseDeferred.resolve(results);
         });
         stream.on("error", function(grpcError) {
-          logDebug(LOG_TAG$7, "RPC '" + rpcName + "' failed with error:", grpcError);
+          logDebug(LOG_TAG$9, "RPC '" + rpcName + "' failed with error:", grpcError);
           var code = mapCodeFromRpcCode(grpcError.code);
           responseDeferred.reject(new FirestoreError(code, grpcError.message));
         });
@@ -30168,7 +30780,7 @@ var require_index_node_cjs2 = __commonJS({
         var stream = new StreamBridge({
           sendFn: function(msg) {
             if (!closed) {
-              logDebug(LOG_TAG$7, "GRPC stream sending:", msg);
+              logDebug(LOG_TAG$9, "GRPC stream sending:", msg);
               try {
                 grpcStream.write(msg);
               } catch (e) {
@@ -30177,32 +30789,32 @@ var require_index_node_cjs2 = __commonJS({
                 throw e;
               }
             } else {
-              logDebug(LOG_TAG$7, "Not sending because gRPC stream is closed:", msg);
+              logDebug(LOG_TAG$9, "Not sending because gRPC stream is closed:", msg);
             }
           },
           closeFn: function() {
-            logDebug(LOG_TAG$7, "GRPC stream closed locally via close().");
+            logDebug(LOG_TAG$9, "GRPC stream closed locally via close().");
             close();
           }
         });
         grpcStream.on("data", function(msg) {
           if (!closed) {
-            logDebug(LOG_TAG$7, "GRPC stream received:", msg);
+            logDebug(LOG_TAG$9, "GRPC stream received:", msg);
             stream.callOnMessage(msg);
           }
         });
         grpcStream.on("end", function() {
-          logDebug(LOG_TAG$7, "GRPC stream ended.");
+          logDebug(LOG_TAG$9, "GRPC stream ended.");
           close();
         });
         grpcStream.on("error", function(grpcError) {
           if (!closed) {
-            logWarn(LOG_TAG$7, "GRPC stream error. Code:", grpcError.code, "Message:", grpcError.message);
+            logWarn(LOG_TAG$9, "GRPC stream error. Code:", grpcError.code, "Message:", grpcError.message);
             var code = mapCodeFromRpcCode(grpcError.code);
             close(new FirestoreError(code, grpcError.message));
           }
         });
-        logDebug(LOG_TAG$7, "Opening GRPC stream");
+        logDebug(LOG_TAG$9, "Opening GRPC stream");
         setTimeout(function() {
           stream.callOnOpen();
         }, 0);
@@ -30316,7 +30928,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return ExponentialBackoff2;
     }();
-    var LOG_TAG$9 = "PersistentStream";
+    var LOG_TAG$7 = "PersistentStream";
     var IDLE_TIMEOUT_MS = 60 * 1e3;
     var PersistentStream = function() {
       function PersistentStream2(queue, connectionTimerId, idleTimerId, connection, credentialsProvider, listener) {
@@ -30393,7 +31005,7 @@ var require_index_node_cjs2 = __commonJS({
           this.idleTimer = null;
         }
       };
-      PersistentStream2.prototype.close = function(finalState, error3) {
+      PersistentStream2.prototype.close = function(finalState, error2) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           return tslib.__generator(this, function(_d) {
             switch (_d.label) {
@@ -30403,11 +31015,11 @@ var require_index_node_cjs2 = __commonJS({
                 this.closeCount++;
                 if (finalState !== 3) {
                   this.backoff.reset();
-                } else if (error3 && error3.code === Code.RESOURCE_EXHAUSTED) {
-                  logError(error3.toString());
+                } else if (error2 && error2.code === Code.RESOURCE_EXHAUSTED) {
+                  logError(error2.toString());
                   logError("Using maximum backoff delay to prevent overloading the backend.");
                   this.backoff.resetToMax();
-                } else if (error3 && error3.code === Code.UNAUTHENTICATED) {
+                } else if (error2 && error2.code === Code.UNAUTHENTICATED) {
                   this.credentialsProvider.invalidateToken();
                 }
                 if (this.stream !== null) {
@@ -30416,7 +31028,7 @@ var require_index_node_cjs2 = __commonJS({
                   this.stream = null;
                 }
                 this.state = finalState;
-                return [4, this.listener.onClose(error3)];
+                return [4, this.listener.onClose(error2)];
               case 1:
                 _d.sent();
                 return [2];
@@ -30435,9 +31047,9 @@ var require_index_node_cjs2 = __commonJS({
           if (_this.closeCount === closeCount) {
             _this.startStream(token);
           }
-        }, function(error3) {
+        }, function(error2) {
           dispatchIfNotClosed(function() {
-            var rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error3.message);
+            var rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error2.message);
             return _this.handleStreamClose(rpcError);
           });
         });
@@ -30452,9 +31064,9 @@ var require_index_node_cjs2 = __commonJS({
             return _this.listener.onOpen();
           });
         });
-        this.stream.onClose(function(error3) {
+        this.stream.onClose(function(error2) {
           dispatchIfNotClosed(function() {
-            return _this.handleStreamClose(error3);
+            return _this.handleStreamClose(error2);
           });
         });
         this.stream.onMessage(function(msg) {
@@ -30476,10 +31088,10 @@ var require_index_node_cjs2 = __commonJS({
           });
         });
       };
-      PersistentStream2.prototype.handleStreamClose = function(error3) {
-        logDebug(LOG_TAG$9, "close with error: " + error3);
+      PersistentStream2.prototype.handleStreamClose = function(error2) {
+        logDebug(LOG_TAG$7, "close with error: " + error2);
         this.stream = null;
-        return this.close(3, error3);
+        return this.close(3, error2);
       };
       PersistentStream2.prototype.getCloseGuardedDispatcher = function(startCloseCount) {
         var _this = this;
@@ -30488,7 +31100,7 @@ var require_index_node_cjs2 = __commonJS({
             if (_this.closeCount === startCloseCount) {
               return fn();
             } else {
-              logDebug(LOG_TAG$9, "stream callback skipped by getCloseGuardedDispatcher.");
+              logDebug(LOG_TAG$7, "stream callback skipped by getCloseGuardedDispatcher.");
               return Promise.resolve();
             }
           });
@@ -30614,14 +31226,14 @@ var require_index_node_cjs2 = __commonJS({
         this.verifyInitialized();
         return this.credentials.getToken().then(function(token) {
           return _this.connection.invokeRPC(rpcName, path2, request, token);
-        }).catch(function(error3) {
-          if (error3.name === "FirebaseError") {
-            if (error3.code === Code.UNAUTHENTICATED) {
+        }).catch(function(error2) {
+          if (error2.name === "FirebaseError") {
+            if (error2.code === Code.UNAUTHENTICATED) {
               _this.credentials.invalidateToken();
             }
-            throw error3;
+            throw error2;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error3.toString());
+            throw new FirestoreError(Code.UNKNOWN, error2.toString());
           }
         });
       };
@@ -30630,14 +31242,14 @@ var require_index_node_cjs2 = __commonJS({
         this.verifyInitialized();
         return this.credentials.getToken().then(function(token) {
           return _this.connection.invokeStreamingRPC(rpcName, path2, request, token);
-        }).catch(function(error3) {
-          if (error3.name === "FirebaseError") {
-            if (error3.code === Code.UNAUTHENTICATED) {
+        }).catch(function(error2) {
+          if (error2.name === "FirebaseError") {
+            if (error2.code === Code.UNAUTHENTICATED) {
               _this.credentials.invalidateToken();
             }
-            throw error3;
+            throw error2;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error3.toString());
+            throw new FirestoreError(Code.UNKNOWN, error2.toString());
           }
         });
       };
@@ -30712,7 +31324,7 @@ var require_index_node_cjs2 = __commonJS({
       datastoreImpl.verifyInitialized();
       return new PersistentListenStream(queue, datastoreImpl.connection, datastoreImpl.credentials, datastoreImpl.serializer, listener);
     }
-    var LOG_TAG$a = "OnlineStateTracker";
+    var LOG_TAG$6 = "OnlineStateTracker";
     var MAX_WATCH_STREAM_FAILURES = 1;
     var ONLINE_STATE_TIMEOUT_MS = 10 * 1e3;
     var OnlineStateTracker = function() {
@@ -30736,14 +31348,14 @@ var require_index_node_cjs2 = __commonJS({
           });
         }
       };
-      OnlineStateTracker2.prototype.handleWatchStreamFailure = function(error3) {
+      OnlineStateTracker2.prototype.handleWatchStreamFailure = function(error2) {
         if (this.state === "Online") {
           this.setAndBroadcast("Unknown");
         } else {
           this.watchStreamFailures++;
           if (this.watchStreamFailures >= MAX_WATCH_STREAM_FAILURES) {
             this.clearOnlineStateTimer();
-            this.logClientOfflineWarningIfNecessary("Connection failed " + MAX_WATCH_STREAM_FAILURES + " " + ("times. Most recent error: " + error3.toString()));
+            this.logClientOfflineWarningIfNecessary("Connection failed " + MAX_WATCH_STREAM_FAILURES + " " + ("times. Most recent error: " + error2.toString()));
             this.setAndBroadcast("Offline");
           }
         }
@@ -30768,7 +31380,7 @@ var require_index_node_cjs2 = __commonJS({
           logError(message);
           this.shouldWarnClientIsOffline = false;
         } else {
-          logDebug(LOG_TAG$a, message);
+          logDebug(LOG_TAG$6, message);
         }
       };
       OnlineStateTracker2.prototype.clearOnlineStateTimer = function() {
@@ -30779,7 +31391,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return OnlineStateTracker2;
     }();
-    var LOG_TAG$b = "RemoteStore";
+    var LOG_TAG$5 = "RemoteStore";
     var MAX_PENDING_WRITES = 10;
     var RemoteStoreImpl = function() {
       function RemoteStoreImpl2(localStore, datastore, asyncQueue, onlineStateHandler, connectivityMonitor) {
@@ -30801,7 +31413,7 @@ var require_index_node_cjs2 = __commonJS({
                   case 0:
                     if (!canUseNetwork(this))
                       return [3, 2];
-                    logDebug(LOG_TAG$b, "Restarting streams for network reachability change.");
+                    logDebug(LOG_TAG$5, "Restarting streams for network reachability change.");
                     return [4, restartNetwork(this)];
                   case 1:
                     _d.sent();
@@ -30901,7 +31513,7 @@ var require_index_node_cjs2 = __commonJS({
           switch (_d.label) {
             case 0:
               remoteStoreImpl = debugCast(remoteStore);
-              logDebug(LOG_TAG$b, "RemoteStore shutting down.");
+              logDebug(LOG_TAG$5, "RemoteStore shutting down.");
               remoteStoreImpl.offlineCauses.add(5);
               return [4, disableNetworkInternal(remoteStoreImpl)];
             case 1:
@@ -30980,12 +31592,12 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function onWatchStreamClose(remoteStoreImpl, error3) {
+    function onWatchStreamClose(remoteStoreImpl, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         return tslib.__generator(this, function(_d) {
           cleanUpWatchStreamState(remoteStoreImpl);
           if (shouldStartWatchStream(remoteStoreImpl)) {
-            remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error3);
+            remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error2);
             startWatchStream(remoteStoreImpl);
           } else {
             remoteStoreImpl.onlineStateTracker.set("Unknown");
@@ -31012,7 +31624,7 @@ var require_index_node_cjs2 = __commonJS({
               return [3, 5];
             case 3:
               e_4 = _d.sent();
-              logDebug(LOG_TAG$b, "Failed to remove targets %s: %s ", watchChange.targetIds.join(","), e_4);
+              logDebug(LOG_TAG$5, "Failed to remove targets %s: %s ", watchChange.targetIds.join(","), e_4);
               return [4, disableNetworkUntilRecovery(remoteStoreImpl, e_4)];
             case 4:
               _d.sent();
@@ -31045,7 +31657,7 @@ var require_index_node_cjs2 = __commonJS({
               return [3, 13];
             case 11:
               e_5 = _d.sent();
-              logDebug(LOG_TAG$b, "Failed to raise snapshot:", e_5);
+              logDebug(LOG_TAG$5, "Failed to raise snapshot:", e_5);
               return [4, disableNetworkUntilRecovery(remoteStoreImpl, e_5)];
             case 12:
               _d.sent();
@@ -31079,7 +31691,7 @@ var require_index_node_cjs2 = __commonJS({
                   return tslib.__generator(this, function(_d2) {
                     switch (_d2.label) {
                       case 0:
-                        logDebug(LOG_TAG$b, "Retrying IndexedDB access");
+                        logDebug(LOG_TAG$5, "Retrying IndexedDB access");
                         return [4, op()];
                       case 1:
                         _d2.sent();
@@ -31130,11 +31742,11 @@ var require_index_node_cjs2 = __commonJS({
     }
     function handleTargetError(remoteStoreImpl, watchChange) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var error3, _i, _d, targetId;
+        var error2, _i, _d, targetId;
         return tslib.__generator(this, function(_e) {
           switch (_e.label) {
             case 0:
-              error3 = watchChange.cause;
+              error2 = watchChange.cause;
               _i = 0, _d = watchChange.targetIds;
               _e.label = 1;
             case 1:
@@ -31143,7 +31755,7 @@ var require_index_node_cjs2 = __commonJS({
               targetId = _d[_i];
               if (!remoteStoreImpl.listenTargets.has(targetId))
                 return [3, 3];
-              return [4, remoteStoreImpl.remoteSyncer.rejectListen(targetId, error3)];
+              return [4, remoteStoreImpl.remoteSyncer.rejectListen(targetId, error2)];
             case 2:
               _e.sent();
               remoteStoreImpl.listenTargets.delete(targetId);
@@ -31262,14 +31874,14 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function onWriteStreamClose(remoteStoreImpl, error3) {
+    function onWriteStreamClose(remoteStoreImpl, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
-              if (!(error3 && ensureWriteStream(remoteStoreImpl).handshakeComplete))
+              if (!(error2 && ensureWriteStream(remoteStoreImpl).handshakeComplete))
                 return [3, 2];
-              return [4, handleWriteError(remoteStoreImpl, error3)];
+              return [4, handleWriteError(remoteStoreImpl, error2)];
             case 1:
               _d.sent();
               _d.label = 2;
@@ -31282,18 +31894,18 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function handleWriteError(remoteStoreImpl, error3) {
+    function handleWriteError(remoteStoreImpl, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var batch_1;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
-              if (!isPermanentWriteError(error3.code))
+              if (!isPermanentWriteError(error2.code))
                 return [3, 3];
               batch_1 = remoteStoreImpl.writePipeline.shift();
               ensureWriteStream(remoteStoreImpl).inhibitBackoff();
               return [4, executeWithRecovery(remoteStoreImpl, function() {
-                return remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch_1.batchId, error3);
+                return remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch_1.batchId, error2);
               })];
             case 1:
               _d.sent();
@@ -31336,7 +31948,7 @@ var require_index_node_cjs2 = __commonJS({
             case 0:
               remoteStoreImpl = debugCast(remoteStore);
               remoteStoreImpl.asyncQueue.verifyOperationInProgress();
-              logDebug(LOG_TAG$b, "RemoteStore received new credentials");
+              logDebug(LOG_TAG$5, "RemoteStore received new credentials");
               usesNetwork = canUseNetwork(remoteStoreImpl);
               remoteStoreImpl.offlineCauses.add(3);
               return [4, disableNetworkInternal(remoteStoreImpl)];
@@ -31449,7 +32061,7 @@ var require_index_node_cjs2 = __commonJS({
                 case 3:
                   _d.sent();
                   if (remoteStoreImpl.writePipeline.length > 0) {
-                    logDebug(LOG_TAG$b, "Stopping write stream with " + remoteStoreImpl.writePipeline.length + " pending writes");
+                    logDebug(LOG_TAG$5, "Stopping write stream with " + remoteStoreImpl.writePipeline.length + " pending writes");
                     remoteStoreImpl.writePipeline = [];
                   }
                   _d.label = 4;
@@ -31462,7 +32074,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       return remoteStoreImpl.writeStream;
     }
-    var LOG_TAG$c = "AsyncQueue";
+    var LOG_TAG$4 = "AsyncQueue";
     var DelayedOperation = function() {
       function DelayedOperation2(asyncQueue, timerId, targetTimeMs, op, removalCallback) {
         this.asyncQueue = asyncQueue;
@@ -31519,7 +32131,7 @@ var require_index_node_cjs2 = __commonJS({
       return DelayedOperation2;
     }();
     function wrapInUserErrorIfRecoverable(e, msg) {
-      logError(LOG_TAG$c, msg + ": " + e);
+      logError(LOG_TAG$4, msg + ": " + e);
       if (isIndexedDbTransactionError(e)) {
         return new FirestoreError(Code.UNAVAILABLE, msg + ": " + e);
       } else {
@@ -31742,7 +32354,7 @@ var require_index_node_cjs2 = __commonJS({
     }();
     function eventManagerListen(eventManager, listener) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var eventManagerImpl, query3, firstListen, queryInfo, _d, e_7, firestoreError, raisedEvent, raisedEvent_1;
+        var eventManagerImpl, query3, firstListen, queryInfo, _d, e_7, firestoreError, raisedEvent;
         return tslib.__generator(this, function(_e) {
           switch (_e.label) {
             case 0:
@@ -31772,10 +32384,10 @@ var require_index_node_cjs2 = __commonJS({
             case 4:
               eventManagerImpl.queries.set(query3, queryInfo);
               queryInfo.listeners.push(listener);
-              raisedEvent = listener.applyOnlineStateChange(eventManagerImpl.onlineState);
+              listener.applyOnlineStateChange(eventManagerImpl.onlineState);
               if (queryInfo.viewSnap) {
-                raisedEvent_1 = listener.onViewSnapshot(queryInfo.viewSnap);
-                if (raisedEvent_1) {
+                raisedEvent = listener.onViewSnapshot(queryInfo.viewSnap);
+                if (raisedEvent) {
                   raiseSnapshotsInSyncEvent(eventManagerImpl);
                 }
               }
@@ -31828,13 +32440,13 @@ var require_index_node_cjs2 = __commonJS({
         raiseSnapshotsInSyncEvent(eventManagerImpl);
       }
     }
-    function eventManagerOnWatchError(eventManager, query3, error3) {
+    function eventManagerOnWatchError(eventManager, query3, error2) {
       var eventManagerImpl = debugCast(eventManager);
       var queryInfo = eventManagerImpl.queries.get(query3);
       if (queryInfo) {
         for (var _i = 0, _d = queryInfo.listeners; _i < _d.length; _i++) {
           var listener = _d[_i];
-          listener.onError(error3);
+          listener.onError(error2);
         }
       }
       eventManagerImpl.queries.delete(query3);
@@ -31902,8 +32514,8 @@ var require_index_node_cjs2 = __commonJS({
         this.snap = snap;
         return raisedEvent;
       };
-      QueryListener2.prototype.onError = function(error3) {
-        this.queryObserver.error(error3);
+      QueryListener2.prototype.onError = function(error2) {
+        this.queryObserver.error(error2);
       };
       QueryListener2.prototype.applyOnlineStateChange = function(onlineState) {
         this.onlineState = onlineState;
@@ -32308,7 +32920,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       return order(c1) - order(c2);
     }
-    var LOG_TAG$d = "SyncEngine";
+    var LOG_TAG$3 = "SyncEngine";
     var QueryView = function() {
       function QueryView2(query3, targetId, view) {
         this.query = query3;
@@ -32471,7 +33083,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function syncEngineWrite(syncEngine, batch, userCallback) {
       return tslib.__awaiter(this, void 0, void 0, function() {
-        var syncEngineImpl, result, e_8, error3;
+        var syncEngineImpl, result, e_8, error2;
         return tslib.__generator(this, function(_d) {
           switch (_d.label) {
             case 0:
@@ -32493,8 +33105,8 @@ var require_index_node_cjs2 = __commonJS({
               return [3, 6];
             case 5:
               e_8 = _d.sent();
-              error3 = wrapInUserErrorIfRecoverable(e_8, "Failed to persist write");
-              userCallback.reject(error3);
+              error2 = wrapInUserErrorIfRecoverable(e_8, "Failed to persist write");
+              userCallback.reject(error2);
               return [3, 6];
             case 6:
               return [2];
@@ -32635,7 +33247,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function syncEngineRejectFailedWrite(syncEngine, batchId, error3) {
+    function syncEngineRejectFailedWrite(syncEngine, batchId, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var syncEngineImpl, changes, error_4;
         return tslib.__generator(this, function(_d) {
@@ -32648,9 +33260,9 @@ var require_index_node_cjs2 = __commonJS({
               return [4, localStoreRejectBatch(syncEngineImpl.localStore, batchId)];
             case 2:
               changes = _d.sent();
-              processUserCallback(syncEngineImpl, batchId, error3);
+              processUserCallback(syncEngineImpl, batchId, error2);
               triggerPendingWritesCallbacks(syncEngineImpl, batchId);
-              syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error3);
+              syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error2);
               return [4, syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes)];
             case 3:
               _d.sent();
@@ -32675,7 +33287,7 @@ var require_index_node_cjs2 = __commonJS({
             case 0:
               syncEngineImpl = debugCast(syncEngine);
               if (!canUseNetwork(syncEngineImpl.remoteStore)) {
-                logDebug(LOG_TAG$d, "The network is disabled. The task returned by 'awaitPendingWrites()' will not complete until the network is enabled.");
+                logDebug(LOG_TAG$3, "The network is disabled. The task returned by 'awaitPendingWrites()' will not complete until the network is enabled.");
               }
               _d.label = 1;
             case 1:
@@ -32724,14 +33336,14 @@ var require_index_node_cjs2 = __commonJS({
       newCallbacks = newCallbacks.insert(batchId, callback);
       syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
     }
-    function processUserCallback(syncEngine, batchId, error3) {
+    function processUserCallback(syncEngine, batchId, error2) {
       var syncEngineImpl = debugCast(syncEngine);
       var newCallbacks = syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()];
       if (newCallbacks) {
         var callback = newCallbacks.get(batchId);
         if (callback) {
-          if (error3) {
-            callback.reject(error3);
+          if (error2) {
+            callback.reject(error2);
           } else {
             callback.resolve();
           }
@@ -32740,16 +33352,16 @@ var require_index_node_cjs2 = __commonJS({
         syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
       }
     }
-    function removeAndCleanupTarget(syncEngineImpl, targetId, error3) {
-      if (error3 === void 0) {
-        error3 = null;
+    function removeAndCleanupTarget(syncEngineImpl, targetId, error2) {
+      if (error2 === void 0) {
+        error2 = null;
       }
       syncEngineImpl.sharedClientState.removeLocalQueryTarget(targetId);
       for (var _i = 0, _d = syncEngineImpl.queriesByTarget.get(targetId); _i < _d.length; _i++) {
         var query_2 = _d[_i];
         syncEngineImpl.queryViewsByQuery.delete(query_2);
-        if (error3) {
-          syncEngineImpl.syncEngineListener.onWatchError(query_2, error3);
+        if (error2) {
+          syncEngineImpl.syncEngineListener.onWatchError(query_2, error2);
         }
       }
       syncEngineImpl.queriesByTarget.delete(targetId);
@@ -32781,7 +33393,7 @@ var require_index_node_cjs2 = __commonJS({
           syncEngineImpl.limboDocumentRefs.addReference(limboChange.key, targetId);
           trackLimboChange(syncEngineImpl, limboChange);
         } else if (limboChange instanceof RemovedLimboDocument) {
-          logDebug(LOG_TAG$d, "Document no longer in limbo: " + limboChange.key);
+          logDebug(LOG_TAG$3, "Document no longer in limbo: " + limboChange.key);
           syncEngineImpl.limboDocumentRefs.removeReference(limboChange.key, targetId);
           var isReferenced = syncEngineImpl.limboDocumentRefs.containsKey(limboChange.key);
           if (!isReferenced) {
@@ -32796,7 +33408,7 @@ var require_index_node_cjs2 = __commonJS({
       var key = limboChange.key;
       var keyString = key.path.canonicalString();
       if (!syncEngineImpl.activeLimboTargetsByKey.get(key) && !syncEngineImpl.enqueuedLimboResolutions.has(keyString)) {
-        logDebug(LOG_TAG$d, "New document in limbo: " + key);
+        logDebug(LOG_TAG$3, "New document in limbo: " + key);
         syncEngineImpl.enqueuedLimboResolutions.add(keyString);
         pumpEnqueuedLimboResolutions(syncEngineImpl);
       }
@@ -32884,7 +33496,7 @@ var require_index_node_cjs2 = __commonJS({
               userChanged = !syncEngineImpl.currentUser.isEqual(user);
               if (!userChanged)
                 return [3, 3];
-              logDebug(LOG_TAG$d, "User change. New user:", user.toKey());
+              logDebug(LOG_TAG$3, "User change. New user:", user.toKey());
               return [4, localStoreHandleUserChange(syncEngineImpl.localStore, user)];
             case 1:
               result = _d.sent();
@@ -32950,7 +33562,7 @@ var require_index_node_cjs2 = __commonJS({
         });
       });
     }
-    function syncEngineApplyBatchState(syncEngine, batchId, batchState, error3) {
+    function syncEngineApplyBatchState(syncEngine, batchId, batchState, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var syncEngineImpl, documents;
         return tslib.__generator(this, function(_d) {
@@ -32961,7 +33573,7 @@ var require_index_node_cjs2 = __commonJS({
             case 1:
               documents = _d.sent();
               if (documents === null) {
-                logDebug(LOG_TAG$d, "Cannot apply mutation batch with id: " + batchId);
+                logDebug(LOG_TAG$3, "Cannot apply mutation batch with id: " + batchId);
                 return [2];
               }
               if (!(batchState === "pending"))
@@ -32972,7 +33584,7 @@ var require_index_node_cjs2 = __commonJS({
               return [3, 4];
             case 3:
               if (batchState === "acknowledged" || batchState === "rejected") {
-                processUserCallback(syncEngineImpl, batchId, error3 ? error3 : null);
+                processUserCallback(syncEngineImpl, batchId, error2 ? error2 : null);
                 triggerPendingWritesCallbacks(syncEngineImpl, batchId);
                 localStoreRemoveCachedMutationBatchMetadata(syncEngineImpl.localStore, batchId);
               } else {
@@ -33127,7 +33739,7 @@ var require_index_node_cjs2 = __commonJS({
       var syncEngineImpl = debugCast(syncEngine);
       return localStoreGetActiveClients(syncEngineImpl.localStore);
     }
-    function syncEngineApplyTargetState(syncEngine, targetId, state, error3) {
+    function syncEngineApplyTargetState(syncEngine, targetId, state, error2) {
       return tslib.__awaiter(this, void 0, void 0, function() {
         var syncEngineImpl, _d, changes, synthesizedRemoteEvent;
         return tslib.__generator(this, function(_e) {
@@ -33135,7 +33747,7 @@ var require_index_node_cjs2 = __commonJS({
             case 0:
               syncEngineImpl = debugCast(syncEngine);
               if (syncEngineImpl._isPrimaryClient) {
-                logDebug(LOG_TAG$d, "Ignoring unexpected query state notification.");
+                logDebug(LOG_TAG$3, "Ignoring unexpected query state notification.");
                 return [2];
               }
               if (!syncEngineImpl.queriesByTarget.has(targetId))
@@ -33163,7 +33775,7 @@ var require_index_node_cjs2 = __commonJS({
               return [4, localStoreReleaseTarget(syncEngineImpl.localStore, targetId, true)];
             case 5:
               _e.sent();
-              removeAndCleanupTarget(syncEngineImpl, targetId, error3);
+              removeAndCleanupTarget(syncEngineImpl, targetId, error2);
               return [3, 7];
             case 6:
               fail();
@@ -33191,7 +33803,7 @@ var require_index_node_cjs2 = __commonJS({
                 return [3, 6];
               targetId = added_1[_i];
               if (syncEngineImpl.queriesByTarget.has(targetId)) {
-                logDebug(LOG_TAG$d, "Adding an already active target " + targetId);
+                logDebug(LOG_TAG$3, "Adding an already active target " + targetId);
                 return [3, 5];
               }
               return [4, localStoreGetCachedTarget(syncEngineImpl.localStore, targetId)];
@@ -33320,7 +33932,7 @@ var require_index_node_cjs2 = __commonJS({
               return [3, 14];
             case 13:
               e_10 = _d.sent();
-              logWarn(LOG_TAG$d, "Loading bundle failed with " + e_10);
+              logWarn(LOG_TAG$3, "Loading bundle failed with " + e_10);
               task._failWith(e_10);
               return [3, 14];
             case 14:
@@ -33396,6 +34008,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       IndexedDbOfflineComponentProvider2.prototype.initialize = function(cfg) {
         return tslib.__awaiter(this, void 0, void 0, function() {
+          var _this = this;
           return tslib.__generator(this, function(_d) {
             switch (_d.label) {
               case 0:
@@ -33413,6 +34026,14 @@ var require_index_node_cjs2 = __commonJS({
                 _d.sent();
                 return [4, fillWritePipeline(this.onlineComponentProvider.remoteStore)];
               case 5:
+                _d.sent();
+                return [4, this.persistence.setPrimaryStateListener(function() {
+                  if (_this.gcScheduler && !_this.gcScheduler.started) {
+                    _this.gcScheduler.start(_this.localStore);
+                  }
+                  return Promise.resolve();
+                })];
+              case 6:
                 _d.sent();
                 return [2];
             }
@@ -33649,11 +34270,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function tryGetCustomObjectType(input) {
       if (input.constructor) {
-        var funcNameRegex = /function\s+([^\s(]+)\s*\(/;
-        var results = funcNameRegex.exec(input.constructor.toString());
-        if (results && results.length > 1) {
-          return results[1];
-        }
+        return input.constructor.name;
       }
       return null;
     }
@@ -33692,11 +34309,11 @@ var require_index_node_cjs2 = __commonJS({
           this.scheduleEvent(this.observer.next, value);
         }
       };
-      AsyncObserver2.prototype.error = function(error3) {
+      AsyncObserver2.prototype.error = function(error2) {
         if (this.observer.error) {
-          this.scheduleEvent(this.observer.error, error3);
+          this.scheduleEvent(this.observer.error, error2);
         } else {
-          console.error("Uncaught Error in snapshot listener:", error3);
+          console.error("Uncaught Error in snapshot listener:", error2);
         }
       };
       AsyncObserver2.prototype.mute = function() {
@@ -33738,8 +34355,8 @@ var require_index_node_cjs2 = __commonJS({
           } else {
             _this.metadata.reject(new Error("The first element of the bundle is not a metadata, it is\n             " + JSON.stringify(element === null || element === void 0 ? void 0 : element.payload)));
           }
-        }, function(error3) {
-          return _this.metadata.reject(error3);
+        }, function(error2) {
+          return _this.metadata.reject(error2);
         });
       }
       BundleReaderImpl2.prototype.close = function() {
@@ -33877,8 +34494,8 @@ var require_index_node_cjs2 = __commonJS({
     function newBundleReader(reader, serializer) {
       return new BundleReaderImpl(reader, serializer);
     }
-    var Transaction = function() {
-      function Transaction2(datastore) {
+    var Transaction$2 = function() {
+      function Transaction$22(datastore) {
         this.datastore = datastore;
         this.readVersions = new Map();
         this.mutations = [];
@@ -33886,7 +34503,7 @@ var require_index_node_cjs2 = __commonJS({
         this.lastWriteError = null;
         this.writtenDocs = new Set();
       }
-      Transaction2.prototype.lookup = function(keys) {
+      Transaction$22.prototype.lookup = function(keys) {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var docs;
           var _this = this;
@@ -33908,11 +34525,11 @@ var require_index_node_cjs2 = __commonJS({
           });
         });
       };
-      Transaction2.prototype.set = function(key, data) {
+      Transaction$22.prototype.set = function(key, data) {
         this.write(data.toMutation(key, this.precondition(key)));
         this.writtenDocs.add(key.toString());
       };
-      Transaction2.prototype.update = function(key, data) {
+      Transaction$22.prototype.update = function(key, data) {
         try {
           this.write(data.toMutation(key, this.preconditionForUpdate(key)));
         } catch (e) {
@@ -33920,11 +34537,11 @@ var require_index_node_cjs2 = __commonJS({
         }
         this.writtenDocs.add(key.toString());
       };
-      Transaction2.prototype.delete = function(key) {
+      Transaction$22.prototype.delete = function(key) {
         this.write(new DeleteMutation(key, this.precondition(key)));
         this.writtenDocs.add(key.toString());
       };
-      Transaction2.prototype.commit = function() {
+      Transaction$22.prototype.commit = function() {
         return tslib.__awaiter(this, void 0, void 0, function() {
           var unwritten;
           var _this = this;
@@ -33952,7 +34569,7 @@ var require_index_node_cjs2 = __commonJS({
           });
         });
       };
-      Transaction2.prototype.recordVersion = function(doc3) {
+      Transaction$22.prototype.recordVersion = function(doc3) {
         var docVersion;
         if (doc3.isFoundDocument()) {
           docVersion = doc3.version;
@@ -33970,7 +34587,7 @@ var require_index_node_cjs2 = __commonJS({
           this.readVersions.set(doc3.key.toString(), docVersion);
         }
       };
-      Transaction2.prototype.precondition = function(key) {
+      Transaction$22.prototype.precondition = function(key) {
         var version2 = this.readVersions.get(key.toString());
         if (!this.writtenDocs.has(key.toString()) && version2) {
           return Precondition.updateTime(version2);
@@ -33978,7 +34595,7 @@ var require_index_node_cjs2 = __commonJS({
           return Precondition.none();
         }
       };
-      Transaction2.prototype.preconditionForUpdate = function(key) {
+      Transaction$22.prototype.preconditionForUpdate = function(key) {
         var version2 = this.readVersions.get(key.toString());
         if (!this.writtenDocs.has(key.toString()) && version2) {
           if (version2.isEqual(SnapshotVersion.min())) {
@@ -33989,25 +34606,26 @@ var require_index_node_cjs2 = __commonJS({
           return Precondition.exists(true);
         }
       };
-      Transaction2.prototype.write = function(mutation) {
+      Transaction$22.prototype.write = function(mutation) {
         this.ensureCommitNotCalled();
         this.mutations.push(mutation);
       };
-      Transaction2.prototype.ensureCommitNotCalled = function() {
+      Transaction$22.prototype.ensureCommitNotCalled = function() {
       };
-      return Transaction2;
+      return Transaction$22;
     }();
-    var RETRY_COUNT = 5;
+    var DEFAULT_MAX_ATTEMPTS_COUNT = 5;
     var TransactionRunner = function() {
       function TransactionRunner2(asyncQueue, datastore, updateFunction, deferred) {
         this.asyncQueue = asyncQueue;
         this.datastore = datastore;
         this.updateFunction = updateFunction;
         this.deferred = deferred;
-        this.retries = RETRY_COUNT;
+        this.attemptsRemaining = DEFAULT_MAX_ATTEMPTS_COUNT;
         this.backoff = new ExponentialBackoff(this.asyncQueue, "transaction_retry");
       }
       TransactionRunner2.prototype.run = function() {
+        this.attemptsRemaining -= 1;
         this.runWithBackOff();
       };
       TransactionRunner2.prototype.runWithBackOff = function() {
@@ -34017,7 +34635,7 @@ var require_index_node_cjs2 = __commonJS({
             var transaction, userPromise;
             var _this2 = this;
             return tslib.__generator(this, function(_d) {
-              transaction = new Transaction(this.datastore);
+              transaction = new Transaction$2(this.datastore);
               userPromise = this.tryRunUpdateFunction(transaction);
               if (userPromise) {
                 userPromise.then(function(result) {
@@ -34045,33 +34663,33 @@ var require_index_node_cjs2 = __commonJS({
             return null;
           }
           return userPromise;
-        } catch (error3) {
-          this.deferred.reject(error3);
+        } catch (error2) {
+          this.deferred.reject(error2);
           return null;
         }
       };
-      TransactionRunner2.prototype.handleTransactionError = function(error3) {
+      TransactionRunner2.prototype.handleTransactionError = function(error2) {
         var _this = this;
-        if (this.retries > 0 && this.isRetryableTransactionError(error3)) {
-          this.retries -= 1;
+        if (this.attemptsRemaining > 0 && this.isRetryableTransactionError(error2)) {
+          this.attemptsRemaining -= 1;
           this.asyncQueue.enqueueAndForget(function() {
             _this.runWithBackOff();
             return Promise.resolve();
           });
         } else {
-          this.deferred.reject(error3);
+          this.deferred.reject(error2);
         }
       };
-      TransactionRunner2.prototype.isRetryableTransactionError = function(error3) {
-        if (error3.name === "FirebaseError") {
-          var code = error3.code;
+      TransactionRunner2.prototype.isRetryableTransactionError = function(error2) {
+        if (error2.name === "FirebaseError") {
+          var code = error2.code;
           return code === "aborted" || code === "failed-precondition" || !isPermanentError(code);
         }
         return false;
       };
       return TransactionRunner2;
     }();
-    var LOG_TAG$e = "FirestoreClient";
+    var LOG_TAG$2 = "FirestoreClient";
     var MAX_CONCURRENT_LIMBO_RESOLUTIONS = 100;
     var FirestoreClient = function() {
       function FirestoreClient2(credentials, asyncQueue, databaseInfo) {
@@ -34084,12 +34702,12 @@ var require_index_node_cjs2 = __commonJS({
         this.credentialListener = function() {
           return Promise.resolve();
         };
-        this.credentials.setChangeListener(asyncQueue, function(user) {
+        this.credentials.start(asyncQueue, function(user) {
           return tslib.__awaiter(_this, void 0, void 0, function() {
             return tslib.__generator(this, function(_d) {
               switch (_d.label) {
                 case 0:
-                  logDebug(LOG_TAG$e, "Received user=", user.uid);
+                  logDebug(LOG_TAG$2, "Received user=", user.uid);
                   return [4, this.credentialListener(user)];
                 case 1:
                   _d.sent();
@@ -34147,7 +34765,7 @@ var require_index_node_cjs2 = __commonJS({
                   _d.sent();
                   _d.label = 4;
                 case 4:
-                  this.credentials.removeChangeListener();
+                  this.credentials.shutdown();
                   deferred.resolve();
                   return [3, 6];
                 case 5:
@@ -34173,7 +34791,7 @@ var require_index_node_cjs2 = __commonJS({
           switch (_d.label) {
             case 0:
               client.asyncQueue.verifyOperationInProgress();
-              logDebug(LOG_TAG$e, "Initializing OfflineComponentProvider");
+              logDebug(LOG_TAG$2, "Initializing OfflineComponentProvider");
               return [4, client.getConfiguration()];
             case 1:
               configuration = _d.sent();
@@ -34218,7 +34836,7 @@ var require_index_node_cjs2 = __commonJS({
               return [4, ensureOfflineComponents(client)];
             case 1:
               offlineComponentProvider = _d.sent();
-              logDebug(LOG_TAG$e, "Initializing OnlineComponentProvider");
+              logDebug(LOG_TAG$2, "Initializing OnlineComponentProvider");
               return [4, client.getConfiguration()];
             case 2:
               configuration = _d.sent();
@@ -34241,7 +34859,7 @@ var require_index_node_cjs2 = __commonJS({
             case 0:
               if (!!client.offlineComponents)
                 return [3, 2];
-              logDebug(LOG_TAG$e, "Using default OfflineComponentProvider");
+              logDebug(LOG_TAG$2, "Using default OfflineComponentProvider");
               return [4, setOfflineComponentProvider(client, new MemoryOfflineComponentProvider())];
             case 1:
               _d.sent();
@@ -34259,7 +34877,7 @@ var require_index_node_cjs2 = __commonJS({
             case 0:
               if (!!client.onlineComponents)
                 return [3, 2];
-              logDebug(LOG_TAG$e, "Using default OnlineComponentProvider");
+              logDebug(LOG_TAG$2, "Using default OnlineComponentProvider");
               return [4, setOnlineComponentProvider(client, new OnlineComponentProvider())];
             case 1:
               _d.sent();
@@ -34713,7 +35331,7 @@ var require_index_node_cjs2 = __commonJS({
       return newBundleReader(toByteStreamReader(content), serializer);
     }
     var DatabaseInfo = function() {
-      function DatabaseInfo2(databaseId, appId, persistenceKey, host, ssl, forceLongPolling, autoDetectLongPolling) {
+      function DatabaseInfo2(databaseId, appId, persistenceKey, host, ssl, forceLongPolling, autoDetectLongPolling, useFetchStreams) {
         this.databaseId = databaseId;
         this.appId = appId;
         this.persistenceKey = persistenceKey;
@@ -34721,6 +35339,7 @@ var require_index_node_cjs2 = __commonJS({
         this.ssl = ssl;
         this.forceLongPolling = forceLongPolling;
         this.autoDetectLongPolling = autoDetectLongPolling;
+        this.useFetchStreams = useFetchStreams;
       }
       return DatabaseInfo2;
     }();
@@ -34742,251 +35361,24 @@ var require_index_node_cjs2 = __commonJS({
       };
       return DatabaseId2;
     }();
-    var LOG_TAG$f = "ComponentProvider";
+    var LOG_TAG$1 = "ComponentProvider";
     var datastoreInstances = new Map();
     function removeComponents(firestore) {
       var datastore = datastoreInstances.get(firestore);
       if (datastore) {
-        logDebug(LOG_TAG$f, "Removing Datastore");
+        logDebug(LOG_TAG$1, "Removing Datastore");
         datastoreInstances.delete(firestore);
         datastore.terminate();
       }
     }
     function makeDatabaseInfo(databaseId, appId, persistenceKey, settings) {
-      return new DatabaseInfo(databaseId, appId, persistenceKey, settings.host, settings.ssl, settings.experimentalForceLongPolling, settings.experimentalAutoDetectLongPolling);
-    }
-    var OAuthToken = function() {
-      function OAuthToken2(value, user) {
-        this.user = user;
-        this.type = "OAuth";
-        this.authHeaders = {};
-        this.authHeaders["Authorization"] = "Bearer " + value;
-      }
-      return OAuthToken2;
-    }();
-    var EmptyCredentialsProvider = function() {
-      function EmptyCredentialsProvider2() {
-        this.changeListener = null;
-      }
-      EmptyCredentialsProvider2.prototype.getToken = function() {
-        return Promise.resolve(null);
-      };
-      EmptyCredentialsProvider2.prototype.invalidateToken = function() {
-      };
-      EmptyCredentialsProvider2.prototype.setChangeListener = function(asyncQueue, changeListener) {
-        this.changeListener = changeListener;
-        asyncQueue.enqueueRetryable(function() {
-          return changeListener(User.UNAUTHENTICATED);
-        });
-      };
-      EmptyCredentialsProvider2.prototype.removeChangeListener = function() {
-        this.changeListener = null;
-      };
-      return EmptyCredentialsProvider2;
-    }();
-    var EmulatorCredentialsProvider = function() {
-      function EmulatorCredentialsProvider2(token) {
-        this.token = token;
-        this.changeListener = null;
-      }
-      EmulatorCredentialsProvider2.prototype.getToken = function() {
-        return Promise.resolve(this.token);
-      };
-      EmulatorCredentialsProvider2.prototype.invalidateToken = function() {
-      };
-      EmulatorCredentialsProvider2.prototype.setChangeListener = function(asyncQueue, changeListener) {
-        var _this = this;
-        this.changeListener = changeListener;
-        asyncQueue.enqueueRetryable(function() {
-          return changeListener(_this.token.user);
-        });
-      };
-      EmulatorCredentialsProvider2.prototype.removeChangeListener = function() {
-        this.changeListener = null;
-      };
-      return EmulatorCredentialsProvider2;
-    }();
-    var FirebaseCredentialsProvider = function() {
-      function FirebaseCredentialsProvider2(authProvider) {
-        var _this = this;
-        this.currentUser = User.UNAUTHENTICATED;
-        this.receivedInitialUser = new Deferred();
-        this.tokenCounter = 0;
-        this.changeListener = function() {
-          return Promise.resolve();
-        };
-        this.invokeChangeListener = false;
-        this.forceRefresh = false;
-        this.auth = null;
-        this.asyncQueue = null;
-        this.tokenListener = function() {
-          _this.tokenCounter++;
-          _this.currentUser = _this.getUser();
-          _this.receivedInitialUser.resolve();
-          if (_this.invokeChangeListener) {
-            _this.asyncQueue.enqueueRetryable(function() {
-              return _this.changeListener(_this.currentUser);
-            });
-          }
-        };
-        var registerAuth = function(auth) {
-          logDebug("FirebaseCredentialsProvider", "Auth detected");
-          _this.auth = auth;
-          _this.awaitTokenAndRaiseInitialEvent();
-          _this.auth.addAuthTokenListener(_this.tokenListener);
-        };
-        authProvider.onInit(function(auth) {
-          return registerAuth(auth);
-        });
-        setTimeout(function() {
-          if (!_this.auth) {
-            var auth = authProvider.getImmediate({optional: true});
-            if (auth) {
-              registerAuth(auth);
-            } else if (_this.invokeChangeListener) {
-              logDebug("FirebaseCredentialsProvider", "Auth not yet detected");
-              _this.asyncQueue.enqueueRetryable(function() {
-                return _this.changeListener(_this.currentUser);
-              });
-            }
-          }
-        }, 0);
-      }
-      FirebaseCredentialsProvider2.prototype.getToken = function() {
-        var _this = this;
-        var initialTokenCounter = this.tokenCounter;
-        var forceRefresh = this.forceRefresh;
-        this.forceRefresh = false;
-        if (!this.auth) {
-          return Promise.resolve(null);
-        }
-        return this.auth.getToken(forceRefresh).then(function(tokenData) {
-          if (_this.tokenCounter !== initialTokenCounter) {
-            logDebug("FirebaseCredentialsProvider", "getToken aborted due to token change.");
-            return _this.getToken();
-          } else {
-            if (tokenData) {
-              hardAssert(typeof tokenData.accessToken === "string");
-              return new OAuthToken(tokenData.accessToken, _this.currentUser);
-            } else {
-              return null;
-            }
-          }
-        });
-      };
-      FirebaseCredentialsProvider2.prototype.invalidateToken = function() {
-        this.forceRefresh = true;
-      };
-      FirebaseCredentialsProvider2.prototype.setChangeListener = function(asyncQueue, changeListener) {
-        this.invokeChangeListener = true;
-        this.asyncQueue = asyncQueue;
-        this.changeListener = changeListener;
-      };
-      FirebaseCredentialsProvider2.prototype.removeChangeListener = function() {
-        if (this.auth) {
-          this.auth.removeAuthTokenListener(this.tokenListener);
-        }
-        this.changeListener = function() {
-          return Promise.resolve();
-        };
-      };
-      FirebaseCredentialsProvider2.prototype.getUser = function() {
-        var currentUid = this.auth && this.auth.getUid();
-        hardAssert(currentUid === null || typeof currentUid === "string");
-        return new User(currentUid);
-      };
-      FirebaseCredentialsProvider2.prototype.awaitTokenAndRaiseInitialEvent = function() {
-        var _this = this;
-        if (this.invokeChangeListener) {
-          this.invokeChangeListener = false;
-          this.asyncQueue.enqueueRetryable(function() {
-            return tslib.__awaiter(_this, void 0, void 0, function() {
-              return tslib.__generator(this, function(_d) {
-                switch (_d.label) {
-                  case 0:
-                    return [4, this.receivedInitialUser.promise];
-                  case 1:
-                    _d.sent();
-                    return [4, this.changeListener(this.currentUser)];
-                  case 2:
-                    _d.sent();
-                    this.invokeChangeListener = true;
-                    return [2];
-                }
-              });
-            });
-          });
-        }
-      };
-      return FirebaseCredentialsProvider2;
-    }();
-    var FirstPartyToken = function() {
-      function FirstPartyToken2(gapi, sessionIndex, iamToken) {
-        this.gapi = gapi;
-        this.sessionIndex = sessionIndex;
-        this.iamToken = iamToken;
-        this.type = "FirstParty";
-        this.user = User.FIRST_PARTY;
-      }
-      Object.defineProperty(FirstPartyToken2.prototype, "authHeaders", {
-        get: function() {
-          var headers = {
-            "X-Goog-AuthUser": this.sessionIndex
-          };
-          var authHeader = this.gapi["auth"]["getAuthHeaderValueForFirstParty"]([]);
-          if (authHeader) {
-            headers["Authorization"] = authHeader;
-          }
-          if (this.iamToken) {
-            headers["X-Goog-Iam-Authorization-Token"] = this.iamToken;
-          }
-          return headers;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      return FirstPartyToken2;
-    }();
-    var FirstPartyCredentialsProvider = function() {
-      function FirstPartyCredentialsProvider2(gapi, sessionIndex, iamToken) {
-        this.gapi = gapi;
-        this.sessionIndex = sessionIndex;
-        this.iamToken = iamToken;
-      }
-      FirstPartyCredentialsProvider2.prototype.getToken = function() {
-        return Promise.resolve(new FirstPartyToken(this.gapi, this.sessionIndex, this.iamToken));
-      };
-      FirstPartyCredentialsProvider2.prototype.setChangeListener = function(asyncQueue, changeListener) {
-        asyncQueue.enqueueRetryable(function() {
-          return changeListener(User.FIRST_PARTY);
-        });
-      };
-      FirstPartyCredentialsProvider2.prototype.removeChangeListener = function() {
-      };
-      FirstPartyCredentialsProvider2.prototype.invalidateToken = function() {
-      };
-      return FirstPartyCredentialsProvider2;
-    }();
-    function makeCredentialsProvider(credentials) {
-      if (!credentials) {
-        return new EmptyCredentialsProvider();
-      }
-      switch (credentials["type"]) {
-        case "gapi":
-          var client = credentials["client"];
-          hardAssert(!!(typeof client === "object" && client !== null && client["auth"] && client["auth"]["getAuthHeaderValueForFirstParty"]));
-          return new FirstPartyCredentialsProvider(client, credentials["sessionIndex"] || "0", credentials["iamToken"] || null);
-        case "provider":
-          return credentials["client"];
-        default:
-          throw new FirestoreError(Code.INVALID_ARGUMENT, "makeCredentialsProvider failed due to invalid credential type");
-      }
+      return new DatabaseInfo(databaseId, appId, persistenceKey, settings.host, settings.ssl, settings.experimentalForceLongPolling, settings.experimentalAutoDetectLongPolling, settings.useFetchStreams);
     }
     var DEFAULT_HOST = "firestore.googleapis.com";
     var DEFAULT_SSL = true;
-    var FirestoreSettings = function() {
-      function FirestoreSettings2(settings) {
-        var _a;
+    var FirestoreSettingsImpl = function() {
+      function FirestoreSettingsImpl2(settings) {
+        var _a2;
         if (settings.host === void 0) {
           if (settings.ssl !== void 0) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Can't provide ssl option if host option is not set");
@@ -34995,7 +35387,7 @@ var require_index_node_cjs2 = __commonJS({
           this.ssl = DEFAULT_SSL;
         } else {
           this.host = settings.host;
-          this.ssl = (_a = settings.ssl) !== null && _a !== void 0 ? _a : DEFAULT_SSL;
+          this.ssl = (_a2 = settings.ssl) !== null && _a2 !== void 0 ? _a2 : DEFAULT_SSL;
         }
         this.credentials = settings.credentials;
         this.ignoreUndefinedProperties = !!settings.ignoreUndefinedProperties;
@@ -35010,29 +35402,29 @@ var require_index_node_cjs2 = __commonJS({
         }
         this.experimentalForceLongPolling = !!settings.experimentalForceLongPolling;
         this.experimentalAutoDetectLongPolling = !!settings.experimentalAutoDetectLongPolling;
+        this.useFetchStreams = !!settings.useFetchStreams;
         validateIsNotUsedTogether("experimentalForceLongPolling", settings.experimentalForceLongPolling, "experimentalAutoDetectLongPolling", settings.experimentalAutoDetectLongPolling);
       }
-      FirestoreSettings2.prototype.isEqual = function(other) {
-        return this.host === other.host && this.ssl === other.ssl && this.credentials === other.credentials && this.cacheSizeBytes === other.cacheSizeBytes && this.experimentalForceLongPolling === other.experimentalForceLongPolling && this.experimentalAutoDetectLongPolling === other.experimentalAutoDetectLongPolling && this.ignoreUndefinedProperties === other.ignoreUndefinedProperties;
+      FirestoreSettingsImpl2.prototype.isEqual = function(other) {
+        return this.host === other.host && this.ssl === other.ssl && this.credentials === other.credentials && this.cacheSizeBytes === other.cacheSizeBytes && this.experimentalForceLongPolling === other.experimentalForceLongPolling && this.experimentalAutoDetectLongPolling === other.experimentalAutoDetectLongPolling && this.ignoreUndefinedProperties === other.ignoreUndefinedProperties && this.useFetchStreams === other.useFetchStreams;
       };
-      return FirestoreSettings2;
+      return FirestoreSettingsImpl2;
     }();
-    var FirebaseFirestore = function() {
-      function FirebaseFirestore2(databaseIdOrApp, authProvider) {
+    var Firestore$1 = function() {
+      function Firestore$12(databaseIdOrApp, _credentials) {
+        this._credentials = _credentials;
         this.type = "firestore-lite";
         this._persistenceKey = "(lite)";
-        this._settings = new FirestoreSettings({});
+        this._settings = new FirestoreSettingsImpl({});
         this._settingsFrozen = false;
         if (databaseIdOrApp instanceof DatabaseId) {
           this._databaseId = databaseIdOrApp;
-          this._credentials = new EmptyCredentialsProvider();
         } else {
           this._app = databaseIdOrApp;
           this._databaseId = databaseIdFromApp(databaseIdOrApp);
-          this._credentials = new FirebaseCredentialsProvider(authProvider);
         }
       }
-      Object.defineProperty(FirebaseFirestore2.prototype, "app", {
+      Object.defineProperty(Firestore$12.prototype, "app", {
         get: function() {
           if (!this._app) {
             throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore was not initialized using the Firebase SDK. 'app' is not available");
@@ -35042,54 +35434,54 @@ var require_index_node_cjs2 = __commonJS({
         enumerable: false,
         configurable: true
       });
-      Object.defineProperty(FirebaseFirestore2.prototype, "_initialized", {
+      Object.defineProperty(Firestore$12.prototype, "_initialized", {
         get: function() {
           return this._settingsFrozen;
         },
         enumerable: false,
         configurable: true
       });
-      Object.defineProperty(FirebaseFirestore2.prototype, "_terminated", {
+      Object.defineProperty(Firestore$12.prototype, "_terminated", {
         get: function() {
           return this._terminateTask !== void 0;
         },
         enumerable: false,
         configurable: true
       });
-      FirebaseFirestore2.prototype._setSettings = function(settings) {
+      Firestore$12.prototype._setSettings = function(settings) {
         if (this._settingsFrozen) {
           throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore has already been started and its settings can no longer be changed. You can only modify settings before calling any other methods on a Firestore object.");
         }
-        this._settings = new FirestoreSettings(settings);
+        this._settings = new FirestoreSettingsImpl(settings);
         if (settings.credentials !== void 0) {
           this._credentials = makeCredentialsProvider(settings.credentials);
         }
       };
-      FirebaseFirestore2.prototype._getSettings = function() {
+      Firestore$12.prototype._getSettings = function() {
         return this._settings;
       };
-      FirebaseFirestore2.prototype._freezeSettings = function() {
+      Firestore$12.prototype._freezeSettings = function() {
         this._settingsFrozen = true;
         return this._settings;
       };
-      FirebaseFirestore2.prototype._delete = function() {
+      Firestore$12.prototype._delete = function() {
         if (!this._terminateTask) {
           this._terminateTask = this._terminate();
         }
         return this._terminateTask;
       };
-      FirebaseFirestore2.prototype.toJSON = function() {
+      Firestore$12.prototype.toJSON = function() {
         return {
           app: this._app,
           databaseId: this._databaseId,
           settings: this._settings
         };
       };
-      FirebaseFirestore2.prototype._terminate = function() {
+      Firestore$12.prototype._terminate = function() {
         removeComponents(this);
         return Promise.resolve();
       };
-      return FirebaseFirestore2;
+      return Firestore$12;
     }();
     function databaseIdFromApp(app2) {
       if (!Object.prototype.hasOwnProperty.apply(app2.options, ["projectId"])) {
@@ -35097,23 +35489,32 @@ var require_index_node_cjs2 = __commonJS({
       }
       return new DatabaseId(app2.options.projectId);
     }
-    function useFirestoreEmulator(firestore, host, port, options2) {
+    function connectFirestoreEmulator(firestore, host, port, options2) {
       if (options2 === void 0) {
         options2 = {};
       }
-      firestore = cast(firestore, FirebaseFirestore);
+      var _a2;
+      firestore = cast(firestore, Firestore$1);
       var settings = firestore._getSettings();
       if (settings.host !== DEFAULT_HOST && settings.host !== host) {
         logWarn("Host has been set in both settings() and useEmulator(), emulator host will be used");
       }
       firestore._setSettings(Object.assign(Object.assign({}, settings), {host: host + ":" + port, ssl: false}));
       if (options2.mockUserToken) {
-        var token = util.createMockUserToken(options2.mockUserToken);
-        var uid = options2.mockUserToken.sub || options2.mockUserToken.user_id;
-        if (!uid) {
-          throw new FirestoreError(Code.INVALID_ARGUMENT, "mockUserToken must contain 'sub' or 'user_id' field!");
+        var token = void 0;
+        var user = void 0;
+        if (typeof options2.mockUserToken === "string") {
+          token = options2.mockUserToken;
+          user = User.MOCK_USER;
+        } else {
+          token = util.createMockUserToken(options2.mockUserToken, (_a2 = firestore._app) === null || _a2 === void 0 ? void 0 : _a2.options.projectId);
+          var uid = options2.mockUserToken.sub || options2.mockUserToken.user_id;
+          if (!uid) {
+            throw new FirestoreError(Code.INVALID_ARGUMENT, "mockUserToken must contain 'sub' or 'user_id' field!");
+          }
+          user = new User(uid);
         }
-        firestore._credentials = new EmulatorCredentialsProvider(new OAuthToken(token, new User(uid)));
+        firestore._credentials = new EmulatorCredentialsProvider(new OAuthToken(token, user));
       }
     }
     var DocumentReference = function() {
@@ -35214,7 +35615,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       parent = util.getModularInstance(parent);
       validateNonEmptyArgument("collection", "path", path2);
-      if (parent instanceof FirebaseFirestore) {
+      if (parent instanceof Firestore$1) {
         var absolutePath = ResourcePath.fromString.apply(ResourcePath, tslib.__spreadArray([path2], pathSegments));
         validateCollectionPath(absolutePath);
         return new CollectionReference(parent, null, absolutePath);
@@ -35222,13 +35623,13 @@ var require_index_node_cjs2 = __commonJS({
         if (!(parent instanceof DocumentReference) && !(parent instanceof CollectionReference)) {
           throw new FirestoreError(Code.INVALID_ARGUMENT, "Expected first argument to collection() to be a CollectionReference, a DocumentReference or FirebaseFirestore");
         }
-        var absolutePath = ResourcePath.fromString.apply(ResourcePath, tslib.__spreadArray([parent.path], pathSegments)).child(ResourcePath.fromString(path2));
+        var absolutePath = parent._path.child(ResourcePath.fromString.apply(ResourcePath, tslib.__spreadArray([path2], pathSegments)));
         validateCollectionPath(absolutePath);
         return new CollectionReference(parent.firestore, null, absolutePath);
       }
     }
     function collectionGroup(firestore, collectionId) {
-      firestore = cast(firestore, FirebaseFirestore);
+      firestore = cast(firestore, Firestore$1);
       validateNonEmptyArgument("collectionGroup", "collection id", collectionId);
       if (collectionId.indexOf("/") >= 0) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid collection ID '" + collectionId + "' passed to function collectionGroup(). Collection IDs must not contain '/'.");
@@ -35245,7 +35646,7 @@ var require_index_node_cjs2 = __commonJS({
         path2 = AutoId.newId();
       }
       validateNonEmptyArgument("doc", "path", path2);
-      if (parent instanceof FirebaseFirestore) {
+      if (parent instanceof Firestore$1) {
         var absolutePath = ResourcePath.fromString.apply(ResourcePath, tslib.__spreadArray([path2], pathSegments));
         validateDocumentPath(absolutePath);
         return new DocumentReference(parent, null, new DocumentKey(absolutePath));
@@ -35274,7 +35675,7 @@ var require_index_node_cjs2 = __commonJS({
       }
       return false;
     }
-    var LOG_TAG$g = "AsyncQueue";
+    var LOG_TAG = "AsyncQueue";
     var AsyncQueueImpl = function() {
       function AsyncQueueImpl2() {
         var _this = this;
@@ -35284,6 +35685,7 @@ var require_index_node_cjs2 = __commonJS({
         this.delayedOperations = [];
         this.failure = null;
         this.operationInProgress = false;
+        this.skipNonRestrictedTasks = false;
         this.timerIdsToSkip = [];
         this.backoff = new ExponentialBackoff(this, "async_queue_retry");
         this.visibilityHandler = function() {
@@ -35304,18 +35706,29 @@ var require_index_node_cjs2 = __commonJS({
         this.verifyNotFailed();
         this.enqueueInternal(op);
       };
-      AsyncQueueImpl2.prototype.enterRestrictedMode = function() {
+      AsyncQueueImpl2.prototype.enterRestrictedMode = function(purgeExistingTasks) {
         if (!this._isShuttingDown) {
           this._isShuttingDown = true;
+          this.skipNonRestrictedTasks = purgeExistingTasks || false;
         }
       };
       AsyncQueueImpl2.prototype.enqueue = function(op) {
+        var _this = this;
         this.verifyNotFailed();
         if (this._isShuttingDown) {
-          return new Promise(function(resolve2) {
+          return new Promise(function() {
           });
         }
-        return this.enqueueInternal(op);
+        var task = new Deferred();
+        return this.enqueueInternal(function() {
+          if (_this._isShuttingDown && _this.skipNonRestrictedTasks) {
+            return Promise.resolve();
+          }
+          op().then(task.resolve, task.reject);
+          return task.promise;
+        }).then(function() {
+          return task.promise;
+        });
       };
       AsyncQueueImpl2.prototype.enqueueRetryable = function(op) {
         var _this = this;
@@ -35346,7 +35759,7 @@ var require_index_node_cjs2 = __commonJS({
               case 3:
                 e_14 = _d.sent();
                 if (isIndexedDbTransactionError(e_14)) {
-                  logDebug(LOG_TAG$g, "Operation failed with retryable error: " + e_14);
+                  logDebug(LOG_TAG, "Operation failed with retryable error: " + e_14);
                 } else {
                   throw e_14;
                 }
@@ -35366,12 +35779,12 @@ var require_index_node_cjs2 = __commonJS({
         var _this = this;
         var newTail = this.tail.then(function() {
           _this.operationInProgress = true;
-          return op().catch(function(error3) {
-            _this.failure = error3;
+          return op().catch(function(error2) {
+            _this.failure = error2;
             _this.operationInProgress = false;
-            var message = getMessageOrStack(error3);
+            var message = getMessageOrStack(error2);
             logError("INTERNAL UNHANDLED ERROR: ", message);
-            throw error3;
+            throw error2;
           }).then(function(result) {
             _this.operationInProgress = false;
             return result;
@@ -35457,13 +35870,13 @@ var require_index_node_cjs2 = __commonJS({
     function newAsyncQueue() {
       return new AsyncQueueImpl();
     }
-    function getMessageOrStack(error3) {
-      var message = error3.message || "";
-      if (error3.stack) {
-        if (error3.stack.includes(error3.message)) {
-          message = error3.stack;
+    function getMessageOrStack(error2) {
+      var message = error2.message || "";
+      if (error2.stack) {
+        if (error2.stack.includes(error2.message)) {
+          message = error2.stack;
         } else {
-          message = error3.message + "\n" + error3.stack;
+          message = error2.message + "\n" + error2.stack;
         }
       }
       return message;
@@ -35480,10 +35893,10 @@ var require_index_node_cjs2 = __commonJS({
           documentsLoaded: 0
         };
       }
-      LoadBundleTask2.prototype.onProgress = function(next, error3, complete) {
+      LoadBundleTask2.prototype.onProgress = function(next, error2, complete) {
         this._progressObserver = {
           next,
-          error: error3,
+          error: error2,
           complete
         };
       };
@@ -35500,15 +35913,15 @@ var require_index_node_cjs2 = __commonJS({
         }
         this._taskCompletionResolver.resolve(progress);
       };
-      LoadBundleTask2.prototype._failWith = function(error3) {
+      LoadBundleTask2.prototype._failWith = function(error2) {
         this._lastProgress.taskState = "Error";
         if (this._progressObserver.next) {
           this._progressObserver.next(this._lastProgress);
         }
         if (this._progressObserver.error) {
-          this._progressObserver.error(error3);
+          this._progressObserver.error(error2);
         }
-        this._taskCompletionResolver.reject(error3);
+        this._taskCompletionResolver.reject(error2);
       };
       LoadBundleTask2.prototype._updateProgress = function(progress) {
         this._lastProgress = progress;
@@ -35522,27 +35935,33 @@ var require_index_node_cjs2 = __commonJS({
     var DOM_EXCEPTION_ABORTED = 20;
     var DOM_EXCEPTION_QUOTA_EXCEEDED = 22;
     var CACHE_SIZE_UNLIMITED = LRU_COLLECTION_DISABLED;
-    var FirebaseFirestore$1 = function(_super) {
-      tslib.__extends(FirebaseFirestore$12, _super);
-      function FirebaseFirestore$12(databaseIdOrApp, authProvider) {
-        var _this = _super.call(this, databaseIdOrApp, authProvider) || this;
+    var Firestore = function(_super) {
+      tslib.__extends(Firestore2, _super);
+      function Firestore2(databaseIdOrApp, credentialsProvider) {
+        var _this = _super.call(this, databaseIdOrApp, credentialsProvider) || this;
         _this.type = "firestore";
         _this._queue = newAsyncQueue();
         _this._persistenceKey = "name" in databaseIdOrApp ? databaseIdOrApp.name : "[DEFAULT]";
         return _this;
       }
-      FirebaseFirestore$12.prototype._terminate = function() {
+      Firestore2.prototype._terminate = function() {
         if (!this._firestoreClient) {
           configureFirestore(this);
         }
         return this._firestoreClient.terminate();
       };
-      return FirebaseFirestore$12;
-    }(FirebaseFirestore);
+      return Firestore2;
+    }(Firestore$1);
     function initializeFirestore(app$1, settings) {
-      var provider = app._getProvider(app$1, "firestore-exp");
+      var provider = app._getProvider(app$1, "firestore");
       if (provider.isInitialized()) {
-        throw new FirestoreError(Code.FAILED_PRECONDITION, "Firestore can only be initialized once per app.");
+        var existingInstance = provider.getImmediate();
+        var initialSettings = provider.getOptions();
+        if (util.deepEqual(initialSettings, settings)) {
+          return existingInstance;
+        } else {
+          throw new FirestoreError(Code.FAILED_PRECONDITION, "initializeFirestore() has already been called with different options. To avoid this error, call initializeFirestore() with the same options as when it was originally called, or call getFirestore() to return the already initialized instance.");
+        }
       }
       if (settings.cacheSizeBytes !== void 0 && settings.cacheSizeBytes !== CACHE_SIZE_UNLIMITED && settings.cacheSizeBytes < LRU_MINIMUM_CACHE_SIZE_BYTES) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "cacheSizeBytes must be at least " + LRU_MINIMUM_CACHE_SIZE_BYTES);
@@ -35553,7 +35972,7 @@ var require_index_node_cjs2 = __commonJS({
       if (app$1 === void 0) {
         app$1 = app.getApp();
       }
-      return app._getProvider(app$1, "firestore-exp").getImmediate();
+      return app._getProvider(app$1, "firestore").getImmediate();
     }
     function ensureFirestoreConfigured(firestore) {
       if (!firestore._firestoreClient) {
@@ -35563,13 +35982,13 @@ var require_index_node_cjs2 = __commonJS({
       return firestore._firestoreClient;
     }
     function configureFirestore(firestore) {
-      var _a;
+      var _a2;
       var settings = firestore._freezeSettings();
-      var databaseInfo = makeDatabaseInfo(firestore._databaseId, ((_a = firestore._app) === null || _a === void 0 ? void 0 : _a.options.appId) || "", firestore._persistenceKey, settings);
+      var databaseInfo = makeDatabaseInfo(firestore._databaseId, ((_a2 = firestore._app) === null || _a2 === void 0 ? void 0 : _a2.options.appId) || "", firestore._persistenceKey, settings);
       firestore._firestoreClient = new FirestoreClient(firestore._credentials, firestore._queue, databaseInfo);
     }
     function enableIndexedDbPersistence(firestore, persistenceSettings) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       verifyNotInitialized(firestore);
       var client = ensureFirestoreConfigured(firestore);
       var settings = firestore._freezeSettings();
@@ -35578,7 +35997,7 @@ var require_index_node_cjs2 = __commonJS({
       return setPersistenceProviders(client, onlineComponentProvider, offlineComponentProvider);
     }
     function enableMultiTabIndexedDbPersistence(firestore) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       verifyNotInitialized(firestore);
       var client = ensureFirestoreConfigured(firestore);
       var settings = firestore._freezeSettings();
@@ -35621,11 +36040,11 @@ var require_index_node_cjs2 = __commonJS({
         return persistenceResult.promise;
       });
     }
-    function canFallbackFromIndexedDbError(error3) {
-      if (error3.name === "FirebaseError") {
-        return error3.code === Code.FAILED_PRECONDITION || error3.code === Code.UNIMPLEMENTED;
-      } else if (typeof DOMException !== "undefined" && error3 instanceof DOMException) {
-        return error3.code === DOM_EXCEPTION_QUOTA_EXCEEDED || error3.code === DOM_EXCEPTION_ABORTED || error3.code === DOM_EXCEPTION_INVALID_STATE;
+    function canFallbackFromIndexedDbError(error2) {
+      if (error2.name === "FirebaseError") {
+        return error2.code === Code.FAILED_PRECONDITION || error2.code === Code.UNIMPLEMENTED;
+      } else if (typeof DOMException !== "undefined" && error2 instanceof DOMException) {
+        return error2.code === DOM_EXCEPTION_QUOTA_EXCEEDED || error2.code === DOM_EXCEPTION_ABORTED || error2.code === DOM_EXCEPTION_INVALID_STATE;
       }
       return true;
     }
@@ -35660,33 +36079,33 @@ var require_index_node_cjs2 = __commonJS({
       return deferred.promise;
     }
     function waitForPendingWrites(firestore) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientWaitForPendingWrites(client);
     }
     function enableNetwork(firestore) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientEnableNetwork(client);
     }
     function disableNetwork(firestore) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientDisableNetwork(client);
     }
     function terminate(firestore) {
-      app._removeServiceInstance(firestore.app, "firestore-exp");
+      app._removeServiceInstance(firestore.app, "firestore");
       return firestore._delete();
     }
     function loadBundle(firestore, bundleData) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var resultTask = new LoadBundleTask();
       firestoreClientLoadBundle(client, firestore._databaseId, bundleData, resultTask);
       return resultTask;
     }
     function namedQuery(firestore, name2) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientGetNamedQuery(client, name2).then(function(namedQuery2) {
         if (!namedQuery2) {
@@ -35702,19 +36121,18 @@ var require_index_node_cjs2 = __commonJS({
     }
     function registerFirestore(variant) {
       setSDKVersion(app.SDK_VERSION);
-      app._registerComponent(new component.Component("firestore-exp", function(container, _d) {
+      app._registerComponent(new component.Component("firestore", function(container, _d) {
         var settings = _d.options;
-        var app2 = container.getProvider("app-exp").getImmediate();
-        var firestoreInstance = new FirebaseFirestore$1(app2, container.getProvider("auth-internal"));
-        if (settings) {
-          firestoreInstance._setSettings(settings);
-        }
+        var app2 = container.getProvider("app").getImmediate();
+        var firestoreInstance = new Firestore(app2, new FirebaseCredentialsProvider(container.getProvider("auth-internal")));
+        settings = Object.assign({useFetchStreams: true}, settings);
+        firestoreInstance._setSettings(settings);
         return firestoreInstance;
       }, "PUBLIC"));
-      app.registerVersion(name, version, variant);
+      app.registerVersion(name, version$1, variant);
     }
-    var FieldPath$1 = function() {
-      function FieldPath$12() {
+    var FieldPath = function() {
+      function FieldPath2() {
         var fieldNames = [];
         for (var _i = 0; _i < arguments.length; _i++) {
           fieldNames[_i] = arguments[_i];
@@ -35724,15 +36142,15 @@ var require_index_node_cjs2 = __commonJS({
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Invalid field name at argument $(i + 1). Field names must not be empty.");
           }
         }
-        this._internalPath = new FieldPath(fieldNames);
+        this._internalPath = new FieldPath$1(fieldNames);
       }
-      FieldPath$12.prototype.isEqual = function(other) {
+      FieldPath2.prototype.isEqual = function(other) {
         return this._internalPath.isEqual(other._internalPath);
       };
-      return FieldPath$12;
+      return FieldPath2;
     }();
     function documentId() {
-      return new FieldPath$1(DOCUMENT_KEY_NAME);
+      return new FieldPath(DOCUMENT_KEY_NAME);
     }
     var Bytes = function() {
       function Bytes2(byteString) {
@@ -35874,15 +36292,15 @@ var require_index_node_cjs2 = __commonJS({
         return new ParseContextImpl2(Object.assign(Object.assign({}, this.settings), configuration), this.databaseId, this.serializer, this.ignoreUndefinedProperties, this.fieldTransforms, this.fieldMask);
       };
       ParseContextImpl2.prototype.childContextForField = function(field) {
-        var _a;
-        var childPath = (_a = this.path) === null || _a === void 0 ? void 0 : _a.child(field);
+        var _a2;
+        var childPath = (_a2 = this.path) === null || _a2 === void 0 ? void 0 : _a2.child(field);
         var context = this.contextWith({path: childPath, arrayElement: false});
         context.validatePathSegment(field);
         return context;
       };
       ParseContextImpl2.prototype.childContextForFieldPath = function(field) {
-        var _a;
-        var childPath = (_a = this.path) === null || _a === void 0 ? void 0 : _a.child(field);
+        var _a2;
+        var childPath = (_a2 = this.path) === null || _a2 === void 0 ? void 0 : _a2.child(field);
         var context = this.contextWith({path: childPath, arrayElement: false});
         context.validatePath();
         return context;
@@ -35932,7 +36350,7 @@ var require_index_node_cjs2 = __commonJS({
           dataSource,
           methodName,
           targetDoc,
-          path: FieldPath.emptyPath(),
+          path: FieldPath$1.emptyPath(),
           arrayElement: false,
           hasConverter
         }, this.databaseId, this.serializer, this.ignoreUndefinedProperties);
@@ -35960,7 +36378,7 @@ var require_index_node_cjs2 = __commonJS({
         var validatedFieldPaths = [];
         for (var _i = 0, _d = options2.mergeFields; _i < _d.length; _i++) {
           var stringOrFieldPath = _d[_i];
-          var fieldPath = fieldPathFromArgument(methodName, stringOrFieldPath, targetDoc);
+          var fieldPath = fieldPathFromArgument$1(methodName, stringOrFieldPath, targetDoc);
           if (!context.contains(fieldPath)) {
             throw new FirestoreError(Code.INVALID_ARGUMENT, "Field '" + fieldPath + "' is specified in your field mask but missing from your input data.");
           }
@@ -36099,13 +36517,13 @@ var require_index_node_cjs2 = __commonJS({
     }
     function parseUpdateVarargs(userDataReader, methodName, targetDoc, field, value, moreFieldsAndValues) {
       var context = userDataReader.createContext(1, methodName, targetDoc);
-      var keys = [fieldPathFromArgument(methodName, field, targetDoc)];
+      var keys = [fieldPathFromArgument$1(methodName, field, targetDoc)];
       var values = [value];
       if (moreFieldsAndValues.length % 2 !== 0) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, "Function " + methodName + "() needs to be called with an even number of arguments that alternate between field names and values.");
       }
       for (var i = 0; i < moreFieldsAndValues.length; i += 2) {
-        keys.push(fieldPathFromArgument(methodName, moreFieldsAndValues[i]));
+        keys.push(fieldPathFromArgument$1(methodName, moreFieldsAndValues[i]));
         values.push(moreFieldsAndValues[i + 1]);
       }
       var fieldMaskPaths = [];
@@ -36259,9 +36677,9 @@ var require_index_node_cjs2 = __commonJS({
         }
       }
     }
-    function fieldPathFromArgument(methodName, path2, targetDoc) {
+    function fieldPathFromArgument$1(methodName, path2, targetDoc) {
       path2 = util.getModularInstance(path2);
-      if (path2 instanceof FieldPath$1) {
+      if (path2 instanceof FieldPath) {
         return path2._internalPath;
       } else if (typeof path2 === "string") {
         return fieldPathFromDotSeparatedString(methodName, path2);
@@ -36277,7 +36695,7 @@ var require_index_node_cjs2 = __commonJS({
         throw createError("Invalid field path (" + path2 + "). Paths must not contain '~', '*', '/', '[', or ']'", methodName, false, void 0, targetDoc);
       }
       try {
-        return new (FieldPath$1.bind.apply(FieldPath$1, tslib.__spreadArray([void 0], path2.split("."))))()._internalPath;
+        return new (FieldPath.bind.apply(FieldPath, tslib.__spreadArray([void 0], path2.split("."))))()._internalPath;
       } catch (e) {
         throw createError("Invalid field path (" + path2 + "). Paths must not be empty, begin with '.', end with '.', or contain '..'", methodName, false, void 0, targetDoc);
       }
@@ -36308,66 +36726,66 @@ var require_index_node_cjs2 = __commonJS({
         return v.isEqual(needle);
       });
     }
-    var DocumentSnapshot = function() {
-      function DocumentSnapshot2(_firestore, _userDataWriter, _key, _document, _converter) {
+    var DocumentSnapshot$1 = function() {
+      function DocumentSnapshot$12(_firestore, _userDataWriter, _key, _document, _converter) {
         this._firestore = _firestore;
         this._userDataWriter = _userDataWriter;
         this._key = _key;
         this._document = _document;
         this._converter = _converter;
       }
-      Object.defineProperty(DocumentSnapshot2.prototype, "id", {
+      Object.defineProperty(DocumentSnapshot$12.prototype, "id", {
         get: function() {
           return this._key.path.lastSegment();
         },
         enumerable: false,
         configurable: true
       });
-      Object.defineProperty(DocumentSnapshot2.prototype, "ref", {
+      Object.defineProperty(DocumentSnapshot$12.prototype, "ref", {
         get: function() {
           return new DocumentReference(this._firestore, this._converter, this._key);
         },
         enumerable: false,
         configurable: true
       });
-      DocumentSnapshot2.prototype.exists = function() {
+      DocumentSnapshot$12.prototype.exists = function() {
         return this._document !== null;
       };
-      DocumentSnapshot2.prototype.data = function() {
+      DocumentSnapshot$12.prototype.data = function() {
         if (!this._document) {
           return void 0;
         } else if (this._converter) {
-          var snapshot = new QueryDocumentSnapshot(this._firestore, this._userDataWriter, this._key, this._document, null);
+          var snapshot = new QueryDocumentSnapshot$1(this._firestore, this._userDataWriter, this._key, this._document, null);
           return this._converter.fromFirestore(snapshot);
         } else {
-          return this._userDataWriter.convertValue(this._document.data.toProto());
+          return this._userDataWriter.convertValue(this._document.data.value);
         }
       };
-      DocumentSnapshot2.prototype.get = function(fieldPath) {
+      DocumentSnapshot$12.prototype.get = function(fieldPath) {
         if (this._document) {
-          var value = this._document.data.field(fieldPathFromArgument$1("DocumentSnapshot.get", fieldPath));
+          var value = this._document.data.field(fieldPathFromArgument("DocumentSnapshot.get", fieldPath));
           if (value !== null) {
             return this._userDataWriter.convertValue(value);
           }
         }
         return void 0;
       };
-      return DocumentSnapshot2;
+      return DocumentSnapshot$12;
     }();
-    var QueryDocumentSnapshot = function(_super) {
-      tslib.__extends(QueryDocumentSnapshot2, _super);
-      function QueryDocumentSnapshot2() {
+    var QueryDocumentSnapshot$1 = function(_super) {
+      tslib.__extends(QueryDocumentSnapshot$12, _super);
+      function QueryDocumentSnapshot$12() {
         return _super !== null && _super.apply(this, arguments) || this;
       }
-      QueryDocumentSnapshot2.prototype.data = function() {
+      QueryDocumentSnapshot$12.prototype.data = function() {
         return _super.prototype.data.call(this);
       };
-      return QueryDocumentSnapshot2;
-    }(DocumentSnapshot);
-    function fieldPathFromArgument$1(methodName, arg) {
+      return QueryDocumentSnapshot$12;
+    }(DocumentSnapshot$1);
+    function fieldPathFromArgument(methodName, arg) {
       if (typeof arg === "string") {
         return fieldPathFromDotSeparatedString(methodName, arg);
-      } else if (arg instanceof FieldPath$1) {
+      } else if (arg instanceof FieldPath) {
         return arg._internalPath;
       } else {
         return arg._delegate._internalPath;
@@ -36383,58 +36801,58 @@ var require_index_node_cjs2 = __commonJS({
       };
       return SnapshotMetadata2;
     }();
-    var DocumentSnapshot$1 = function(_super) {
-      tslib.__extends(DocumentSnapshot$12, _super);
-      function DocumentSnapshot$12(_firestore, userDataWriter, key, document2, metadata, converter) {
+    var DocumentSnapshot = function(_super) {
+      tslib.__extends(DocumentSnapshot2, _super);
+      function DocumentSnapshot2(_firestore, userDataWriter, key, document2, metadata, converter) {
         var _this = _super.call(this, _firestore, userDataWriter, key, document2, converter) || this;
         _this._firestore = _firestore;
         _this._firestoreImpl = _firestore;
         _this.metadata = metadata;
         return _this;
       }
-      DocumentSnapshot$12.prototype.exists = function() {
+      DocumentSnapshot2.prototype.exists = function() {
         return _super.prototype.exists.call(this);
       };
-      DocumentSnapshot$12.prototype.data = function(options2) {
+      DocumentSnapshot2.prototype.data = function(options2) {
         if (options2 === void 0) {
           options2 = {};
         }
         if (!this._document) {
           return void 0;
         } else if (this._converter) {
-          var snapshot = new QueryDocumentSnapshot$1(this._firestore, this._userDataWriter, this._key, this._document, this.metadata, null);
+          var snapshot = new QueryDocumentSnapshot(this._firestore, this._userDataWriter, this._key, this._document, this.metadata, null);
           return this._converter.fromFirestore(snapshot, options2);
         } else {
-          return this._userDataWriter.convertValue(this._document.data.toProto(), options2.serverTimestamps);
+          return this._userDataWriter.convertValue(this._document.data.value, options2.serverTimestamps);
         }
       };
-      DocumentSnapshot$12.prototype.get = function(fieldPath, options2) {
+      DocumentSnapshot2.prototype.get = function(fieldPath, options2) {
         if (options2 === void 0) {
           options2 = {};
         }
         if (this._document) {
-          var value = this._document.data.field(fieldPathFromArgument$1("DocumentSnapshot.get", fieldPath));
+          var value = this._document.data.field(fieldPathFromArgument("DocumentSnapshot.get", fieldPath));
           if (value !== null) {
             return this._userDataWriter.convertValue(value, options2.serverTimestamps);
           }
         }
         return void 0;
       };
-      return DocumentSnapshot$12;
-    }(DocumentSnapshot);
-    var QueryDocumentSnapshot$1 = function(_super) {
-      tslib.__extends(QueryDocumentSnapshot$12, _super);
-      function QueryDocumentSnapshot$12() {
+      return DocumentSnapshot2;
+    }(DocumentSnapshot$1);
+    var QueryDocumentSnapshot = function(_super) {
+      tslib.__extends(QueryDocumentSnapshot2, _super);
+      function QueryDocumentSnapshot2() {
         return _super !== null && _super.apply(this, arguments) || this;
       }
-      QueryDocumentSnapshot$12.prototype.data = function(options2) {
+      QueryDocumentSnapshot2.prototype.data = function(options2) {
         if (options2 === void 0) {
           options2 = {};
         }
         return _super.prototype.data.call(this, options2);
       };
-      return QueryDocumentSnapshot$12;
-    }(DocumentSnapshot$1);
+      return QueryDocumentSnapshot2;
+    }(DocumentSnapshot);
     var QuerySnapshot = function() {
       function QuerySnapshot2(_firestore, _userDataWriter, query3, _snapshot) {
         this._firestore = _firestore;
@@ -36471,7 +36889,7 @@ var require_index_node_cjs2 = __commonJS({
       QuerySnapshot2.prototype.forEach = function(callback, thisArg) {
         var _this = this;
         this._snapshot.docs.forEach(function(doc3) {
-          callback.call(thisArg, new QueryDocumentSnapshot$1(_this._firestore, _this._userDataWriter, doc3.key, doc3, new SnapshotMetadata(_this._snapshot.mutatedKeys.has(doc3.key), _this._snapshot.fromCache), _this.query.converter));
+          callback.call(thisArg, new QueryDocumentSnapshot(_this._firestore, _this._userDataWriter, doc3.key, doc3, new SnapshotMetadata(_this._snapshot.mutatedKeys.has(doc3.key), _this._snapshot.fromCache), _this.query.converter));
         });
       };
       QuerySnapshot2.prototype.docChanges = function(options2) {
@@ -36492,11 +36910,9 @@ var require_index_node_cjs2 = __commonJS({
     }();
     function changesFromSnapshot(querySnapshot, includeMetadataChanges) {
       if (querySnapshot._snapshot.oldDocs.isEmpty()) {
-        var lastDoc_1;
         var index_1 = 0;
         return querySnapshot._snapshot.docChanges.map(function(change) {
-          var doc3 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
-          lastDoc_1 = change.doc;
+          var doc3 = new QueryDocumentSnapshot(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
           return {
             type: "added",
             doc: doc3,
@@ -36509,7 +36925,7 @@ var require_index_node_cjs2 = __commonJS({
         return querySnapshot._snapshot.docChanges.filter(function(change) {
           return includeMetadataChanges || change.type !== 3;
         }).map(function(change) {
-          var doc3 = new QueryDocumentSnapshot$1(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
+          var doc3 = new QueryDocumentSnapshot(querySnapshot._firestore, querySnapshot._userDataWriter, change.doc.key, change.doc, new SnapshotMetadata(querySnapshot._snapshot.mutatedKeys.has(change.doc.key), querySnapshot._snapshot.fromCache), querySnapshot.query.converter);
           var oldIndex = -1;
           var newIndex = -1;
           if (change.type !== 0) {
@@ -36543,7 +36959,7 @@ var require_index_node_cjs2 = __commonJS({
       }
     }
     function snapshotEqual(left, right) {
-      if (left instanceof DocumentSnapshot$1 && right instanceof DocumentSnapshot$1) {
+      if (left instanceof DocumentSnapshot && right instanceof DocumentSnapshot) {
         return left._firestore === right._firestore && left._key.isEqual(right._key) && (left._document === null ? right._document === null : left._document.isEqual(right._document)) && left._converter === right._converter;
       } else if (left instanceof QuerySnapshot && right instanceof QuerySnapshot) {
         return left._firestore === right._firestore && queryEqual(left.query, right.query) && left.metadata.isEqual(right.metadata) && left._snapshot.isEqual(right._snapshot);
@@ -36590,7 +37006,7 @@ var require_index_node_cjs2 = __commonJS({
     }(QueryConstraint);
     function where(fieldPath, opStr, value) {
       var op = opStr;
-      var field = fieldPathFromArgument$1("where", fieldPath);
+      var field = fieldPathFromArgument("where", fieldPath);
       return new QueryFilterConstraint(field, op, value);
     }
     var QueryOrderByConstraint = function(_super) {
@@ -36613,7 +37029,7 @@ var require_index_node_cjs2 = __commonJS({
         directionStr = "asc";
       }
       var direction = directionStr;
-      var path2 = fieldPathFromArgument$1("orderBy", fieldPath);
+      var path2 = fieldPathFromArgument("orderBy", fieldPath);
       return new QueryOrderByConstraint(path2, direction);
     }
     var QueryLimitConstraint = function(_super) {
@@ -36698,7 +37114,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function newQueryBoundFromDocOrFields(query3, methodName, docOrFields, before) {
       docOrFields[0] = util.getModularInstance(docOrFields[0]);
-      if (docOrFields[0] instanceof DocumentSnapshot) {
+      if (docOrFields[0] instanceof DocumentSnapshot$1) {
         return newQueryBoundFromDocument(query3._query, query3.firestore._databaseId, methodName, docOrFields[0]._document, before);
       } else {
         var reader = newUserDataReader(query3.firestore);
@@ -36923,7 +37339,7 @@ var require_index_node_cjs2 = __commonJS({
       AbstractUserDataWriter2.prototype.convertObject = function(mapValue, serverTimestampBehavior) {
         var _this = this;
         var result = {};
-        forEach(mapValue.fields || {}, function(key, value) {
+        forEach(mapValue.fields, function(key, value) {
           result[key] = _this.convertValue(value, serverTimestampBehavior);
         });
         return result;
@@ -37021,7 +37437,7 @@ var require_index_node_cjs2 = __commonJS({
         var ref = validateReference(documentRef, this._firestore);
         fieldOrUpdateData = util.getModularInstance(fieldOrUpdateData);
         var parsed;
-        if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath$1) {
+        if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath) {
           parsed = parseUpdateVarargs(this._dataReader, "WriteBatch.update", ref._key, fieldOrUpdateData, value, moreFieldsAndValues);
         } else {
           parsed = parseUpdateData(this._dataReader, "WriteBatch.update", ref._key, fieldOrUpdateData);
@@ -37074,9 +37490,9 @@ var require_index_node_cjs2 = __commonJS({
           }
           var doc3 = docs[0];
           if (doc3.isFoundDocument()) {
-            return new DocumentSnapshot(_this._firestore, userDataWriter, doc3.key, doc3, ref.converter);
+            return new DocumentSnapshot$1(_this._firestore, userDataWriter, doc3.key, doc3, ref.converter);
           } else if (doc3.isNoDocument()) {
-            return new DocumentSnapshot(_this._firestore, userDataWriter, ref._key, null, ref.converter);
+            return new DocumentSnapshot$1(_this._firestore, userDataWriter, ref._key, null, ref.converter);
           } else {
             throw fail();
           }
@@ -37097,7 +37513,7 @@ var require_index_node_cjs2 = __commonJS({
         var ref = validateReference(documentRef, this._firestore);
         fieldOrUpdateData = util.getModularInstance(fieldOrUpdateData);
         var parsed;
-        if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath$1) {
+        if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath) {
           parsed = parseUpdateVarargs(this._dataReader, "Transaction.update", ref._key, fieldOrUpdateData, value, moreFieldsAndValues);
         } else {
           parsed = parseUpdateData(this._dataReader, "Transaction.update", ref._key, fieldOrUpdateData);
@@ -37130,7 +37546,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function getDoc2(reference) {
       reference = cast(reference, DocumentReference);
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientGetDocumentViaSnapshotListener(client, reference._key).then(function(snapshot) {
         return convertToDocSnapshot(firestore, reference, snapshot);
@@ -37154,16 +37570,16 @@ var require_index_node_cjs2 = __commonJS({
     }(AbstractUserDataWriter);
     function getDocFromCache(reference) {
       reference = cast(reference, DocumentReference);
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
       return firestoreClientGetDocumentFromLocalCache(client, reference._key).then(function(doc3) {
-        return new DocumentSnapshot$1(firestore, userDataWriter, reference._key, doc3, new SnapshotMetadata(doc3 !== null && doc3.hasLocalMutations, true), reference.converter);
+        return new DocumentSnapshot(firestore, userDataWriter, reference._key, doc3, new SnapshotMetadata(doc3 !== null && doc3.hasLocalMutations, true), reference.converter);
       });
     }
     function getDocFromServer(reference) {
       reference = cast(reference, DocumentReference);
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientGetDocumentViaSnapshotListener(client, reference._key, {
         source: "server"
@@ -37173,7 +37589,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function getDocs(query3) {
       query3 = cast(query3, Query);
-      var firestore = cast(query3.firestore, FirebaseFirestore$1);
+      var firestore = cast(query3.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
       validateHasExplicitOrderByForLimitToLast(query3._query);
@@ -37183,7 +37599,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function getDocsFromCache(query3) {
       query3 = cast(query3, Query);
-      var firestore = cast(query3.firestore, FirebaseFirestore$1);
+      var firestore = cast(query3.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
       return firestoreClientGetDocumentsFromLocalCache(client, query3._query).then(function(snapshot) {
@@ -37192,7 +37608,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function getDocsFromServer(query3) {
       query3 = cast(query3, Query);
-      var firestore = cast(query3.firestore, FirebaseFirestore$1);
+      var firestore = cast(query3.firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var userDataWriter = new ExpUserDataWriter(firestore);
       return firestoreClientGetDocumentsViaSnapshotListener(client, query3._query, {
@@ -37203,7 +37619,7 @@ var require_index_node_cjs2 = __commonJS({
     }
     function setDoc2(reference, data, options2) {
       reference = cast(reference, DocumentReference);
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var convertedValue = applyFirestoreDataConverter(reference.converter, data, options2);
       var dataReader = newUserDataReader(firestore);
       var parsed = parseSetData(dataReader, "setDoc", reference._key, convertedValue, reference.converter !== null, options2);
@@ -37216,11 +37632,11 @@ var require_index_node_cjs2 = __commonJS({
         moreFieldsAndValues[_i - 3] = arguments[_i];
       }
       reference = cast(reference, DocumentReference);
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var dataReader = newUserDataReader(firestore);
       fieldOrUpdateData = util.getModularInstance(fieldOrUpdateData);
       var parsed;
-      if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath$1) {
+      if (typeof fieldOrUpdateData === "string" || fieldOrUpdateData instanceof FieldPath) {
         parsed = parseUpdateVarargs(dataReader, "updateDoc", reference._key, fieldOrUpdateData, value, moreFieldsAndValues);
       } else {
         parsed = parseUpdateData(dataReader, "updateDoc", reference._key, fieldOrUpdateData);
@@ -37229,12 +37645,12 @@ var require_index_node_cjs2 = __commonJS({
       return executeWrite(firestore, [mutation]);
     }
     function deleteDoc2(reference) {
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var mutations = [new DeleteMutation(reference._key, Precondition.none())];
       return executeWrite(firestore, mutations);
     }
     function addDoc(reference, data) {
-      var firestore = cast(reference.firestore, FirebaseFirestore$1);
+      var firestore = cast(reference.firestore, Firestore);
       var docRef = doc2(reference);
       var convertedValue = applyFirestoreDataConverter(reference.converter, data);
       var dataReader = newUserDataReader(reference.firestore);
@@ -37249,7 +37665,7 @@ var require_index_node_cjs2 = __commonJS({
       for (var _i = 1; _i < arguments.length; _i++) {
         args[_i - 1] = arguments[_i];
       }
-      var _a, _b, _c;
+      var _a2, _b, _c;
       reference = util.getModularInstance(reference);
       var options2 = {
         includeMetadataChanges: false
@@ -37264,7 +37680,7 @@ var require_index_node_cjs2 = __commonJS({
       };
       if (isPartialObserver(args[currArg])) {
         var userObserver = args[currArg];
-        args[currArg] = (_a = userObserver.next) === null || _a === void 0 ? void 0 : _a.bind(userObserver);
+        args[currArg] = (_a2 = userObserver.next) === null || _a2 === void 0 ? void 0 : _a2.bind(userObserver);
         args[currArg + 1] = (_b = userObserver.error) === null || _b === void 0 ? void 0 : _b.bind(userObserver);
         args[currArg + 2] = (_c = userObserver.complete) === null || _c === void 0 ? void 0 : _c.bind(userObserver);
       }
@@ -37272,7 +37688,7 @@ var require_index_node_cjs2 = __commonJS({
       var firestore;
       var internalQuery;
       if (reference instanceof DocumentReference) {
-        firestore = cast(reference.firestore, FirebaseFirestore$1);
+        firestore = cast(reference.firestore, Firestore);
         internalQuery = newQueryForPath(reference._key.path);
         observer = {
           next: function(snapshot) {
@@ -37285,7 +37701,7 @@ var require_index_node_cjs2 = __commonJS({
         };
       } else {
         var query_5 = cast(reference, Query);
-        firestore = cast(query_5.firestore, FirebaseFirestore$1);
+        firestore = cast(query_5.firestore, Firestore);
         internalQuery = query_5._query;
         var userDataWriter_1 = new ExpUserDataWriter(firestore);
         observer = {
@@ -37303,7 +37719,7 @@ var require_index_node_cjs2 = __commonJS({
       return firestoreClientListen(client, internalQuery, internalOptions, observer);
     }
     function onSnapshotsInSync(firestore, arg) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       var client = ensureFirestoreConfigured(firestore);
       var observer = isPartialObserver(arg) ? arg : {
         next: arg
@@ -37317,35 +37733,35 @@ var require_index_node_cjs2 = __commonJS({
     function convertToDocSnapshot(firestore, ref, snapshot) {
       var doc3 = snapshot.docs.get(ref._key);
       var userDataWriter = new ExpUserDataWriter(firestore);
-      return new DocumentSnapshot$1(firestore, userDataWriter, ref._key, doc3, new SnapshotMetadata(snapshot.hasPendingWrites, snapshot.fromCache), ref.converter);
+      return new DocumentSnapshot(firestore, userDataWriter, ref._key, doc3, new SnapshotMetadata(snapshot.hasPendingWrites, snapshot.fromCache), ref.converter);
     }
-    var Transaction$2 = function(_super) {
-      tslib.__extends(Transaction$22, _super);
-      function Transaction$22(_firestore, _transaction) {
+    var Transaction = function(_super) {
+      tslib.__extends(Transaction2, _super);
+      function Transaction2(_firestore, _transaction) {
         var _this = _super.call(this, _firestore, _transaction) || this;
         _this._firestore = _firestore;
         return _this;
       }
-      Transaction$22.prototype.get = function(documentRef) {
+      Transaction2.prototype.get = function(documentRef) {
         var _this = this;
         var ref = validateReference(documentRef, this._firestore);
         var userDataWriter = new ExpUserDataWriter(this._firestore);
         return _super.prototype.get.call(this, documentRef).then(function(liteDocumentSnapshot) {
-          return new DocumentSnapshot$1(_this._firestore, userDataWriter, ref._key, liteDocumentSnapshot._document, new SnapshotMetadata(false, false), ref.converter);
+          return new DocumentSnapshot(_this._firestore, userDataWriter, ref._key, liteDocumentSnapshot._document, new SnapshotMetadata(false, false), ref.converter);
         });
       };
-      return Transaction$22;
+      return Transaction2;
     }(Transaction$1);
     function runTransaction(firestore, updateFunction) {
       var client = ensureFirestoreConfigured(firestore);
       return firestoreClientTransaction(client, function(internalTransaction) {
-        return updateFunction(new Transaction$2(firestore, internalTransaction));
+        return updateFunction(new Transaction(firestore, internalTransaction));
       });
     }
     function deleteField() {
       return new DeleteFieldValueImpl("deleteField");
     }
-    function serverTimestamp$1() {
+    function serverTimestamp() {
       return new ServerTimestampFieldValueImpl("serverTimestamp");
     }
     function arrayUnion() {
@@ -37366,7 +37782,7 @@ var require_index_node_cjs2 = __commonJS({
       return new NumericIncrementFieldValueImpl("increment", n);
     }
     function writeBatch(firestore) {
-      firestore = cast(firestore, FirebaseFirestore$1);
+      firestore = cast(firestore, Firestore);
       ensureFirestoreConfigured(firestore);
       return new WriteBatch(firestore, function(mutations) {
         return executeWrite(firestore, mutations);
@@ -37378,27 +37794,37 @@ var require_index_node_cjs2 = __commonJS({
     exports2.CACHE_SIZE_UNLIMITED = CACHE_SIZE_UNLIMITED;
     exports2.CollectionReference = CollectionReference;
     exports2.DocumentReference = DocumentReference;
-    exports2.DocumentSnapshot = DocumentSnapshot$1;
-    exports2.FieldPath = FieldPath$1;
+    exports2.DocumentSnapshot = DocumentSnapshot;
+    exports2.FieldPath = FieldPath;
     exports2.FieldValue = FieldValue;
-    exports2.FirebaseFirestore = FirebaseFirestore$1;
+    exports2.Firestore = Firestore;
     exports2.FirestoreError = FirestoreError;
     exports2.GeoPoint = GeoPoint;
     exports2.LoadBundleTask = LoadBundleTask;
     exports2.Query = Query;
     exports2.QueryConstraint = QueryConstraint;
-    exports2.QueryDocumentSnapshot = QueryDocumentSnapshot$1;
+    exports2.QueryDocumentSnapshot = QueryDocumentSnapshot;
     exports2.QuerySnapshot = QuerySnapshot;
     exports2.SnapshotMetadata = SnapshotMetadata;
     exports2.Timestamp = Timestamp;
-    exports2.Transaction = Transaction$2;
+    exports2.Transaction = Transaction;
     exports2.WriteBatch = WriteBatch;
+    exports2._DatabaseId = DatabaseId;
+    exports2._DocumentKey = DocumentKey;
+    exports2._EmptyCredentialsProvider = EmptyCredentialsProvider;
+    exports2._FieldPath = FieldPath$1;
+    exports2._cast = cast;
+    exports2._debugAssert = debugAssert;
+    exports2._isBase64Available = isBase64Available;
+    exports2._logWarn = logWarn;
+    exports2._validateIsNotUsedTogether = validateIsNotUsedTogether;
     exports2.addDoc = addDoc;
     exports2.arrayRemove = arrayRemove;
     exports2.arrayUnion = arrayUnion;
     exports2.clearIndexedDbPersistence = clearIndexedDbPersistence;
     exports2.collection = collection2;
     exports2.collectionGroup = collectionGroup;
+    exports2.connectFirestoreEmulator = connectFirestoreEmulator;
     exports2.deleteDoc = deleteDoc2;
     exports2.deleteField = deleteField;
     exports2.disableNetwork = disableNetwork;
@@ -37431,7 +37857,7 @@ var require_index_node_cjs2 = __commonJS({
     exports2.queryEqual = queryEqual;
     exports2.refEqual = refEqual;
     exports2.runTransaction = runTransaction;
-    exports2.serverTimestamp = serverTimestamp$1;
+    exports2.serverTimestamp = serverTimestamp;
     exports2.setDoc = setDoc2;
     exports2.setLogLevel = setLogLevel;
     exports2.snapshotEqual = snapshotEqual;
@@ -37439,7 +37865,6 @@ var require_index_node_cjs2 = __commonJS({
     exports2.startAt = startAt;
     exports2.terminate = terminate;
     exports2.updateDoc = updateDoc;
-    exports2.useFirestoreEmulator = useFirestoreEmulator;
     exports2.waitForPendingWrites = waitForPendingWrites;
     exports2.where = where;
     exports2.writeBatch = writeBatch;
@@ -37460,141 +37885,3725 @@ var import_stream = __toModule(require("stream"));
 var import_util = __toModule(require("util"));
 var import_crypto = __toModule(require("crypto"));
 var import_url = __toModule(require("url"));
-function dataUriToBuffer(uri) {
-  if (!/^data:/i.test(uri)) {
-    throw new TypeError('`uri` does not appear to be a Data URI (must begin with "data:")');
-  }
-  uri = uri.replace(/\r?\n/g, "");
-  const firstComma = uri.indexOf(",");
-  if (firstComma === -1 || firstComma <= 4) {
-    throw new TypeError("malformed data: URI");
-  }
-  const meta = uri.substring(5, firstComma).split(";");
-  let charset = "";
-  let base64 = false;
-  const type = meta[0] || "text/plain";
-  let typeFull = type;
-  for (let i = 1; i < meta.length; i++) {
-    if (meta[i] === "base64") {
-      base64 = true;
-    } else {
-      typeFull += `;${meta[i]}`;
-      if (meta[i].indexOf("charset=") === 0) {
-        charset = meta[i].substring(8);
+var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+var ponyfill_es2018 = {exports: {}};
+(function(module2, exports2) {
+  (function(global2, factory) {
+    factory(exports2);
+  })(commonjsGlobal, function(exports3) {
+    const SymbolPolyfill = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? Symbol : (description) => `Symbol(${description})`;
+    function noop2() {
+      return void 0;
+    }
+    function getGlobals() {
+      if (typeof self !== "undefined") {
+        return self;
+      } else if (typeof window !== "undefined") {
+        return window;
+      } else if (typeof commonjsGlobal !== "undefined") {
+        return commonjsGlobal;
+      }
+      return void 0;
+    }
+    const globals = getGlobals();
+    function typeIsObject(x) {
+      return typeof x === "object" && x !== null || typeof x === "function";
+    }
+    const rethrowAssertionErrorRejection = noop2;
+    const originalPromise = Promise;
+    const originalPromiseThen = Promise.prototype.then;
+    const originalPromiseResolve = Promise.resolve.bind(originalPromise);
+    const originalPromiseReject = Promise.reject.bind(originalPromise);
+    function newPromise(executor) {
+      return new originalPromise(executor);
+    }
+    function promiseResolvedWith(value) {
+      return originalPromiseResolve(value);
+    }
+    function promiseRejectedWith(reason) {
+      return originalPromiseReject(reason);
+    }
+    function PerformPromiseThen(promise, onFulfilled, onRejected) {
+      return originalPromiseThen.call(promise, onFulfilled, onRejected);
+    }
+    function uponPromise(promise, onFulfilled, onRejected) {
+      PerformPromiseThen(PerformPromiseThen(promise, onFulfilled, onRejected), void 0, rethrowAssertionErrorRejection);
+    }
+    function uponFulfillment(promise, onFulfilled) {
+      uponPromise(promise, onFulfilled);
+    }
+    function uponRejection(promise, onRejected) {
+      uponPromise(promise, void 0, onRejected);
+    }
+    function transformPromiseWith(promise, fulfillmentHandler, rejectionHandler) {
+      return PerformPromiseThen(promise, fulfillmentHandler, rejectionHandler);
+    }
+    function setPromiseIsHandledToTrue(promise) {
+      PerformPromiseThen(promise, void 0, rethrowAssertionErrorRejection);
+    }
+    const queueMicrotask = (() => {
+      const globalQueueMicrotask = globals && globals.queueMicrotask;
+      if (typeof globalQueueMicrotask === "function") {
+        return globalQueueMicrotask;
+      }
+      const resolvedPromise = promiseResolvedWith(void 0);
+      return (fn) => PerformPromiseThen(resolvedPromise, fn);
+    })();
+    function reflectCall(F, V, args) {
+      if (typeof F !== "function") {
+        throw new TypeError("Argument is not a function");
+      }
+      return Function.prototype.apply.call(F, V, args);
+    }
+    function promiseCall(F, V, args) {
+      try {
+        return promiseResolvedWith(reflectCall(F, V, args));
+      } catch (value) {
+        return promiseRejectedWith(value);
       }
     }
+    const QUEUE_MAX_ARRAY_SIZE = 16384;
+    class SimpleQueue {
+      constructor() {
+        this._cursor = 0;
+        this._size = 0;
+        this._front = {
+          _elements: [],
+          _next: void 0
+        };
+        this._back = this._front;
+        this._cursor = 0;
+        this._size = 0;
+      }
+      get length() {
+        return this._size;
+      }
+      push(element) {
+        const oldBack = this._back;
+        let newBack = oldBack;
+        if (oldBack._elements.length === QUEUE_MAX_ARRAY_SIZE - 1) {
+          newBack = {
+            _elements: [],
+            _next: void 0
+          };
+        }
+        oldBack._elements.push(element);
+        if (newBack !== oldBack) {
+          this._back = newBack;
+          oldBack._next = newBack;
+        }
+        ++this._size;
+      }
+      shift() {
+        const oldFront = this._front;
+        let newFront = oldFront;
+        const oldCursor = this._cursor;
+        let newCursor = oldCursor + 1;
+        const elements = oldFront._elements;
+        const element = elements[oldCursor];
+        if (newCursor === QUEUE_MAX_ARRAY_SIZE) {
+          newFront = oldFront._next;
+          newCursor = 0;
+        }
+        --this._size;
+        this._cursor = newCursor;
+        if (oldFront !== newFront) {
+          this._front = newFront;
+        }
+        elements[oldCursor] = void 0;
+        return element;
+      }
+      forEach(callback) {
+        let i = this._cursor;
+        let node = this._front;
+        let elements = node._elements;
+        while (i !== elements.length || node._next !== void 0) {
+          if (i === elements.length) {
+            node = node._next;
+            elements = node._elements;
+            i = 0;
+            if (elements.length === 0) {
+              break;
+            }
+          }
+          callback(elements[i]);
+          ++i;
+        }
+      }
+      peek() {
+        const front = this._front;
+        const cursor = this._cursor;
+        return front._elements[cursor];
+      }
+    }
+    function ReadableStreamReaderGenericInitialize(reader, stream) {
+      reader._ownerReadableStream = stream;
+      stream._reader = reader;
+      if (stream._state === "readable") {
+        defaultReaderClosedPromiseInitialize(reader);
+      } else if (stream._state === "closed") {
+        defaultReaderClosedPromiseInitializeAsResolved(reader);
+      } else {
+        defaultReaderClosedPromiseInitializeAsRejected(reader, stream._storedError);
+      }
+    }
+    function ReadableStreamReaderGenericCancel(reader, reason) {
+      const stream = reader._ownerReadableStream;
+      return ReadableStreamCancel(stream, reason);
+    }
+    function ReadableStreamReaderGenericRelease(reader) {
+      if (reader._ownerReadableStream._state === "readable") {
+        defaultReaderClosedPromiseReject(reader, new TypeError(`Reader was released and can no longer be used to monitor the stream's closedness`));
+      } else {
+        defaultReaderClosedPromiseResetToRejected(reader, new TypeError(`Reader was released and can no longer be used to monitor the stream's closedness`));
+      }
+      reader._ownerReadableStream._reader = void 0;
+      reader._ownerReadableStream = void 0;
+    }
+    function readerLockException(name) {
+      return new TypeError("Cannot " + name + " a stream using a released reader");
+    }
+    function defaultReaderClosedPromiseInitialize(reader) {
+      reader._closedPromise = newPromise((resolve2, reject) => {
+        reader._closedPromise_resolve = resolve2;
+        reader._closedPromise_reject = reject;
+      });
+    }
+    function defaultReaderClosedPromiseInitializeAsRejected(reader, reason) {
+      defaultReaderClosedPromiseInitialize(reader);
+      defaultReaderClosedPromiseReject(reader, reason);
+    }
+    function defaultReaderClosedPromiseInitializeAsResolved(reader) {
+      defaultReaderClosedPromiseInitialize(reader);
+      defaultReaderClosedPromiseResolve(reader);
+    }
+    function defaultReaderClosedPromiseReject(reader, reason) {
+      if (reader._closedPromise_reject === void 0) {
+        return;
+      }
+      setPromiseIsHandledToTrue(reader._closedPromise);
+      reader._closedPromise_reject(reason);
+      reader._closedPromise_resolve = void 0;
+      reader._closedPromise_reject = void 0;
+    }
+    function defaultReaderClosedPromiseResetToRejected(reader, reason) {
+      defaultReaderClosedPromiseInitializeAsRejected(reader, reason);
+    }
+    function defaultReaderClosedPromiseResolve(reader) {
+      if (reader._closedPromise_resolve === void 0) {
+        return;
+      }
+      reader._closedPromise_resolve(void 0);
+      reader._closedPromise_resolve = void 0;
+      reader._closedPromise_reject = void 0;
+    }
+    const AbortSteps = SymbolPolyfill("[[AbortSteps]]");
+    const ErrorSteps = SymbolPolyfill("[[ErrorSteps]]");
+    const CancelSteps = SymbolPolyfill("[[CancelSteps]]");
+    const PullSteps = SymbolPolyfill("[[PullSteps]]");
+    const NumberIsFinite = Number.isFinite || function(x) {
+      return typeof x === "number" && isFinite(x);
+    };
+    const MathTrunc = Math.trunc || function(v) {
+      return v < 0 ? Math.ceil(v) : Math.floor(v);
+    };
+    function isDictionary(x) {
+      return typeof x === "object" || typeof x === "function";
+    }
+    function assertDictionary(obj, context) {
+      if (obj !== void 0 && !isDictionary(obj)) {
+        throw new TypeError(`${context} is not an object.`);
+      }
+    }
+    function assertFunction(x, context) {
+      if (typeof x !== "function") {
+        throw new TypeError(`${context} is not a function.`);
+      }
+    }
+    function isObject(x) {
+      return typeof x === "object" && x !== null || typeof x === "function";
+    }
+    function assertObject(x, context) {
+      if (!isObject(x)) {
+        throw new TypeError(`${context} is not an object.`);
+      }
+    }
+    function assertRequiredArgument(x, position, context) {
+      if (x === void 0) {
+        throw new TypeError(`Parameter ${position} is required in '${context}'.`);
+      }
+    }
+    function assertRequiredField(x, field, context) {
+      if (x === void 0) {
+        throw new TypeError(`${field} is required in '${context}'.`);
+      }
+    }
+    function convertUnrestrictedDouble(value) {
+      return Number(value);
+    }
+    function censorNegativeZero(x) {
+      return x === 0 ? 0 : x;
+    }
+    function integerPart(x) {
+      return censorNegativeZero(MathTrunc(x));
+    }
+    function convertUnsignedLongLongWithEnforceRange(value, context) {
+      const lowerBound = 0;
+      const upperBound = Number.MAX_SAFE_INTEGER;
+      let x = Number(value);
+      x = censorNegativeZero(x);
+      if (!NumberIsFinite(x)) {
+        throw new TypeError(`${context} is not a finite number`);
+      }
+      x = integerPart(x);
+      if (x < lowerBound || x > upperBound) {
+        throw new TypeError(`${context} is outside the accepted range of ${lowerBound} to ${upperBound}, inclusive`);
+      }
+      if (!NumberIsFinite(x) || x === 0) {
+        return 0;
+      }
+      return x;
+    }
+    function assertReadableStream(x, context) {
+      if (!IsReadableStream(x)) {
+        throw new TypeError(`${context} is not a ReadableStream.`);
+      }
+    }
+    function AcquireReadableStreamDefaultReader(stream) {
+      return new ReadableStreamDefaultReader(stream);
+    }
+    function ReadableStreamAddReadRequest(stream, readRequest) {
+      stream._reader._readRequests.push(readRequest);
+    }
+    function ReadableStreamFulfillReadRequest(stream, chunk, done) {
+      const reader = stream._reader;
+      const readRequest = reader._readRequests.shift();
+      if (done) {
+        readRequest._closeSteps();
+      } else {
+        readRequest._chunkSteps(chunk);
+      }
+    }
+    function ReadableStreamGetNumReadRequests(stream) {
+      return stream._reader._readRequests.length;
+    }
+    function ReadableStreamHasDefaultReader(stream) {
+      const reader = stream._reader;
+      if (reader === void 0) {
+        return false;
+      }
+      if (!IsReadableStreamDefaultReader(reader)) {
+        return false;
+      }
+      return true;
+    }
+    class ReadableStreamDefaultReader {
+      constructor(stream) {
+        assertRequiredArgument(stream, 1, "ReadableStreamDefaultReader");
+        assertReadableStream(stream, "First parameter");
+        if (IsReadableStreamLocked(stream)) {
+          throw new TypeError("This stream has already been locked for exclusive reading by another reader");
+        }
+        ReadableStreamReaderGenericInitialize(this, stream);
+        this._readRequests = new SimpleQueue();
+      }
+      get closed() {
+        if (!IsReadableStreamDefaultReader(this)) {
+          return promiseRejectedWith(defaultReaderBrandCheckException("closed"));
+        }
+        return this._closedPromise;
+      }
+      cancel(reason = void 0) {
+        if (!IsReadableStreamDefaultReader(this)) {
+          return promiseRejectedWith(defaultReaderBrandCheckException("cancel"));
+        }
+        if (this._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("cancel"));
+        }
+        return ReadableStreamReaderGenericCancel(this, reason);
+      }
+      read() {
+        if (!IsReadableStreamDefaultReader(this)) {
+          return promiseRejectedWith(defaultReaderBrandCheckException("read"));
+        }
+        if (this._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("read from"));
+        }
+        let resolvePromise;
+        let rejectPromise;
+        const promise = newPromise((resolve2, reject) => {
+          resolvePromise = resolve2;
+          rejectPromise = reject;
+        });
+        const readRequest = {
+          _chunkSteps: (chunk) => resolvePromise({value: chunk, done: false}),
+          _closeSteps: () => resolvePromise({value: void 0, done: true}),
+          _errorSteps: (e) => rejectPromise(e)
+        };
+        ReadableStreamDefaultReaderRead(this, readRequest);
+        return promise;
+      }
+      releaseLock() {
+        if (!IsReadableStreamDefaultReader(this)) {
+          throw defaultReaderBrandCheckException("releaseLock");
+        }
+        if (this._ownerReadableStream === void 0) {
+          return;
+        }
+        if (this._readRequests.length > 0) {
+          throw new TypeError("Tried to release a reader lock when that reader has pending read() calls un-settled");
+        }
+        ReadableStreamReaderGenericRelease(this);
+      }
+    }
+    Object.defineProperties(ReadableStreamDefaultReader.prototype, {
+      cancel: {enumerable: true},
+      read: {enumerable: true},
+      releaseLock: {enumerable: true},
+      closed: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableStreamDefaultReader.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableStreamDefaultReader",
+        configurable: true
+      });
+    }
+    function IsReadableStreamDefaultReader(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_readRequests")) {
+        return false;
+      }
+      return x instanceof ReadableStreamDefaultReader;
+    }
+    function ReadableStreamDefaultReaderRead(reader, readRequest) {
+      const stream = reader._ownerReadableStream;
+      stream._disturbed = true;
+      if (stream._state === "closed") {
+        readRequest._closeSteps();
+      } else if (stream._state === "errored") {
+        readRequest._errorSteps(stream._storedError);
+      } else {
+        stream._readableStreamController[PullSteps](readRequest);
+      }
+    }
+    function defaultReaderBrandCheckException(name) {
+      return new TypeError(`ReadableStreamDefaultReader.prototype.${name} can only be used on a ReadableStreamDefaultReader`);
+    }
+    const AsyncIteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf(async function* () {
+    }).prototype);
+    class ReadableStreamAsyncIteratorImpl {
+      constructor(reader, preventCancel) {
+        this._ongoingPromise = void 0;
+        this._isFinished = false;
+        this._reader = reader;
+        this._preventCancel = preventCancel;
+      }
+      next() {
+        const nextSteps = () => this._nextSteps();
+        this._ongoingPromise = this._ongoingPromise ? transformPromiseWith(this._ongoingPromise, nextSteps, nextSteps) : nextSteps();
+        return this._ongoingPromise;
+      }
+      return(value) {
+        const returnSteps = () => this._returnSteps(value);
+        return this._ongoingPromise ? transformPromiseWith(this._ongoingPromise, returnSteps, returnSteps) : returnSteps();
+      }
+      _nextSteps() {
+        if (this._isFinished) {
+          return Promise.resolve({value: void 0, done: true});
+        }
+        const reader = this._reader;
+        if (reader._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("iterate"));
+        }
+        let resolvePromise;
+        let rejectPromise;
+        const promise = newPromise((resolve2, reject) => {
+          resolvePromise = resolve2;
+          rejectPromise = reject;
+        });
+        const readRequest = {
+          _chunkSteps: (chunk) => {
+            this._ongoingPromise = void 0;
+            queueMicrotask(() => resolvePromise({value: chunk, done: false}));
+          },
+          _closeSteps: () => {
+            this._ongoingPromise = void 0;
+            this._isFinished = true;
+            ReadableStreamReaderGenericRelease(reader);
+            resolvePromise({value: void 0, done: true});
+          },
+          _errorSteps: (reason) => {
+            this._ongoingPromise = void 0;
+            this._isFinished = true;
+            ReadableStreamReaderGenericRelease(reader);
+            rejectPromise(reason);
+          }
+        };
+        ReadableStreamDefaultReaderRead(reader, readRequest);
+        return promise;
+      }
+      _returnSteps(value) {
+        if (this._isFinished) {
+          return Promise.resolve({value, done: true});
+        }
+        this._isFinished = true;
+        const reader = this._reader;
+        if (reader._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("finish iterating"));
+        }
+        if (!this._preventCancel) {
+          const result = ReadableStreamReaderGenericCancel(reader, value);
+          ReadableStreamReaderGenericRelease(reader);
+          return transformPromiseWith(result, () => ({value, done: true}));
+        }
+        ReadableStreamReaderGenericRelease(reader);
+        return promiseResolvedWith({value, done: true});
+      }
+    }
+    const ReadableStreamAsyncIteratorPrototype = {
+      next() {
+        if (!IsReadableStreamAsyncIterator(this)) {
+          return promiseRejectedWith(streamAsyncIteratorBrandCheckException("next"));
+        }
+        return this._asyncIteratorImpl.next();
+      },
+      return(value) {
+        if (!IsReadableStreamAsyncIterator(this)) {
+          return promiseRejectedWith(streamAsyncIteratorBrandCheckException("return"));
+        }
+        return this._asyncIteratorImpl.return(value);
+      }
+    };
+    if (AsyncIteratorPrototype !== void 0) {
+      Object.setPrototypeOf(ReadableStreamAsyncIteratorPrototype, AsyncIteratorPrototype);
+    }
+    function AcquireReadableStreamAsyncIterator(stream, preventCancel) {
+      const reader = AcquireReadableStreamDefaultReader(stream);
+      const impl = new ReadableStreamAsyncIteratorImpl(reader, preventCancel);
+      const iterator = Object.create(ReadableStreamAsyncIteratorPrototype);
+      iterator._asyncIteratorImpl = impl;
+      return iterator;
+    }
+    function IsReadableStreamAsyncIterator(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_asyncIteratorImpl")) {
+        return false;
+      }
+      try {
+        return x._asyncIteratorImpl instanceof ReadableStreamAsyncIteratorImpl;
+      } catch (_a2) {
+        return false;
+      }
+    }
+    function streamAsyncIteratorBrandCheckException(name) {
+      return new TypeError(`ReadableStreamAsyncIterator.${name} can only be used on a ReadableSteamAsyncIterator`);
+    }
+    const NumberIsNaN = Number.isNaN || function(x) {
+      return x !== x;
+    };
+    function CreateArrayFromList(elements) {
+      return elements.slice();
+    }
+    function CopyDataBlockBytes(dest, destOffset, src, srcOffset, n) {
+      new Uint8Array(dest).set(new Uint8Array(src, srcOffset, n), destOffset);
+    }
+    function TransferArrayBuffer(O) {
+      return O;
+    }
+    function IsDetachedBuffer(O) {
+      return false;
+    }
+    function ArrayBufferSlice(buffer, begin, end) {
+      if (buffer.slice) {
+        return buffer.slice(begin, end);
+      }
+      const length = end - begin;
+      const slice = new ArrayBuffer(length);
+      CopyDataBlockBytes(slice, 0, buffer, begin, length);
+      return slice;
+    }
+    function IsNonNegativeNumber(v) {
+      if (typeof v !== "number") {
+        return false;
+      }
+      if (NumberIsNaN(v)) {
+        return false;
+      }
+      if (v < 0) {
+        return false;
+      }
+      return true;
+    }
+    function CloneAsUint8Array(O) {
+      const buffer = ArrayBufferSlice(O.buffer, O.byteOffset, O.byteOffset + O.byteLength);
+      return new Uint8Array(buffer);
+    }
+    function DequeueValue(container) {
+      const pair = container._queue.shift();
+      container._queueTotalSize -= pair.size;
+      if (container._queueTotalSize < 0) {
+        container._queueTotalSize = 0;
+      }
+      return pair.value;
+    }
+    function EnqueueValueWithSize(container, value, size) {
+      if (!IsNonNegativeNumber(size) || size === Infinity) {
+        throw new RangeError("Size must be a finite, non-NaN, non-negative number.");
+      }
+      container._queue.push({value, size});
+      container._queueTotalSize += size;
+    }
+    function PeekQueueValue(container) {
+      const pair = container._queue.peek();
+      return pair.value;
+    }
+    function ResetQueue(container) {
+      container._queue = new SimpleQueue();
+      container._queueTotalSize = 0;
+    }
+    class ReadableStreamBYOBRequest {
+      constructor() {
+        throw new TypeError("Illegal constructor");
+      }
+      get view() {
+        if (!IsReadableStreamBYOBRequest(this)) {
+          throw byobRequestBrandCheckException("view");
+        }
+        return this._view;
+      }
+      respond(bytesWritten) {
+        if (!IsReadableStreamBYOBRequest(this)) {
+          throw byobRequestBrandCheckException("respond");
+        }
+        assertRequiredArgument(bytesWritten, 1, "respond");
+        bytesWritten = convertUnsignedLongLongWithEnforceRange(bytesWritten, "First parameter");
+        if (this._associatedReadableByteStreamController === void 0) {
+          throw new TypeError("This BYOB request has been invalidated");
+        }
+        if (IsDetachedBuffer(this._view.buffer))
+          ;
+        ReadableByteStreamControllerRespond(this._associatedReadableByteStreamController, bytesWritten);
+      }
+      respondWithNewView(view) {
+        if (!IsReadableStreamBYOBRequest(this)) {
+          throw byobRequestBrandCheckException("respondWithNewView");
+        }
+        assertRequiredArgument(view, 1, "respondWithNewView");
+        if (!ArrayBuffer.isView(view)) {
+          throw new TypeError("You can only respond with array buffer views");
+        }
+        if (this._associatedReadableByteStreamController === void 0) {
+          throw new TypeError("This BYOB request has been invalidated");
+        }
+        if (IsDetachedBuffer(view.buffer))
+          ;
+        ReadableByteStreamControllerRespondWithNewView(this._associatedReadableByteStreamController, view);
+      }
+    }
+    Object.defineProperties(ReadableStreamBYOBRequest.prototype, {
+      respond: {enumerable: true},
+      respondWithNewView: {enumerable: true},
+      view: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableStreamBYOBRequest.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableStreamBYOBRequest",
+        configurable: true
+      });
+    }
+    class ReadableByteStreamController {
+      constructor() {
+        throw new TypeError("Illegal constructor");
+      }
+      get byobRequest() {
+        if (!IsReadableByteStreamController(this)) {
+          throw byteStreamControllerBrandCheckException("byobRequest");
+        }
+        return ReadableByteStreamControllerGetBYOBRequest(this);
+      }
+      get desiredSize() {
+        if (!IsReadableByteStreamController(this)) {
+          throw byteStreamControllerBrandCheckException("desiredSize");
+        }
+        return ReadableByteStreamControllerGetDesiredSize(this);
+      }
+      close() {
+        if (!IsReadableByteStreamController(this)) {
+          throw byteStreamControllerBrandCheckException("close");
+        }
+        if (this._closeRequested) {
+          throw new TypeError("The stream has already been closed; do not close it again!");
+        }
+        const state = this._controlledReadableByteStream._state;
+        if (state !== "readable") {
+          throw new TypeError(`The stream (in ${state} state) is not in the readable state and cannot be closed`);
+        }
+        ReadableByteStreamControllerClose(this);
+      }
+      enqueue(chunk) {
+        if (!IsReadableByteStreamController(this)) {
+          throw byteStreamControllerBrandCheckException("enqueue");
+        }
+        assertRequiredArgument(chunk, 1, "enqueue");
+        if (!ArrayBuffer.isView(chunk)) {
+          throw new TypeError("chunk must be an array buffer view");
+        }
+        if (chunk.byteLength === 0) {
+          throw new TypeError("chunk must have non-zero byteLength");
+        }
+        if (chunk.buffer.byteLength === 0) {
+          throw new TypeError(`chunk's buffer must have non-zero byteLength`);
+        }
+        if (this._closeRequested) {
+          throw new TypeError("stream is closed or draining");
+        }
+        const state = this._controlledReadableByteStream._state;
+        if (state !== "readable") {
+          throw new TypeError(`The stream (in ${state} state) is not in the readable state and cannot be enqueued to`);
+        }
+        ReadableByteStreamControllerEnqueue(this, chunk);
+      }
+      error(e = void 0) {
+        if (!IsReadableByteStreamController(this)) {
+          throw byteStreamControllerBrandCheckException("error");
+        }
+        ReadableByteStreamControllerError(this, e);
+      }
+      [CancelSteps](reason) {
+        ReadableByteStreamControllerClearPendingPullIntos(this);
+        ResetQueue(this);
+        const result = this._cancelAlgorithm(reason);
+        ReadableByteStreamControllerClearAlgorithms(this);
+        return result;
+      }
+      [PullSteps](readRequest) {
+        const stream = this._controlledReadableByteStream;
+        if (this._queueTotalSize > 0) {
+          const entry = this._queue.shift();
+          this._queueTotalSize -= entry.byteLength;
+          ReadableByteStreamControllerHandleQueueDrain(this);
+          const view = new Uint8Array(entry.buffer, entry.byteOffset, entry.byteLength);
+          readRequest._chunkSteps(view);
+          return;
+        }
+        const autoAllocateChunkSize = this._autoAllocateChunkSize;
+        if (autoAllocateChunkSize !== void 0) {
+          let buffer;
+          try {
+            buffer = new ArrayBuffer(autoAllocateChunkSize);
+          } catch (bufferE) {
+            readRequest._errorSteps(bufferE);
+            return;
+          }
+          const pullIntoDescriptor = {
+            buffer,
+            bufferByteLength: autoAllocateChunkSize,
+            byteOffset: 0,
+            byteLength: autoAllocateChunkSize,
+            bytesFilled: 0,
+            elementSize: 1,
+            viewConstructor: Uint8Array,
+            readerType: "default"
+          };
+          this._pendingPullIntos.push(pullIntoDescriptor);
+        }
+        ReadableStreamAddReadRequest(stream, readRequest);
+        ReadableByteStreamControllerCallPullIfNeeded(this);
+      }
+    }
+    Object.defineProperties(ReadableByteStreamController.prototype, {
+      close: {enumerable: true},
+      enqueue: {enumerable: true},
+      error: {enumerable: true},
+      byobRequest: {enumerable: true},
+      desiredSize: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableByteStreamController.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableByteStreamController",
+        configurable: true
+      });
+    }
+    function IsReadableByteStreamController(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_controlledReadableByteStream")) {
+        return false;
+      }
+      return x instanceof ReadableByteStreamController;
+    }
+    function IsReadableStreamBYOBRequest(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_associatedReadableByteStreamController")) {
+        return false;
+      }
+      return x instanceof ReadableStreamBYOBRequest;
+    }
+    function ReadableByteStreamControllerCallPullIfNeeded(controller) {
+      const shouldPull = ReadableByteStreamControllerShouldCallPull(controller);
+      if (!shouldPull) {
+        return;
+      }
+      if (controller._pulling) {
+        controller._pullAgain = true;
+        return;
+      }
+      controller._pulling = true;
+      const pullPromise = controller._pullAlgorithm();
+      uponPromise(pullPromise, () => {
+        controller._pulling = false;
+        if (controller._pullAgain) {
+          controller._pullAgain = false;
+          ReadableByteStreamControllerCallPullIfNeeded(controller);
+        }
+      }, (e) => {
+        ReadableByteStreamControllerError(controller, e);
+      });
+    }
+    function ReadableByteStreamControllerClearPendingPullIntos(controller) {
+      ReadableByteStreamControllerInvalidateBYOBRequest(controller);
+      controller._pendingPullIntos = new SimpleQueue();
+    }
+    function ReadableByteStreamControllerCommitPullIntoDescriptor(stream, pullIntoDescriptor) {
+      let done = false;
+      if (stream._state === "closed") {
+        done = true;
+      }
+      const filledView = ReadableByteStreamControllerConvertPullIntoDescriptor(pullIntoDescriptor);
+      if (pullIntoDescriptor.readerType === "default") {
+        ReadableStreamFulfillReadRequest(stream, filledView, done);
+      } else {
+        ReadableStreamFulfillReadIntoRequest(stream, filledView, done);
+      }
+    }
+    function ReadableByteStreamControllerConvertPullIntoDescriptor(pullIntoDescriptor) {
+      const bytesFilled = pullIntoDescriptor.bytesFilled;
+      const elementSize = pullIntoDescriptor.elementSize;
+      return new pullIntoDescriptor.viewConstructor(pullIntoDescriptor.buffer, pullIntoDescriptor.byteOffset, bytesFilled / elementSize);
+    }
+    function ReadableByteStreamControllerEnqueueChunkToQueue(controller, buffer, byteOffset, byteLength) {
+      controller._queue.push({buffer, byteOffset, byteLength});
+      controller._queueTotalSize += byteLength;
+    }
+    function ReadableByteStreamControllerFillPullIntoDescriptorFromQueue(controller, pullIntoDescriptor) {
+      const elementSize = pullIntoDescriptor.elementSize;
+      const currentAlignedBytes = pullIntoDescriptor.bytesFilled - pullIntoDescriptor.bytesFilled % elementSize;
+      const maxBytesToCopy = Math.min(controller._queueTotalSize, pullIntoDescriptor.byteLength - pullIntoDescriptor.bytesFilled);
+      const maxBytesFilled = pullIntoDescriptor.bytesFilled + maxBytesToCopy;
+      const maxAlignedBytes = maxBytesFilled - maxBytesFilled % elementSize;
+      let totalBytesToCopyRemaining = maxBytesToCopy;
+      let ready = false;
+      if (maxAlignedBytes > currentAlignedBytes) {
+        totalBytesToCopyRemaining = maxAlignedBytes - pullIntoDescriptor.bytesFilled;
+        ready = true;
+      }
+      const queue = controller._queue;
+      while (totalBytesToCopyRemaining > 0) {
+        const headOfQueue = queue.peek();
+        const bytesToCopy = Math.min(totalBytesToCopyRemaining, headOfQueue.byteLength);
+        const destStart = pullIntoDescriptor.byteOffset + pullIntoDescriptor.bytesFilled;
+        CopyDataBlockBytes(pullIntoDescriptor.buffer, destStart, headOfQueue.buffer, headOfQueue.byteOffset, bytesToCopy);
+        if (headOfQueue.byteLength === bytesToCopy) {
+          queue.shift();
+        } else {
+          headOfQueue.byteOffset += bytesToCopy;
+          headOfQueue.byteLength -= bytesToCopy;
+        }
+        controller._queueTotalSize -= bytesToCopy;
+        ReadableByteStreamControllerFillHeadPullIntoDescriptor(controller, bytesToCopy, pullIntoDescriptor);
+        totalBytesToCopyRemaining -= bytesToCopy;
+      }
+      return ready;
+    }
+    function ReadableByteStreamControllerFillHeadPullIntoDescriptor(controller, size, pullIntoDescriptor) {
+      pullIntoDescriptor.bytesFilled += size;
+    }
+    function ReadableByteStreamControllerHandleQueueDrain(controller) {
+      if (controller._queueTotalSize === 0 && controller._closeRequested) {
+        ReadableByteStreamControllerClearAlgorithms(controller);
+        ReadableStreamClose(controller._controlledReadableByteStream);
+      } else {
+        ReadableByteStreamControllerCallPullIfNeeded(controller);
+      }
+    }
+    function ReadableByteStreamControllerInvalidateBYOBRequest(controller) {
+      if (controller._byobRequest === null) {
+        return;
+      }
+      controller._byobRequest._associatedReadableByteStreamController = void 0;
+      controller._byobRequest._view = null;
+      controller._byobRequest = null;
+    }
+    function ReadableByteStreamControllerProcessPullIntoDescriptorsUsingQueue(controller) {
+      while (controller._pendingPullIntos.length > 0) {
+        if (controller._queueTotalSize === 0) {
+          return;
+        }
+        const pullIntoDescriptor = controller._pendingPullIntos.peek();
+        if (ReadableByteStreamControllerFillPullIntoDescriptorFromQueue(controller, pullIntoDescriptor)) {
+          ReadableByteStreamControllerShiftPendingPullInto(controller);
+          ReadableByteStreamControllerCommitPullIntoDescriptor(controller._controlledReadableByteStream, pullIntoDescriptor);
+        }
+      }
+    }
+    function ReadableByteStreamControllerPullInto(controller, view, readIntoRequest) {
+      const stream = controller._controlledReadableByteStream;
+      let elementSize = 1;
+      if (view.constructor !== DataView) {
+        elementSize = view.constructor.BYTES_PER_ELEMENT;
+      }
+      const ctor = view.constructor;
+      const buffer = TransferArrayBuffer(view.buffer);
+      const pullIntoDescriptor = {
+        buffer,
+        bufferByteLength: buffer.byteLength,
+        byteOffset: view.byteOffset,
+        byteLength: view.byteLength,
+        bytesFilled: 0,
+        elementSize,
+        viewConstructor: ctor,
+        readerType: "byob"
+      };
+      if (controller._pendingPullIntos.length > 0) {
+        controller._pendingPullIntos.push(pullIntoDescriptor);
+        ReadableStreamAddReadIntoRequest(stream, readIntoRequest);
+        return;
+      }
+      if (stream._state === "closed") {
+        const emptyView = new ctor(pullIntoDescriptor.buffer, pullIntoDescriptor.byteOffset, 0);
+        readIntoRequest._closeSteps(emptyView);
+        return;
+      }
+      if (controller._queueTotalSize > 0) {
+        if (ReadableByteStreamControllerFillPullIntoDescriptorFromQueue(controller, pullIntoDescriptor)) {
+          const filledView = ReadableByteStreamControllerConvertPullIntoDescriptor(pullIntoDescriptor);
+          ReadableByteStreamControllerHandleQueueDrain(controller);
+          readIntoRequest._chunkSteps(filledView);
+          return;
+        }
+        if (controller._closeRequested) {
+          const e = new TypeError("Insufficient bytes to fill elements in the given buffer");
+          ReadableByteStreamControllerError(controller, e);
+          readIntoRequest._errorSteps(e);
+          return;
+        }
+      }
+      controller._pendingPullIntos.push(pullIntoDescriptor);
+      ReadableStreamAddReadIntoRequest(stream, readIntoRequest);
+      ReadableByteStreamControllerCallPullIfNeeded(controller);
+    }
+    function ReadableByteStreamControllerRespondInClosedState(controller, firstDescriptor) {
+      const stream = controller._controlledReadableByteStream;
+      if (ReadableStreamHasBYOBReader(stream)) {
+        while (ReadableStreamGetNumReadIntoRequests(stream) > 0) {
+          const pullIntoDescriptor = ReadableByteStreamControllerShiftPendingPullInto(controller);
+          ReadableByteStreamControllerCommitPullIntoDescriptor(stream, pullIntoDescriptor);
+        }
+      }
+    }
+    function ReadableByteStreamControllerRespondInReadableState(controller, bytesWritten, pullIntoDescriptor) {
+      ReadableByteStreamControllerFillHeadPullIntoDescriptor(controller, bytesWritten, pullIntoDescriptor);
+      if (pullIntoDescriptor.bytesFilled < pullIntoDescriptor.elementSize) {
+        return;
+      }
+      ReadableByteStreamControllerShiftPendingPullInto(controller);
+      const remainderSize = pullIntoDescriptor.bytesFilled % pullIntoDescriptor.elementSize;
+      if (remainderSize > 0) {
+        const end = pullIntoDescriptor.byteOffset + pullIntoDescriptor.bytesFilled;
+        const remainder = ArrayBufferSlice(pullIntoDescriptor.buffer, end - remainderSize, end);
+        ReadableByteStreamControllerEnqueueChunkToQueue(controller, remainder, 0, remainder.byteLength);
+      }
+      pullIntoDescriptor.bytesFilled -= remainderSize;
+      ReadableByteStreamControllerCommitPullIntoDescriptor(controller._controlledReadableByteStream, pullIntoDescriptor);
+      ReadableByteStreamControllerProcessPullIntoDescriptorsUsingQueue(controller);
+    }
+    function ReadableByteStreamControllerRespondInternal(controller, bytesWritten) {
+      const firstDescriptor = controller._pendingPullIntos.peek();
+      ReadableByteStreamControllerInvalidateBYOBRequest(controller);
+      const state = controller._controlledReadableByteStream._state;
+      if (state === "closed") {
+        ReadableByteStreamControllerRespondInClosedState(controller);
+      } else {
+        ReadableByteStreamControllerRespondInReadableState(controller, bytesWritten, firstDescriptor);
+      }
+      ReadableByteStreamControllerCallPullIfNeeded(controller);
+    }
+    function ReadableByteStreamControllerShiftPendingPullInto(controller) {
+      const descriptor = controller._pendingPullIntos.shift();
+      return descriptor;
+    }
+    function ReadableByteStreamControllerShouldCallPull(controller) {
+      const stream = controller._controlledReadableByteStream;
+      if (stream._state !== "readable") {
+        return false;
+      }
+      if (controller._closeRequested) {
+        return false;
+      }
+      if (!controller._started) {
+        return false;
+      }
+      if (ReadableStreamHasDefaultReader(stream) && ReadableStreamGetNumReadRequests(stream) > 0) {
+        return true;
+      }
+      if (ReadableStreamHasBYOBReader(stream) && ReadableStreamGetNumReadIntoRequests(stream) > 0) {
+        return true;
+      }
+      const desiredSize = ReadableByteStreamControllerGetDesiredSize(controller);
+      if (desiredSize > 0) {
+        return true;
+      }
+      return false;
+    }
+    function ReadableByteStreamControllerClearAlgorithms(controller) {
+      controller._pullAlgorithm = void 0;
+      controller._cancelAlgorithm = void 0;
+    }
+    function ReadableByteStreamControllerClose(controller) {
+      const stream = controller._controlledReadableByteStream;
+      if (controller._closeRequested || stream._state !== "readable") {
+        return;
+      }
+      if (controller._queueTotalSize > 0) {
+        controller._closeRequested = true;
+        return;
+      }
+      if (controller._pendingPullIntos.length > 0) {
+        const firstPendingPullInto = controller._pendingPullIntos.peek();
+        if (firstPendingPullInto.bytesFilled > 0) {
+          const e = new TypeError("Insufficient bytes to fill elements in the given buffer");
+          ReadableByteStreamControllerError(controller, e);
+          throw e;
+        }
+      }
+      ReadableByteStreamControllerClearAlgorithms(controller);
+      ReadableStreamClose(stream);
+    }
+    function ReadableByteStreamControllerEnqueue(controller, chunk) {
+      const stream = controller._controlledReadableByteStream;
+      if (controller._closeRequested || stream._state !== "readable") {
+        return;
+      }
+      const buffer = chunk.buffer;
+      const byteOffset = chunk.byteOffset;
+      const byteLength = chunk.byteLength;
+      const transferredBuffer = TransferArrayBuffer(buffer);
+      if (controller._pendingPullIntos.length > 0) {
+        const firstPendingPullInto = controller._pendingPullIntos.peek();
+        if (IsDetachedBuffer(firstPendingPullInto.buffer))
+          ;
+        firstPendingPullInto.buffer = TransferArrayBuffer(firstPendingPullInto.buffer);
+      }
+      ReadableByteStreamControllerInvalidateBYOBRequest(controller);
+      if (ReadableStreamHasDefaultReader(stream)) {
+        if (ReadableStreamGetNumReadRequests(stream) === 0) {
+          ReadableByteStreamControllerEnqueueChunkToQueue(controller, transferredBuffer, byteOffset, byteLength);
+        } else {
+          const transferredView = new Uint8Array(transferredBuffer, byteOffset, byteLength);
+          ReadableStreamFulfillReadRequest(stream, transferredView, false);
+        }
+      } else if (ReadableStreamHasBYOBReader(stream)) {
+        ReadableByteStreamControllerEnqueueChunkToQueue(controller, transferredBuffer, byteOffset, byteLength);
+        ReadableByteStreamControllerProcessPullIntoDescriptorsUsingQueue(controller);
+      } else {
+        ReadableByteStreamControllerEnqueueChunkToQueue(controller, transferredBuffer, byteOffset, byteLength);
+      }
+      ReadableByteStreamControllerCallPullIfNeeded(controller);
+    }
+    function ReadableByteStreamControllerError(controller, e) {
+      const stream = controller._controlledReadableByteStream;
+      if (stream._state !== "readable") {
+        return;
+      }
+      ReadableByteStreamControllerClearPendingPullIntos(controller);
+      ResetQueue(controller);
+      ReadableByteStreamControllerClearAlgorithms(controller);
+      ReadableStreamError(stream, e);
+    }
+    function ReadableByteStreamControllerGetBYOBRequest(controller) {
+      if (controller._byobRequest === null && controller._pendingPullIntos.length > 0) {
+        const firstDescriptor = controller._pendingPullIntos.peek();
+        const view = new Uint8Array(firstDescriptor.buffer, firstDescriptor.byteOffset + firstDescriptor.bytesFilled, firstDescriptor.byteLength - firstDescriptor.bytesFilled);
+        const byobRequest = Object.create(ReadableStreamBYOBRequest.prototype);
+        SetUpReadableStreamBYOBRequest(byobRequest, controller, view);
+        controller._byobRequest = byobRequest;
+      }
+      return controller._byobRequest;
+    }
+    function ReadableByteStreamControllerGetDesiredSize(controller) {
+      const state = controller._controlledReadableByteStream._state;
+      if (state === "errored") {
+        return null;
+      }
+      if (state === "closed") {
+        return 0;
+      }
+      return controller._strategyHWM - controller._queueTotalSize;
+    }
+    function ReadableByteStreamControllerRespond(controller, bytesWritten) {
+      const firstDescriptor = controller._pendingPullIntos.peek();
+      const state = controller._controlledReadableByteStream._state;
+      if (state === "closed") {
+        if (bytesWritten !== 0) {
+          throw new TypeError("bytesWritten must be 0 when calling respond() on a closed stream");
+        }
+      } else {
+        if (bytesWritten === 0) {
+          throw new TypeError("bytesWritten must be greater than 0 when calling respond() on a readable stream");
+        }
+        if (firstDescriptor.bytesFilled + bytesWritten > firstDescriptor.byteLength) {
+          throw new RangeError("bytesWritten out of range");
+        }
+      }
+      firstDescriptor.buffer = TransferArrayBuffer(firstDescriptor.buffer);
+      ReadableByteStreamControllerRespondInternal(controller, bytesWritten);
+    }
+    function ReadableByteStreamControllerRespondWithNewView(controller, view) {
+      const firstDescriptor = controller._pendingPullIntos.peek();
+      const state = controller._controlledReadableByteStream._state;
+      if (state === "closed") {
+        if (view.byteLength !== 0) {
+          throw new TypeError("The view's length must be 0 when calling respondWithNewView() on a closed stream");
+        }
+      } else {
+        if (view.byteLength === 0) {
+          throw new TypeError("The view's length must be greater than 0 when calling respondWithNewView() on a readable stream");
+        }
+      }
+      if (firstDescriptor.byteOffset + firstDescriptor.bytesFilled !== view.byteOffset) {
+        throw new RangeError("The region specified by view does not match byobRequest");
+      }
+      if (firstDescriptor.bufferByteLength !== view.buffer.byteLength) {
+        throw new RangeError("The buffer of view has different capacity than byobRequest");
+      }
+      if (firstDescriptor.bytesFilled + view.byteLength > firstDescriptor.byteLength) {
+        throw new RangeError("The region specified by view is larger than byobRequest");
+      }
+      firstDescriptor.buffer = TransferArrayBuffer(view.buffer);
+      ReadableByteStreamControllerRespondInternal(controller, view.byteLength);
+    }
+    function SetUpReadableByteStreamController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, autoAllocateChunkSize) {
+      controller._controlledReadableByteStream = stream;
+      controller._pullAgain = false;
+      controller._pulling = false;
+      controller._byobRequest = null;
+      controller._queue = controller._queueTotalSize = void 0;
+      ResetQueue(controller);
+      controller._closeRequested = false;
+      controller._started = false;
+      controller._strategyHWM = highWaterMark;
+      controller._pullAlgorithm = pullAlgorithm;
+      controller._cancelAlgorithm = cancelAlgorithm;
+      controller._autoAllocateChunkSize = autoAllocateChunkSize;
+      controller._pendingPullIntos = new SimpleQueue();
+      stream._readableStreamController = controller;
+      const startResult = startAlgorithm();
+      uponPromise(promiseResolvedWith(startResult), () => {
+        controller._started = true;
+        ReadableByteStreamControllerCallPullIfNeeded(controller);
+      }, (r) => {
+        ReadableByteStreamControllerError(controller, r);
+      });
+    }
+    function SetUpReadableByteStreamControllerFromUnderlyingSource(stream, underlyingByteSource, highWaterMark) {
+      const controller = Object.create(ReadableByteStreamController.prototype);
+      let startAlgorithm = () => void 0;
+      let pullAlgorithm = () => promiseResolvedWith(void 0);
+      let cancelAlgorithm = () => promiseResolvedWith(void 0);
+      if (underlyingByteSource.start !== void 0) {
+        startAlgorithm = () => underlyingByteSource.start(controller);
+      }
+      if (underlyingByteSource.pull !== void 0) {
+        pullAlgorithm = () => underlyingByteSource.pull(controller);
+      }
+      if (underlyingByteSource.cancel !== void 0) {
+        cancelAlgorithm = (reason) => underlyingByteSource.cancel(reason);
+      }
+      const autoAllocateChunkSize = underlyingByteSource.autoAllocateChunkSize;
+      if (autoAllocateChunkSize === 0) {
+        throw new TypeError("autoAllocateChunkSize must be greater than 0");
+      }
+      SetUpReadableByteStreamController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, autoAllocateChunkSize);
+    }
+    function SetUpReadableStreamBYOBRequest(request, controller, view) {
+      request._associatedReadableByteStreamController = controller;
+      request._view = view;
+    }
+    function byobRequestBrandCheckException(name) {
+      return new TypeError(`ReadableStreamBYOBRequest.prototype.${name} can only be used on a ReadableStreamBYOBRequest`);
+    }
+    function byteStreamControllerBrandCheckException(name) {
+      return new TypeError(`ReadableByteStreamController.prototype.${name} can only be used on a ReadableByteStreamController`);
+    }
+    function AcquireReadableStreamBYOBReader(stream) {
+      return new ReadableStreamBYOBReader(stream);
+    }
+    function ReadableStreamAddReadIntoRequest(stream, readIntoRequest) {
+      stream._reader._readIntoRequests.push(readIntoRequest);
+    }
+    function ReadableStreamFulfillReadIntoRequest(stream, chunk, done) {
+      const reader = stream._reader;
+      const readIntoRequest = reader._readIntoRequests.shift();
+      if (done) {
+        readIntoRequest._closeSteps(chunk);
+      } else {
+        readIntoRequest._chunkSteps(chunk);
+      }
+    }
+    function ReadableStreamGetNumReadIntoRequests(stream) {
+      return stream._reader._readIntoRequests.length;
+    }
+    function ReadableStreamHasBYOBReader(stream) {
+      const reader = stream._reader;
+      if (reader === void 0) {
+        return false;
+      }
+      if (!IsReadableStreamBYOBReader(reader)) {
+        return false;
+      }
+      return true;
+    }
+    class ReadableStreamBYOBReader {
+      constructor(stream) {
+        assertRequiredArgument(stream, 1, "ReadableStreamBYOBReader");
+        assertReadableStream(stream, "First parameter");
+        if (IsReadableStreamLocked(stream)) {
+          throw new TypeError("This stream has already been locked for exclusive reading by another reader");
+        }
+        if (!IsReadableByteStreamController(stream._readableStreamController)) {
+          throw new TypeError("Cannot construct a ReadableStreamBYOBReader for a stream not constructed with a byte source");
+        }
+        ReadableStreamReaderGenericInitialize(this, stream);
+        this._readIntoRequests = new SimpleQueue();
+      }
+      get closed() {
+        if (!IsReadableStreamBYOBReader(this)) {
+          return promiseRejectedWith(byobReaderBrandCheckException("closed"));
+        }
+        return this._closedPromise;
+      }
+      cancel(reason = void 0) {
+        if (!IsReadableStreamBYOBReader(this)) {
+          return promiseRejectedWith(byobReaderBrandCheckException("cancel"));
+        }
+        if (this._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("cancel"));
+        }
+        return ReadableStreamReaderGenericCancel(this, reason);
+      }
+      read(view) {
+        if (!IsReadableStreamBYOBReader(this)) {
+          return promiseRejectedWith(byobReaderBrandCheckException("read"));
+        }
+        if (!ArrayBuffer.isView(view)) {
+          return promiseRejectedWith(new TypeError("view must be an array buffer view"));
+        }
+        if (view.byteLength === 0) {
+          return promiseRejectedWith(new TypeError("view must have non-zero byteLength"));
+        }
+        if (view.buffer.byteLength === 0) {
+          return promiseRejectedWith(new TypeError(`view's buffer must have non-zero byteLength`));
+        }
+        if (IsDetachedBuffer(view.buffer))
+          ;
+        if (this._ownerReadableStream === void 0) {
+          return promiseRejectedWith(readerLockException("read from"));
+        }
+        let resolvePromise;
+        let rejectPromise;
+        const promise = newPromise((resolve2, reject) => {
+          resolvePromise = resolve2;
+          rejectPromise = reject;
+        });
+        const readIntoRequest = {
+          _chunkSteps: (chunk) => resolvePromise({value: chunk, done: false}),
+          _closeSteps: (chunk) => resolvePromise({value: chunk, done: true}),
+          _errorSteps: (e) => rejectPromise(e)
+        };
+        ReadableStreamBYOBReaderRead(this, view, readIntoRequest);
+        return promise;
+      }
+      releaseLock() {
+        if (!IsReadableStreamBYOBReader(this)) {
+          throw byobReaderBrandCheckException("releaseLock");
+        }
+        if (this._ownerReadableStream === void 0) {
+          return;
+        }
+        if (this._readIntoRequests.length > 0) {
+          throw new TypeError("Tried to release a reader lock when that reader has pending read() calls un-settled");
+        }
+        ReadableStreamReaderGenericRelease(this);
+      }
+    }
+    Object.defineProperties(ReadableStreamBYOBReader.prototype, {
+      cancel: {enumerable: true},
+      read: {enumerable: true},
+      releaseLock: {enumerable: true},
+      closed: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableStreamBYOBReader.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableStreamBYOBReader",
+        configurable: true
+      });
+    }
+    function IsReadableStreamBYOBReader(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_readIntoRequests")) {
+        return false;
+      }
+      return x instanceof ReadableStreamBYOBReader;
+    }
+    function ReadableStreamBYOBReaderRead(reader, view, readIntoRequest) {
+      const stream = reader._ownerReadableStream;
+      stream._disturbed = true;
+      if (stream._state === "errored") {
+        readIntoRequest._errorSteps(stream._storedError);
+      } else {
+        ReadableByteStreamControllerPullInto(stream._readableStreamController, view, readIntoRequest);
+      }
+    }
+    function byobReaderBrandCheckException(name) {
+      return new TypeError(`ReadableStreamBYOBReader.prototype.${name} can only be used on a ReadableStreamBYOBReader`);
+    }
+    function ExtractHighWaterMark(strategy, defaultHWM) {
+      const {highWaterMark} = strategy;
+      if (highWaterMark === void 0) {
+        return defaultHWM;
+      }
+      if (NumberIsNaN(highWaterMark) || highWaterMark < 0) {
+        throw new RangeError("Invalid highWaterMark");
+      }
+      return highWaterMark;
+    }
+    function ExtractSizeAlgorithm(strategy) {
+      const {size} = strategy;
+      if (!size) {
+        return () => 1;
+      }
+      return size;
+    }
+    function convertQueuingStrategy(init, context) {
+      assertDictionary(init, context);
+      const highWaterMark = init === null || init === void 0 ? void 0 : init.highWaterMark;
+      const size = init === null || init === void 0 ? void 0 : init.size;
+      return {
+        highWaterMark: highWaterMark === void 0 ? void 0 : convertUnrestrictedDouble(highWaterMark),
+        size: size === void 0 ? void 0 : convertQueuingStrategySize(size, `${context} has member 'size' that`)
+      };
+    }
+    function convertQueuingStrategySize(fn, context) {
+      assertFunction(fn, context);
+      return (chunk) => convertUnrestrictedDouble(fn(chunk));
+    }
+    function convertUnderlyingSink(original, context) {
+      assertDictionary(original, context);
+      const abort = original === null || original === void 0 ? void 0 : original.abort;
+      const close = original === null || original === void 0 ? void 0 : original.close;
+      const start = original === null || original === void 0 ? void 0 : original.start;
+      const type = original === null || original === void 0 ? void 0 : original.type;
+      const write = original === null || original === void 0 ? void 0 : original.write;
+      return {
+        abort: abort === void 0 ? void 0 : convertUnderlyingSinkAbortCallback(abort, original, `${context} has member 'abort' that`),
+        close: close === void 0 ? void 0 : convertUnderlyingSinkCloseCallback(close, original, `${context} has member 'close' that`),
+        start: start === void 0 ? void 0 : convertUnderlyingSinkStartCallback(start, original, `${context} has member 'start' that`),
+        write: write === void 0 ? void 0 : convertUnderlyingSinkWriteCallback(write, original, `${context} has member 'write' that`),
+        type
+      };
+    }
+    function convertUnderlyingSinkAbortCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (reason) => promiseCall(fn, original, [reason]);
+    }
+    function convertUnderlyingSinkCloseCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return () => promiseCall(fn, original, []);
+    }
+    function convertUnderlyingSinkStartCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (controller) => reflectCall(fn, original, [controller]);
+    }
+    function convertUnderlyingSinkWriteCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (chunk, controller) => promiseCall(fn, original, [chunk, controller]);
+    }
+    function assertWritableStream(x, context) {
+      if (!IsWritableStream(x)) {
+        throw new TypeError(`${context} is not a WritableStream.`);
+      }
+    }
+    function isAbortSignal2(value) {
+      if (typeof value !== "object" || value === null) {
+        return false;
+      }
+      try {
+        return typeof value.aborted === "boolean";
+      } catch (_a2) {
+        return false;
+      }
+    }
+    const supportsAbortController = typeof AbortController === "function";
+    function createAbortController() {
+      if (supportsAbortController) {
+        return new AbortController();
+      }
+      return void 0;
+    }
+    class WritableStream {
+      constructor(rawUnderlyingSink = {}, rawStrategy = {}) {
+        if (rawUnderlyingSink === void 0) {
+          rawUnderlyingSink = null;
+        } else {
+          assertObject(rawUnderlyingSink, "First parameter");
+        }
+        const strategy = convertQueuingStrategy(rawStrategy, "Second parameter");
+        const underlyingSink = convertUnderlyingSink(rawUnderlyingSink, "First parameter");
+        InitializeWritableStream(this);
+        const type = underlyingSink.type;
+        if (type !== void 0) {
+          throw new RangeError("Invalid type is specified");
+        }
+        const sizeAlgorithm = ExtractSizeAlgorithm(strategy);
+        const highWaterMark = ExtractHighWaterMark(strategy, 1);
+        SetUpWritableStreamDefaultControllerFromUnderlyingSink(this, underlyingSink, highWaterMark, sizeAlgorithm);
+      }
+      get locked() {
+        if (!IsWritableStream(this)) {
+          throw streamBrandCheckException$2("locked");
+        }
+        return IsWritableStreamLocked(this);
+      }
+      abort(reason = void 0) {
+        if (!IsWritableStream(this)) {
+          return promiseRejectedWith(streamBrandCheckException$2("abort"));
+        }
+        if (IsWritableStreamLocked(this)) {
+          return promiseRejectedWith(new TypeError("Cannot abort a stream that already has a writer"));
+        }
+        return WritableStreamAbort(this, reason);
+      }
+      close() {
+        if (!IsWritableStream(this)) {
+          return promiseRejectedWith(streamBrandCheckException$2("close"));
+        }
+        if (IsWritableStreamLocked(this)) {
+          return promiseRejectedWith(new TypeError("Cannot close a stream that already has a writer"));
+        }
+        if (WritableStreamCloseQueuedOrInFlight(this)) {
+          return promiseRejectedWith(new TypeError("Cannot close an already-closing stream"));
+        }
+        return WritableStreamClose(this);
+      }
+      getWriter() {
+        if (!IsWritableStream(this)) {
+          throw streamBrandCheckException$2("getWriter");
+        }
+        return AcquireWritableStreamDefaultWriter(this);
+      }
+    }
+    Object.defineProperties(WritableStream.prototype, {
+      abort: {enumerable: true},
+      close: {enumerable: true},
+      getWriter: {enumerable: true},
+      locked: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(WritableStream.prototype, SymbolPolyfill.toStringTag, {
+        value: "WritableStream",
+        configurable: true
+      });
+    }
+    function AcquireWritableStreamDefaultWriter(stream) {
+      return new WritableStreamDefaultWriter(stream);
+    }
+    function CreateWritableStream(startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, highWaterMark = 1, sizeAlgorithm = () => 1) {
+      const stream = Object.create(WritableStream.prototype);
+      InitializeWritableStream(stream);
+      const controller = Object.create(WritableStreamDefaultController.prototype);
+      SetUpWritableStreamDefaultController(stream, controller, startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, highWaterMark, sizeAlgorithm);
+      return stream;
+    }
+    function InitializeWritableStream(stream) {
+      stream._state = "writable";
+      stream._storedError = void 0;
+      stream._writer = void 0;
+      stream._writableStreamController = void 0;
+      stream._writeRequests = new SimpleQueue();
+      stream._inFlightWriteRequest = void 0;
+      stream._closeRequest = void 0;
+      stream._inFlightCloseRequest = void 0;
+      stream._pendingAbortRequest = void 0;
+      stream._backpressure = false;
+    }
+    function IsWritableStream(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_writableStreamController")) {
+        return false;
+      }
+      return x instanceof WritableStream;
+    }
+    function IsWritableStreamLocked(stream) {
+      if (stream._writer === void 0) {
+        return false;
+      }
+      return true;
+    }
+    function WritableStreamAbort(stream, reason) {
+      var _a2;
+      if (stream._state === "closed" || stream._state === "errored") {
+        return promiseResolvedWith(void 0);
+      }
+      stream._writableStreamController._abortReason = reason;
+      (_a2 = stream._writableStreamController._abortController) === null || _a2 === void 0 ? void 0 : _a2.abort();
+      const state = stream._state;
+      if (state === "closed" || state === "errored") {
+        return promiseResolvedWith(void 0);
+      }
+      if (stream._pendingAbortRequest !== void 0) {
+        return stream._pendingAbortRequest._promise;
+      }
+      let wasAlreadyErroring = false;
+      if (state === "erroring") {
+        wasAlreadyErroring = true;
+        reason = void 0;
+      }
+      const promise = newPromise((resolve2, reject) => {
+        stream._pendingAbortRequest = {
+          _promise: void 0,
+          _resolve: resolve2,
+          _reject: reject,
+          _reason: reason,
+          _wasAlreadyErroring: wasAlreadyErroring
+        };
+      });
+      stream._pendingAbortRequest._promise = promise;
+      if (!wasAlreadyErroring) {
+        WritableStreamStartErroring(stream, reason);
+      }
+      return promise;
+    }
+    function WritableStreamClose(stream) {
+      const state = stream._state;
+      if (state === "closed" || state === "errored") {
+        return promiseRejectedWith(new TypeError(`The stream (in ${state} state) is not in the writable state and cannot be closed`));
+      }
+      const promise = newPromise((resolve2, reject) => {
+        const closeRequest = {
+          _resolve: resolve2,
+          _reject: reject
+        };
+        stream._closeRequest = closeRequest;
+      });
+      const writer = stream._writer;
+      if (writer !== void 0 && stream._backpressure && state === "writable") {
+        defaultWriterReadyPromiseResolve(writer);
+      }
+      WritableStreamDefaultControllerClose(stream._writableStreamController);
+      return promise;
+    }
+    function WritableStreamAddWriteRequest(stream) {
+      const promise = newPromise((resolve2, reject) => {
+        const writeRequest = {
+          _resolve: resolve2,
+          _reject: reject
+        };
+        stream._writeRequests.push(writeRequest);
+      });
+      return promise;
+    }
+    function WritableStreamDealWithRejection(stream, error2) {
+      const state = stream._state;
+      if (state === "writable") {
+        WritableStreamStartErroring(stream, error2);
+        return;
+      }
+      WritableStreamFinishErroring(stream);
+    }
+    function WritableStreamStartErroring(stream, reason) {
+      const controller = stream._writableStreamController;
+      stream._state = "erroring";
+      stream._storedError = reason;
+      const writer = stream._writer;
+      if (writer !== void 0) {
+        WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, reason);
+      }
+      if (!WritableStreamHasOperationMarkedInFlight(stream) && controller._started) {
+        WritableStreamFinishErroring(stream);
+      }
+    }
+    function WritableStreamFinishErroring(stream) {
+      stream._state = "errored";
+      stream._writableStreamController[ErrorSteps]();
+      const storedError = stream._storedError;
+      stream._writeRequests.forEach((writeRequest) => {
+        writeRequest._reject(storedError);
+      });
+      stream._writeRequests = new SimpleQueue();
+      if (stream._pendingAbortRequest === void 0) {
+        WritableStreamRejectCloseAndClosedPromiseIfNeeded(stream);
+        return;
+      }
+      const abortRequest = stream._pendingAbortRequest;
+      stream._pendingAbortRequest = void 0;
+      if (abortRequest._wasAlreadyErroring) {
+        abortRequest._reject(storedError);
+        WritableStreamRejectCloseAndClosedPromiseIfNeeded(stream);
+        return;
+      }
+      const promise = stream._writableStreamController[AbortSteps](abortRequest._reason);
+      uponPromise(promise, () => {
+        abortRequest._resolve();
+        WritableStreamRejectCloseAndClosedPromiseIfNeeded(stream);
+      }, (reason) => {
+        abortRequest._reject(reason);
+        WritableStreamRejectCloseAndClosedPromiseIfNeeded(stream);
+      });
+    }
+    function WritableStreamFinishInFlightWrite(stream) {
+      stream._inFlightWriteRequest._resolve(void 0);
+      stream._inFlightWriteRequest = void 0;
+    }
+    function WritableStreamFinishInFlightWriteWithError(stream, error2) {
+      stream._inFlightWriteRequest._reject(error2);
+      stream._inFlightWriteRequest = void 0;
+      WritableStreamDealWithRejection(stream, error2);
+    }
+    function WritableStreamFinishInFlightClose(stream) {
+      stream._inFlightCloseRequest._resolve(void 0);
+      stream._inFlightCloseRequest = void 0;
+      const state = stream._state;
+      if (state === "erroring") {
+        stream._storedError = void 0;
+        if (stream._pendingAbortRequest !== void 0) {
+          stream._pendingAbortRequest._resolve();
+          stream._pendingAbortRequest = void 0;
+        }
+      }
+      stream._state = "closed";
+      const writer = stream._writer;
+      if (writer !== void 0) {
+        defaultWriterClosedPromiseResolve(writer);
+      }
+    }
+    function WritableStreamFinishInFlightCloseWithError(stream, error2) {
+      stream._inFlightCloseRequest._reject(error2);
+      stream._inFlightCloseRequest = void 0;
+      if (stream._pendingAbortRequest !== void 0) {
+        stream._pendingAbortRequest._reject(error2);
+        stream._pendingAbortRequest = void 0;
+      }
+      WritableStreamDealWithRejection(stream, error2);
+    }
+    function WritableStreamCloseQueuedOrInFlight(stream) {
+      if (stream._closeRequest === void 0 && stream._inFlightCloseRequest === void 0) {
+        return false;
+      }
+      return true;
+    }
+    function WritableStreamHasOperationMarkedInFlight(stream) {
+      if (stream._inFlightWriteRequest === void 0 && stream._inFlightCloseRequest === void 0) {
+        return false;
+      }
+      return true;
+    }
+    function WritableStreamMarkCloseRequestInFlight(stream) {
+      stream._inFlightCloseRequest = stream._closeRequest;
+      stream._closeRequest = void 0;
+    }
+    function WritableStreamMarkFirstWriteRequestInFlight(stream) {
+      stream._inFlightWriteRequest = stream._writeRequests.shift();
+    }
+    function WritableStreamRejectCloseAndClosedPromiseIfNeeded(stream) {
+      if (stream._closeRequest !== void 0) {
+        stream._closeRequest._reject(stream._storedError);
+        stream._closeRequest = void 0;
+      }
+      const writer = stream._writer;
+      if (writer !== void 0) {
+        defaultWriterClosedPromiseReject(writer, stream._storedError);
+      }
+    }
+    function WritableStreamUpdateBackpressure(stream, backpressure) {
+      const writer = stream._writer;
+      if (writer !== void 0 && backpressure !== stream._backpressure) {
+        if (backpressure) {
+          defaultWriterReadyPromiseReset(writer);
+        } else {
+          defaultWriterReadyPromiseResolve(writer);
+        }
+      }
+      stream._backpressure = backpressure;
+    }
+    class WritableStreamDefaultWriter {
+      constructor(stream) {
+        assertRequiredArgument(stream, 1, "WritableStreamDefaultWriter");
+        assertWritableStream(stream, "First parameter");
+        if (IsWritableStreamLocked(stream)) {
+          throw new TypeError("This stream has already been locked for exclusive writing by another writer");
+        }
+        this._ownerWritableStream = stream;
+        stream._writer = this;
+        const state = stream._state;
+        if (state === "writable") {
+          if (!WritableStreamCloseQueuedOrInFlight(stream) && stream._backpressure) {
+            defaultWriterReadyPromiseInitialize(this);
+          } else {
+            defaultWriterReadyPromiseInitializeAsResolved(this);
+          }
+          defaultWriterClosedPromiseInitialize(this);
+        } else if (state === "erroring") {
+          defaultWriterReadyPromiseInitializeAsRejected(this, stream._storedError);
+          defaultWriterClosedPromiseInitialize(this);
+        } else if (state === "closed") {
+          defaultWriterReadyPromiseInitializeAsResolved(this);
+          defaultWriterClosedPromiseInitializeAsResolved(this);
+        } else {
+          const storedError = stream._storedError;
+          defaultWriterReadyPromiseInitializeAsRejected(this, storedError);
+          defaultWriterClosedPromiseInitializeAsRejected(this, storedError);
+        }
+      }
+      get closed() {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          return promiseRejectedWith(defaultWriterBrandCheckException("closed"));
+        }
+        return this._closedPromise;
+      }
+      get desiredSize() {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          throw defaultWriterBrandCheckException("desiredSize");
+        }
+        if (this._ownerWritableStream === void 0) {
+          throw defaultWriterLockException("desiredSize");
+        }
+        return WritableStreamDefaultWriterGetDesiredSize(this);
+      }
+      get ready() {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          return promiseRejectedWith(defaultWriterBrandCheckException("ready"));
+        }
+        return this._readyPromise;
+      }
+      abort(reason = void 0) {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          return promiseRejectedWith(defaultWriterBrandCheckException("abort"));
+        }
+        if (this._ownerWritableStream === void 0) {
+          return promiseRejectedWith(defaultWriterLockException("abort"));
+        }
+        return WritableStreamDefaultWriterAbort(this, reason);
+      }
+      close() {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          return promiseRejectedWith(defaultWriterBrandCheckException("close"));
+        }
+        const stream = this._ownerWritableStream;
+        if (stream === void 0) {
+          return promiseRejectedWith(defaultWriterLockException("close"));
+        }
+        if (WritableStreamCloseQueuedOrInFlight(stream)) {
+          return promiseRejectedWith(new TypeError("Cannot close an already-closing stream"));
+        }
+        return WritableStreamDefaultWriterClose(this);
+      }
+      releaseLock() {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          throw defaultWriterBrandCheckException("releaseLock");
+        }
+        const stream = this._ownerWritableStream;
+        if (stream === void 0) {
+          return;
+        }
+        WritableStreamDefaultWriterRelease(this);
+      }
+      write(chunk = void 0) {
+        if (!IsWritableStreamDefaultWriter(this)) {
+          return promiseRejectedWith(defaultWriterBrandCheckException("write"));
+        }
+        if (this._ownerWritableStream === void 0) {
+          return promiseRejectedWith(defaultWriterLockException("write to"));
+        }
+        return WritableStreamDefaultWriterWrite(this, chunk);
+      }
+    }
+    Object.defineProperties(WritableStreamDefaultWriter.prototype, {
+      abort: {enumerable: true},
+      close: {enumerable: true},
+      releaseLock: {enumerable: true},
+      write: {enumerable: true},
+      closed: {enumerable: true},
+      desiredSize: {enumerable: true},
+      ready: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(WritableStreamDefaultWriter.prototype, SymbolPolyfill.toStringTag, {
+        value: "WritableStreamDefaultWriter",
+        configurable: true
+      });
+    }
+    function IsWritableStreamDefaultWriter(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_ownerWritableStream")) {
+        return false;
+      }
+      return x instanceof WritableStreamDefaultWriter;
+    }
+    function WritableStreamDefaultWriterAbort(writer, reason) {
+      const stream = writer._ownerWritableStream;
+      return WritableStreamAbort(stream, reason);
+    }
+    function WritableStreamDefaultWriterClose(writer) {
+      const stream = writer._ownerWritableStream;
+      return WritableStreamClose(stream);
+    }
+    function WritableStreamDefaultWriterCloseWithErrorPropagation(writer) {
+      const stream = writer._ownerWritableStream;
+      const state = stream._state;
+      if (WritableStreamCloseQueuedOrInFlight(stream) || state === "closed") {
+        return promiseResolvedWith(void 0);
+      }
+      if (state === "errored") {
+        return promiseRejectedWith(stream._storedError);
+      }
+      return WritableStreamDefaultWriterClose(writer);
+    }
+    function WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, error2) {
+      if (writer._closedPromiseState === "pending") {
+        defaultWriterClosedPromiseReject(writer, error2);
+      } else {
+        defaultWriterClosedPromiseResetToRejected(writer, error2);
+      }
+    }
+    function WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, error2) {
+      if (writer._readyPromiseState === "pending") {
+        defaultWriterReadyPromiseReject(writer, error2);
+      } else {
+        defaultWriterReadyPromiseResetToRejected(writer, error2);
+      }
+    }
+    function WritableStreamDefaultWriterGetDesiredSize(writer) {
+      const stream = writer._ownerWritableStream;
+      const state = stream._state;
+      if (state === "errored" || state === "erroring") {
+        return null;
+      }
+      if (state === "closed") {
+        return 0;
+      }
+      return WritableStreamDefaultControllerGetDesiredSize(stream._writableStreamController);
+    }
+    function WritableStreamDefaultWriterRelease(writer) {
+      const stream = writer._ownerWritableStream;
+      const releasedError = new TypeError(`Writer was released and can no longer be used to monitor the stream's closedness`);
+      WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, releasedError);
+      WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, releasedError);
+      stream._writer = void 0;
+      writer._ownerWritableStream = void 0;
+    }
+    function WritableStreamDefaultWriterWrite(writer, chunk) {
+      const stream = writer._ownerWritableStream;
+      const controller = stream._writableStreamController;
+      const chunkSize = WritableStreamDefaultControllerGetChunkSize(controller, chunk);
+      if (stream !== writer._ownerWritableStream) {
+        return promiseRejectedWith(defaultWriterLockException("write to"));
+      }
+      const state = stream._state;
+      if (state === "errored") {
+        return promiseRejectedWith(stream._storedError);
+      }
+      if (WritableStreamCloseQueuedOrInFlight(stream) || state === "closed") {
+        return promiseRejectedWith(new TypeError("The stream is closing or closed and cannot be written to"));
+      }
+      if (state === "erroring") {
+        return promiseRejectedWith(stream._storedError);
+      }
+      const promise = WritableStreamAddWriteRequest(stream);
+      WritableStreamDefaultControllerWrite(controller, chunk, chunkSize);
+      return promise;
+    }
+    const closeSentinel = {};
+    class WritableStreamDefaultController {
+      constructor() {
+        throw new TypeError("Illegal constructor");
+      }
+      get abortReason() {
+        if (!IsWritableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$2("abortReason");
+        }
+        return this._abortReason;
+      }
+      get signal() {
+        if (!IsWritableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$2("signal");
+        }
+        if (this._abortController === void 0) {
+          throw new TypeError("WritableStreamDefaultController.prototype.signal is not supported");
+        }
+        return this._abortController.signal;
+      }
+      error(e = void 0) {
+        if (!IsWritableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$2("error");
+        }
+        const state = this._controlledWritableStream._state;
+        if (state !== "writable") {
+          return;
+        }
+        WritableStreamDefaultControllerError(this, e);
+      }
+      [AbortSteps](reason) {
+        const result = this._abortAlgorithm(reason);
+        WritableStreamDefaultControllerClearAlgorithms(this);
+        return result;
+      }
+      [ErrorSteps]() {
+        ResetQueue(this);
+      }
+    }
+    Object.defineProperties(WritableStreamDefaultController.prototype, {
+      error: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(WritableStreamDefaultController.prototype, SymbolPolyfill.toStringTag, {
+        value: "WritableStreamDefaultController",
+        configurable: true
+      });
+    }
+    function IsWritableStreamDefaultController(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_controlledWritableStream")) {
+        return false;
+      }
+      return x instanceof WritableStreamDefaultController;
+    }
+    function SetUpWritableStreamDefaultController(stream, controller, startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, highWaterMark, sizeAlgorithm) {
+      controller._controlledWritableStream = stream;
+      stream._writableStreamController = controller;
+      controller._queue = void 0;
+      controller._queueTotalSize = void 0;
+      ResetQueue(controller);
+      controller._abortReason = void 0;
+      controller._abortController = createAbortController();
+      controller._started = false;
+      controller._strategySizeAlgorithm = sizeAlgorithm;
+      controller._strategyHWM = highWaterMark;
+      controller._writeAlgorithm = writeAlgorithm;
+      controller._closeAlgorithm = closeAlgorithm;
+      controller._abortAlgorithm = abortAlgorithm;
+      const backpressure = WritableStreamDefaultControllerGetBackpressure(controller);
+      WritableStreamUpdateBackpressure(stream, backpressure);
+      const startResult = startAlgorithm();
+      const startPromise = promiseResolvedWith(startResult);
+      uponPromise(startPromise, () => {
+        controller._started = true;
+        WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
+      }, (r) => {
+        controller._started = true;
+        WritableStreamDealWithRejection(stream, r);
+      });
+    }
+    function SetUpWritableStreamDefaultControllerFromUnderlyingSink(stream, underlyingSink, highWaterMark, sizeAlgorithm) {
+      const controller = Object.create(WritableStreamDefaultController.prototype);
+      let startAlgorithm = () => void 0;
+      let writeAlgorithm = () => promiseResolvedWith(void 0);
+      let closeAlgorithm = () => promiseResolvedWith(void 0);
+      let abortAlgorithm = () => promiseResolvedWith(void 0);
+      if (underlyingSink.start !== void 0) {
+        startAlgorithm = () => underlyingSink.start(controller);
+      }
+      if (underlyingSink.write !== void 0) {
+        writeAlgorithm = (chunk) => underlyingSink.write(chunk, controller);
+      }
+      if (underlyingSink.close !== void 0) {
+        closeAlgorithm = () => underlyingSink.close();
+      }
+      if (underlyingSink.abort !== void 0) {
+        abortAlgorithm = (reason) => underlyingSink.abort(reason);
+      }
+      SetUpWritableStreamDefaultController(stream, controller, startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, highWaterMark, sizeAlgorithm);
+    }
+    function WritableStreamDefaultControllerClearAlgorithms(controller) {
+      controller._writeAlgorithm = void 0;
+      controller._closeAlgorithm = void 0;
+      controller._abortAlgorithm = void 0;
+      controller._strategySizeAlgorithm = void 0;
+    }
+    function WritableStreamDefaultControllerClose(controller) {
+      EnqueueValueWithSize(controller, closeSentinel, 0);
+      WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
+    }
+    function WritableStreamDefaultControllerGetChunkSize(controller, chunk) {
+      try {
+        return controller._strategySizeAlgorithm(chunk);
+      } catch (chunkSizeE) {
+        WritableStreamDefaultControllerErrorIfNeeded(controller, chunkSizeE);
+        return 1;
+      }
+    }
+    function WritableStreamDefaultControllerGetDesiredSize(controller) {
+      return controller._strategyHWM - controller._queueTotalSize;
+    }
+    function WritableStreamDefaultControllerWrite(controller, chunk, chunkSize) {
+      try {
+        EnqueueValueWithSize(controller, chunk, chunkSize);
+      } catch (enqueueE) {
+        WritableStreamDefaultControllerErrorIfNeeded(controller, enqueueE);
+        return;
+      }
+      const stream = controller._controlledWritableStream;
+      if (!WritableStreamCloseQueuedOrInFlight(stream) && stream._state === "writable") {
+        const backpressure = WritableStreamDefaultControllerGetBackpressure(controller);
+        WritableStreamUpdateBackpressure(stream, backpressure);
+      }
+      WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
+    }
+    function WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller) {
+      const stream = controller._controlledWritableStream;
+      if (!controller._started) {
+        return;
+      }
+      if (stream._inFlightWriteRequest !== void 0) {
+        return;
+      }
+      const state = stream._state;
+      if (state === "erroring") {
+        WritableStreamFinishErroring(stream);
+        return;
+      }
+      if (controller._queue.length === 0) {
+        return;
+      }
+      const value = PeekQueueValue(controller);
+      if (value === closeSentinel) {
+        WritableStreamDefaultControllerProcessClose(controller);
+      } else {
+        WritableStreamDefaultControllerProcessWrite(controller, value);
+      }
+    }
+    function WritableStreamDefaultControllerErrorIfNeeded(controller, error2) {
+      if (controller._controlledWritableStream._state === "writable") {
+        WritableStreamDefaultControllerError(controller, error2);
+      }
+    }
+    function WritableStreamDefaultControllerProcessClose(controller) {
+      const stream = controller._controlledWritableStream;
+      WritableStreamMarkCloseRequestInFlight(stream);
+      DequeueValue(controller);
+      const sinkClosePromise = controller._closeAlgorithm();
+      WritableStreamDefaultControllerClearAlgorithms(controller);
+      uponPromise(sinkClosePromise, () => {
+        WritableStreamFinishInFlightClose(stream);
+      }, (reason) => {
+        WritableStreamFinishInFlightCloseWithError(stream, reason);
+      });
+    }
+    function WritableStreamDefaultControllerProcessWrite(controller, chunk) {
+      const stream = controller._controlledWritableStream;
+      WritableStreamMarkFirstWriteRequestInFlight(stream);
+      const sinkWritePromise = controller._writeAlgorithm(chunk);
+      uponPromise(sinkWritePromise, () => {
+        WritableStreamFinishInFlightWrite(stream);
+        const state = stream._state;
+        DequeueValue(controller);
+        if (!WritableStreamCloseQueuedOrInFlight(stream) && state === "writable") {
+          const backpressure = WritableStreamDefaultControllerGetBackpressure(controller);
+          WritableStreamUpdateBackpressure(stream, backpressure);
+        }
+        WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
+      }, (reason) => {
+        if (stream._state === "writable") {
+          WritableStreamDefaultControllerClearAlgorithms(controller);
+        }
+        WritableStreamFinishInFlightWriteWithError(stream, reason);
+      });
+    }
+    function WritableStreamDefaultControllerGetBackpressure(controller) {
+      const desiredSize = WritableStreamDefaultControllerGetDesiredSize(controller);
+      return desiredSize <= 0;
+    }
+    function WritableStreamDefaultControllerError(controller, error2) {
+      const stream = controller._controlledWritableStream;
+      WritableStreamDefaultControllerClearAlgorithms(controller);
+      WritableStreamStartErroring(stream, error2);
+    }
+    function streamBrandCheckException$2(name) {
+      return new TypeError(`WritableStream.prototype.${name} can only be used on a WritableStream`);
+    }
+    function defaultControllerBrandCheckException$2(name) {
+      return new TypeError(`WritableStreamDefaultController.prototype.${name} can only be used on a WritableStreamDefaultController`);
+    }
+    function defaultWriterBrandCheckException(name) {
+      return new TypeError(`WritableStreamDefaultWriter.prototype.${name} can only be used on a WritableStreamDefaultWriter`);
+    }
+    function defaultWriterLockException(name) {
+      return new TypeError("Cannot " + name + " a stream using a released writer");
+    }
+    function defaultWriterClosedPromiseInitialize(writer) {
+      writer._closedPromise = newPromise((resolve2, reject) => {
+        writer._closedPromise_resolve = resolve2;
+        writer._closedPromise_reject = reject;
+        writer._closedPromiseState = "pending";
+      });
+    }
+    function defaultWriterClosedPromiseInitializeAsRejected(writer, reason) {
+      defaultWriterClosedPromiseInitialize(writer);
+      defaultWriterClosedPromiseReject(writer, reason);
+    }
+    function defaultWriterClosedPromiseInitializeAsResolved(writer) {
+      defaultWriterClosedPromiseInitialize(writer);
+      defaultWriterClosedPromiseResolve(writer);
+    }
+    function defaultWriterClosedPromiseReject(writer, reason) {
+      if (writer._closedPromise_reject === void 0) {
+        return;
+      }
+      setPromiseIsHandledToTrue(writer._closedPromise);
+      writer._closedPromise_reject(reason);
+      writer._closedPromise_resolve = void 0;
+      writer._closedPromise_reject = void 0;
+      writer._closedPromiseState = "rejected";
+    }
+    function defaultWriterClosedPromiseResetToRejected(writer, reason) {
+      defaultWriterClosedPromiseInitializeAsRejected(writer, reason);
+    }
+    function defaultWriterClosedPromiseResolve(writer) {
+      if (writer._closedPromise_resolve === void 0) {
+        return;
+      }
+      writer._closedPromise_resolve(void 0);
+      writer._closedPromise_resolve = void 0;
+      writer._closedPromise_reject = void 0;
+      writer._closedPromiseState = "resolved";
+    }
+    function defaultWriterReadyPromiseInitialize(writer) {
+      writer._readyPromise = newPromise((resolve2, reject) => {
+        writer._readyPromise_resolve = resolve2;
+        writer._readyPromise_reject = reject;
+      });
+      writer._readyPromiseState = "pending";
+    }
+    function defaultWriterReadyPromiseInitializeAsRejected(writer, reason) {
+      defaultWriterReadyPromiseInitialize(writer);
+      defaultWriterReadyPromiseReject(writer, reason);
+    }
+    function defaultWriterReadyPromiseInitializeAsResolved(writer) {
+      defaultWriterReadyPromiseInitialize(writer);
+      defaultWriterReadyPromiseResolve(writer);
+    }
+    function defaultWriterReadyPromiseReject(writer, reason) {
+      if (writer._readyPromise_reject === void 0) {
+        return;
+      }
+      setPromiseIsHandledToTrue(writer._readyPromise);
+      writer._readyPromise_reject(reason);
+      writer._readyPromise_resolve = void 0;
+      writer._readyPromise_reject = void 0;
+      writer._readyPromiseState = "rejected";
+    }
+    function defaultWriterReadyPromiseReset(writer) {
+      defaultWriterReadyPromiseInitialize(writer);
+    }
+    function defaultWriterReadyPromiseResetToRejected(writer, reason) {
+      defaultWriterReadyPromiseInitializeAsRejected(writer, reason);
+    }
+    function defaultWriterReadyPromiseResolve(writer) {
+      if (writer._readyPromise_resolve === void 0) {
+        return;
+      }
+      writer._readyPromise_resolve(void 0);
+      writer._readyPromise_resolve = void 0;
+      writer._readyPromise_reject = void 0;
+      writer._readyPromiseState = "fulfilled";
+    }
+    const NativeDOMException = typeof DOMException !== "undefined" ? DOMException : void 0;
+    function isDOMExceptionConstructor(ctor) {
+      if (!(typeof ctor === "function" || typeof ctor === "object")) {
+        return false;
+      }
+      try {
+        new ctor();
+        return true;
+      } catch (_a2) {
+        return false;
+      }
+    }
+    function createDOMExceptionPolyfill() {
+      const ctor = function DOMException2(message, name) {
+        this.message = message || "";
+        this.name = name || "Error";
+        if (Error.captureStackTrace) {
+          Error.captureStackTrace(this, this.constructor);
+        }
+      };
+      ctor.prototype = Object.create(Error.prototype);
+      Object.defineProperty(ctor.prototype, "constructor", {value: ctor, writable: true, configurable: true});
+      return ctor;
+    }
+    const DOMException$1 = isDOMExceptionConstructor(NativeDOMException) ? NativeDOMException : createDOMExceptionPolyfill();
+    function ReadableStreamPipeTo(source, dest, preventClose, preventAbort, preventCancel, signal) {
+      const reader = AcquireReadableStreamDefaultReader(source);
+      const writer = AcquireWritableStreamDefaultWriter(dest);
+      source._disturbed = true;
+      let shuttingDown = false;
+      let currentWrite = promiseResolvedWith(void 0);
+      return newPromise((resolve2, reject) => {
+        let abortAlgorithm;
+        if (signal !== void 0) {
+          abortAlgorithm = () => {
+            const error2 = new DOMException$1("Aborted", "AbortError");
+            const actions = [];
+            if (!preventAbort) {
+              actions.push(() => {
+                if (dest._state === "writable") {
+                  return WritableStreamAbort(dest, error2);
+                }
+                return promiseResolvedWith(void 0);
+              });
+            }
+            if (!preventCancel) {
+              actions.push(() => {
+                if (source._state === "readable") {
+                  return ReadableStreamCancel(source, error2);
+                }
+                return promiseResolvedWith(void 0);
+              });
+            }
+            shutdownWithAction(() => Promise.all(actions.map((action) => action())), true, error2);
+          };
+          if (signal.aborted) {
+            abortAlgorithm();
+            return;
+          }
+          signal.addEventListener("abort", abortAlgorithm);
+        }
+        function pipeLoop() {
+          return newPromise((resolveLoop, rejectLoop) => {
+            function next(done) {
+              if (done) {
+                resolveLoop();
+              } else {
+                PerformPromiseThen(pipeStep(), next, rejectLoop);
+              }
+            }
+            next(false);
+          });
+        }
+        function pipeStep() {
+          if (shuttingDown) {
+            return promiseResolvedWith(true);
+          }
+          return PerformPromiseThen(writer._readyPromise, () => {
+            return newPromise((resolveRead, rejectRead) => {
+              ReadableStreamDefaultReaderRead(reader, {
+                _chunkSteps: (chunk) => {
+                  currentWrite = PerformPromiseThen(WritableStreamDefaultWriterWrite(writer, chunk), void 0, noop2);
+                  resolveRead(false);
+                },
+                _closeSteps: () => resolveRead(true),
+                _errorSteps: rejectRead
+              });
+            });
+          });
+        }
+        isOrBecomesErrored(source, reader._closedPromise, (storedError) => {
+          if (!preventAbort) {
+            shutdownWithAction(() => WritableStreamAbort(dest, storedError), true, storedError);
+          } else {
+            shutdown(true, storedError);
+          }
+        });
+        isOrBecomesErrored(dest, writer._closedPromise, (storedError) => {
+          if (!preventCancel) {
+            shutdownWithAction(() => ReadableStreamCancel(source, storedError), true, storedError);
+          } else {
+            shutdown(true, storedError);
+          }
+        });
+        isOrBecomesClosed(source, reader._closedPromise, () => {
+          if (!preventClose) {
+            shutdownWithAction(() => WritableStreamDefaultWriterCloseWithErrorPropagation(writer));
+          } else {
+            shutdown();
+          }
+        });
+        if (WritableStreamCloseQueuedOrInFlight(dest) || dest._state === "closed") {
+          const destClosed = new TypeError("the destination writable stream closed before all data could be piped to it");
+          if (!preventCancel) {
+            shutdownWithAction(() => ReadableStreamCancel(source, destClosed), true, destClosed);
+          } else {
+            shutdown(true, destClosed);
+          }
+        }
+        setPromiseIsHandledToTrue(pipeLoop());
+        function waitForWritesToFinish() {
+          const oldCurrentWrite = currentWrite;
+          return PerformPromiseThen(currentWrite, () => oldCurrentWrite !== currentWrite ? waitForWritesToFinish() : void 0);
+        }
+        function isOrBecomesErrored(stream, promise, action) {
+          if (stream._state === "errored") {
+            action(stream._storedError);
+          } else {
+            uponRejection(promise, action);
+          }
+        }
+        function isOrBecomesClosed(stream, promise, action) {
+          if (stream._state === "closed") {
+            action();
+          } else {
+            uponFulfillment(promise, action);
+          }
+        }
+        function shutdownWithAction(action, originalIsError, originalError) {
+          if (shuttingDown) {
+            return;
+          }
+          shuttingDown = true;
+          if (dest._state === "writable" && !WritableStreamCloseQueuedOrInFlight(dest)) {
+            uponFulfillment(waitForWritesToFinish(), doTheRest);
+          } else {
+            doTheRest();
+          }
+          function doTheRest() {
+            uponPromise(action(), () => finalize(originalIsError, originalError), (newError) => finalize(true, newError));
+          }
+        }
+        function shutdown(isError, error2) {
+          if (shuttingDown) {
+            return;
+          }
+          shuttingDown = true;
+          if (dest._state === "writable" && !WritableStreamCloseQueuedOrInFlight(dest)) {
+            uponFulfillment(waitForWritesToFinish(), () => finalize(isError, error2));
+          } else {
+            finalize(isError, error2);
+          }
+        }
+        function finalize(isError, error2) {
+          WritableStreamDefaultWriterRelease(writer);
+          ReadableStreamReaderGenericRelease(reader);
+          if (signal !== void 0) {
+            signal.removeEventListener("abort", abortAlgorithm);
+          }
+          if (isError) {
+            reject(error2);
+          } else {
+            resolve2(void 0);
+          }
+        }
+      });
+    }
+    class ReadableStreamDefaultController {
+      constructor() {
+        throw new TypeError("Illegal constructor");
+      }
+      get desiredSize() {
+        if (!IsReadableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$1("desiredSize");
+        }
+        return ReadableStreamDefaultControllerGetDesiredSize(this);
+      }
+      close() {
+        if (!IsReadableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$1("close");
+        }
+        if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(this)) {
+          throw new TypeError("The stream is not in a state that permits close");
+        }
+        ReadableStreamDefaultControllerClose(this);
+      }
+      enqueue(chunk = void 0) {
+        if (!IsReadableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$1("enqueue");
+        }
+        if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(this)) {
+          throw new TypeError("The stream is not in a state that permits enqueue");
+        }
+        return ReadableStreamDefaultControllerEnqueue(this, chunk);
+      }
+      error(e = void 0) {
+        if (!IsReadableStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException$1("error");
+        }
+        ReadableStreamDefaultControllerError(this, e);
+      }
+      [CancelSteps](reason) {
+        ResetQueue(this);
+        const result = this._cancelAlgorithm(reason);
+        ReadableStreamDefaultControllerClearAlgorithms(this);
+        return result;
+      }
+      [PullSteps](readRequest) {
+        const stream = this._controlledReadableStream;
+        if (this._queue.length > 0) {
+          const chunk = DequeueValue(this);
+          if (this._closeRequested && this._queue.length === 0) {
+            ReadableStreamDefaultControllerClearAlgorithms(this);
+            ReadableStreamClose(stream);
+          } else {
+            ReadableStreamDefaultControllerCallPullIfNeeded(this);
+          }
+          readRequest._chunkSteps(chunk);
+        } else {
+          ReadableStreamAddReadRequest(stream, readRequest);
+          ReadableStreamDefaultControllerCallPullIfNeeded(this);
+        }
+      }
+    }
+    Object.defineProperties(ReadableStreamDefaultController.prototype, {
+      close: {enumerable: true},
+      enqueue: {enumerable: true},
+      error: {enumerable: true},
+      desiredSize: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableStreamDefaultController.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableStreamDefaultController",
+        configurable: true
+      });
+    }
+    function IsReadableStreamDefaultController(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_controlledReadableStream")) {
+        return false;
+      }
+      return x instanceof ReadableStreamDefaultController;
+    }
+    function ReadableStreamDefaultControllerCallPullIfNeeded(controller) {
+      const shouldPull = ReadableStreamDefaultControllerShouldCallPull(controller);
+      if (!shouldPull) {
+        return;
+      }
+      if (controller._pulling) {
+        controller._pullAgain = true;
+        return;
+      }
+      controller._pulling = true;
+      const pullPromise = controller._pullAlgorithm();
+      uponPromise(pullPromise, () => {
+        controller._pulling = false;
+        if (controller._pullAgain) {
+          controller._pullAgain = false;
+          ReadableStreamDefaultControllerCallPullIfNeeded(controller);
+        }
+      }, (e) => {
+        ReadableStreamDefaultControllerError(controller, e);
+      });
+    }
+    function ReadableStreamDefaultControllerShouldCallPull(controller) {
+      const stream = controller._controlledReadableStream;
+      if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(controller)) {
+        return false;
+      }
+      if (!controller._started) {
+        return false;
+      }
+      if (IsReadableStreamLocked(stream) && ReadableStreamGetNumReadRequests(stream) > 0) {
+        return true;
+      }
+      const desiredSize = ReadableStreamDefaultControllerGetDesiredSize(controller);
+      if (desiredSize > 0) {
+        return true;
+      }
+      return false;
+    }
+    function ReadableStreamDefaultControllerClearAlgorithms(controller) {
+      controller._pullAlgorithm = void 0;
+      controller._cancelAlgorithm = void 0;
+      controller._strategySizeAlgorithm = void 0;
+    }
+    function ReadableStreamDefaultControllerClose(controller) {
+      if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(controller)) {
+        return;
+      }
+      const stream = controller._controlledReadableStream;
+      controller._closeRequested = true;
+      if (controller._queue.length === 0) {
+        ReadableStreamDefaultControllerClearAlgorithms(controller);
+        ReadableStreamClose(stream);
+      }
+    }
+    function ReadableStreamDefaultControllerEnqueue(controller, chunk) {
+      if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(controller)) {
+        return;
+      }
+      const stream = controller._controlledReadableStream;
+      if (IsReadableStreamLocked(stream) && ReadableStreamGetNumReadRequests(stream) > 0) {
+        ReadableStreamFulfillReadRequest(stream, chunk, false);
+      } else {
+        let chunkSize;
+        try {
+          chunkSize = controller._strategySizeAlgorithm(chunk);
+        } catch (chunkSizeE) {
+          ReadableStreamDefaultControllerError(controller, chunkSizeE);
+          throw chunkSizeE;
+        }
+        try {
+          EnqueueValueWithSize(controller, chunk, chunkSize);
+        } catch (enqueueE) {
+          ReadableStreamDefaultControllerError(controller, enqueueE);
+          throw enqueueE;
+        }
+      }
+      ReadableStreamDefaultControllerCallPullIfNeeded(controller);
+    }
+    function ReadableStreamDefaultControllerError(controller, e) {
+      const stream = controller._controlledReadableStream;
+      if (stream._state !== "readable") {
+        return;
+      }
+      ResetQueue(controller);
+      ReadableStreamDefaultControllerClearAlgorithms(controller);
+      ReadableStreamError(stream, e);
+    }
+    function ReadableStreamDefaultControllerGetDesiredSize(controller) {
+      const state = controller._controlledReadableStream._state;
+      if (state === "errored") {
+        return null;
+      }
+      if (state === "closed") {
+        return 0;
+      }
+      return controller._strategyHWM - controller._queueTotalSize;
+    }
+    function ReadableStreamDefaultControllerHasBackpressure(controller) {
+      if (ReadableStreamDefaultControllerShouldCallPull(controller)) {
+        return false;
+      }
+      return true;
+    }
+    function ReadableStreamDefaultControllerCanCloseOrEnqueue(controller) {
+      const state = controller._controlledReadableStream._state;
+      if (!controller._closeRequested && state === "readable") {
+        return true;
+      }
+      return false;
+    }
+    function SetUpReadableStreamDefaultController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, sizeAlgorithm) {
+      controller._controlledReadableStream = stream;
+      controller._queue = void 0;
+      controller._queueTotalSize = void 0;
+      ResetQueue(controller);
+      controller._started = false;
+      controller._closeRequested = false;
+      controller._pullAgain = false;
+      controller._pulling = false;
+      controller._strategySizeAlgorithm = sizeAlgorithm;
+      controller._strategyHWM = highWaterMark;
+      controller._pullAlgorithm = pullAlgorithm;
+      controller._cancelAlgorithm = cancelAlgorithm;
+      stream._readableStreamController = controller;
+      const startResult = startAlgorithm();
+      uponPromise(promiseResolvedWith(startResult), () => {
+        controller._started = true;
+        ReadableStreamDefaultControllerCallPullIfNeeded(controller);
+      }, (r) => {
+        ReadableStreamDefaultControllerError(controller, r);
+      });
+    }
+    function SetUpReadableStreamDefaultControllerFromUnderlyingSource(stream, underlyingSource, highWaterMark, sizeAlgorithm) {
+      const controller = Object.create(ReadableStreamDefaultController.prototype);
+      let startAlgorithm = () => void 0;
+      let pullAlgorithm = () => promiseResolvedWith(void 0);
+      let cancelAlgorithm = () => promiseResolvedWith(void 0);
+      if (underlyingSource.start !== void 0) {
+        startAlgorithm = () => underlyingSource.start(controller);
+      }
+      if (underlyingSource.pull !== void 0) {
+        pullAlgorithm = () => underlyingSource.pull(controller);
+      }
+      if (underlyingSource.cancel !== void 0) {
+        cancelAlgorithm = (reason) => underlyingSource.cancel(reason);
+      }
+      SetUpReadableStreamDefaultController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, sizeAlgorithm);
+    }
+    function defaultControllerBrandCheckException$1(name) {
+      return new TypeError(`ReadableStreamDefaultController.prototype.${name} can only be used on a ReadableStreamDefaultController`);
+    }
+    function ReadableStreamTee(stream, cloneForBranch2) {
+      if (IsReadableByteStreamController(stream._readableStreamController)) {
+        return ReadableByteStreamTee(stream);
+      }
+      return ReadableStreamDefaultTee(stream);
+    }
+    function ReadableStreamDefaultTee(stream, cloneForBranch2) {
+      const reader = AcquireReadableStreamDefaultReader(stream);
+      let reading = false;
+      let canceled1 = false;
+      let canceled2 = false;
+      let reason1;
+      let reason2;
+      let branch1;
+      let branch2;
+      let resolveCancelPromise;
+      const cancelPromise = newPromise((resolve2) => {
+        resolveCancelPromise = resolve2;
+      });
+      function pullAlgorithm() {
+        if (reading) {
+          return promiseResolvedWith(void 0);
+        }
+        reading = true;
+        const readRequest = {
+          _chunkSteps: (chunk) => {
+            queueMicrotask(() => {
+              reading = false;
+              const chunk1 = chunk;
+              const chunk2 = chunk;
+              if (!canceled1) {
+                ReadableStreamDefaultControllerEnqueue(branch1._readableStreamController, chunk1);
+              }
+              if (!canceled2) {
+                ReadableStreamDefaultControllerEnqueue(branch2._readableStreamController, chunk2);
+              }
+            });
+          },
+          _closeSteps: () => {
+            reading = false;
+            if (!canceled1) {
+              ReadableStreamDefaultControllerClose(branch1._readableStreamController);
+            }
+            if (!canceled2) {
+              ReadableStreamDefaultControllerClose(branch2._readableStreamController);
+            }
+            if (!canceled1 || !canceled2) {
+              resolveCancelPromise(void 0);
+            }
+          },
+          _errorSteps: () => {
+            reading = false;
+          }
+        };
+        ReadableStreamDefaultReaderRead(reader, readRequest);
+        return promiseResolvedWith(void 0);
+      }
+      function cancel1Algorithm(reason) {
+        canceled1 = true;
+        reason1 = reason;
+        if (canceled2) {
+          const compositeReason = CreateArrayFromList([reason1, reason2]);
+          const cancelResult = ReadableStreamCancel(stream, compositeReason);
+          resolveCancelPromise(cancelResult);
+        }
+        return cancelPromise;
+      }
+      function cancel2Algorithm(reason) {
+        canceled2 = true;
+        reason2 = reason;
+        if (canceled1) {
+          const compositeReason = CreateArrayFromList([reason1, reason2]);
+          const cancelResult = ReadableStreamCancel(stream, compositeReason);
+          resolveCancelPromise(cancelResult);
+        }
+        return cancelPromise;
+      }
+      function startAlgorithm() {
+      }
+      branch1 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel1Algorithm);
+      branch2 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel2Algorithm);
+      uponRejection(reader._closedPromise, (r) => {
+        ReadableStreamDefaultControllerError(branch1._readableStreamController, r);
+        ReadableStreamDefaultControllerError(branch2._readableStreamController, r);
+        if (!canceled1 || !canceled2) {
+          resolveCancelPromise(void 0);
+        }
+      });
+      return [branch1, branch2];
+    }
+    function ReadableByteStreamTee(stream) {
+      let reader = AcquireReadableStreamDefaultReader(stream);
+      let reading = false;
+      let canceled1 = false;
+      let canceled2 = false;
+      let reason1;
+      let reason2;
+      let branch1;
+      let branch2;
+      let resolveCancelPromise;
+      const cancelPromise = newPromise((resolve2) => {
+        resolveCancelPromise = resolve2;
+      });
+      function forwardReaderError(thisReader) {
+        uponRejection(thisReader._closedPromise, (r) => {
+          if (thisReader !== reader) {
+            return;
+          }
+          ReadableByteStreamControllerError(branch1._readableStreamController, r);
+          ReadableByteStreamControllerError(branch2._readableStreamController, r);
+          if (!canceled1 || !canceled2) {
+            resolveCancelPromise(void 0);
+          }
+        });
+      }
+      function pullWithDefaultReader() {
+        if (IsReadableStreamBYOBReader(reader)) {
+          ReadableStreamReaderGenericRelease(reader);
+          reader = AcquireReadableStreamDefaultReader(stream);
+          forwardReaderError(reader);
+        }
+        const readRequest = {
+          _chunkSteps: (chunk) => {
+            queueMicrotask(() => {
+              reading = false;
+              const chunk1 = chunk;
+              let chunk2 = chunk;
+              if (!canceled1 && !canceled2) {
+                try {
+                  chunk2 = CloneAsUint8Array(chunk);
+                } catch (cloneE) {
+                  ReadableByteStreamControllerError(branch1._readableStreamController, cloneE);
+                  ReadableByteStreamControllerError(branch2._readableStreamController, cloneE);
+                  resolveCancelPromise(ReadableStreamCancel(stream, cloneE));
+                  return;
+                }
+              }
+              if (!canceled1) {
+                ReadableByteStreamControllerEnqueue(branch1._readableStreamController, chunk1);
+              }
+              if (!canceled2) {
+                ReadableByteStreamControllerEnqueue(branch2._readableStreamController, chunk2);
+              }
+            });
+          },
+          _closeSteps: () => {
+            reading = false;
+            if (!canceled1) {
+              ReadableByteStreamControllerClose(branch1._readableStreamController);
+            }
+            if (!canceled2) {
+              ReadableByteStreamControllerClose(branch2._readableStreamController);
+            }
+            if (branch1._readableStreamController._pendingPullIntos.length > 0) {
+              ReadableByteStreamControllerRespond(branch1._readableStreamController, 0);
+            }
+            if (branch2._readableStreamController._pendingPullIntos.length > 0) {
+              ReadableByteStreamControllerRespond(branch2._readableStreamController, 0);
+            }
+            if (!canceled1 || !canceled2) {
+              resolveCancelPromise(void 0);
+            }
+          },
+          _errorSteps: () => {
+            reading = false;
+          }
+        };
+        ReadableStreamDefaultReaderRead(reader, readRequest);
+      }
+      function pullWithBYOBReader(view, forBranch2) {
+        if (IsReadableStreamDefaultReader(reader)) {
+          ReadableStreamReaderGenericRelease(reader);
+          reader = AcquireReadableStreamBYOBReader(stream);
+          forwardReaderError(reader);
+        }
+        const byobBranch = forBranch2 ? branch2 : branch1;
+        const otherBranch = forBranch2 ? branch1 : branch2;
+        const readIntoRequest = {
+          _chunkSteps: (chunk) => {
+            queueMicrotask(() => {
+              reading = false;
+              const byobCanceled = forBranch2 ? canceled2 : canceled1;
+              const otherCanceled = forBranch2 ? canceled1 : canceled2;
+              if (!otherCanceled) {
+                let clonedChunk;
+                try {
+                  clonedChunk = CloneAsUint8Array(chunk);
+                } catch (cloneE) {
+                  ReadableByteStreamControllerError(byobBranch._readableStreamController, cloneE);
+                  ReadableByteStreamControllerError(otherBranch._readableStreamController, cloneE);
+                  resolveCancelPromise(ReadableStreamCancel(stream, cloneE));
+                  return;
+                }
+                if (!byobCanceled) {
+                  ReadableByteStreamControllerRespondWithNewView(byobBranch._readableStreamController, chunk);
+                }
+                ReadableByteStreamControllerEnqueue(otherBranch._readableStreamController, clonedChunk);
+              } else if (!byobCanceled) {
+                ReadableByteStreamControllerRespondWithNewView(byobBranch._readableStreamController, chunk);
+              }
+            });
+          },
+          _closeSteps: (chunk) => {
+            reading = false;
+            const byobCanceled = forBranch2 ? canceled2 : canceled1;
+            const otherCanceled = forBranch2 ? canceled1 : canceled2;
+            if (!byobCanceled) {
+              ReadableByteStreamControllerClose(byobBranch._readableStreamController);
+            }
+            if (!otherCanceled) {
+              ReadableByteStreamControllerClose(otherBranch._readableStreamController);
+            }
+            if (chunk !== void 0) {
+              if (!byobCanceled) {
+                ReadableByteStreamControllerRespondWithNewView(byobBranch._readableStreamController, chunk);
+              }
+              if (!otherCanceled && otherBranch._readableStreamController._pendingPullIntos.length > 0) {
+                ReadableByteStreamControllerRespond(otherBranch._readableStreamController, 0);
+              }
+            }
+            if (!byobCanceled || !otherCanceled) {
+              resolveCancelPromise(void 0);
+            }
+          },
+          _errorSteps: () => {
+            reading = false;
+          }
+        };
+        ReadableStreamBYOBReaderRead(reader, view, readIntoRequest);
+      }
+      function pull1Algorithm() {
+        if (reading) {
+          return promiseResolvedWith(void 0);
+        }
+        reading = true;
+        const byobRequest = ReadableByteStreamControllerGetBYOBRequest(branch1._readableStreamController);
+        if (byobRequest === null) {
+          pullWithDefaultReader();
+        } else {
+          pullWithBYOBReader(byobRequest._view, false);
+        }
+        return promiseResolvedWith(void 0);
+      }
+      function pull2Algorithm() {
+        if (reading) {
+          return promiseResolvedWith(void 0);
+        }
+        reading = true;
+        const byobRequest = ReadableByteStreamControllerGetBYOBRequest(branch2._readableStreamController);
+        if (byobRequest === null) {
+          pullWithDefaultReader();
+        } else {
+          pullWithBYOBReader(byobRequest._view, true);
+        }
+        return promiseResolvedWith(void 0);
+      }
+      function cancel1Algorithm(reason) {
+        canceled1 = true;
+        reason1 = reason;
+        if (canceled2) {
+          const compositeReason = CreateArrayFromList([reason1, reason2]);
+          const cancelResult = ReadableStreamCancel(stream, compositeReason);
+          resolveCancelPromise(cancelResult);
+        }
+        return cancelPromise;
+      }
+      function cancel2Algorithm(reason) {
+        canceled2 = true;
+        reason2 = reason;
+        if (canceled1) {
+          const compositeReason = CreateArrayFromList([reason1, reason2]);
+          const cancelResult = ReadableStreamCancel(stream, compositeReason);
+          resolveCancelPromise(cancelResult);
+        }
+        return cancelPromise;
+      }
+      function startAlgorithm() {
+        return;
+      }
+      branch1 = CreateReadableByteStream(startAlgorithm, pull1Algorithm, cancel1Algorithm);
+      branch2 = CreateReadableByteStream(startAlgorithm, pull2Algorithm, cancel2Algorithm);
+      forwardReaderError(reader);
+      return [branch1, branch2];
+    }
+    function convertUnderlyingDefaultOrByteSource(source, context) {
+      assertDictionary(source, context);
+      const original = source;
+      const autoAllocateChunkSize = original === null || original === void 0 ? void 0 : original.autoAllocateChunkSize;
+      const cancel = original === null || original === void 0 ? void 0 : original.cancel;
+      const pull = original === null || original === void 0 ? void 0 : original.pull;
+      const start = original === null || original === void 0 ? void 0 : original.start;
+      const type = original === null || original === void 0 ? void 0 : original.type;
+      return {
+        autoAllocateChunkSize: autoAllocateChunkSize === void 0 ? void 0 : convertUnsignedLongLongWithEnforceRange(autoAllocateChunkSize, `${context} has member 'autoAllocateChunkSize' that`),
+        cancel: cancel === void 0 ? void 0 : convertUnderlyingSourceCancelCallback(cancel, original, `${context} has member 'cancel' that`),
+        pull: pull === void 0 ? void 0 : convertUnderlyingSourcePullCallback(pull, original, `${context} has member 'pull' that`),
+        start: start === void 0 ? void 0 : convertUnderlyingSourceStartCallback(start, original, `${context} has member 'start' that`),
+        type: type === void 0 ? void 0 : convertReadableStreamType(type, `${context} has member 'type' that`)
+      };
+    }
+    function convertUnderlyingSourceCancelCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (reason) => promiseCall(fn, original, [reason]);
+    }
+    function convertUnderlyingSourcePullCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (controller) => promiseCall(fn, original, [controller]);
+    }
+    function convertUnderlyingSourceStartCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (controller) => reflectCall(fn, original, [controller]);
+    }
+    function convertReadableStreamType(type, context) {
+      type = `${type}`;
+      if (type !== "bytes") {
+        throw new TypeError(`${context} '${type}' is not a valid enumeration value for ReadableStreamType`);
+      }
+      return type;
+    }
+    function convertReaderOptions(options2, context) {
+      assertDictionary(options2, context);
+      const mode = options2 === null || options2 === void 0 ? void 0 : options2.mode;
+      return {
+        mode: mode === void 0 ? void 0 : convertReadableStreamReaderMode(mode, `${context} has member 'mode' that`)
+      };
+    }
+    function convertReadableStreamReaderMode(mode, context) {
+      mode = `${mode}`;
+      if (mode !== "byob") {
+        throw new TypeError(`${context} '${mode}' is not a valid enumeration value for ReadableStreamReaderMode`);
+      }
+      return mode;
+    }
+    function convertIteratorOptions(options2, context) {
+      assertDictionary(options2, context);
+      const preventCancel = options2 === null || options2 === void 0 ? void 0 : options2.preventCancel;
+      return {preventCancel: Boolean(preventCancel)};
+    }
+    function convertPipeOptions(options2, context) {
+      assertDictionary(options2, context);
+      const preventAbort = options2 === null || options2 === void 0 ? void 0 : options2.preventAbort;
+      const preventCancel = options2 === null || options2 === void 0 ? void 0 : options2.preventCancel;
+      const preventClose = options2 === null || options2 === void 0 ? void 0 : options2.preventClose;
+      const signal = options2 === null || options2 === void 0 ? void 0 : options2.signal;
+      if (signal !== void 0) {
+        assertAbortSignal(signal, `${context} has member 'signal' that`);
+      }
+      return {
+        preventAbort: Boolean(preventAbort),
+        preventCancel: Boolean(preventCancel),
+        preventClose: Boolean(preventClose),
+        signal
+      };
+    }
+    function assertAbortSignal(signal, context) {
+      if (!isAbortSignal2(signal)) {
+        throw new TypeError(`${context} is not an AbortSignal.`);
+      }
+    }
+    function convertReadableWritablePair(pair, context) {
+      assertDictionary(pair, context);
+      const readable = pair === null || pair === void 0 ? void 0 : pair.readable;
+      assertRequiredField(readable, "readable", "ReadableWritablePair");
+      assertReadableStream(readable, `${context} has member 'readable' that`);
+      const writable2 = pair === null || pair === void 0 ? void 0 : pair.writable;
+      assertRequiredField(writable2, "writable", "ReadableWritablePair");
+      assertWritableStream(writable2, `${context} has member 'writable' that`);
+      return {readable, writable: writable2};
+    }
+    class ReadableStream2 {
+      constructor(rawUnderlyingSource = {}, rawStrategy = {}) {
+        if (rawUnderlyingSource === void 0) {
+          rawUnderlyingSource = null;
+        } else {
+          assertObject(rawUnderlyingSource, "First parameter");
+        }
+        const strategy = convertQueuingStrategy(rawStrategy, "Second parameter");
+        const underlyingSource = convertUnderlyingDefaultOrByteSource(rawUnderlyingSource, "First parameter");
+        InitializeReadableStream(this);
+        if (underlyingSource.type === "bytes") {
+          if (strategy.size !== void 0) {
+            throw new RangeError("The strategy for a byte stream cannot have a size function");
+          }
+          const highWaterMark = ExtractHighWaterMark(strategy, 0);
+          SetUpReadableByteStreamControllerFromUnderlyingSource(this, underlyingSource, highWaterMark);
+        } else {
+          const sizeAlgorithm = ExtractSizeAlgorithm(strategy);
+          const highWaterMark = ExtractHighWaterMark(strategy, 1);
+          SetUpReadableStreamDefaultControllerFromUnderlyingSource(this, underlyingSource, highWaterMark, sizeAlgorithm);
+        }
+      }
+      get locked() {
+        if (!IsReadableStream(this)) {
+          throw streamBrandCheckException$1("locked");
+        }
+        return IsReadableStreamLocked(this);
+      }
+      cancel(reason = void 0) {
+        if (!IsReadableStream(this)) {
+          return promiseRejectedWith(streamBrandCheckException$1("cancel"));
+        }
+        if (IsReadableStreamLocked(this)) {
+          return promiseRejectedWith(new TypeError("Cannot cancel a stream that already has a reader"));
+        }
+        return ReadableStreamCancel(this, reason);
+      }
+      getReader(rawOptions = void 0) {
+        if (!IsReadableStream(this)) {
+          throw streamBrandCheckException$1("getReader");
+        }
+        const options2 = convertReaderOptions(rawOptions, "First parameter");
+        if (options2.mode === void 0) {
+          return AcquireReadableStreamDefaultReader(this);
+        }
+        return AcquireReadableStreamBYOBReader(this);
+      }
+      pipeThrough(rawTransform, rawOptions = {}) {
+        if (!IsReadableStream(this)) {
+          throw streamBrandCheckException$1("pipeThrough");
+        }
+        assertRequiredArgument(rawTransform, 1, "pipeThrough");
+        const transform = convertReadableWritablePair(rawTransform, "First parameter");
+        const options2 = convertPipeOptions(rawOptions, "Second parameter");
+        if (IsReadableStreamLocked(this)) {
+          throw new TypeError("ReadableStream.prototype.pipeThrough cannot be used on a locked ReadableStream");
+        }
+        if (IsWritableStreamLocked(transform.writable)) {
+          throw new TypeError("ReadableStream.prototype.pipeThrough cannot be used on a locked WritableStream");
+        }
+        const promise = ReadableStreamPipeTo(this, transform.writable, options2.preventClose, options2.preventAbort, options2.preventCancel, options2.signal);
+        setPromiseIsHandledToTrue(promise);
+        return transform.readable;
+      }
+      pipeTo(destination, rawOptions = {}) {
+        if (!IsReadableStream(this)) {
+          return promiseRejectedWith(streamBrandCheckException$1("pipeTo"));
+        }
+        if (destination === void 0) {
+          return promiseRejectedWith(`Parameter 1 is required in 'pipeTo'.`);
+        }
+        if (!IsWritableStream(destination)) {
+          return promiseRejectedWith(new TypeError(`ReadableStream.prototype.pipeTo's first argument must be a WritableStream`));
+        }
+        let options2;
+        try {
+          options2 = convertPipeOptions(rawOptions, "Second parameter");
+        } catch (e) {
+          return promiseRejectedWith(e);
+        }
+        if (IsReadableStreamLocked(this)) {
+          return promiseRejectedWith(new TypeError("ReadableStream.prototype.pipeTo cannot be used on a locked ReadableStream"));
+        }
+        if (IsWritableStreamLocked(destination)) {
+          return promiseRejectedWith(new TypeError("ReadableStream.prototype.pipeTo cannot be used on a locked WritableStream"));
+        }
+        return ReadableStreamPipeTo(this, destination, options2.preventClose, options2.preventAbort, options2.preventCancel, options2.signal);
+      }
+      tee() {
+        if (!IsReadableStream(this)) {
+          throw streamBrandCheckException$1("tee");
+        }
+        const branches = ReadableStreamTee(this);
+        return CreateArrayFromList(branches);
+      }
+      values(rawOptions = void 0) {
+        if (!IsReadableStream(this)) {
+          throw streamBrandCheckException$1("values");
+        }
+        const options2 = convertIteratorOptions(rawOptions, "First parameter");
+        return AcquireReadableStreamAsyncIterator(this, options2.preventCancel);
+      }
+    }
+    Object.defineProperties(ReadableStream2.prototype, {
+      cancel: {enumerable: true},
+      getReader: {enumerable: true},
+      pipeThrough: {enumerable: true},
+      pipeTo: {enumerable: true},
+      tee: {enumerable: true},
+      values: {enumerable: true},
+      locked: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ReadableStream2.prototype, SymbolPolyfill.toStringTag, {
+        value: "ReadableStream",
+        configurable: true
+      });
+    }
+    if (typeof SymbolPolyfill.asyncIterator === "symbol") {
+      Object.defineProperty(ReadableStream2.prototype, SymbolPolyfill.asyncIterator, {
+        value: ReadableStream2.prototype.values,
+        writable: true,
+        configurable: true
+      });
+    }
+    function CreateReadableStream(startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark = 1, sizeAlgorithm = () => 1) {
+      const stream = Object.create(ReadableStream2.prototype);
+      InitializeReadableStream(stream);
+      const controller = Object.create(ReadableStreamDefaultController.prototype);
+      SetUpReadableStreamDefaultController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, sizeAlgorithm);
+      return stream;
+    }
+    function CreateReadableByteStream(startAlgorithm, pullAlgorithm, cancelAlgorithm) {
+      const stream = Object.create(ReadableStream2.prototype);
+      InitializeReadableStream(stream);
+      const controller = Object.create(ReadableByteStreamController.prototype);
+      SetUpReadableByteStreamController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, 0, void 0);
+      return stream;
+    }
+    function InitializeReadableStream(stream) {
+      stream._state = "readable";
+      stream._reader = void 0;
+      stream._storedError = void 0;
+      stream._disturbed = false;
+    }
+    function IsReadableStream(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_readableStreamController")) {
+        return false;
+      }
+      return x instanceof ReadableStream2;
+    }
+    function IsReadableStreamLocked(stream) {
+      if (stream._reader === void 0) {
+        return false;
+      }
+      return true;
+    }
+    function ReadableStreamCancel(stream, reason) {
+      stream._disturbed = true;
+      if (stream._state === "closed") {
+        return promiseResolvedWith(void 0);
+      }
+      if (stream._state === "errored") {
+        return promiseRejectedWith(stream._storedError);
+      }
+      ReadableStreamClose(stream);
+      const reader = stream._reader;
+      if (reader !== void 0 && IsReadableStreamBYOBReader(reader)) {
+        reader._readIntoRequests.forEach((readIntoRequest) => {
+          readIntoRequest._closeSteps(void 0);
+        });
+        reader._readIntoRequests = new SimpleQueue();
+      }
+      const sourceCancelPromise = stream._readableStreamController[CancelSteps](reason);
+      return transformPromiseWith(sourceCancelPromise, noop2);
+    }
+    function ReadableStreamClose(stream) {
+      stream._state = "closed";
+      const reader = stream._reader;
+      if (reader === void 0) {
+        return;
+      }
+      defaultReaderClosedPromiseResolve(reader);
+      if (IsReadableStreamDefaultReader(reader)) {
+        reader._readRequests.forEach((readRequest) => {
+          readRequest._closeSteps();
+        });
+        reader._readRequests = new SimpleQueue();
+      }
+    }
+    function ReadableStreamError(stream, e) {
+      stream._state = "errored";
+      stream._storedError = e;
+      const reader = stream._reader;
+      if (reader === void 0) {
+        return;
+      }
+      defaultReaderClosedPromiseReject(reader, e);
+      if (IsReadableStreamDefaultReader(reader)) {
+        reader._readRequests.forEach((readRequest) => {
+          readRequest._errorSteps(e);
+        });
+        reader._readRequests = new SimpleQueue();
+      } else {
+        reader._readIntoRequests.forEach((readIntoRequest) => {
+          readIntoRequest._errorSteps(e);
+        });
+        reader._readIntoRequests = new SimpleQueue();
+      }
+    }
+    function streamBrandCheckException$1(name) {
+      return new TypeError(`ReadableStream.prototype.${name} can only be used on a ReadableStream`);
+    }
+    function convertQueuingStrategyInit(init, context) {
+      assertDictionary(init, context);
+      const highWaterMark = init === null || init === void 0 ? void 0 : init.highWaterMark;
+      assertRequiredField(highWaterMark, "highWaterMark", "QueuingStrategyInit");
+      return {
+        highWaterMark: convertUnrestrictedDouble(highWaterMark)
+      };
+    }
+    const byteLengthSizeFunction = (chunk) => {
+      return chunk.byteLength;
+    };
+    Object.defineProperty(byteLengthSizeFunction, "name", {
+      value: "size",
+      configurable: true
+    });
+    class ByteLengthQueuingStrategy {
+      constructor(options2) {
+        assertRequiredArgument(options2, 1, "ByteLengthQueuingStrategy");
+        options2 = convertQueuingStrategyInit(options2, "First parameter");
+        this._byteLengthQueuingStrategyHighWaterMark = options2.highWaterMark;
+      }
+      get highWaterMark() {
+        if (!IsByteLengthQueuingStrategy(this)) {
+          throw byteLengthBrandCheckException("highWaterMark");
+        }
+        return this._byteLengthQueuingStrategyHighWaterMark;
+      }
+      get size() {
+        if (!IsByteLengthQueuingStrategy(this)) {
+          throw byteLengthBrandCheckException("size");
+        }
+        return byteLengthSizeFunction;
+      }
+    }
+    Object.defineProperties(ByteLengthQueuingStrategy.prototype, {
+      highWaterMark: {enumerable: true},
+      size: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(ByteLengthQueuingStrategy.prototype, SymbolPolyfill.toStringTag, {
+        value: "ByteLengthQueuingStrategy",
+        configurable: true
+      });
+    }
+    function byteLengthBrandCheckException(name) {
+      return new TypeError(`ByteLengthQueuingStrategy.prototype.${name} can only be used on a ByteLengthQueuingStrategy`);
+    }
+    function IsByteLengthQueuingStrategy(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_byteLengthQueuingStrategyHighWaterMark")) {
+        return false;
+      }
+      return x instanceof ByteLengthQueuingStrategy;
+    }
+    const countSizeFunction = () => {
+      return 1;
+    };
+    Object.defineProperty(countSizeFunction, "name", {
+      value: "size",
+      configurable: true
+    });
+    class CountQueuingStrategy {
+      constructor(options2) {
+        assertRequiredArgument(options2, 1, "CountQueuingStrategy");
+        options2 = convertQueuingStrategyInit(options2, "First parameter");
+        this._countQueuingStrategyHighWaterMark = options2.highWaterMark;
+      }
+      get highWaterMark() {
+        if (!IsCountQueuingStrategy(this)) {
+          throw countBrandCheckException("highWaterMark");
+        }
+        return this._countQueuingStrategyHighWaterMark;
+      }
+      get size() {
+        if (!IsCountQueuingStrategy(this)) {
+          throw countBrandCheckException("size");
+        }
+        return countSizeFunction;
+      }
+    }
+    Object.defineProperties(CountQueuingStrategy.prototype, {
+      highWaterMark: {enumerable: true},
+      size: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(CountQueuingStrategy.prototype, SymbolPolyfill.toStringTag, {
+        value: "CountQueuingStrategy",
+        configurable: true
+      });
+    }
+    function countBrandCheckException(name) {
+      return new TypeError(`CountQueuingStrategy.prototype.${name} can only be used on a CountQueuingStrategy`);
+    }
+    function IsCountQueuingStrategy(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_countQueuingStrategyHighWaterMark")) {
+        return false;
+      }
+      return x instanceof CountQueuingStrategy;
+    }
+    function convertTransformer(original, context) {
+      assertDictionary(original, context);
+      const flush = original === null || original === void 0 ? void 0 : original.flush;
+      const readableType = original === null || original === void 0 ? void 0 : original.readableType;
+      const start = original === null || original === void 0 ? void 0 : original.start;
+      const transform = original === null || original === void 0 ? void 0 : original.transform;
+      const writableType = original === null || original === void 0 ? void 0 : original.writableType;
+      return {
+        flush: flush === void 0 ? void 0 : convertTransformerFlushCallback(flush, original, `${context} has member 'flush' that`),
+        readableType,
+        start: start === void 0 ? void 0 : convertTransformerStartCallback(start, original, `${context} has member 'start' that`),
+        transform: transform === void 0 ? void 0 : convertTransformerTransformCallback(transform, original, `${context} has member 'transform' that`),
+        writableType
+      };
+    }
+    function convertTransformerFlushCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (controller) => promiseCall(fn, original, [controller]);
+    }
+    function convertTransformerStartCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (controller) => reflectCall(fn, original, [controller]);
+    }
+    function convertTransformerTransformCallback(fn, original, context) {
+      assertFunction(fn, context);
+      return (chunk, controller) => promiseCall(fn, original, [chunk, controller]);
+    }
+    class TransformStream {
+      constructor(rawTransformer = {}, rawWritableStrategy = {}, rawReadableStrategy = {}) {
+        if (rawTransformer === void 0) {
+          rawTransformer = null;
+        }
+        const writableStrategy = convertQueuingStrategy(rawWritableStrategy, "Second parameter");
+        const readableStrategy = convertQueuingStrategy(rawReadableStrategy, "Third parameter");
+        const transformer = convertTransformer(rawTransformer, "First parameter");
+        if (transformer.readableType !== void 0) {
+          throw new RangeError("Invalid readableType specified");
+        }
+        if (transformer.writableType !== void 0) {
+          throw new RangeError("Invalid writableType specified");
+        }
+        const readableHighWaterMark = ExtractHighWaterMark(readableStrategy, 0);
+        const readableSizeAlgorithm = ExtractSizeAlgorithm(readableStrategy);
+        const writableHighWaterMark = ExtractHighWaterMark(writableStrategy, 1);
+        const writableSizeAlgorithm = ExtractSizeAlgorithm(writableStrategy);
+        let startPromise_resolve;
+        const startPromise = newPromise((resolve2) => {
+          startPromise_resolve = resolve2;
+        });
+        InitializeTransformStream(this, startPromise, writableHighWaterMark, writableSizeAlgorithm, readableHighWaterMark, readableSizeAlgorithm);
+        SetUpTransformStreamDefaultControllerFromTransformer(this, transformer);
+        if (transformer.start !== void 0) {
+          startPromise_resolve(transformer.start(this._transformStreamController));
+        } else {
+          startPromise_resolve(void 0);
+        }
+      }
+      get readable() {
+        if (!IsTransformStream(this)) {
+          throw streamBrandCheckException("readable");
+        }
+        return this._readable;
+      }
+      get writable() {
+        if (!IsTransformStream(this)) {
+          throw streamBrandCheckException("writable");
+        }
+        return this._writable;
+      }
+    }
+    Object.defineProperties(TransformStream.prototype, {
+      readable: {enumerable: true},
+      writable: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(TransformStream.prototype, SymbolPolyfill.toStringTag, {
+        value: "TransformStream",
+        configurable: true
+      });
+    }
+    function InitializeTransformStream(stream, startPromise, writableHighWaterMark, writableSizeAlgorithm, readableHighWaterMark, readableSizeAlgorithm) {
+      function startAlgorithm() {
+        return startPromise;
+      }
+      function writeAlgorithm(chunk) {
+        return TransformStreamDefaultSinkWriteAlgorithm(stream, chunk);
+      }
+      function abortAlgorithm(reason) {
+        return TransformStreamDefaultSinkAbortAlgorithm(stream, reason);
+      }
+      function closeAlgorithm() {
+        return TransformStreamDefaultSinkCloseAlgorithm(stream);
+      }
+      stream._writable = CreateWritableStream(startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, writableHighWaterMark, writableSizeAlgorithm);
+      function pullAlgorithm() {
+        return TransformStreamDefaultSourcePullAlgorithm(stream);
+      }
+      function cancelAlgorithm(reason) {
+        TransformStreamErrorWritableAndUnblockWrite(stream, reason);
+        return promiseResolvedWith(void 0);
+      }
+      stream._readable = CreateReadableStream(startAlgorithm, pullAlgorithm, cancelAlgorithm, readableHighWaterMark, readableSizeAlgorithm);
+      stream._backpressure = void 0;
+      stream._backpressureChangePromise = void 0;
+      stream._backpressureChangePromise_resolve = void 0;
+      TransformStreamSetBackpressure(stream, true);
+      stream._transformStreamController = void 0;
+    }
+    function IsTransformStream(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_transformStreamController")) {
+        return false;
+      }
+      return x instanceof TransformStream;
+    }
+    function TransformStreamError(stream, e) {
+      ReadableStreamDefaultControllerError(stream._readable._readableStreamController, e);
+      TransformStreamErrorWritableAndUnblockWrite(stream, e);
+    }
+    function TransformStreamErrorWritableAndUnblockWrite(stream, e) {
+      TransformStreamDefaultControllerClearAlgorithms(stream._transformStreamController);
+      WritableStreamDefaultControllerErrorIfNeeded(stream._writable._writableStreamController, e);
+      if (stream._backpressure) {
+        TransformStreamSetBackpressure(stream, false);
+      }
+    }
+    function TransformStreamSetBackpressure(stream, backpressure) {
+      if (stream._backpressureChangePromise !== void 0) {
+        stream._backpressureChangePromise_resolve();
+      }
+      stream._backpressureChangePromise = newPromise((resolve2) => {
+        stream._backpressureChangePromise_resolve = resolve2;
+      });
+      stream._backpressure = backpressure;
+    }
+    class TransformStreamDefaultController {
+      constructor() {
+        throw new TypeError("Illegal constructor");
+      }
+      get desiredSize() {
+        if (!IsTransformStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException("desiredSize");
+        }
+        const readableController = this._controlledTransformStream._readable._readableStreamController;
+        return ReadableStreamDefaultControllerGetDesiredSize(readableController);
+      }
+      enqueue(chunk = void 0) {
+        if (!IsTransformStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException("enqueue");
+        }
+        TransformStreamDefaultControllerEnqueue(this, chunk);
+      }
+      error(reason = void 0) {
+        if (!IsTransformStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException("error");
+        }
+        TransformStreamDefaultControllerError(this, reason);
+      }
+      terminate() {
+        if (!IsTransformStreamDefaultController(this)) {
+          throw defaultControllerBrandCheckException("terminate");
+        }
+        TransformStreamDefaultControllerTerminate(this);
+      }
+    }
+    Object.defineProperties(TransformStreamDefaultController.prototype, {
+      enqueue: {enumerable: true},
+      error: {enumerable: true},
+      terminate: {enumerable: true},
+      desiredSize: {enumerable: true}
+    });
+    if (typeof SymbolPolyfill.toStringTag === "symbol") {
+      Object.defineProperty(TransformStreamDefaultController.prototype, SymbolPolyfill.toStringTag, {
+        value: "TransformStreamDefaultController",
+        configurable: true
+      });
+    }
+    function IsTransformStreamDefaultController(x) {
+      if (!typeIsObject(x)) {
+        return false;
+      }
+      if (!Object.prototype.hasOwnProperty.call(x, "_controlledTransformStream")) {
+        return false;
+      }
+      return x instanceof TransformStreamDefaultController;
+    }
+    function SetUpTransformStreamDefaultController(stream, controller, transformAlgorithm, flushAlgorithm) {
+      controller._controlledTransformStream = stream;
+      stream._transformStreamController = controller;
+      controller._transformAlgorithm = transformAlgorithm;
+      controller._flushAlgorithm = flushAlgorithm;
+    }
+    function SetUpTransformStreamDefaultControllerFromTransformer(stream, transformer) {
+      const controller = Object.create(TransformStreamDefaultController.prototype);
+      let transformAlgorithm = (chunk) => {
+        try {
+          TransformStreamDefaultControllerEnqueue(controller, chunk);
+          return promiseResolvedWith(void 0);
+        } catch (transformResultE) {
+          return promiseRejectedWith(transformResultE);
+        }
+      };
+      let flushAlgorithm = () => promiseResolvedWith(void 0);
+      if (transformer.transform !== void 0) {
+        transformAlgorithm = (chunk) => transformer.transform(chunk, controller);
+      }
+      if (transformer.flush !== void 0) {
+        flushAlgorithm = () => transformer.flush(controller);
+      }
+      SetUpTransformStreamDefaultController(stream, controller, transformAlgorithm, flushAlgorithm);
+    }
+    function TransformStreamDefaultControllerClearAlgorithms(controller) {
+      controller._transformAlgorithm = void 0;
+      controller._flushAlgorithm = void 0;
+    }
+    function TransformStreamDefaultControllerEnqueue(controller, chunk) {
+      const stream = controller._controlledTransformStream;
+      const readableController = stream._readable._readableStreamController;
+      if (!ReadableStreamDefaultControllerCanCloseOrEnqueue(readableController)) {
+        throw new TypeError("Readable side is not in a state that permits enqueue");
+      }
+      try {
+        ReadableStreamDefaultControllerEnqueue(readableController, chunk);
+      } catch (e) {
+        TransformStreamErrorWritableAndUnblockWrite(stream, e);
+        throw stream._readable._storedError;
+      }
+      const backpressure = ReadableStreamDefaultControllerHasBackpressure(readableController);
+      if (backpressure !== stream._backpressure) {
+        TransformStreamSetBackpressure(stream, true);
+      }
+    }
+    function TransformStreamDefaultControllerError(controller, e) {
+      TransformStreamError(controller._controlledTransformStream, e);
+    }
+    function TransformStreamDefaultControllerPerformTransform(controller, chunk) {
+      const transformPromise = controller._transformAlgorithm(chunk);
+      return transformPromiseWith(transformPromise, void 0, (r) => {
+        TransformStreamError(controller._controlledTransformStream, r);
+        throw r;
+      });
+    }
+    function TransformStreamDefaultControllerTerminate(controller) {
+      const stream = controller._controlledTransformStream;
+      const readableController = stream._readable._readableStreamController;
+      ReadableStreamDefaultControllerClose(readableController);
+      const error2 = new TypeError("TransformStream terminated");
+      TransformStreamErrorWritableAndUnblockWrite(stream, error2);
+    }
+    function TransformStreamDefaultSinkWriteAlgorithm(stream, chunk) {
+      const controller = stream._transformStreamController;
+      if (stream._backpressure) {
+        const backpressureChangePromise = stream._backpressureChangePromise;
+        return transformPromiseWith(backpressureChangePromise, () => {
+          const writable2 = stream._writable;
+          const state = writable2._state;
+          if (state === "erroring") {
+            throw writable2._storedError;
+          }
+          return TransformStreamDefaultControllerPerformTransform(controller, chunk);
+        });
+      }
+      return TransformStreamDefaultControllerPerformTransform(controller, chunk);
+    }
+    function TransformStreamDefaultSinkAbortAlgorithm(stream, reason) {
+      TransformStreamError(stream, reason);
+      return promiseResolvedWith(void 0);
+    }
+    function TransformStreamDefaultSinkCloseAlgorithm(stream) {
+      const readable = stream._readable;
+      const controller = stream._transformStreamController;
+      const flushPromise = controller._flushAlgorithm();
+      TransformStreamDefaultControllerClearAlgorithms(controller);
+      return transformPromiseWith(flushPromise, () => {
+        if (readable._state === "errored") {
+          throw readable._storedError;
+        }
+        ReadableStreamDefaultControllerClose(readable._readableStreamController);
+      }, (r) => {
+        TransformStreamError(stream, r);
+        throw readable._storedError;
+      });
+    }
+    function TransformStreamDefaultSourcePullAlgorithm(stream) {
+      TransformStreamSetBackpressure(stream, false);
+      return stream._backpressureChangePromise;
+    }
+    function defaultControllerBrandCheckException(name) {
+      return new TypeError(`TransformStreamDefaultController.prototype.${name} can only be used on a TransformStreamDefaultController`);
+    }
+    function streamBrandCheckException(name) {
+      return new TypeError(`TransformStream.prototype.${name} can only be used on a TransformStream`);
+    }
+    exports3.ByteLengthQueuingStrategy = ByteLengthQueuingStrategy;
+    exports3.CountQueuingStrategy = CountQueuingStrategy;
+    exports3.ReadableByteStreamController = ReadableByteStreamController;
+    exports3.ReadableStream = ReadableStream2;
+    exports3.ReadableStreamBYOBReader = ReadableStreamBYOBReader;
+    exports3.ReadableStreamBYOBRequest = ReadableStreamBYOBRequest;
+    exports3.ReadableStreamDefaultController = ReadableStreamDefaultController;
+    exports3.ReadableStreamDefaultReader = ReadableStreamDefaultReader;
+    exports3.TransformStream = TransformStream;
+    exports3.TransformStreamDefaultController = TransformStreamDefaultController;
+    exports3.WritableStream = WritableStream;
+    exports3.WritableStreamDefaultController = WritableStreamDefaultController;
+    exports3.WritableStreamDefaultWriter = WritableStreamDefaultWriter;
+    Object.defineProperty(exports3, "__esModule", {value: true});
+  });
+})(ponyfill_es2018, ponyfill_es2018.exports);
+var POOL_SIZE$1 = 65536;
+if (!globalThis.ReadableStream) {
+  try {
+    Object.assign(globalThis, require("stream/web"));
+  } catch (error2) {
+    Object.assign(globalThis, ponyfill_es2018.exports);
   }
-  if (!meta[0] && !charset.length) {
-    typeFull += ";charset=US-ASCII";
-    charset = "US-ASCII";
-  }
-  const encoding = base64 ? "base64" : "ascii";
-  const data = unescape(uri.substring(firstComma + 1));
-  const buffer = Buffer.from(data, encoding);
-  buffer.type = type;
-  buffer.typeFull = typeFull;
-  buffer.charset = charset;
-  return buffer;
 }
-var src = dataUriToBuffer;
-var {Readable} = import_stream.default;
-var wm = new WeakMap();
-async function* read(parts) {
-  for (const part of parts) {
+try {
+  const {Blob: Blob2} = require("buffer");
+  if (Blob2 && !Blob2.prototype.stream) {
+    Blob2.prototype.stream = function name(params) {
+      let position = 0;
+      const blob = this;
+      return new ReadableStream({
+        type: "bytes",
+        async pull(ctrl) {
+          const chunk = blob.slice(position, Math.min(blob.size, position + POOL_SIZE$1));
+          const buffer = await chunk.arrayBuffer();
+          position += buffer.byteLength;
+          ctrl.enqueue(new Uint8Array(buffer));
+          if (position === blob.size) {
+            ctrl.close();
+          }
+        }
+      });
+    };
+  }
+} catch (error2) {
+}
+var POOL_SIZE = 65536;
+async function* toIterator(parts, clone2 = true) {
+  for (let part of parts) {
     if ("stream" in part) {
       yield* part.stream();
+    } else if (ArrayBuffer.isView(part)) {
+      if (clone2) {
+        let position = part.byteOffset;
+        let end = part.byteOffset + part.byteLength;
+        while (position !== end) {
+          const size = Math.min(end - position, POOL_SIZE);
+          const chunk = part.buffer.slice(position, position + size);
+          position += chunk.byteLength;
+          yield new Uint8Array(chunk);
+        }
+      } else {
+        yield part;
+      }
     } else {
-      yield part;
+      let position = 0;
+      while (position !== part.size) {
+        const chunk = part.slice(position, Math.min(part.size, position + POOL_SIZE));
+        const buffer = await chunk.arrayBuffer();
+        position += buffer.byteLength;
+        yield new Uint8Array(buffer);
+      }
     }
   }
 }
-var Blob = class {
+var _parts, _type, _size, _a;
+var _Blob = (_a = class {
   constructor(blobParts = [], options2 = {}) {
+    __privateAdd(this, _parts, []);
+    __privateAdd(this, _type, "");
+    __privateAdd(this, _size, 0);
     let size = 0;
     const parts = blobParts.map((element) => {
-      let buffer;
-      if (element instanceof Buffer) {
-        buffer = element;
-      } else if (ArrayBuffer.isView(element)) {
-        buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
+      let part;
+      if (ArrayBuffer.isView(element)) {
+        part = new Uint8Array(element.buffer.slice(element.byteOffset, element.byteOffset + element.byteLength));
       } else if (element instanceof ArrayBuffer) {
-        buffer = Buffer.from(element);
-      } else if (element instanceof Blob) {
-        buffer = element;
+        part = new Uint8Array(element.slice(0));
+      } else if (element instanceof _a) {
+        part = element;
       } else {
-        buffer = Buffer.from(typeof element === "string" ? element : String(element));
+        part = new TextEncoder().encode(element);
       }
-      size += buffer.length || buffer.size || 0;
-      return buffer;
+      size += ArrayBuffer.isView(part) ? part.byteLength : part.size;
+      return part;
     });
-    const type = options2.type === void 0 ? "" : String(options2.type).toLowerCase();
-    wm.set(this, {
-      type: /[^\u0020-\u007E]/.test(type) ? "" : type,
-      size,
-      parts
-    });
+    const type = options2.type === void 0 ? "" : String(options2.type);
+    __privateSet(this, _type, /[^\u0020-\u007E]/.test(type) ? "" : type);
+    __privateSet(this, _size, size);
+    __privateSet(this, _parts, parts);
   }
   get size() {
-    return wm.get(this).size;
+    return __privateGet(this, _size);
   }
   get type() {
-    return wm.get(this).type;
+    return __privateGet(this, _type);
   }
   async text() {
-    return Buffer.from(await this.arrayBuffer()).toString();
+    const decoder = new TextDecoder();
+    let str = "";
+    for await (let part of toIterator(__privateGet(this, _parts), false)) {
+      str += decoder.decode(part, {stream: true});
+    }
+    str += decoder.decode();
+    return str;
   }
   async arrayBuffer() {
     const data = new Uint8Array(this.size);
     let offset = 0;
-    for await (const chunk of this.stream()) {
+    for await (const chunk of toIterator(__privateGet(this, _parts), false)) {
       data.set(chunk, offset);
       offset += chunk.length;
     }
     return data.buffer;
   }
   stream() {
-    return Readable.from(read(wm.get(this).parts));
+    const it = toIterator(__privateGet(this, _parts), true);
+    return new ReadableStream({
+      type: "bytes",
+      async pull(ctrl) {
+        const chunk = await it.next();
+        chunk.done ? ctrl.close() : ctrl.enqueue(chunk.value);
+      }
+    });
   }
   slice(start = 0, end = this.size, type = "") {
     const {size} = this;
     let relativeStart = start < 0 ? Math.max(size + start, 0) : Math.min(start, size);
     let relativeEnd = end < 0 ? Math.max(size + end, 0) : Math.min(end, size);
     const span = Math.max(relativeEnd - relativeStart, 0);
-    const parts = wm.get(this).parts.values();
+    const parts = __privateGet(this, _parts);
     const blobParts = [];
     let added = 0;
     for (const part of parts) {
+      if (added >= span) {
+        break;
+      }
       const size2 = ArrayBuffer.isView(part) ? part.byteLength : part.size;
       if (relativeStart && size2 <= relativeStart) {
         relativeStart -= size2;
         relativeEnd -= size2;
       } else {
-        const chunk = part.slice(relativeStart, Math.min(size2, relativeEnd));
-        blobParts.push(chunk);
-        added += ArrayBuffer.isView(chunk) ? chunk.byteLength : chunk.size;
-        relativeStart = 0;
-        if (added >= span) {
-          break;
+        let chunk;
+        if (ArrayBuffer.isView(part)) {
+          chunk = part.subarray(relativeStart, Math.min(size2, relativeEnd));
+          added += chunk.byteLength;
+        } else {
+          chunk = part.slice(relativeStart, Math.min(size2, relativeEnd));
+          added += chunk.size;
         }
+        blobParts.push(chunk);
+        relativeStart = 0;
       }
     }
-    const blob = new Blob([], {type: String(type).toLowerCase()});
-    Object.assign(wm.get(blob), {size: span, parts: blobParts});
+    const blob = new _a([], {type: String(type).toLowerCase()});
+    __privateSet(blob, _size, span);
+    __privateSet(blob, _parts, blobParts);
     return blob;
   }
   get [Symbol.toStringTag]() {
     return "Blob";
   }
   static [Symbol.hasInstance](object) {
-    return object && typeof object === "object" && typeof object.stream === "function" && object.stream.length === 0 && typeof object.constructor === "function" && /^(Blob|File)$/.test(object[Symbol.toStringTag]);
+    return object && typeof object === "object" && typeof object.constructor === "function" && (typeof object.stream === "function" || typeof object.arrayBuffer === "function") && /^(Blob|File)$/.test(object[Symbol.toStringTag]);
   }
-};
-Object.defineProperties(Blob.prototype, {
+}, _parts = new WeakMap(), _type = new WeakMap(), _size = new WeakMap(), _a);
+Object.defineProperties(_Blob.prototype, {
   size: {enumerable: true},
   type: {enumerable: true},
   slice: {enumerable: true}
 });
-var fetchBlob = Blob;
+var Blob = _Blob;
+var Blob$1 = Blob;
 var FetchBaseError = class extends Error {
   constructor(message, type) {
     super(message);
@@ -37628,7 +41637,7 @@ function isFormData(object) {
   return typeof object === "object" && typeof object.append === "function" && typeof object.set === "function" && typeof object.get === "function" && typeof object.getAll === "function" && typeof object.delete === "function" && typeof object.keys === "function" && typeof object.values === "function" && typeof object.entries === "function" && typeof object.constructor === "function" && object[NAME] === "FormData";
 }
 var isAbortSignal = (object) => {
-  return typeof object === "object" && object[NAME] === "AbortSignal";
+  return typeof object === "object" && (object[NAME] === "AbortSignal" || object[NAME] === "EventTarget");
 };
 var carriage = "\r\n";
 var dashes = "-".repeat(2);
@@ -37656,20 +41665,6 @@ async function* formDataIterator(form, boundary) {
     yield carriage;
   }
   yield getFooter(boundary);
-}
-function getFormDataLength(form, boundary) {
-  let length = 0;
-  for (const [name, value] of form) {
-    length += Buffer.byteLength(getHeader(boundary, name, value));
-    if (isBlob(value)) {
-      length += value.size;
-    } else {
-      length += Buffer.byteLength(String(value));
-    }
-    length += carriageLength;
-  }
-  length += Buffer.byteLength(getFooter(boundary));
-  return length;
 }
 var INTERNALS$2 = Symbol("Body internals");
 var Body = class {
@@ -37705,9 +41700,9 @@ var Body = class {
     };
     this.size = size;
     if (body instanceof import_stream.default) {
-      body.on("error", (err) => {
-        const error3 = err instanceof FetchBaseError ? err : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${err.message}`, "system", err);
-        this[INTERNALS$2].error = error3;
+      body.on("error", (error_) => {
+        const error2 = error_ instanceof FetchBaseError ? error_ : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${error_.message}`, "system", error_);
+        this[INTERNALS$2].error = error2;
       });
     }
   }
@@ -37724,7 +41719,7 @@ var Body = class {
   async blob() {
     const ct = this.headers && this.headers.get("content-type") || this[INTERNALS$2].body && this[INTERNALS$2].body.type || "";
     const buf = await this.buffer();
-    return new fetchBlob([buf], {
+    return new Blob$1([buf], {
       type: ct
     });
   }
@@ -37761,7 +41756,7 @@ async function consumeBody(data) {
     return Buffer.alloc(0);
   }
   if (isBlob(body)) {
-    body = body.stream();
+    body = import_stream.default.Readable.from(body.stream());
   }
   if (Buffer.isBuffer(body)) {
     return body;
@@ -37774,19 +41769,16 @@ async function consumeBody(data) {
   try {
     for await (const chunk of body) {
       if (data.size > 0 && accumBytes + chunk.length > data.size) {
-        const err = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
-        body.destroy(err);
-        throw err;
+        const error2 = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
+        body.destroy(error2);
+        throw error2;
       }
       accumBytes += chunk.length;
       accum.push(chunk);
     }
-  } catch (error3) {
-    if (error3 instanceof FetchBaseError) {
-      throw error3;
-    } else {
-      throw new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error3.message}`, "system", error3);
-    }
+  } catch (error2) {
+    const error_ = error2 instanceof FetchBaseError ? error2 : new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error2.message}`, "system", error2);
+    throw error_;
   }
   if (body.readableEnded === true || body._readableState.ended === true) {
     try {
@@ -37794,8 +41786,8 @@ async function consumeBody(data) {
         return Buffer.from(accum.join(""));
       }
       return Buffer.concat(accum, accumBytes);
-    } catch (error3) {
-      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error3.message}`, "system", error3);
+    } catch (error2) {
+      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error2.message}`, "system", error2);
     }
   } else {
     throw new FetchError(`Premature close of server response while trying to fetch ${data.url}`);
@@ -37845,70 +41837,39 @@ var extractContentType = (body, request) => {
   }
   return "text/plain;charset=UTF-8";
 };
-var getTotalBytes = (request) => {
-  const {body} = request;
-  if (body === null) {
-    return 0;
-  }
-  if (isBlob(body)) {
-    return body.size;
-  }
-  if (Buffer.isBuffer(body)) {
-    return body.length;
-  }
-  if (body && typeof body.getLengthSync === "function") {
-    return body.hasKnownLength && body.hasKnownLength() ? body.getLengthSync() : null;
-  }
-  if (isFormData(body)) {
-    return getFormDataLength(request[INTERNALS$2].boundary);
-  }
-  return null;
-};
-var writeToStream = (dest, {body}) => {
-  if (body === null) {
-    dest.end();
-  } else if (isBlob(body)) {
-    body.stream().pipe(dest);
-  } else if (Buffer.isBuffer(body)) {
-    dest.write(body);
-    dest.end();
-  } else {
-    body.pipe(dest);
-  }
-};
 var validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name) => {
   if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name)) {
-    const err = new TypeError(`Header name must be a valid HTTP token [${name}]`);
-    Object.defineProperty(err, "code", {value: "ERR_INVALID_HTTP_TOKEN"});
-    throw err;
+    const error2 = new TypeError(`Header name must be a valid HTTP token [${name}]`);
+    Object.defineProperty(error2, "code", {value: "ERR_INVALID_HTTP_TOKEN"});
+    throw error2;
   }
 };
 var validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name, value) => {
   if (/[^\t\u0020-\u007E\u0080-\u00FF]/.test(value)) {
-    const err = new TypeError(`Invalid character in header content ["${name}"]`);
-    Object.defineProperty(err, "code", {value: "ERR_INVALID_CHAR"});
-    throw err;
+    const error2 = new TypeError(`Invalid character in header content ["${name}"]`);
+    Object.defineProperty(error2, "code", {value: "ERR_INVALID_CHAR"});
+    throw error2;
   }
 };
 var Headers = class extends URLSearchParams {
-  constructor(init2) {
+  constructor(init) {
     let result = [];
-    if (init2 instanceof Headers) {
-      const raw = init2.raw();
+    if (init instanceof Headers) {
+      const raw = init.raw();
       for (const [name, values] of Object.entries(raw)) {
         result.push(...values.map((value) => [name, value]));
       }
-    } else if (init2 == null)
+    } else if (init == null)
       ;
-    else if (typeof init2 === "object" && !import_util.types.isBoxedPrimitive(init2)) {
-      const method = init2[Symbol.iterator];
+    else if (typeof init === "object" && !import_util.types.isBoxedPrimitive(init)) {
+      const method = init[Symbol.iterator];
       if (method == null) {
-        result.push(...Object.entries(init2));
+        result.push(...Object.entries(init));
       } else {
         if (typeof method !== "function") {
           throw new TypeError("Header pairs must be iterable");
         }
-        result = [...init2].map((pair) => {
+        result = [...init].map((pair) => {
           if (typeof pair !== "object" || import_util.types.isBoxedPrimitive(pair)) {
             throw new TypeError("Each header pair must be an iterable object");
           }
@@ -37937,14 +41898,14 @@ var Headers = class extends URLSearchParams {
             return (name, value) => {
               validateHeaderName(name);
               validateHeaderValue(name, String(value));
-              return URLSearchParams.prototype[p2].call(receiver, String(name).toLowerCase(), String(value));
+              return URLSearchParams.prototype[p2].call(target, String(name).toLowerCase(), String(value));
             };
           case "delete":
           case "has":
           case "getAll":
             return (name) => {
               validateHeaderName(name);
-              return URLSearchParams.prototype[p2].call(receiver, String(name).toLowerCase());
+              return URLSearchParams.prototype[p2].call(target, String(name).toLowerCase());
             };
           case "keys":
             return () => {
@@ -37974,9 +41935,9 @@ var Headers = class extends URLSearchParams {
     }
     return value;
   }
-  forEach(callback) {
+  forEach(callback, thisArg = void 0) {
     for (const name of this.keys()) {
-      callback(this.get(name), name);
+      Reflect.apply(callback, thisArg, [this.get(name), name, this]);
     }
   }
   *values() {
@@ -38014,22 +41975,6 @@ Object.defineProperties(Headers.prototype, ["get", "entries", "forEach", "values
   result[property] = {enumerable: true};
   return result;
 }, {}));
-function fromRawHeaders(headers = []) {
-  return new Headers(headers.reduce((result, value, index2, array) => {
-    if (index2 % 2 === 0) {
-      result.push(array.slice(index2, index2 + 2));
-    }
-    return result;
-  }, []).filter(([name, value]) => {
-    try {
-      validateHeaderName(name);
-      validateHeaderValue(name, String(value));
-      return true;
-    } catch {
-      return false;
-    }
-  }));
-}
 var redirectStatus = new Set([301, 302, 303, 307, 308]);
 var isRedirect = (code) => {
   return redirectStatus.has(code);
@@ -38038,7 +41983,7 @@ var INTERNALS$1 = Symbol("Response internals");
 var Response2 = class extends Body {
   constructor(body = null, options2 = {}) {
     super(body, options2);
-    const status = options2.status || 200;
+    const status = options2.status != null ? options2.status : 200;
     const headers = new Headers(options2.headers);
     if (body !== null && !headers.has("Content-Type")) {
       const contentType = extractContentType(body);
@@ -38047,6 +41992,7 @@ var Response2 = class extends Body {
       }
     }
     this[INTERNALS$1] = {
+      type: "default",
       url: options2.url,
       status,
       statusText: options2.statusText || "",
@@ -38054,6 +42000,9 @@ var Response2 = class extends Body {
       counter: options2.counter,
       highWaterMark: options2.highWaterMark
     };
+  }
+  get type() {
+    return this[INTERNALS$1].type;
   }
   get url() {
     return this[INTERNALS$1].url || "";
@@ -38078,6 +42027,7 @@ var Response2 = class extends Body {
   }
   clone() {
     return new Response2(clone(this, this.highWaterMark), {
+      type: this.type,
       url: this.url,
       status: this.status,
       statusText: this.statusText,
@@ -38098,11 +42048,17 @@ var Response2 = class extends Body {
       status
     });
   }
+  static error() {
+    const response = new Response2(null, {status: 0, statusText: ""});
+    response[INTERNALS$1].type = "error";
+    return response;
+  }
   get [Symbol.toStringTag]() {
     return "Response";
   }
 };
 Object.defineProperties(Response2.prototype, {
+  type: {enumerable: true},
   url: {enumerable: true},
   status: {enumerable: true},
   ok: {enumerable: true},
@@ -38111,20 +42067,12 @@ Object.defineProperties(Response2.prototype, {
   headers: {enumerable: true},
   clone: {enumerable: true}
 });
-var getSearch = (parsedURL) => {
-  if (parsedURL.search) {
-    return parsedURL.search;
-  }
-  const lastOffset = parsedURL.href.length - 1;
-  const hash2 = parsedURL.hash || (parsedURL.href[lastOffset] === "#" ? "#" : "");
-  return parsedURL.href[lastOffset - hash2.length] === "?" ? "?" : "";
-};
 var INTERNALS = Symbol("Request internals");
 var isRequest = (object) => {
   return typeof object === "object" && typeof object[INTERNALS] === "object";
 };
-var Request = class extends Body {
-  constructor(input, init2 = {}) {
+var Request2 = class extends Body {
+  constructor(input, init = {}) {
     let parsedURL;
     if (isRequest(input)) {
       parsedURL = new URL(input.url);
@@ -38132,16 +42080,16 @@ var Request = class extends Body {
       parsedURL = new URL(input);
       input = {};
     }
-    let method = init2.method || input.method || "GET";
+    let method = init.method || input.method || "GET";
     method = method.toUpperCase();
-    if ((init2.body != null || isRequest(input)) && input.body !== null && (method === "GET" || method === "HEAD")) {
+    if ((init.body != null || isRequest(input)) && input.body !== null && (method === "GET" || method === "HEAD")) {
       throw new TypeError("Request with GET/HEAD method cannot have body");
     }
-    const inputBody = init2.body ? init2.body : isRequest(input) && input.body !== null ? clone(input) : null;
+    const inputBody = init.body ? init.body : isRequest(input) && input.body !== null ? clone(input) : null;
     super(inputBody, {
-      size: init2.size || input.size || 0
+      size: init.size || input.size || 0
     });
-    const headers = new Headers(init2.headers || input.headers || {});
+    const headers = new Headers(init.headers || input.headers || {});
     if (inputBody !== null && !headers.has("Content-Type")) {
       const contentType = extractContentType(inputBody, this);
       if (contentType) {
@@ -38149,25 +42097,25 @@ var Request = class extends Body {
       }
     }
     let signal = isRequest(input) ? input.signal : null;
-    if ("signal" in init2) {
-      signal = init2.signal;
+    if ("signal" in init) {
+      signal = init.signal;
     }
-    if (signal !== null && !isAbortSignal(signal)) {
-      throw new TypeError("Expected signal to be an instanceof AbortSignal");
+    if (signal != null && !isAbortSignal(signal)) {
+      throw new TypeError("Expected signal to be an instanceof AbortSignal or EventTarget");
     }
     this[INTERNALS] = {
       method,
-      redirect: init2.redirect || input.redirect || "follow",
+      redirect: init.redirect || input.redirect || "follow",
       headers,
       parsedURL,
       signal
     };
-    this.follow = init2.follow === void 0 ? input.follow === void 0 ? 20 : input.follow : init2.follow;
-    this.compress = init2.compress === void 0 ? input.compress === void 0 ? true : input.compress : init2.compress;
-    this.counter = init2.counter || input.counter || 0;
-    this.agent = init2.agent || input.agent;
-    this.highWaterMark = init2.highWaterMark || input.highWaterMark || 16384;
-    this.insecureHTTPParser = init2.insecureHTTPParser || input.insecureHTTPParser || false;
+    this.follow = init.follow === void 0 ? input.follow === void 0 ? 20 : input.follow : init.follow;
+    this.compress = init.compress === void 0 ? input.compress === void 0 ? true : input.compress : init.compress;
+    this.counter = init.counter || input.counter || 0;
+    this.agent = init.agent || input.agent;
+    this.highWaterMark = init.highWaterMark || input.highWaterMark || 16384;
+    this.insecureHTTPParser = init.insecureHTTPParser || input.insecureHTTPParser || false;
   }
   get method() {
     return this[INTERNALS].method;
@@ -38185,13 +42133,13 @@ var Request = class extends Body {
     return this[INTERNALS].signal;
   }
   clone() {
-    return new Request(this);
+    return new Request2(this);
   }
   get [Symbol.toStringTag]() {
     return "Request";
   }
 };
-Object.defineProperties(Request.prototype, {
+Object.defineProperties(Request2.prototype, {
   method: {enumerable: true},
   url: {enumerable: true},
   headers: {enumerable: true},
@@ -38199,244 +42147,135 @@ Object.defineProperties(Request.prototype, {
   clone: {enumerable: true},
   signal: {enumerable: true}
 });
-var getNodeRequestOptions = (request) => {
-  const {parsedURL} = request[INTERNALS];
-  const headers = new Headers(request[INTERNALS].headers);
-  if (!headers.has("Accept")) {
-    headers.set("Accept", "*/*");
-  }
-  let contentLengthValue = null;
-  if (request.body === null && /^(post|put)$/i.test(request.method)) {
-    contentLengthValue = "0";
-  }
-  if (request.body !== null) {
-    const totalBytes = getTotalBytes(request);
-    if (typeof totalBytes === "number" && !Number.isNaN(totalBytes)) {
-      contentLengthValue = String(totalBytes);
-    }
-  }
-  if (contentLengthValue) {
-    headers.set("Content-Length", contentLengthValue);
-  }
-  if (!headers.has("User-Agent")) {
-    headers.set("User-Agent", "node-fetch");
-  }
-  if (request.compress && !headers.has("Accept-Encoding")) {
-    headers.set("Accept-Encoding", "gzip,deflate,br");
-  }
-  let {agent} = request;
-  if (typeof agent === "function") {
-    agent = agent(parsedURL);
-  }
-  if (!headers.has("Connection") && !agent) {
-    headers.set("Connection", "close");
-  }
-  const search = getSearch(parsedURL);
-  const requestOptions = {
-    path: parsedURL.pathname + search,
-    pathname: parsedURL.pathname,
-    hostname: parsedURL.hostname,
-    protocol: parsedURL.protocol,
-    port: parsedURL.port,
-    hash: parsedURL.hash,
-    search: parsedURL.search,
-    query: parsedURL.query,
-    href: parsedURL.href,
-    method: request.method,
-    headers: headers[Symbol.for("nodejs.util.inspect.custom")](),
-    insecureHTTPParser: request.insecureHTTPParser,
-    agent
-  };
-  return requestOptions;
-};
-var AbortError = class extends FetchBaseError {
-  constructor(message, type = "aborted") {
-    super(message, type);
-  }
-};
 var supportedSchemas = new Set(["data:", "http:", "https:"]);
-async function fetch2(url, options_) {
-  return new Promise((resolve2, reject) => {
-    const request = new Request(url, options_);
-    const options2 = getNodeRequestOptions(request);
-    if (!supportedSchemas.has(options2.protocol)) {
-      throw new TypeError(`node-fetch cannot load ${url}. URL scheme "${options2.protocol.replace(/:$/, "")}" is not supported.`);
-    }
-    if (options2.protocol === "data:") {
-      const data = src(request.url);
-      const response2 = new Response2(data, {headers: {"Content-Type": data.typeFull}});
-      resolve2(response2);
-      return;
-    }
-    const send = (options2.protocol === "https:" ? import_https.default : import_http.default).request;
-    const {signal} = request;
-    let response = null;
-    const abort = () => {
-      const error3 = new AbortError("The operation was aborted.");
-      reject(error3);
-      if (request.body && request.body instanceof import_stream.default.Readable) {
-        request.body.destroy(error3);
-      }
-      if (!response || !response.body) {
-        return;
-      }
-      response.body.emit("error", error3);
-    };
-    if (signal && signal.aborted) {
-      abort();
-      return;
-    }
-    const abortAndFinalize = () => {
-      abort();
-      finalize();
-    };
-    const request_ = send(options2);
-    if (signal) {
-      signal.addEventListener("abort", abortAndFinalize);
-    }
-    const finalize = () => {
-      request_.abort();
-      if (signal) {
-        signal.removeEventListener("abort", abortAndFinalize);
-      }
-    };
-    request_.on("error", (err) => {
-      reject(new FetchError(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
-      finalize();
-    });
-    request_.on("response", (response_) => {
-      request_.setTimeout(0);
-      const headers = fromRawHeaders(response_.rawHeaders);
-      if (isRedirect(response_.statusCode)) {
-        const location = headers.get("Location");
-        const locationURL = location === null ? null : new URL(location, request.url);
-        switch (request.redirect) {
-          case "error":
-            reject(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
-            finalize();
-            return;
-          case "manual":
-            if (locationURL !== null) {
-              try {
-                headers.set("Location", locationURL);
-              } catch (error3) {
-                reject(error3);
-              }
-            }
-            break;
-          case "follow": {
-            if (locationURL === null) {
-              break;
-            }
-            if (request.counter >= request.follow) {
-              reject(new FetchError(`maximum redirect reached at: ${request.url}`, "max-redirect"));
-              finalize();
-              return;
-            }
-            const requestOptions = {
-              headers: new Headers(request.headers),
-              follow: request.follow,
-              counter: request.counter + 1,
-              agent: request.agent,
-              compress: request.compress,
-              method: request.method,
-              body: request.body,
-              signal: request.signal,
-              size: request.size
-            };
-            if (response_.statusCode !== 303 && request.body && options_.body instanceof import_stream.default.Readable) {
-              reject(new FetchError("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
-              finalize();
-              return;
-            }
-            if (response_.statusCode === 303 || (response_.statusCode === 301 || response_.statusCode === 302) && request.method === "POST") {
-              requestOptions.method = "GET";
-              requestOptions.body = void 0;
-              requestOptions.headers.delete("content-length");
-            }
-            resolve2(fetch2(new Request(locationURL, requestOptions)));
-            finalize();
-            return;
-          }
-        }
-      }
-      response_.once("end", () => {
-        if (signal) {
-          signal.removeEventListener("abort", abortAndFinalize);
-        }
-      });
-      let body = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), (error3) => {
-        reject(error3);
-      });
-      if (process.version < "v12.10") {
-        response_.on("aborted", abortAndFinalize);
-      }
-      const responseOptions = {
-        url: request.url,
-        status: response_.statusCode,
-        statusText: response_.statusMessage,
-        headers,
-        size: request.size,
-        counter: request.counter,
-        highWaterMark: request.highWaterMark
-      };
-      const codings = headers.get("Content-Encoding");
-      if (!request.compress || request.method === "HEAD" || codings === null || response_.statusCode === 204 || response_.statusCode === 304) {
-        response = new Response2(body, responseOptions);
-        resolve2(response);
-        return;
-      }
-      const zlibOptions = {
-        flush: import_zlib.default.Z_SYNC_FLUSH,
-        finishFlush: import_zlib.default.Z_SYNC_FLUSH
-      };
-      if (codings === "gzip" || codings === "x-gzip") {
-        body = (0, import_stream.pipeline)(body, import_zlib.default.createGunzip(zlibOptions), (error3) => {
-          reject(error3);
-        });
-        response = new Response2(body, responseOptions);
-        resolve2(response);
-        return;
-      }
-      if (codings === "deflate" || codings === "x-deflate") {
-        const raw = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), (error3) => {
-          reject(error3);
-        });
-        raw.once("data", (chunk) => {
-          if ((chunk[0] & 15) === 8) {
-            body = (0, import_stream.pipeline)(body, import_zlib.default.createInflate(), (error3) => {
-              reject(error3);
-            });
-          } else {
-            body = (0, import_stream.pipeline)(body, import_zlib.default.createInflateRaw(), (error3) => {
-              reject(error3);
-            });
-          }
-          response = new Response2(body, responseOptions);
-          resolve2(response);
-        });
-        return;
-      }
-      if (codings === "br") {
-        body = (0, import_stream.pipeline)(body, import_zlib.default.createBrotliDecompress(), (error3) => {
-          reject(error3);
-        });
-        response = new Response2(body, responseOptions);
-        resolve2(response);
-        return;
-      }
-      response = new Response2(body, responseOptions);
-      resolve2(response);
-    });
-    writeToStream(request_, request);
-  });
-}
-globalThis.fetch = fetch2;
-globalThis.Response = Response2;
-globalThis.Request = Request;
-globalThis.Headers = Headers;
 
-// node_modules/@sveltejs/kit/dist/ssr.js
+// .svelte-kit/output/server/app.js
+var import_auth = __toModule(require_node());
+
+// node_modules/nanoid/index.js
+var import_crypto2 = __toModule(require("crypto"));
+
+// node_modules/nanoid/url-alphabet/index.js
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+
+// node_modules/nanoid/index.js
+var POOL_SIZE_MULTIPLIER = 32;
+var pool;
+var poolOffset;
+var random = (bytes) => {
+  if (!pool || pool.length < bytes) {
+    pool = Buffer.allocUnsafe(bytes * POOL_SIZE_MULTIPLIER);
+    import_crypto2.default.randomFillSync(pool);
+    poolOffset = 0;
+  } else if (poolOffset + bytes > pool.length) {
+    import_crypto2.default.randomFillSync(pool);
+    poolOffset = 0;
+  }
+  let res = pool.subarray(poolOffset, poolOffset + bytes);
+  poolOffset += bytes;
+  return res;
+};
+var nanoid = (size = 21) => {
+  let bytes = random(size);
+  let id = "";
+  while (size--) {
+    id += urlAlphabet[bytes[size] & 63];
+  }
+  return id;
+};
+
+// .svelte-kit/output/server/app.js
+var import_app = __toModule(require_index_cjs3());
+var import_firestore = __toModule(require_index_node_cjs2());
+var __accessCheck2 = (obj, member, msg) => {
+  if (!member.has(obj))
+    throw TypeError("Cannot " + msg);
+};
+var __privateGet2 = (obj, member, getter) => {
+  __accessCheck2(obj, member, "read from private field");
+  return getter ? getter.call(obj) : member.get(obj);
+};
+var __privateAdd2 = (obj, member, value) => {
+  if (member.has(obj))
+    throw TypeError("Cannot add the same private member more than once");
+  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+};
+var __privateSet2 = (obj, member, value, setter) => {
+  __accessCheck2(obj, member, "write to private field");
+  setter ? setter.call(obj, value) : member.set(obj, value);
+  return value;
+};
+var _map;
+function get_single_valued_header(headers, key) {
+  const value = headers[key];
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return void 0;
+    }
+    if (value.length > 1) {
+      throw new Error(`Multiple headers provided for ${key}. Multiple may be provided only for set-cookie`);
+    }
+    return value[0];
+  }
+  return value;
+}
+function coalesce_to_error(err) {
+  return err instanceof Error || err && err.name && err.message ? err : new Error(JSON.stringify(err));
+}
+function lowercase_keys(obj) {
+  const clone2 = {};
+  for (const key in obj) {
+    clone2[key.toLowerCase()] = obj[key];
+  }
+  return clone2;
+}
+function error$1(body) {
+  return {
+    status: 500,
+    body,
+    headers: {}
+  };
+}
+function is_string(s2) {
+  return typeof s2 === "string" || s2 instanceof String;
+}
+function is_content_type_textual(content_type) {
+  if (!content_type)
+    return true;
+  const [type] = content_type.split(";");
+  return type === "text/plain" || type === "application/json" || type === "application/x-www-form-urlencoded" || type === "multipart/form-data";
+}
+async function render_endpoint(request, route, match) {
+  const mod = await route.load();
+  const handler = mod[request.method.toLowerCase().replace("delete", "del")];
+  if (!handler) {
+    return;
+  }
+  const params = route.params(match);
+  const response = await handler(__spreadProps(__spreadValues({}, request), {params}));
+  const preface = `Invalid response from route ${request.path}`;
+  if (!response) {
+    return;
+  }
+  if (typeof response !== "object") {
+    return error$1(`${preface}: expected an object, got ${typeof response}`);
+  }
+  let {status = 200, body, headers = {}} = response;
+  headers = lowercase_keys(headers);
+  const type = get_single_valued_header(headers, "content-type");
+  const is_type_textual = is_content_type_textual(type);
+  if (!is_type_textual && !(body instanceof Uint8Array || is_string(body))) {
+    return error$1(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
+  }
+  let normalized_body;
+  if ((typeof body === "object" || typeof body === "undefined") && !(body instanceof Uint8Array) && (!type || type.startsWith("application/json"))) {
+    headers = __spreadProps(__spreadValues({}, headers), {"content-type": "application/json; charset=utf-8"});
+    normalized_body = JSON.stringify(typeof body === "undefined" ? {} : body);
+  } else {
+    normalized_body = body;
+  }
+  return {status, body: normalized_body, headers};
+}
 var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_$";
 var unsafeChars = /[<>\b\f\n\r\t\0\u2028\u2029]/g;
 var reserved = /^(?:do|if|in|for|int|let|new|try|var|byte|case|char|else|enum|goto|long|this|void|with|await|break|catch|class|const|final|float|short|super|throw|while|yield|delete|double|export|import|native|return|switch|throws|typeof|boolean|default|extends|finally|package|private|abstract|continue|debugger|function|volatile|interface|protected|transient|implements|instanceof|synchronized)$/;
@@ -38580,8 +42419,8 @@ function devalue(value) {
           break;
         case "Map":
           values_1.push("new Map");
-          statements_1.push(name + "." + Array.from(thing).map(function(_a) {
-            var k = _a[0], v = _a[1];
+          statements_1.push(name + "." + Array.from(thing).map(function(_a2) {
+            var k = _a2[0], v = _a2[1];
             return "set(" + stringify(k) + ", " + stringify(v) + ")";
           }).join("."));
           break;
@@ -38664,19 +42503,19 @@ function noop() {
 function safe_not_equal(a, b) {
   return a != a ? b == b : a !== b || (a && typeof a === "object" || typeof a === "function");
 }
+Promise.resolve();
 var subscriber_queue = [];
 function writable(value, start = noop) {
   let stop;
-  const subscribers = [];
+  const subscribers = new Set();
   function set(new_value) {
     if (safe_not_equal(value, new_value)) {
       value = new_value;
       if (stop) {
         const run_queue = !subscriber_queue.length;
-        for (let i = 0; i < subscribers.length; i += 1) {
-          const s2 = subscribers[i];
-          s2[1]();
-          subscriber_queue.push(s2, value);
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
         }
         if (run_queue) {
           for (let i = 0; i < subscriber_queue.length; i += 2) {
@@ -38692,17 +42531,14 @@ function writable(value, start = noop) {
   }
   function subscribe(run2, invalidate = noop) {
     const subscriber = [run2, invalidate];
-    subscribers.push(subscriber);
-    if (subscribers.length === 1) {
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
       stop = start(set) || noop;
     }
     run2(value);
     return () => {
-      const index2 = subscribers.indexOf(subscriber);
-      if (index2 !== -1) {
-        subscribers.splice(index2, 1);
-      }
-      if (subscribers.length === 0) {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
         stop();
         stop = null;
       }
@@ -38724,12 +42560,12 @@ function hash(value) {
 }
 var s$1 = JSON.stringify;
 async function render_response({
+  branch,
   options: options2,
   $session,
   page_config,
   status,
-  error: error3,
-  branch,
+  error: error2,
   page
 }) {
   const css2 = new Set(options2.entry.css);
@@ -38739,10 +42575,10 @@ async function render_response({
   let rendered;
   let is_private = false;
   let maxage;
-  if (error3) {
-    error3.stack = options2.get_stack(error3);
+  if (error2) {
+    error2.stack = options2.get_stack(error2);
   }
-  if (branch) {
+  if (page_config.ssr) {
     branch.forEach(({node, loaded, fetched, uses_credentials}) => {
       if (node.css)
         node.css.forEach((url) => css2.add(url));
@@ -38802,8 +42638,8 @@ async function render_response({
 			start({
 				target: ${options2.target ? `document.querySelector(${s$1(options2.target)})` : "document.body"},
 				paths: ${s$1(options2.paths)},
-				session: ${try_serialize($session, (error4) => {
-      throw new Error(`Failed to serialize session data: ${error4.message}`);
+				session: ${try_serialize($session, (error3) => {
+      throw new Error(`Failed to serialize session data: ${error3.message}`);
     })},
 				host: ${page && page.host ? s$1(page.host) : "location.host"},
 				route: ${!!page_config.router},
@@ -38811,18 +42647,25 @@ async function render_response({
 				trailing_slash: ${s$1(options2.trailing_slash)},
 				hydrate: ${page_config.ssr && page_config.hydrate ? `{
 					status: ${status},
-					error: ${serialize_error(error3)},
+					error: ${serialize_error(error2)},
 					nodes: [
-						${branch.map(({node}) => `import(${s$1(node.entry)})`).join(",\n						")}
+						${(branch || []).map(({node}) => `import(${s$1(node.entry)})`).join(",\n						")}
 					],
 					page: {
-						host: ${page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
-						path: ${s$1(page.path)},
-						query: new URLSearchParams(${s$1(page.query.toString())}),
-						params: ${s$1(page.params)}
+						host: ${page && page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
+						path: ${s$1(page && page.path)},
+						query: new URLSearchParams(${page ? s$1(page.query.toString()) : ""}),
+						params: ${page && s$1(page.params)}
 					}
 				}` : "null"}
 			});
+		</script>`;
+  }
+  if (options2.service_worker) {
+    init2 += `<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('${options2.service_worker}');
+			}
 		</script>`;
   }
   const head = [
@@ -38834,9 +42677,12 @@ async function render_response({
   const body = options2.amp ? rendered.html : `${rendered.html}
 
 			${serialized_data.map(({url, body: body2, json}) => {
-    return body2 ? `<script type="svelte-data" url="${url}" body="${hash(body2)}">${json}</script>` : `<script type="svelte-data" url="${url}">${json}</script>`;
-  }).join("\n\n			")}
-		`.replace(/^\t{2}/gm, "");
+    let attributes = `type="application/json" data-type="svelte-data" data-url="${url}"`;
+    if (body2)
+      attributes += ` data-body="${hash(body2)}"`;
+    return `<script ${attributes}>${json}</script>`;
+  }).join("\n\n	")}
+		`;
   const headers = {
     "content-type": "text/html"
   };
@@ -38857,17 +42703,17 @@ function try_serialize(data, fail) {
     return devalue(data);
   } catch (err) {
     if (fail)
-      fail(err);
+      fail(coalesce_to_error(err));
     return null;
   }
 }
-function serialize_error(error3) {
-  if (!error3)
+function serialize_error(error2) {
+  if (!error2)
     return null;
-  let serialized = try_serialize(error3);
+  let serialized = try_serialize(error2);
   if (!serialized) {
-    const {name, message, stack} = error3;
-    serialized = try_serialize({name, message, stack});
+    const {name, message, stack} = error2;
+    serialized = try_serialize(__spreadProps(__spreadValues({}, error2), {name, message, stack}));
   }
   if (!serialized) {
     serialized = "{}";
@@ -38875,20 +42721,27 @@ function serialize_error(error3) {
   return serialized;
 }
 function normalize(loaded) {
-  if (loaded.error) {
-    const error3 = typeof loaded.error === "string" ? new Error(loaded.error) : loaded.error;
+  const has_error_status = loaded.status && loaded.status >= 400 && loaded.status <= 599 && !loaded.redirect;
+  if (loaded.error || has_error_status) {
     const status = loaded.status;
-    if (!(error3 instanceof Error)) {
+    if (!loaded.error && has_error_status) {
+      return {
+        status: status || 500,
+        error: new Error()
+      };
+    }
+    const error2 = typeof loaded.error === "string" ? new Error(loaded.error) : loaded.error;
+    if (!(error2 instanceof Error)) {
       return {
         status: 500,
-        error: new Error(`"error" property returned from load() must be a string or instance of Error, received type "${typeof error3}"`)
+        error: new Error(`"error" property returned from load() must be a string or instance of Error, received type "${typeof error2}"`)
       };
     }
     if (!status || status < 400 || status > 599) {
       console.warn('"error" returned from load() without a valid status code \u2014 defaulting to 500');
-      return {status: 500, error: error3};
+      return {status: 500, error: error2};
     }
-    return {status, error: error3};
+    return {status, error: error2};
   }
   if (loaded.redirect) {
     if (!loaded.status || Math.floor(loaded.status / 100) !== 3) {
@@ -38904,22 +42757,10 @@ function normalize(loaded) {
       };
     }
   }
-  return loaded;
-}
-function resolve(base, path) {
-  const baseparts = path[0] === "/" ? [] : base.slice(1).split("/");
-  const pathparts = path[0] === "/" ? path.slice(1).split("/") : path.split("/");
-  baseparts.pop();
-  for (let i = 0; i < pathparts.length; i += 1) {
-    const part = pathparts[i];
-    if (part === ".")
-      continue;
-    else if (part === "..")
-      baseparts.pop();
-    else
-      baseparts.push(part);
+  if (loaded.context) {
+    throw new Error('You are returning "context" from a load function. "context" was renamed to "stuff", please adjust your code accordingly.');
   }
-  return `/${baseparts.join("/")}`;
+  return loaded;
 }
 var s = JSON.stringify;
 async function load_node({
@@ -38930,19 +42771,29 @@ async function load_node({
   page,
   node,
   $session,
-  context,
+  stuff,
+  prerender_enabled,
   is_leaf,
   is_error,
   status,
-  error: error3
+  error: error2
 }) {
   const {module: module2} = node;
   let uses_credentials = false;
   const fetched = [];
+  let set_cookie_headers = [];
   let loaded;
+  const page_proxy = new Proxy(page, {
+    get: (target, prop, receiver) => {
+      if (prop === "query" && prerender_enabled) {
+        throw new Error("Cannot access query on a page with prerendering enabled");
+      }
+      return Reflect.get(target, prop, receiver);
+    }
+  });
   if (module2.load) {
     const load_input = {
-      page,
+      page: page_proxy,
       get session() {
         uses_credentials = true;
         return $session;
@@ -38965,65 +42816,65 @@ async function load_node({
             integrity: resource.integrity
           }, opts);
         }
-        if (options2.read && url.startsWith(options2.paths.assets)) {
-          url = url.replace(options2.paths.assets, "");
-        }
-        if (url.startsWith("//")) {
-          throw new Error(`Cannot request protocol-relative URL (${url}) in server-side fetch`);
-        }
+        const resolved = resolve(request.path, url.split("?")[0]);
         let response;
-        if (/^[a-zA-Z]+:/.test(url)) {
-          response = await fetch(url, opts);
-        } else {
-          const [path, search] = url.split("?");
-          const resolved = resolve(request.path, path);
-          const filename = resolved.slice(1);
-          const filename_html = `${filename}/index.html`;
-          const asset = options2.manifest.assets.find((d2) => d2.file === filename || d2.file === filename_html);
-          if (asset) {
-            if (options2.read) {
-              response = new Response(options2.read(asset.file), {
-                headers: {
-                  "content-type": asset.type
-                }
-              });
-            } else {
-              response = await fetch(`http://${page.host}/${asset.file}`, opts);
+        const filename = resolved.replace(options2.paths.assets, "").slice(1);
+        const filename_html = `${filename}/index.html`;
+        const asset = options2.manifest.assets.find((d2) => d2.file === filename || d2.file === filename_html);
+        if (asset) {
+          response = options2.read ? new Response(options2.read(asset.file), {
+            headers: asset.type ? {"content-type": asset.type} : {}
+          }) : await fetch(`http://${page.host}/${asset.file}`, opts);
+        } else if (resolved.startsWith("/") && !resolved.startsWith("//")) {
+          const relative = resolved;
+          const headers = __spreadValues({}, opts.headers);
+          if (opts.credentials !== "omit") {
+            uses_credentials = true;
+            headers.cookie = request.headers.cookie;
+            if (!headers.authorization) {
+              headers.authorization = request.headers.authorization;
             }
           }
-          if (!response) {
-            const headers = __spreadValues({}, opts.headers);
-            if (opts.credentials !== "omit") {
-              uses_credentials = true;
-              headers.cookie = request.headers.cookie;
-              if (!headers.authorization) {
-                headers.authorization = request.headers.authorization;
-              }
+          if (opts.body && typeof opts.body !== "string") {
+            throw new Error("Request body must be a string");
+          }
+          const search = url.includes("?") ? url.slice(url.indexOf("?") + 1) : "";
+          const rendered = await respond({
+            host: request.host,
+            method: opts.method || "GET",
+            headers,
+            path: relative,
+            rawBody: opts.body == null ? null : new TextEncoder().encode(opts.body),
+            query: new URLSearchParams(search)
+          }, options2, {
+            fetched: url,
+            initiator: route
+          });
+          if (rendered) {
+            if (state.prerender) {
+              state.prerender.dependencies.set(relative, rendered);
             }
-            if (opts.body && typeof opts.body !== "string") {
-              throw new Error("Request body must be a string");
-            }
-            const rendered = await respond({
-              host: request.host,
-              method: opts.method || "GET",
-              headers,
-              path: resolved,
-              rawBody: opts.body,
-              query: new URLSearchParams(search)
-            }, options2, {
-              fetched: url,
-              initiator: route
+            response = new Response(rendered.body, {
+              status: rendered.status,
+              headers: rendered.headers
             });
-            if (rendered) {
-              if (state.prerender) {
-                state.prerender.dependencies.set(resolved, rendered);
-              }
-              response = new Response(rendered.body, {
-                status: rendered.status,
-                headers: rendered.headers
+          }
+        } else {
+          if (resolved.startsWith("//")) {
+            throw new Error(`Cannot request protocol-relative URL (${url}) in server-side fetch`);
+          }
+          if (typeof request.host !== "undefined") {
+            const {hostname: fetch_hostname} = new URL(url);
+            const [server_hostname] = request.host.split(":");
+            if (`.${fetch_hostname}`.endsWith(`.${server_hostname}`) && opts.credentials !== "omit") {
+              uses_credentials = true;
+              opts.headers = __spreadProps(__spreadValues({}, opts.headers), {
+                cookie: request.headers.cookie
               });
             }
           }
+          const external_request = new Request(url, opts);
+          response = await options2.hooks.externalFetch.call(null, external_request);
         }
         if (response) {
           const proxy = new Proxy(response, {
@@ -39032,14 +42883,17 @@ async function load_node({
                 const body = await response2.text();
                 const headers = {};
                 for (const [key2, value] of response2.headers) {
-                  if (key2 !== "etag" && key2 !== "set-cookie")
+                  if (key2 === "set-cookie") {
+                    set_cookie_headers = set_cookie_headers.concat(value);
+                  } else if (key2 !== "etag") {
                     headers[key2] = value;
+                  }
                 }
                 if (!opts.body || typeof opts.body === "string") {
                   fetched.push({
                     url,
                     body: opts.body,
-                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers)},"body":${escape(body)}}`
+                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers)},"body":${escape$1(body)}}`
                   });
                 }
                 return body;
@@ -39061,11 +42915,11 @@ async function load_node({
           status: 404
         });
       },
-      context: __spreadValues({}, context)
+      stuff: __spreadValues({}, stuff)
     };
     if (is_error) {
       load_input.status = status;
-      load_input.error = error3;
+      load_input.error = error2;
     }
     loaded = await module2.load.call(null, load_input);
   } else {
@@ -39073,15 +42927,19 @@ async function load_node({
   }
   if (!loaded && is_leaf && !is_error)
     return;
+  if (!loaded) {
+    throw new Error(`${node.entry} - load must return a value except for page fall through`);
+  }
   return {
     node,
     loaded: normalize(loaded),
-    context: loaded.context || context,
+    stuff: loaded.stuff || stuff,
     fetched,
+    set_cookie_headers,
     uses_credentials
   };
 }
-var escaped = {
+var escaped$2 = {
   "<": "\\u003C",
   ">": "\\u003E",
   "/": "\\u002F",
@@ -39095,15 +42953,15 @@ var escaped = {
   "\u2028": "\\u2028",
   "\u2029": "\\u2029"
 };
-function escape(str) {
+function escape$1(str) {
   let result = '"';
   for (let i = 0; i < str.length; i += 1) {
     const char = str.charAt(i);
     const code = char.charCodeAt(0);
     if (char === '"') {
       result += '\\"';
-    } else if (char in escaped) {
-      result += escaped[char];
+    } else if (char in escaped$2) {
+      result += escaped$2[char];
     } else if (code >= 55296 && code <= 57343) {
       const next = str.charCodeAt(i + 1);
       if (code <= 56319 && next >= 56320 && next <= 57343) {
@@ -39118,7 +42976,29 @@ function escape(str) {
   result += '"';
   return result;
 }
-async function respond_with_error({request, options: options2, state, $session, status, error: error3}) {
+var absolute = /^([a-z]+:)?\/?\//;
+function resolve(base2, path) {
+  const base_match = absolute.exec(base2);
+  const path_match = absolute.exec(path);
+  if (!base_match) {
+    throw new Error(`bad base path: "${base2}"`);
+  }
+  const baseparts = path_match ? [] : base2.slice(base_match[0].length).split("/");
+  const pathparts = path_match ? path.slice(path_match[0].length).split("/") : path.split("/");
+  baseparts.pop();
+  for (let i = 0; i < pathparts.length; i += 1) {
+    const part = pathparts[i];
+    if (part === ".")
+      continue;
+    else if (part === "..")
+      baseparts.pop();
+    else
+      baseparts.push(part);
+  }
+  const prefix = path_match && path_match[0] || base_match && base_match[0] || "";
+  return `${prefix}${baseparts.join("/")}`;
+}
+async function respond_with_error({request, options: options2, state, $session, status, error: error2}) {
   const default_layout = await options2.load_component(options2.manifest.layout);
   const default_error = await options2.load_component(options2.manifest.error);
   const page = {
@@ -39135,7 +43015,8 @@ async function respond_with_error({request, options: options2, state, $session, 
     page,
     node: default_layout,
     $session,
-    context: {},
+    stuff: {},
+    prerender_enabled: is_prerender_enabled(options2, default_error, state),
     is_leaf: false,
     is_error: false
   });
@@ -39149,11 +43030,12 @@ async function respond_with_error({request, options: options2, state, $session, 
       page,
       node: default_error,
       $session,
-      context: loaded.context,
+      stuff: loaded ? loaded.stuff : {},
+      prerender_enabled: is_prerender_enabled(options2, default_error, state),
       is_leaf: false,
       is_error: true,
       status,
-      error: error3
+      error: error2
     })
   ];
   try {
@@ -39166,172 +43048,168 @@ async function respond_with_error({request, options: options2, state, $session, 
         ssr: options2.ssr
       },
       status,
-      error: error3,
+      error: error2,
       branch,
       page
     });
-  } catch (error4) {
-    options2.handle_error(error4);
+  } catch (err) {
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
     return {
       status: 500,
       headers: {},
-      body: error4.stack
+      body: error3.stack
     };
   }
 }
-async function respond$1({request, options: options2, state, $session, route}) {
-  const match = route.pattern.exec(request.path);
-  const params = route.params(match);
-  const page = {
-    host: request.host,
-    path: request.path,
-    query: request.query,
-    params
-  };
+function is_prerender_enabled(options2, node, state) {
+  return options2.prerender && (!!node.module.prerender || !!state.prerender && state.prerender.all);
+}
+async function respond$1(opts) {
+  const {request, options: options2, state, $session, route} = opts;
   let nodes;
   try {
-    nodes = await Promise.all(route.a.map((id) => id && options2.load_component(id)));
-  } catch (error4) {
-    options2.handle_error(error4);
+    nodes = await Promise.all(route.a.map((id) => id ? options2.load_component(id) : void 0));
+  } catch (err) {
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
     return await respond_with_error({
       request,
       options: options2,
       state,
       $session,
       status: 500,
-      error: error4
+      error: error3
     });
   }
   const leaf = nodes[nodes.length - 1].module;
-  const page_config = {
-    ssr: "ssr" in leaf ? leaf.ssr : options2.ssr,
-    router: "router" in leaf ? leaf.router : options2.router,
-    hydrate: "hydrate" in leaf ? leaf.hydrate : options2.hydrate
-  };
+  let page_config = get_page_config(leaf, options2);
   if (!leaf.prerender && state.prerender && !state.prerender.all) {
     return {
       status: 204,
       headers: {},
-      body: null
+      body: ""
     };
   }
-  let branch;
+  let branch = [];
   let status = 200;
-  let error3;
+  let error2;
+  let set_cookie_headers = [];
   ssr:
     if (page_config.ssr) {
-      let context = {};
-      branch = [];
+      let stuff = {};
       for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
         let loaded;
         if (node) {
           try {
-            loaded = await load_node({
-              request,
-              options: options2,
-              state,
-              route,
-              page,
+            loaded = await load_node(__spreadProps(__spreadValues({}, opts), {
               node,
-              $session,
-              context,
+              stuff,
+              prerender_enabled: is_prerender_enabled(options2, node, state),
               is_leaf: i === nodes.length - 1,
               is_error: false
-            });
+            }));
             if (!loaded)
               return;
+            set_cookie_headers = set_cookie_headers.concat(loaded.set_cookie_headers);
             if (loaded.loaded.redirect) {
-              return {
+              return with_cookies({
                 status: loaded.loaded.status,
                 headers: {
                   location: encodeURI(loaded.loaded.redirect)
                 }
-              };
+              }, set_cookie_headers);
             }
             if (loaded.loaded.error) {
-              ({status, error: error3} = loaded.loaded);
+              ({status, error: error2} = loaded.loaded);
             }
-          } catch (e) {
-            options2.handle_error(e);
+          } catch (err) {
+            const e = coalesce_to_error(err);
+            options2.handle_error(e, request);
             status = 500;
-            error3 = e;
+            error2 = e;
           }
-          if (error3) {
+          if (loaded && !error2) {
+            branch.push(loaded);
+          }
+          if (error2) {
             while (i--) {
               if (route.b[i]) {
                 const error_node = await options2.load_component(route.b[i]);
-                let error_loaded;
                 let node_loaded;
                 let j = i;
                 while (!(node_loaded = branch[j])) {
                   j -= 1;
                 }
                 try {
-                  error_loaded = await load_node({
-                    request,
-                    options: options2,
-                    state,
-                    route,
-                    page,
+                  const error_loaded = await load_node(__spreadProps(__spreadValues({}, opts), {
                     node: error_node,
-                    $session,
-                    context: node_loaded.context,
+                    stuff: node_loaded.stuff,
+                    prerender_enabled: is_prerender_enabled(options2, error_node, state),
                     is_leaf: false,
                     is_error: true,
                     status,
-                    error: error3
-                  });
+                    error: error2
+                  }));
                   if (error_loaded.loaded.error) {
                     continue;
                   }
+                  page_config = get_page_config(error_node.module, options2);
                   branch = branch.slice(0, j + 1).concat(error_loaded);
                   break ssr;
-                } catch (e) {
-                  options2.handle_error(e);
+                } catch (err) {
+                  const e = coalesce_to_error(err);
+                  options2.handle_error(e, request);
                   continue;
                 }
               }
             }
-            return await respond_with_error({
+            return with_cookies(await respond_with_error({
               request,
               options: options2,
               state,
               $session,
               status,
-              error: error3
-            });
+              error: error2
+            }), set_cookie_headers);
           }
         }
-        branch.push(loaded);
-        if (loaded && loaded.loaded.context) {
-          context = __spreadValues(__spreadValues({}, context), loaded.loaded.context);
+        if (loaded && loaded.loaded.stuff) {
+          stuff = __spreadValues(__spreadValues({}, stuff), loaded.loaded.stuff);
         }
       }
     }
   try {
-    return await render_response({
-      options: options2,
-      $session,
+    return with_cookies(await render_response(__spreadProps(__spreadValues({}, opts), {
       page_config,
       status,
-      error: error3,
-      branch: branch && branch.filter(Boolean),
-      page
-    });
-  } catch (error4) {
-    options2.handle_error(error4);
-    return await respond_with_error({
-      request,
-      options: options2,
-      state,
-      $session,
+      error: error2,
+      branch: branch.filter(Boolean)
+    })), set_cookie_headers);
+  } catch (err) {
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
+    return with_cookies(await respond_with_error(__spreadProps(__spreadValues({}, opts), {
       status: 500,
-      error: error4
-    });
+      error: error3
+    })), set_cookie_headers);
   }
 }
-async function render_page(request, route, options2, state) {
+function get_page_config(leaf, options2) {
+  return {
+    ssr: "ssr" in leaf ? !!leaf.ssr : options2.ssr,
+    router: "router" in leaf ? !!leaf.router : options2.router,
+    hydrate: "hydrate" in leaf ? !!leaf.hydrate : options2.hydrate
+  };
+}
+function with_cookies(response, set_cookie_headers) {
+  if (set_cookie_headers.length) {
+    response.headers["set-cookie"] = set_cookie_headers;
+  }
+  return response;
+}
+async function render_page(request, route, match, options2, state) {
   if (state.initiator === route) {
     return {
       status: 404,
@@ -39339,79 +43217,31 @@ async function render_page(request, route, options2, state) {
       body: `Not found: ${request.path}`
     };
   }
-  const $session = await options2.hooks.getSession(request);
-  if (route) {
-    const response = await respond$1({
-      request,
-      options: options2,
-      state,
-      $session,
-      route
-    });
-    if (response) {
-      return response;
-    }
-    if (state.fetched) {
-      return {
-        status: 500,
-        headers: {},
-        body: `Bad request in load function: failed to fetch ${state.fetched}`
-      };
-    }
-  } else {
-    return await respond_with_error({
-      request,
-      options: options2,
-      state,
-      $session,
-      status: 404,
-      error: new Error(`Not found: ${request.path}`)
-    });
-  }
-}
-function lowercase_keys(obj) {
-  const clone2 = {};
-  for (const key in obj) {
-    clone2[key.toLowerCase()] = obj[key];
-  }
-  return clone2;
-}
-function error(body) {
-  return {
-    status: 500,
-    body,
-    headers: {}
+  const params = route.params(match);
+  const page = {
+    host: request.host,
+    path: request.path,
+    query: request.query,
+    params
   };
-}
-async function render_route(request, route) {
-  const mod = await route.load();
-  const handler = mod[request.method.toLowerCase().replace("delete", "del")];
-  if (handler) {
-    const match = route.pattern.exec(request.path);
-    const params = route.params(match);
-    const response = await handler(__spreadProps(__spreadValues({}, request), {params}));
-    if (response) {
-      if (typeof response !== "object") {
-        return error(`Invalid response from route ${request.path}: expected an object, got ${typeof response}`);
-      }
-      let {status = 200, body, headers = {}} = response;
-      headers = lowercase_keys(headers);
-      const type = headers["content-type"];
-      if (type === "application/octet-stream" && !(body instanceof Uint8Array)) {
-        return error(`Invalid response from route ${request.path}: body must be an instance of Uint8Array if content type is application/octet-stream`);
-      }
-      if (body instanceof Uint8Array && type !== "application/octet-stream") {
-        return error(`Invalid response from route ${request.path}: Uint8Array body must be accompanied by content-type: application/octet-stream header`);
-      }
-      let normalized_body;
-      if (typeof body === "object" && (!type || type === "application/json")) {
-        headers = __spreadProps(__spreadValues({}, headers), {"content-type": "application/json"});
-        normalized_body = JSON.stringify(body);
-      } else {
-        normalized_body = body;
-      }
-      return {status, body: normalized_body, headers};
-    }
+  const $session = await options2.hooks.getSession(request);
+  const response = await respond$1({
+    request,
+    options: options2,
+    state,
+    $session,
+    route,
+    page
+  });
+  if (response) {
+    return response;
+  }
+  if (state.fetched) {
+    return {
+      status: 500,
+      headers: {},
+      body: `Bad request in load function: failed to fetch ${state.fetched}`
+    };
   }
 }
 function read_only_form_data() {
@@ -39419,7 +43249,7 @@ function read_only_form_data() {
   return {
     append(key, value) {
       if (map.has(key)) {
-        map.get(key).push(value);
+        (map.get(key) || []).push(value);
       } else {
         map.set(key, [value]);
       }
@@ -39427,47 +43257,43 @@ function read_only_form_data() {
     data: new ReadOnlyFormData(map)
   };
 }
-var _map;
 var ReadOnlyFormData = class {
   constructor(map) {
-    __privateAdd(this, _map, void 0);
-    __privateSet(this, _map, map);
+    __privateAdd2(this, _map, void 0);
+    __privateSet2(this, _map, map);
   }
   get(key) {
-    const value = __privateGet(this, _map).get(key);
+    const value = __privateGet2(this, _map).get(key);
     return value && value[0];
   }
   getAll(key) {
-    return __privateGet(this, _map).get(key);
+    return __privateGet2(this, _map).get(key);
   }
   has(key) {
-    return __privateGet(this, _map).has(key);
+    return __privateGet2(this, _map).has(key);
   }
   *[Symbol.iterator]() {
-    for (const [key, value] of __privateGet(this, _map)) {
+    for (const [key, value] of __privateGet2(this, _map)) {
       for (let i = 0; i < value.length; i += 1) {
         yield [key, value[i]];
       }
     }
   }
   *entries() {
-    for (const [key, value] of __privateGet(this, _map)) {
+    for (const [key, value] of __privateGet2(this, _map)) {
       for (let i = 0; i < value.length; i += 1) {
         yield [key, value[i]];
       }
     }
   }
   *keys() {
-    for (const [key, value] of __privateGet(this, _map)) {
-      for (let i = 0; i < value.length; i += 1) {
-        yield key;
-      }
-    }
+    for (const [key] of __privateGet2(this, _map))
+      yield key;
   }
   *values() {
-    for (const [, value] of __privateGet(this, _map)) {
+    for (const [, value] of __privateGet2(this, _map)) {
       for (let i = 0; i < value.length; i += 1) {
-        yield value;
+        yield value[i];
       }
     }
   }
@@ -39476,26 +43302,25 @@ _map = new WeakMap();
 function parse_body(raw, headers) {
   if (!raw)
     return raw;
-  const [type, ...directives] = headers["content-type"].split(/;\s*/);
-  if (typeof raw === "string") {
-    switch (type) {
-      case "text/plain":
-        return raw;
-      case "application/json":
-        return JSON.parse(raw);
-      case "application/x-www-form-urlencoded":
-        return get_urlencoded(raw);
-      case "multipart/form-data": {
-        const boundary = directives.find((directive) => directive.startsWith("boundary="));
-        if (!boundary)
-          throw new Error("Missing boundary");
-        return get_multipart(raw, boundary.slice("boundary=".length));
-      }
-      default:
-        throw new Error(`Invalid Content-Type ${type}`);
+  const content_type = headers["content-type"];
+  const [type, ...directives] = content_type ? content_type.split(/;\s*/) : [];
+  const text = () => new TextDecoder(headers["content-encoding"] || "utf-8").decode(raw);
+  switch (type) {
+    case "text/plain":
+      return text();
+    case "application/json":
+      return JSON.parse(text());
+    case "application/x-www-form-urlencoded":
+      return get_urlencoded(text());
+    case "multipart/form-data": {
+      const boundary = directives.find((directive) => directive.startsWith("boundary="));
+      if (!boundary)
+        throw new Error("Missing boundary");
+      return get_multipart(text(), boundary.slice("boundary=".length));
     }
+    default:
+      return raw;
   }
-  return raw;
 }
 function get_urlencoded(text) {
   const {data, append} = read_only_form_data();
@@ -39507,22 +43332,24 @@ function get_urlencoded(text) {
 }
 function get_multipart(text, boundary) {
   const parts = text.split(`--${boundary}`);
-  const nope = () => {
-    throw new Error("Malformed form data");
-  };
   if (parts[0] !== "" || parts[parts.length - 1].trim() !== "--") {
-    nope();
+    throw new Error("Malformed form data");
   }
   const {data, append} = read_only_form_data();
   parts.slice(1, -1).forEach((part) => {
     const match = /\s*([\s\S]+?)\r\n\r\n([\s\S]*)\s*/.exec(part);
+    if (!match) {
+      throw new Error("Malformed form data");
+    }
     const raw_headers = match[1];
     const body = match[2].trim();
     let key;
+    const headers = {};
     raw_headers.split("\r\n").forEach((str) => {
       const [raw_header, ...raw_directives] = str.split("; ");
       let [name, value] = raw_header.split(": ");
       name = name.toLowerCase();
+      headers[name] = value;
       const directives = {};
       raw_directives.forEach((raw_directive) => {
         const [name2, value2] = raw_directive.split("=");
@@ -39530,7 +43357,7 @@ function get_multipart(text, boundary) {
       });
       if (name === "content-disposition") {
         if (value !== "form-data")
-          nope();
+          throw new Error("Malformed form data");
         if (directives.filename) {
           throw new Error("File upload is not yet implemented");
         }
@@ -39540,7 +43367,7 @@ function get_multipart(text, boundary) {
       }
     });
     if (!key)
-      nope();
+      throw new Error("Malformed form data");
     append(key, body);
   });
   return data;
@@ -39548,51 +43375,53 @@ function get_multipart(text, boundary) {
 async function respond(incoming, options2, state = {}) {
   if (incoming.path !== "/" && options2.trailing_slash !== "ignore") {
     const has_trailing_slash = incoming.path.endsWith("/");
-    if (has_trailing_slash && options2.trailing_slash === "never" || !has_trailing_slash && options2.trailing_slash === "always" && !incoming.path.split("/").pop().includes(".")) {
+    if (has_trailing_slash && options2.trailing_slash === "never" || !has_trailing_slash && options2.trailing_slash === "always" && !(incoming.path.split("/").pop() || "").includes(".")) {
       const path = has_trailing_slash ? incoming.path.slice(0, -1) : incoming.path + "/";
       const q = incoming.query.toString();
       return {
         status: 301,
         headers: {
-          location: encodeURI(path + (q ? `?${q}` : ""))
+          location: options2.paths.base + path + (q ? `?${q}` : "")
         }
       };
     }
   }
+  const headers = lowercase_keys(incoming.headers);
+  const request = __spreadProps(__spreadValues({}, incoming), {
+    headers,
+    body: parse_body(incoming.rawBody, headers),
+    params: {},
+    locals: {}
+  });
   try {
-    const headers = lowercase_keys(incoming.headers);
     return await options2.hooks.handle({
-      request: __spreadProps(__spreadValues({}, incoming), {
-        headers,
-        body: parse_body(incoming.rawBody, headers),
-        params: null,
-        locals: {}
-      }),
-      resolve: async (request) => {
+      request,
+      resolve: async (request2) => {
         if (state.prerender && state.prerender.fallback) {
           return await render_response({
             options: options2,
-            $session: await options2.hooks.getSession(request),
+            $session: await options2.hooks.getSession(request2),
             page_config: {ssr: false, router: true, hydrate: true},
             status: 200,
-            error: null,
-            branch: [],
-            page: null
+            branch: []
           });
         }
+        const decoded = decodeURI(request2.path);
         for (const route of options2.manifest.routes) {
-          if (!route.pattern.test(request.path))
+          const match = route.pattern.exec(decoded);
+          if (!match)
             continue;
-          const response = route.type === "endpoint" ? await render_route(request, route) : await render_page(request, route, options2, state);
+          const response = route.type === "endpoint" ? await render_endpoint(request2, route, match) : await render_page(request2, route, match, options2, state);
           if (response) {
             if (response.status === 200) {
-              if (!/(no-store|immutable)/.test(response.headers["cache-control"])) {
-                const etag = `"${hash(response.body)}"`;
-                if (request.headers["if-none-match"] === etag) {
+              const cache_control = get_single_valued_header(response.headers, "cache-control");
+              if (!cache_control || !/(no-store|immutable)/.test(cache_control)) {
+                const etag = `"${hash(response.body || "")}"`;
+                if (request2.headers["if-none-match"] === etag) {
                   return {
                     status: 304,
                     headers: {},
-                    body: null
+                    body: ""
                   };
                 }
                 response.headers["etag"] = etag;
@@ -39601,21 +43430,26 @@ async function respond(incoming, options2, state = {}) {
             return response;
           }
         }
-        return await render_page(request, null, options2, state);
+        const $session = await options2.hooks.getSession(request2);
+        return await respond_with_error({
+          request: request2,
+          options: options2,
+          state,
+          $session,
+          status: 404,
+          error: new Error(`Not found: ${request2.path}`)
+        });
       }
     });
-  } catch (e) {
-    options2.handle_error(e);
+  } catch (err) {
+    const e = coalesce_to_error(err);
+    options2.handle_error(e, request);
     return {
       status: 500,
       headers: {},
       body: options2.dev ? e.stack : e.message
     };
   }
-}
-
-// node_modules/svelte/internal/index.mjs
-function noop2() {
 }
 function run(fn) {
   return fn();
@@ -39626,14 +43460,6 @@ function blank_object() {
 function run_all(fns) {
   fns.forEach(run);
 }
-function is_function(thing) {
-  return typeof thing === "function";
-}
-function is_empty(obj) {
-  return Object.keys(obj).length === 0;
-}
-var tasks = new Set();
-var active_docs = new Set();
 var current_component;
 function set_current_component(component) {
   current_component = component;
@@ -39652,45 +43478,16 @@ function afterUpdate(fn) {
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
 }
-var resolved_promise = Promise.resolve();
-var seen_callbacks = new Set();
-var outroing = new Set();
-var globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : global;
-var boolean_attributes = new Set([
-  "allowfullscreen",
-  "allowpaymentrequest",
-  "async",
-  "autofocus",
-  "autoplay",
-  "checked",
-  "controls",
-  "default",
-  "defer",
-  "disabled",
-  "formnovalidate",
-  "hidden",
-  "ismap",
-  "loop",
-  "multiple",
-  "muted",
-  "nomodule",
-  "novalidate",
-  "open",
-  "playsinline",
-  "readonly",
-  "required",
-  "reversed",
-  "selected"
-]);
-var escaped2 = {
+Promise.resolve();
+var escaped = {
   '"': "&quot;",
   "'": "&#39;",
   "&": "&amp;",
   "<": "&lt;",
   ">": "&gt;"
 };
-function escape2(html) {
-  return String(html).replace(/["'&<>]/g, (match) => escaped2[match]);
+function escape(html) {
+  return String(html).replace(/["'&<>]/g, (match) => escaped[match]);
 }
 function each(items, fn) {
   let str = "";
@@ -39748,98 +43545,8 @@ function create_ssr_component(fn) {
 function add_attribute(name, value, boolean) {
   if (value == null || boolean && !value)
     return "";
-  return ` ${name}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape2(value)) : `"${value}"`}`}`;
+  return ` ${name}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape(value)) : `"${value}"`}`}`;
 }
-function destroy_component(component, detaching) {
-  const $$ = component.$$;
-  if ($$.fragment !== null) {
-    run_all($$.on_destroy);
-    $$.fragment && $$.fragment.d(detaching);
-    $$.on_destroy = $$.fragment = null;
-    $$.ctx = [];
-  }
-}
-var SvelteElement;
-if (typeof HTMLElement === "function") {
-  SvelteElement = class extends HTMLElement {
-    constructor() {
-      super();
-      this.attachShadow({mode: "open"});
-    }
-    connectedCallback() {
-      const {on_mount} = this.$$;
-      this.$$.on_disconnect = on_mount.map(run).filter(is_function);
-      for (const key in this.$$.slotted) {
-        this.appendChild(this.$$.slotted[key]);
-      }
-    }
-    attributeChangedCallback(attr, _oldValue, newValue) {
-      this[attr] = newValue;
-    }
-    disconnectedCallback() {
-      run_all(this.$$.on_disconnect);
-    }
-    $destroy() {
-      destroy_component(this, 1);
-      this.$destroy = noop2;
-    }
-    $on(type, callback) {
-      const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
-      callbacks.push(callback);
-      return () => {
-        const index2 = callbacks.indexOf(callback);
-        if (index2 !== -1)
-          callbacks.splice(index2, 1);
-      };
-    }
-    $set($$props) {
-      if (this.$$set && !is_empty($$props)) {
-        this.$$.skip_bound = true;
-        this.$$set($$props);
-        this.$$.skip_bound = false;
-      }
-    }
-  };
-}
-
-// .svelte-kit/output/server/app.js
-var import_auth = __toModule(require_node());
-
-// node_modules/nanoid/index.js
-var import_crypto2 = __toModule(require("crypto"));
-
-// node_modules/nanoid/url-alphabet/index.js
-var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
-
-// node_modules/nanoid/index.js
-var POOL_SIZE_MULTIPLIER = 32;
-var pool;
-var poolOffset;
-var random = (bytes) => {
-  if (!pool || pool.length < bytes) {
-    pool = Buffer.allocUnsafe(bytes * POOL_SIZE_MULTIPLIER);
-    import_crypto2.default.randomFillSync(pool);
-    poolOffset = 0;
-  } else if (poolOffset + bytes > pool.length) {
-    import_crypto2.default.randomFillSync(pool);
-    poolOffset = 0;
-  }
-  let res = pool.subarray(poolOffset, poolOffset + bytes);
-  poolOffset += bytes;
-  return res;
-};
-var nanoid = (size = 21) => {
-  let bytes = random(size);
-  let id = "";
-  while (size--) {
-    id += urlAlphabet[bytes[size] & 63];
-  }
-  return id;
-};
-
-// .svelte-kit/output/server/app.js
-var import_app = __toModule(require_index_cjs3());
-var import_firestore = __toModule(require_index_node_cjs2());
 var css$8 = {
   code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
   map: `{"version":3,"file":"root.svelte","sources":["root.svelte"],"sourcesContent":["<!-- This file is generated by @sveltejs/kit \u2014 do not edit it! -->\\n<script>\\n\\timport { setContext, afterUpdate, onMount } from 'svelte';\\n\\n\\t// stores\\n\\texport let stores;\\n\\texport let page;\\n\\n\\texport let components;\\n\\texport let props_0 = null;\\n\\texport let props_1 = null;\\n\\texport let props_2 = null;\\n\\n\\tsetContext('__svelte__', stores);\\n\\n\\t$: stores.page.set(page);\\n\\tafterUpdate(stores.page.notify);\\n\\n\\tlet mounted = false;\\n\\tlet navigated = false;\\n\\tlet title = null;\\n\\n\\tonMount(() => {\\n\\t\\tconst unsubscribe = stores.page.subscribe(() => {\\n\\t\\t\\tif (mounted) {\\n\\t\\t\\t\\tnavigated = true;\\n\\t\\t\\t\\ttitle = document.title || 'untitled page';\\n\\t\\t\\t}\\n\\t\\t});\\n\\n\\t\\tmounted = true;\\n\\t\\treturn unsubscribe;\\n\\t});\\n</script>\\n\\n<svelte:component this={components[0]} {...(props_0 || {})}>\\n\\t{#if components[1]}\\n\\t\\t<svelte:component this={components[1]} {...(props_1 || {})}>\\n\\t\\t\\t{#if components[2]}\\n\\t\\t\\t\\t<svelte:component this={components[2]} {...(props_2 || {})}/>\\n\\t\\t\\t{/if}\\n\\t\\t</svelte:component>\\n\\t{/if}\\n</svelte:component>\\n\\n{#if mounted}\\n\\t<div id=\\"svelte-announcer\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\">\\n\\t\\t{#if navigated}\\n\\t\\t\\t{title}\\n\\t\\t{/if}\\n\\t</div>\\n{/if}\\n\\n<style>\\n\\t#svelte-announcer {\\n\\t\\tposition: absolute;\\n\\t\\tleft: 0;\\n\\t\\ttop: 0;\\n\\t\\tclip: rect(0 0 0 0);\\n\\t\\tclip-path: inset(50%);\\n\\t\\toverflow: hidden;\\n\\t\\twhite-space: nowrap;\\n\\t\\twidth: 1px;\\n\\t\\theight: 1px;\\n\\t}\\n</style>"],"names":[],"mappings":"AAsDC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACnB,SAAS,CAAE,MAAM,GAAG,CAAC,CACrB,QAAQ,CAAE,MAAM,CAChB,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,AACZ,CAAC"}`
@@ -39891,110 +43598,13 @@ ${validate_component(components[0] || missing_component, "svelte:component").$$r
     })}` : ``}`
   })}
 
-${mounted ? `<div id="${"svelte-announcer"}" aria-live="${"assertive"}" aria-atomic="${"true"}" class="${"svelte-1j55zn5"}">${navigated ? `${escape2(title)}` : ``}</div>` : ``}`;
+${mounted ? `<div id="${"svelte-announcer"}" aria-live="${"assertive"}" aria-atomic="${"true"}" class="${"svelte-1j55zn5"}">${navigated ? `${escape(title)}` : ``}</div>` : ``}`;
 });
-function set_paths(paths) {
-}
-function set_prerendering(value) {
-}
 var user_hooks = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module"
 });
-var template = ({head, body}) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<link rel="icon" href="/poll-stream.svg" />\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		<title>Poll.stream</title>\r\n		\r\n		<!-- Adsense -->\r\n		<script data-ad-client="ca-pub-5110463505057316" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>\r\n		\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
 var options = null;
-function init(settings) {
-  set_paths(settings.paths);
-  set_prerendering(settings.prerendering || false);
-  options = {
-    amp: false,
-    dev: false,
-    entry: {
-      file: "/./_app/start-a3984364.js",
-      css: ["/./_app/assets/start-a8cd1609.css"],
-      js: ["/./_app/start-a3984364.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/singletons-bb9012b7.js"]
-    },
-    fetched: void 0,
-    floc: false,
-    get_component_path: (id) => "/./_app/" + entry_lookup[id],
-    get_stack: (error22) => String(error22),
-    handle_error: (error22) => {
-      console.error(error22.stack);
-      error22.stack = options.get_stack(error22);
-    },
-    hooks: get_hooks(user_hooks),
-    hydrate: true,
-    initiator: void 0,
-    load_component,
-    manifest,
-    paths: settings.paths,
-    read: settings.read,
-    root: Root,
-    router: true,
-    ssr: true,
-    target: "#svelte",
-    template,
-    trailing_slash: "never"
-  };
-}
-var d = decodeURIComponent;
-var empty = () => ({});
-var manifest = {
-  assets: [{"file": "poll-stream.svg", "size": 1278, "type": "image/svg+xml"}],
-  layout: "src/routes/__layout.svelte",
-  error: ".svelte-kit/build/components/error.svelte",
-  routes: [
-    {
-      type: "page",
-      pattern: /^\/$/,
-      params: empty,
-      a: ["src/routes/__layout.svelte", "src/routes/index.svelte"],
-      b: [".svelte-kit/build/components/error.svelte"]
-    },
-    {
-      type: "page",
-      pattern: /^\/poll\/([^/]+?)\/?$/,
-      params: (m) => ({slug: d(m[1])}),
-      a: ["src/routes/__layout.svelte", "src/routes/poll/[slug].svelte"],
-      b: [".svelte-kit/build/components/error.svelte"]
-    },
-    {
-      type: "page",
-      pattern: /^\/user\/([^/]+?)\/?$/,
-      params: (m) => ({slug: d(m[1])}),
-      a: ["src/routes/__layout.svelte", "src/routes/user/[slug].svelte"],
-      b: [".svelte-kit/build/components/error.svelte"]
-    }
-  ]
-};
-var get_hooks = (hooks) => ({
-  getSession: hooks.getSession || (() => ({})),
-  handle: hooks.handle || (({request, resolve: resolve2}) => resolve2(request))
-});
-var module_lookup = {
-  "src/routes/__layout.svelte": () => Promise.resolve().then(function() {
-    return __layout;
-  }),
-  ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(function() {
-    return error2;
-  }),
-  "src/routes/index.svelte": () => Promise.resolve().then(function() {
-    return index;
-  }),
-  "src/routes/poll/[slug].svelte": () => Promise.resolve().then(function() {
-    return _slug_$1;
-  }),
-  "src/routes/user/[slug].svelte": () => Promise.resolve().then(function() {
-    return _slug_;
-  })
-};
-var metadata_lookup = {"src/routes/__layout.svelte": {"entry": "/./_app/pages/__layout.svelte-bbba672c.js", "css": ["/./_app/assets/pages/__layout.svelte-21a6dec9.css", "/./_app/assets/Box-9e76679f.css"], "js": ["/./_app/pages/__layout.svelte-bbba672c.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js"], "styles": null}, ".svelte-kit/build/components/error.svelte": {"entry": "/./_app/error.svelte-9ea833de.js", "css": [], "js": ["/./_app/error.svelte-9ea833de.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}, "src/routes/index.svelte": {"entry": "/./_app/pages/index.svelte-9e3f421b.js", "css": ["/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/index.svelte-9e3f421b.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js", "/./_app/chunks/FloatingRow-0b759e20.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/poll/[slug].svelte": {"entry": "/./_app/pages/poll/[slug].svelte-f79e2e88.js", "css": ["/./_app/assets/pages/poll/[slug].svelte-b266b337.css", "/./_app/assets/Box-9e76679f.css", "/./_app/assets/FloatingRow-d9813811.css"], "js": ["/./_app/pages/poll/[slug].svelte-f79e2e88.js", "/./_app/chunks/vendor-b294e5f1.js", "/./_app/chunks/Box-ed2e29ce.js", "/./_app/chunks/FloatingRow-0b759e20.js", "/./_app/chunks/singletons-bb9012b7.js"], "styles": null}, "src/routes/user/[slug].svelte": {"entry": "/./_app/pages/user/[slug].svelte-aab1e842.js", "css": [], "js": ["/./_app/pages/user/[slug].svelte-aab1e842.js", "/./_app/chunks/vendor-b294e5f1.js"], "styles": null}};
-async function load_component(file) {
-  return __spreadValues({
-    module: await module_lookup[file]()
-  }, metadata_lookup[file]);
-}
-init({paths: {"base": "", "assets": "/."}});
 function render(request, {
   prerender
 } = {}) {
@@ -40250,18 +43860,18 @@ function jsonProvider(_key, value) {
   if (typeof value === "object") {
     switch (value.__type) {
       case "PollStream":
-        var pollStream = assign2(new PollStream(), value);
+        var pollStream = assign(new PollStream(), value);
         pollStream.listenToPolls();
         pollStream.onUpdate(() => main.writePollStream(pollStream));
         return pollStream;
       case "Poll":
-        var poll = assign2(new Poll(), value);
+        var poll = assign(new Poll(), value);
         poll.listenToChoices();
         return poll;
       case "Choice":
-        return assign2(new Choice(), value);
+        return assign(new Choice(), value);
       case "UserData":
-        return assign2(new UserData(), value);
+        return assign(new UserData(), value);
       default:
         return value;
     }
@@ -40269,7 +43879,7 @@ function jsonProvider(_key, value) {
     return value;
   }
 }
-function assign2(obj, value) {
+function assign(obj, value) {
   Object.assign(obj, value);
   return obj;
 }
@@ -40449,24 +44059,26 @@ var __layout = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": _layout
 });
-function load$2({error: error22, status}) {
-  return {props: {error: error22, status}};
+function load$2({error: error2, status}) {
+  return {props: {error: error2, status}};
 }
 var Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {status} = $$props;
-  let {error: error22} = $$props;
+  let {error: error2} = $$props;
   if ($$props.status === void 0 && $$bindings.status && status !== void 0)
     $$bindings.status(status);
-  if ($$props.error === void 0 && $$bindings.error && error22 !== void 0)
-    $$bindings.error(error22);
-  return `<h1>${escape2(status)}</h1>
+  if ($$props.error === void 0 && $$bindings.error && error2 !== void 0)
+    $$bindings.error(error2);
+  return `<h1>${escape(status)}</h1>
 
-<p>${escape2(error22.message)}</p>
+<pre>${escape(error2.message)}</pre>
 
 
-${error22.stack ? `<pre>${escape2(error22.stack)}</pre>` : ``}`;
+
+${error2.frame ? `<pre>${escape(error2.frame)}</pre>` : ``}
+${error2.stack ? `<pre>${escape(error2.stack)}</pre>` : ``}`;
 });
-var error2 = /* @__PURE__ */ Object.freeze({
+var error = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Error$1,
@@ -40516,7 +44128,7 @@ var ConfirmationButton = create_ssr_component(($$result, $$props, $$bindings, sl
 		${validate_component(BasicButton, "BasicButton").$$render($$result, {
     onclick: onClick,
     style: "background-color:var(--c_yellow); color:var(--c_dark);"
-  }, {}, {default: () => `${escape2(secondText)}`})}
+  }, {}, {default: () => `${escape(secondText)}`})}
 	`}`;
 });
 var ShareButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40541,8 +44153,8 @@ var PollStreamTile = create_ssr_component(($$result, $$props, $$bindings, slots)
   return `${pollStream != void 0 ? `${validate_component(Box, "Box").$$render($$result, {}, {}, {
     default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
       default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
-        default: () => `<div style="${"cursor: pointer;"}"><h2>${escape2(pollStream.title ? pollStream.title : "Untitled Poll Stream")}</h2>
-					<p>Description: ${escape2(pollStream.description)}</p></div>`
+        default: () => `<div style="${"cursor: pointer;"}"><h2>${escape(pollStream.title ? pollStream.title : "Untitled Poll Stream")}</h2>
+					<p>Description: ${escape(pollStream.description)}</p></div>`
       })}
 			${validate_component(ShareButton, "ShareButton").$$render($$result, {pollStreamId: pollStream.id}, {}, {})}
 			${main.userData && main.userData.isAdminOf(pollStream.id) ? `${validate_component(ConfirmationButton, "ConfirmationButton").$$render($$result, {
@@ -40631,10 +44243,12 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   }
   function build() {
     return __awaiter(this, void 0, void 0, function* () {
-      if (view === 0) {
-        yield readPollStreams(main.userData.getPollStreamIds());
-      } else if (view === 1) {
-        yield readPollStreams(main.userData.getVisitedPollStreamIds());
+      if (main.userData) {
+        if (view === 0) {
+          yield readPollStreams(main.userData.getPollStreamIds());
+        } else if (view === 1) {
+          yield readPollStreams(main.userData.getVisitedPollStreamIds());
+        }
       }
     });
   }
@@ -40642,7 +44256,8 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     if (user) {
       yield main.readUserData();
       yield build();
-    } else {
+    }
+    if (pollStreams === void 0) {
       pollStreams = [];
     }
   }));
@@ -40763,14 +44378,14 @@ var ChoiceItem = create_ssr_component(($$result, $$props, $$bindings, slots) => 
       onclick: vote
     }, {}, {
       default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
-        default: () => `<span style="${"display: inline;"}">${escape2(choice.text)}</span>
-					<span style="${"display: inline; text-align: right;"}">${escape2(choice.getUsers().length)} ${escape2(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>`
+        default: () => `<span style="${"display: inline;"}">${escape(choice.text)}</span>
+					<span style="${"display: inline; text-align: right;"}">${escape(choice.getUsers().length)} ${escape(choice.getUsers().length == 1 ? "vote." : "votes.")}</span>`
       })}`
     })}`}
 		${validate_component(Row, "Row").$$render($$result, {}, {}, {
       default: () => `<span></span>
 			<span style="${"font-size: small;"}">${main.auth.currentUser && !main.auth.currentUser.isAnonymous && userNames.length ? `<span>Voted on by: </span>
-					${each(userNames, (name) => `<span>${escape2(name)}, </span>`)}` : ``}</span>`
+					${each(userNames, (name) => `<span>${escape(name)}, </span>`)}` : ``}</span>`
     })}`
   })}` : ``}`;
 });
@@ -40848,7 +44463,7 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => `${validate_component(BasicButton, "BasicButton").$$render($$result, {
             onclick: () => poll.singleChoice = !poll.singleChoice
           }, {}, {
-            default: () => `${escape2(poll.singleChoice ? "Single Choice" : "Multiple Choice")}`
+            default: () => `${escape(poll.singleChoice ? "Single Choice" : "Multiple Choice")}`
           })}`
         })}`
       })}
@@ -40856,7 +44471,7 @@ var PollCard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         onclick: remove,
         style: "background-color: var(--c_red);"
       }, {}, {default: () => `Delete`})}`
-    })}` : `<h2>${escape2(poll.question)}</h2>
+    })}` : `<h2>${escape(poll.question)}</h2>
 		<div class="${"split svelte-158fiwf"}"></div>`}
 	${each(poll.getChoices(), (choice) => `${validate_component(ChoiceItem, "ChoiceItem").$$render($$result, {
       choice,
@@ -40877,7 +44492,7 @@ var css = {
 var pageInfo;
 var pollStreamId;
 var query;
-async function load$1({page, fetch: fetch3, session, context}) {
+async function load$1({page, fetch: fetch2, session, context}) {
   pageInfo = page;
   pollStreamId = pageInfo.params.slug;
   query = pageInfo.query;
@@ -40964,8 +44579,8 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
       default: () => `${isAdmin && edit ? `<input type="${"text"}" class="${"title svelte-15c3n33"}" placeholder="${"Enter title.."}"${add_attribute("value", pollStream.title, 1)}>
 							<div class="${"title-split"}"></div>
 							<textarea type="${"text"}" class="${"description svelte-15c3n33"}" placeholder="${"Enter description.."}">${pollStream.description || ""}</textarea>
-							<br>` : `<h2>${escape2(pollStream.title)}</h2>
-							<p>${escape2(pollStream.description)}</p>`}`
+							<br>` : `<h2>${escape(pollStream.title)}</h2>
+							<p>${escape(pollStream.description)}</p>`}`
     })}` : `<div></div>`}
 				<div>${validate_component(ShareButton, "ShareButton").$$render($$result, {pollStreamId}, {}, {})}
 					${isAdmin ? `${edit ? `${validate_component(BasicButton, "BasicButton").$$render($$result, {
@@ -40992,7 +44607,7 @@ var U5Bslugu5D$1 = create_ssr_component(($$result, $$props, $$bindings, slots) =
     })}
 
 				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
-      default: () => `${pollStream.getPolls().length ? `<span style="${"margin-top:10pt; font-size: large; font-weight: 700;"}">${escape2(index2 + 1)} of ${escape2(pollStream.getPolls().length)}</span>` : ``}`
+      default: () => `${pollStream.getPolls().length ? `<span style="${"margin-top:10pt; font-size: large; font-weight: 700;"}">${escape(index2 + 1)} of ${escape(pollStream.getPolls().length)}</span>` : ``}`
     })}
 				
 				${validate_component(Box, "Box").$$render($$result, {visible: false}, {}, {
@@ -41016,15 +44631,15 @@ var _slug_$1 = /* @__PURE__ */ Object.freeze({
   load: load$1
 });
 var p;
-async function load({page, fetch: fetch3, session, context}) {
+async function load({page, fetch: fetch2, session, context}) {
   p = page;
   return {props: {}};
 }
 var U5Bslugu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const firebaseApp = (0, import_app.getApp)();
   const auth = (0, import_auth.getAuth)(firebaseApp);
-  return `${auth.currentUser != null && auth.currentUser.uid === p.params.slug ? `<h1>This is your user page, ${escape2(auth.currentUser.displayName)}</h1>` : `<h1>This is not your user page.</h1>`}
-<p>Page Info: ${escape2(JSON.stringify(p))}</p>`;
+  return `${auth.currentUser != null && auth.currentUser.uid === p.params.slug ? `<h1>This is your user page, ${escape(auth.currentUser.displayName)}</h1>` : `<h1>This is not your user page.</h1>`}
+<p>Page Info: ${escape(JSON.stringify(p))}</p>`;
 });
 var _slug_ = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -41067,20 +44682,6 @@ INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
 LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
 ***************************************************************************** */
 /**
  * @license
